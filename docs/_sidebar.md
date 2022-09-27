@@ -1,9 +1,10 @@
 - [Home](/)
-- [How-To](guide.md)
-  - [Configure your Datacoves stack](how-tos/how-to-configure-datacoves/index)
-  - [Add Warehouses, Schemas, and Roles to Snowflake](how-tos/how-to-add-warehouses-schemas-roles/index)
-  - [How To develop and release a feature](how-tos/how-to-create-and-release-a-feature/index)
-
+- [How to](/how-tos/)
+  - [Configure Datacoves](/how-tos/datacoves/)
+    - [Transform](/how-tos/datacoves/transform.md)
+    - [Analyze](/how-tos/datacoves/analyze.md)
+  - [Set up Snowflake](/how-tos/snowflake/)
+    - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles.md)
 
 <!--
     "How-To": [

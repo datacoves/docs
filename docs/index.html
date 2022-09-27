@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link data-rh="true" rel="icon" href="/media/favicon.ico">
+  <link data-rh="true" rel="icon" href="/assets/favicon.ico">
   <meta name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
   <meta name="Datacoves Docs" content="Datacoves documentation">
@@ -22,6 +22,9 @@
       --cover-heading-color: #00044A;
       --cover-blockquote-color: #00044A;
     }
+    .sidebar-nav a {
+      white-space: normal;
+    }
   </style>
 </head>
 
@@ -36,10 +39,14 @@
         loadNavbar: true,
         coverpage: true,
         auto2top: true,
-        maxLevel: 3,
-        subMaxLevel: 1,
+        subMaxLevel: 2,
+        alias: {
+          '/.*/_sidebar.md': '/_sidebar.md',
+        },
+        subMaxLevel: 3,
+        sidebarDisplayLevel: 3,
         coverpage: 'cover.md',
-        logo: '/media/dc-logo.svg',
+        logo: '/assets/dc-logo.svg',
       }
   </script>
 
@@ -51,6 +58,7 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 
 </html>
