@@ -8,8 +8,8 @@ Once your destination is configured you can load data using one of [Airbyte's so
 
 ## Transforming Data
 
-Each Analytics / Data Engineer will need access to your git reposotory and an account to your data warehouse in order to develop with dbt. Each user should [follow these steps to configure dbt](how-tos/configure-datacoves/transform.md).
+Each Analytics / Data Engineer will need access to your git reposotory and an account to your data warehouse in order to develop with dbt. Each user should [follow these steps to configure dbt](/how-tos/datacoves/transform.md).
 
 ## Analyzing Data
 
-To begin analyzing data, [Follow these instructions](/how-tos/configure-datacoves/analyze.md) to add a connection to your data warehouse on Superset.
+To begin analyzing data, [Follow these instructions](/how-tos/datacoves/analyze.md) to add a connection to your data warehouse on Superset.
