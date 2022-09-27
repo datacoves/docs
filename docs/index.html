@@ -25,6 +25,11 @@
     .sidebar-nav a {
       white-space: normal;
     }
+    .markdown-section p[style*="float: right"] {
+      position: fixed;
+      bottom: 0px;
+      right: 20px;
+    }
   </style>
 </head>
 
@@ -47,7 +52,7 @@
         sidebarDisplayLevel: 0,
         coverpage: 'cover.md',
         logo: '/assets/dc-logo.svg',
-      }
+      };
   </script>
 
   <!-- Required -->
@@ -59,6 +64,11 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+  
+  <script>
+    window.$docsify.plugins = [EditOnGithubPlugin.create('https://github.com/datacoves/docs/blob/main/docs/', null, null)].concat(window.$docsify.plugins)
+  </script>
 </body>
 
 </html>
