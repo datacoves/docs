@@ -1,5 +1,5 @@
-- [Learning Resources](https://datacoves.com/learning-resources)
+- [:books: Learning Resources](https://datacoves.com/learning-resources)
 
-- [Our git repos](https://github.com/datacoves/)
+- [:file_folder: Our git repos](https://github.com/datacoves/)
 
-- [dbt docs](https://docs.getdbt.com/)
+- [:open_book: dbt docs](https://docs.getdbt.com/)

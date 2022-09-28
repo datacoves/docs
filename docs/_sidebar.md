@@ -1,52 +1,23 @@
 - [Home](/)
 - [How to](/how-tos/)
-  - [Configure Datacoves](/how-tos/datacoves/)
+  - [Datacoves](/how-tos/datacoves/)
     - [Transform](/how-tos/datacoves/transform.md)
     - [Analyze](/how-tos/datacoves/analyze.md)
-  - [Set up Snowflake](/how-tos/snowflake/)
-    - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles.md)
-
-<!--
-    "How-To": [
-      "how-tos/how-to-configure-datacoves/index",
-      "how-tos/how-to-add-warehouses-schemas-roles/index",
-      "how-tos/how-to-create-and-release-a-feature/index",
-    ],
-    "Explanation": [
-      // "explanation/index",
-      {
-        "Best Practices": [
-          {
-            "Datacoves": [
-              "explanation/best-practices/datacoves/folder-structure",
-            ]
-          },
-          {
-            "dbt": [
-              "explanation/best-practices/dbt/index",
-              "explanation/best-practices/dbt/dbt-guidelines",
-              "explanation/best-practices/dbt/object-naming",
-              "explanation/best-practices/dbt/inlets-bays-coves",
-            ]
-          },
-          {
-            "Git": [
-              "explanation/best-practices/git/index",
-            ]
-          },
-          {
-            "Snowflake": [
-              "explanation/best-practices/security/index",
-              "explanation/best-practices/security/time-travel",
-            ]
-          },
-        ]
-      }
-    ],
-    "Tutorials": [
-      "tutorials/index",
-    ],
-    "Reference": [
-      "reference/index",
-    ],
-     -->
+  - [Snowflake](/how-tos/snowflake/)
+    - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles)
+  - [DataOps](/how-tos/dataops/)
+    - [Releasing a new feature](/how-tos/dataops/releasing-new-feature)
+- [Explanation](/explanation/)
+  - [Best Practices](explanation/best-practices/)
+    - [Datacoves](explanation/best-practices/datacoves/)
+      - [Folder Structure](explanation/best-practices/datacoves/folder-structure)
+    - [dbt](explanation/best-practices/dbt/)
+      - [dbt Guidelines](explanation/best-practices/dbt/dbt-guidelines)
+      - [Object Naming Standards](explanation/best-practices/dbt/object-naming)
+      - [What are Inlets, Bays, and Coves](explanation/best-practices/dbt/inlets-bays-coves)
+    - [Git](explanation/best-practices/git/)
+    - [Snowflake](explanation/best-practices/snowflake/)
+      - [Security Model](explanation/best-practices/snowflake/security-model)
+      - [GDPR and Time-Travel](explanation/best-practices/snowflake/time-travel)
+- [Tutorials](/tutorials/)
+- [Reference](/reference/)

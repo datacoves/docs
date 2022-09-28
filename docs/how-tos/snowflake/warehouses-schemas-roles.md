@@ -22,7 +22,7 @@ In the `secure/` folder of your repo, find the `warehouses.yml` file. Configure 
 
 ![Warehouse Configuration](assets/warehouses-config.png)
 
-Once the `warehouses.yml` file is configured run `secure/create_snowflake_objects.py -s warehouses -t prd` to create the wareshoues using your dbt `prd` target for authentication.
+Once the `warehouses.yml` file is configured run `secure/create_snowflake_objects.py -s warehouses -t prd` to create the warehouses using your dbt `prd` target for authentication.
 
 You can use the `--dry-run` option to see the expected changes before they are applied to Snowflake.
 
@@ -65,7 +65,7 @@ We follow a naming convention as follows `z_<object>_<object_name>` for example:
 
 We can then "bundle" these into higher level template roles by granting the object roles.
 
-```
+``` yaml
 - z_base_analyst:
     member_of:
       - z_db_raw
@@ -95,7 +95,7 @@ We can then "bundle" these into higher level template roles by granting the obje
 
 Finally, we can grant these template roles to functional roles modifying only the parts that make the functional roles different.
 
-```
+``` yaml
 - analyst:
     member_of:
       - z_base_analyst
@@ -114,7 +114,7 @@ The PII Analyst just has one additional grant `z_policy_unmask_pii` which allows
 
 A German analyst is pretty similar, but can only see the German(DE) rows vs all the rows for the region.
 
-```
+``` yaml
 - de_analyst:
     member_of:
       - z_base_analyst

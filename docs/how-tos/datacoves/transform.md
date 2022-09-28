@@ -16,7 +16,7 @@ On the settings page scroll down to the Git SSH keys section.
 
 ![Git Settings](./assets/user_settings_git.png)
 
-Click the Add drop down and select whether you want to provide an existing provate key or have Datacoves auto generate one for you.
+Click the Add drop down and select whether you want to provide an existing private key or have Datacoves auto generate one for you.
 
 ![Git Settings Add](./assets/user_settings_git2.png)
 
@@ -68,7 +68,7 @@ Fill in the rest of the fields and click _Save_
 
 ![Snowflake Setup Connection Details](./assets/user_settings_snowflake3.png)
 
-Datacoves will test the connection and display _Tested_ next to the connection if sucessful. Note that you can create additinal dbt targets as show below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
+Datacoves will test the connection and display _Tested_ next to the connection if successful. Note that you can create additional dbt targets as show below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
 
 ![Snowflake Setup Connection Tested](./assets/user_settings_snowflake4.png)
 
