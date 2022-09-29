@@ -25,10 +25,20 @@
     .sidebar-nav a {
       white-space: normal;
     }
+    /* selector for "edit on github" link */
     .markdown-section p[style*="float: right"] {
       position: fixed;
       bottom: 0px;
       right: 20px;
+    }
+    @media (max-width: 480px) {
+      .app-nav {
+        display: none;
+      }
+      /* selector for "edit on github" link */
+      .markdown-section p[style*="float: right"] {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -45,7 +55,6 @@
         coverpage: true,
         auto2top: true,
         subMaxLevel: 3,
-        // routerMode: 'history',
         alias: {
           '/.*/_sidebar.md': '/_sidebar.md',
         },
@@ -53,6 +62,14 @@
         sidebarDisplayLevel: 0,
         coverpage: 'cover.md',
         logo: '/assets/dc-logo.svg',
+        autoFooter: {
+          name:       "datacoves.com",
+          copyYear:   2021,
+          url:        "https://datacoves.com",
+          // policy:     Bool | String,   // show Privacy Policy (optional)
+          // terms:      Bool | String,   // show Terms of Service (optional)
+          // cookies:    Bool | String,   // show Cookies Policy (optional)
+        },
       };
   </script>
 
@@ -65,6 +82,7 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@markbattistella/docsify-sidebarfooter@latest"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
 
   <script>
