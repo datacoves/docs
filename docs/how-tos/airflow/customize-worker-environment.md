@@ -11,8 +11,10 @@ TBD
 Every DAG's task could use a different docker image. Operators accept an `executor_config` argument that could be used to customize the executor context.
 Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as in this example.
 
+### Python version
+
 ```python
-import pendulum
+from datetime import datetime
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from kubernetes.client import models as k8s
@@ -34,8 +36,7 @@ CONFIG = {
 
 with DAG(
     dag_id="my_dag",
-    start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
-    catchup=False,
+    start_date=datetime(2021, 1, 1),
 ) as dag:
 
     my_task = BashOperator(
@@ -45,4 +46,18 @@ with DAG(
     )
 
     my_task
+```
+
+### YAML version
+
+```yaml
+my_dag:
+  start_date: 2021-01-01
+  tasks:
+    dbt_build:
+      operator: airflow.operators.bash_operator.BashOperator
+      container_spec:
+        name: base
+        image: <IMAGE REPO>:<IMAGE TAG> # Replace <IMAGE REPO> and <IMAGE TAG> by your custom docker image
+      bash_command: "echo SUCCESS!"
 ```

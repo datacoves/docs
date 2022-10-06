@@ -4,9 +4,7 @@ Airflow allows multiple ways to keep the users informed about the status of a DA
 
 We're going to explain how you should send an email notification on DAG's failure.
 
-## Send email notification when a task fails
-
-### Create a new Integration
+## Create a new Integration
 
 First, create a new integration of type `SMTP` by navigating to the Integrations Admin.
 
@@ -20,7 +18,7 @@ Provide a name and select `SMTP`.
 
 Provide the required details and `Save` changes.
 
-### Add integration to an Environment
+## Add integration to an Environment
 
 Once you created the `SMTP` integration, it's time to add it to the Airflow service in an environment.
 
@@ -38,11 +36,13 @@ Click on the `+ Add new integration` button, and then, select the integration yo
 
 `Save` changes. The Airflow service will be restarted shortly and will now include the SMTP configuration required to send emails.
 
-### Send email on DAG task's failure
+## Implement DAG
 
 Once you set up the SMTP integration on Airflow, it's time to modify your DAG.
 
 Simply provide a `default_args` dict like so:
+
+### Python version
 
 ```python
 from datetime import datetime
@@ -61,4 +61,17 @@ dag = DAG(
 )
 
 # your tasks here...
+```
+
+### YAML version
+
+```yaml
+my_dag:
+  start_date: 2021-01-01
+  default_args:
+    owner: airflow
+    email: <RECIPIENT EMAIL ADDRESS> # Replace with recipient's email address
+    email_on_failure: true
+  tasks:
+    # ... your tasks here...
 ```
