@@ -58,7 +58,6 @@ dag = DAG(
     dag_id='my_dag',
     default_args=default_args,
     start_date=datetime(2020, 1, 1),
-    on_failure_callback=send
 )
 
 # your tasks here...
