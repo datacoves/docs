@@ -1,12 +1,12 @@
 # Datacoves Security
 
-Security and Privacy are fundamental pilars in Datacoves.
+Security and Privacy are fundamental pillars in Datacoves.
 
-We are committed to keeping your data safe by following industry-leading standards for securing physical deployments, setting access policies, manage our network, and set policies across our organization.
+We are committed to keeping your data safe by following industry-leading standards for securing physical deployments, setting access policies, managing our network, and setting policies across our organization.
 
 ## Authentication
 
-Datacoves allows you to log in to the platform using your Google account.
+Datacoves allows users to log in to the platform via Single Sign On(SSO) using your organization's Google account.
 
 ## Access Control
 
@@ -28,11 +28,11 @@ Datacoves supports user management and role-based access control (RBAC).
 
 The data from your database will transit through the Datacoves infrastructure on the way to your browser when you write interactive queries from the IDE. But this information is not preserved in any way (caching or otherwise). Outside of your browser sessions, it does not reside on our servers.
 
-### Airbyte
+### Airbyte Service
 
 Airbyte connectors operate as the data pipes moving data from Point A to point B: Extracting data from data sources (APIs, files, databases) and loading it into destination platforms (warehouses, data lakes) with optional transformation performed at the data destination. As soon as data is transferred from the source to the destination, it is purged from your Datacoves environment.
 
-Environments with Airbyte installed stores the following data:
+Environments with Airbyte installed store the following data:
 
 #### Technical Logs
 
@@ -40,11 +40,11 @@ Technical logs are stored for troubleshooting purposes and may contain sensitive
 
 #### Configuration Metadata
 
-Airbyte retains configuration details and data points such as table and column names for each integration.
+Datacoves retains configuration details and data points such as table and column names for each integration.
 
 #### Sensitive Data​
 
-As Airbyte is not aware of the data being transferred, users are required to follow the Terms of Services and are ultimately responsible for ensuring their data transfer is compliant with their jurisdiction.
+As Datacoves is not aware of the data being transferred, users are required to follow the Terms of Service and are ultimately responsible for ensuring their data transfer is compliant with their jurisdiction.
 
 ## Data Storage
 
@@ -61,7 +61,7 @@ Datacoves is hosted in Azure and Amazon Web Services, with availability in multi
 
 We save backups for at least seven (7) days.
 
-Our employees are dispersed remotely across the US and Latin America and offer service to consumers everywhere. We can practically give help from anywhere thanks to our distributed staff, which also lessens the effects of support interruptions in certain geographic areas.
+Our employees are dispersed remotely across the US and Latin America and we offer service to consumers everywhere. We can practically give help from anywhere thanks to our distributed staff, which also lessens the effects of support interruptions in certain geographic areas.
 
 ## Security Protocols
 
@@ -77,7 +77,7 @@ Before release, we examine new features for any security risks.
 
 Ensure that only the datasets processed by Airbyte, dbt, Airflow, or Superset are given access to your warehouse by Datacoves.
 
-To protect your data and login credentials while in transit, use SSL or SSH encryption. For users in your database, pick secure passwords.
+To protect your data and login credentials while in transit, use SSL or SSH encryption. For users in your database, pick secure passwords or use key-based authentication when possible.
 
 ## Contact us
 
