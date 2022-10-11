@@ -25,5 +25,6 @@
       - [GDPR and Time-Travel](explanation/best-practices/snowflake/time-travel)
 - [Tutorials](/tutorials/)
 - [Reference](/reference/)
+  - [Security](/reference/security/)
 
 <footer id="mb-footer"></footer>
