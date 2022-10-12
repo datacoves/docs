@@ -4,6 +4,7 @@
     - [Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Send Emails](/how-tos/airflow/send-emails.md)
     - [Run dbt](/how-tos/airflow/run-dbt.md)
+    - [Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
   - [Datacoves](/how-tos/datacoves/)
     - [Transform](/how-tos/datacoves/transform.md)
     - [Analyze](/how-tos/datacoves/analyze.md)
