@@ -11,6 +11,8 @@
     - [Analyze](/how-tos/datacoves/analyze.md)
   - [DataOps](/how-tos/dataops/)
     - [Releasing a new feature](/how-tos/dataops/releasing-new-feature)
+  - [Git](/how-tos/git/)
+    - [SSH Keys configuration](/how-tos/git/ssh-keys)
   - [Snowflake](/how-tos/snowflake/)
     - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles)
 - [Explanation](/explanation/)
