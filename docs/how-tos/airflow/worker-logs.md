@@ -25,7 +25,7 @@ fields @timestamp, @message
 | sort @timestamp desc
 | limit 20
 | filter kubernetes.container_image like "airflow-airflow" and
-        kubernetes.container_name = "base" and (@message like "error" or @message like "failed")
+        kubernetes.container_name = "base" and @message like /(?i)(error|exception|failed)/
 ```
 
 Then click on "Run query".
