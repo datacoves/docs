@@ -6,6 +6,7 @@
     - [Worker logs](/how-tos/airflow/worker-logs.md)
     - [Run dbt](/how-tos/airflow/run-dbt.md)
     - [Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
+    - [Send Microsoft Teams notifications](/how-tos/airflow/send-ms-teams-notifications.md)
   - [Datacoves](/how-tos/datacoves/)
     - [Transform](/how-tos/datacoves/transform.md)
     - [Analyze](/how-tos/datacoves/analyze.md)
