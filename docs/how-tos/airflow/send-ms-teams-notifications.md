@@ -45,17 +45,7 @@ In this case, we will use this Operator to notify on failing tasks, using Airflo
 
 > **Note:** You can replace `failure` with any of the events described at the beginning of this article (`on_[event]_callback` > `execute`, `failure`, `retry`, `success`)
 
-
-
-
-```python
-from ms_teams.ms_teams_webhook_operator import MSTeamsWebhookOperator
-```
-
-
 First of all, import `MSTeamsWebhookOperator` into your DAG. Next, create a method that receives Airflow's run `context`, and calls the imported `MSTeamsWebhookOperator`. After creating it, set this method to the `on_failure_callback` property of the DAG
-
-
 
 ```python
 import datetime
@@ -89,12 +79,12 @@ default_args = {
 }
 ```
 
-- `http_conn_id`: `Connection Id` of the Airflow Connection created previously
 - `message`: card’s headline.
 - `subtitle`: card’s subtitle
 - `button_text`: text for action button at the bottom of the card
 - `button_url`: what URL the button sends the user to
 - `theme_color`: color for the card’s top line in HEX, without the #
+- `http_conn_id`: `Connection Id` of the Airflow Connection created previously
 
 ### YAML version
 
