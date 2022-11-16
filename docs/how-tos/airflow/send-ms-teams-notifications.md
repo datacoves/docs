@@ -96,15 +96,15 @@ my_dag:
     owner: airflow
     custom_callbacks:
         on_success_callback:
-        module: callbacks.microsoft_teams
-        callable: inform_success
-        args:
-            - connection_id: ms-teams-notifications # Airflow Connection Id
+            module: callbacks.microsoft_teams
+            callable: inform_success
+            args:
+                - connection_id: ms-teams-notifications # Airflow Connection Id
         on_failure_callback:
-        module: callbacks.microsoft_teams
-        callable: inform_failure
-        args:
-            - connection_id: ms-teams-notifications # Airflow Connection Id
+            module: callbacks.microsoft_teams
+            callable: inform_failure
+            args:
+                - connection_id: ms-teams-notifications # Airflow Connection Id
   tasks:
     # ... your tasks here...
 ```
