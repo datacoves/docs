@@ -28,7 +28,7 @@ with DAG(
 ) as dag:
     task_x = BashOperator(
         task_id="dbt_build",
-        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt build"
+        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build"
     )
 
     task_x
@@ -42,5 +42,5 @@ my_dag:
   tasks:
     dbt_build:
       operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt build"
+      bash_command: "source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build"
 ```
