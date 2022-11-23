@@ -4,7 +4,7 @@ In our quest to simplify the way the different tools integrate together in the M
 
 The main idea behind this concept is to read data from different systems (e.g. Airbyte's metadata) and dynamically create tasks that are connected to different sync jobs and can be dynamically triggered in an Airflow DAG.
 
-We're currently supporting only `Airbyte` as a `TaskGenerator`, but also building others like Fivetran.
+We've just added support for triggering `Fivetran` jobs! You can read more at [run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs).
 
 ## Before you start
 
