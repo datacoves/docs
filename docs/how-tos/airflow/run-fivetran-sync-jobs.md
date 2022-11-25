@@ -32,7 +32,6 @@ As stated in [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs), we
 - **generator**: The Airbyte Tasks Generator is being used thanks to the value `dagfactory.FivetranDbtGenerator`.
 - **airflow_connection_id**: Id of the airflow connection that hold the information to connect to the source system
 - **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
-- **deploy_path**: Folder where Airflow will temporarily copy the dbt project to run dbt commands. This is required given that the original project folder is read-only
 - **task_group_name**: Group where tasks will be grouped into
 - **virtualenv_path**: Virtualenv path that contains the `dbt` library
 - **dbt_list_args**: arguments sent to `dbt ls` to retrieve the dbt project sources used to retrieve Airbyte connections. The Tasks generator will match the Airbyte connections using destination's database, schema and relation name.
@@ -50,7 +49,6 @@ example_dag:
       generator: dagfactory.FivetranDbtGenerator
       airflow_connection_id: fivetran_connection
       dbt_project_path: transform
-      deploy_path: /tmp/load
       task_group_name: extract_and_load
       virtualenv_path: /opt/datacoves/virtualenvs/main
       dbt_list_args: "--select tag:loan_daily"
