@@ -8,6 +8,7 @@
     - [Worker logs](/how-tos/airflow/worker-logs.md)
     - [Run dbt](/how-tos/airflow/run-dbt.md)
     - [Run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs.md)
+    - [Run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs.md)
     - [Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
   - [Datacoves](/how-tos/datacoves/)
     - [Transform](/how-tos/datacoves/transform.md)
