@@ -29,13 +29,14 @@ As stated in [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs), we
 
 ### Fields reference
 
-- **generator**: The Airbyte Tasks Generator is being used thanks to the value `dagfactory.FivetranDbtGenerator`.
+- **generator**: The Fivetran Tasks Generator is being used thanks to the value `dagfactory.FivetranDbtGenerator`.
 - **airflow_connection_id**: Id of the airflow connection that hold the information to connect to the source system
 - **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
 - **task_group_name**: Group where tasks will be grouped into
 - **virtualenv_path**: Virtualenv path that contains the `dbt` library
 - **dbt_list_args**: arguments sent to `dbt ls` to retrieve the dbt project sources used to retrieve Airbyte connections. The Tasks generator will match the Airbyte connections using destination's database, schema and relation name.
-
+- **wait_for_completion**: whether Airflow should create a Sensor task that waits for the Fivetran Sync to be completed before triggering extra jobs. Defaults to `True` if not specified
+- **poke_interval**: time interval (in seconds) in which the Sensor task checks Fivetran Sync status. Defaults to 30
 ### YAML version
 
 ```yaml
@@ -52,6 +53,7 @@ example_dag:
       task_group_name: extract_and_load
       virtualenv_path: /opt/datacoves/virtualenvs/main
       dbt_list_args: "--select tag:loan_daily"
+      poke_interval: 60
     transform:
       ...
 ```
