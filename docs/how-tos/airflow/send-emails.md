@@ -14,7 +14,7 @@ Click on the `+ New integration` button.
 
 Provide a name and select `SMTP`.
 
-![Save Integration](./assets/save_integration.png)
+![Save Integration](./assets/save_smtp_integration.png)
 
 Provide the required details and `Save` changes.
 
@@ -32,7 +32,7 @@ Edit the environment that has the Airflow service you want to configure, and the
 
 Click on the `+ Add new integration` button, and then, select the integration you created previously. In the second dropdown select `Airflow` as service.
 
-![Add integration](./assets/add_integration.png)
+![Add integration](./assets/add_smtp_integration.png)
 
 `Save` changes. The Airflow service will be restarted shortly and will now include the SMTP configuration required to send emails.
 
