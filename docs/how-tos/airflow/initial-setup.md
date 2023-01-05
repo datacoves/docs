@@ -12,7 +12,7 @@ Edit the desired environment and click on the `Stack Services` tab. Ensure that 
 
 ## Airflow setup
 
-Once you enabled Airflow, click on the `Services configuration` tab and configure each of the following fields accordigngly:
+Once you enabled Airflow, click on the `Services configuration` tab and configure each of the following fields accordingly:
 
 ### Git branch name
 
