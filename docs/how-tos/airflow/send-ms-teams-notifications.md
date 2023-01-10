@@ -22,14 +22,41 @@ Click `Configure`, give it a name, optionally select an image (it'll work as the
 > Keep this URL at hand, and in a safe place.
 
 ## Prepare Airflow
+### Create a new Integration
 
-To connect your Airflow instance to Microsoft Teams, create a new Connection under `Admin` > `Connections`
+First, create a new integration of type `MS Teams` by navigating to the Integrations Admin.
 
-It's important to notice that `Host` (the Webhook URL created previously) must not contain the `https://` prefix: `'https'` goes in `Schema`.
+![Integrations Admin](./assets/admin_integrations.png)
 
-Also, keep your `Connection Id` at hand, it's the value you will use when configuring your DAGs and Tasks.
+Click on the `+ New integration` button.
 
-![Create Airflow Connection](./assets/create-airflow-connection.png)
+Provide a name and select `MS Teams`.
+
+![Save Integration](./assets/save_msteams_integration.png)
+
+Provide the required details and `Save` changes.
+
+>**Important:**
+>The name you specify will be used to create the Airflow-Teams connection
+>It will be uppercased and joined by underscores -> `'transform notifications'` will become `TRANSFORM_NOTIFICATIONS` 
+### Add integration to an Environment
+
+Once you created the `MS Teams` integration, it's time to add it to the Airflow service in an environment.
+
+First, go to the `Environments` admin.
+
+![Environments admin](./assets/environments_admin.png)
+
+Edit the environment that has the Airflow service you want to configure, and then click on the `Integrations` tab.
+
+![Edit integrations](./assets/edit_integrations.png)
+
+Click on the `+ Add new integration` button, and then, select the integration you created previously. In the second dropdown select `Airflow` as service.
+
+![Add integration](./assets/add_msteams_integration.png)
+
+`Save` changes. The Airflow service will be restarted shortly and will now include the Teams configuration required to send notifications.
+
 
 ## Implement DAG
 
@@ -67,7 +94,7 @@ def ms_teams_send_logs(context):
         task_id="msteams_notify_failure", trigger_rule="all_done",
         message="`{}` has failed on task: `{}`".format(dag_id, task_id),
         button_text="View log", button_url=logs_url,
-        theme_color="FF0000", http_conn_id='ms-teams-notifications')
+        theme_color="FF0000", http_conn_id='TRANSFORM_NOTIFICATIONS')
 
     ms_teams_notification.execute(context)
 
@@ -84,7 +111,7 @@ default_args = {
 - `button_text`: text for action button at the bottom of the card
 - `button_url`: what URL the button sends the user to
 - `theme_color`: color for the card’s top line in HEX, without the #
-- `http_conn_id`: `Connection Id` of the Airflow Connection created previously
+- `http_conn_id`: Integration name, in Environment Variable syntax (uppercased and joined by underscores): `TRANSFORM_NOTIFICATIONS`
 
 ### YAML version
 
@@ -99,12 +126,12 @@ my_dag:
             module: callbacks.microsoft_teams
             callable: inform_success
             args:
-                - connection_id: ms-teams-notifications # Airflow Connection Id
+                - connection_id: TRANSFORM_NOTIFICATIONS 
         on_failure_callback:
             module: callbacks.microsoft_teams
             callable: inform_failure
             args:
-                - connection_id: ms-teams-notifications # Airflow Connection Id
+                - connection_id: TRANSFORM_NOTIFICATIONS 
   tasks:
     # ... your tasks here...
 ```
