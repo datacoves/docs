@@ -1,4 +1,4 @@
-# How To configure a SSH Key to clone a git repository
+# How to configure a SSH Key to clone a git repository
 
 ## Clone a Git repository for development purposes (write access required)
 

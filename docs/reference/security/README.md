@@ -83,4 +83,4 @@ To protect your data and login credentials while in transit, use SSL or SSH encr
 
 To stay current with the most recent security methods, Datacoves is dedicated to collaborating with security professionals throughout the world. We kindly request that you notify us immediately if you discover any security flaws in Datacoves.
 
-Please email us at support@Datacoves.com if you think you have found an issue or if you have any queries.
+Please email us at support@datacoves.com if you think you have found an issue or if you have any queries.
