@@ -33,6 +33,15 @@
       - [GDPR and Time-Travel](explanation/best-practices/snowflake/time-travel)
 - [Tutorials](/tutorials/)
 - [Reference](/reference/)
+  - [Admin Menu](reference/admin-menu/)
+    - [Projects](reference/admin-menu/projects.md)
+    - [Environments](reference/admin-menu/environments.md)
+    - [Connections](reference/admin-menu/connections.md)
+    - [Service Connections](reference/admin-menu/service_connections.md)
+    - [Integrations](reference/admin-menu/integrations.md)
+    - [Users](reference/admin-menu/users.md)
+    - [Invitations](reference/admin-menu/invitations.md)
+    - [Settings & Billing](reference/admin-menu/settings_billing.md)
   - [Security](/reference/security/)
 
 <footer id="mb-footer"></footer>
