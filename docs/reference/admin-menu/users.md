@@ -1,20 +1,25 @@
-# Users Menu
+# Users Admin
 
-## Concept
+## Overview
 
-<!-- TODO: Get a proper well-writen concept of what a Project in Datacoves is -->
-From your Account Administration menu, you can manage the Users that belong to your account and grant them permissions over your different Environments. In Datacoves, there is no such thing as creating a user: you can modify, delete, or invite someone.
+In the page you can manage the users that belong to your account. Here you can grant them permissions to all or individual environments.
 
-## Landing
+## Users Listing
 
-![Users Menu Landing](./assets/users_landing.png)
+![Users Listing](./assets/users_landing.png)
 
-Users landing page lists the Users that belong to your account, with their name, email, group(s) they belong to, and last login timestamp.
+On the Users landing page you can see a list of user associated with your Datacoves account.
 
-## Edit User
+For each user we can see the user's name, their email, the security groups they were granted, and last time they logged into Datacoves.
 
-As stated in the beginning of this article, you can't create a User. What you can do is invite someone to join your Datacoves Account by clicking `Invite user` or using [Invitations menu](/reference/admin-menu/invitations.md)
+Each row contains 2 action buttons, Edit and Delete.
 
-However, what you can do is edit a User, in which case you can modify it's `Name`, `Email` and `Permission Groups` it belongs to.
+## Editing a User
+
+When you edit a user record, you can modify the users `Name`, `Email` and the assigned `Permission Groups`
 
 ![Integration Create or Edit Page](./assets/users_edit_page.png)
+
+## Deleting a User
+
+On the User listings page, clicking on the trash can will delete the user from your account.

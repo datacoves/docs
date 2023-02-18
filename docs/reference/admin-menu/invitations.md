@@ -1,21 +1,17 @@
-# Invitations Menu
+# Invitations Admin
 
-## Concept
+## Overview
 
-<!-- TODO: Get a proper well-writen concept of what a Project in Datacoves is -->
-As stated in [Users Menu](/reference/admin-menu/users.md) article, users are invited to your account, not created.
+This page is used to invite users into your account.
 
-## Landing
+## Invitation Listing
 
-![Invitations Landing](./assets/invitations_landing.png)
+This grid shows all pending invitations for your account. Each row also has two action buttons `delete` which cancels an invitation and `resend` to resend an invitation link.
 
-This landing page lists all invitations your account has sent, both completed and pending. The most important here are it's two action buttons: `delete` which cancels an invitation, leaving it's e-mail without effect; and `resend`.
+![Invitations Listing](./assets/invitations_landing.png)
 
-## Invite someone
+## Invite someone to your account
 
-Creating an Invitation requires the completion of these fields: `Name`, `Email`, `Groups`
+To invite someone into your Datacoves account, click the `Invite User` button. On the invitation form you will be asked to provide the user's `Name` and their `Email`. Here you will also need to select the security `Groups` the user should belong to.
 
 ![Integration Create or Edit Page](./assets/users_edit_page.png)
-
-While in [Users](/reference/admin-menu/users.md) article we mentioned users can't be created and must instead be invited, you can't edit an invitation: once you invited someone to join your account with certain permission groups, the only thing that can be done is waiting for that user to accept the invitation, and finally editing their permission groups from the [Users menu](/reference/admin-menu/users.md) 
-

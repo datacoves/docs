@@ -1,7 +1,7 @@
-# Admin Menu
+# Admininstration Menu
 
-Datacoves' Account Administration menu provides the user quick and easy access to all kind of configurations and set-ups.
+The Datacoves Administration menu provides access to configurations of projects, environments, users, and connections.
 
-In this section, we will explain and illustrate each of it's entries.
+The following pages explain each area in more detail.
 
 ![Account Administration](./assets/gear_dropdown.png)

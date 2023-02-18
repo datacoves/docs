@@ -1,39 +1,38 @@
-# Projects Menu
+# Projects Admin
 
-## Concept
+## Overview
 
-A Project is the highest grouping concept in Datacoves. It is what contains environments, which then are linked to services, connections, etc.
+A Project is the highest grouping in Datacoves. It is what contains environments, which then are linked to services, connections, etc.
 
-Your `Launch Pad` (Datacoves' landing page) shows you this hierachy in a clear way:
+The Datacoves landing page (Launch Pad) follows this hierarchy:
 
 ![Project Environment Difference](./assets/launchpad_environments_projects.png)
 
-## Landing
+## Projects Listing
 
-![Projects Menu Landing](./assets/projects_landing.png)
+![Projects Listing](./assets/projects_landing.png)
 
-In the landing page of Projects' menu, you can see a list of Projects linked to your account. In each of them, the amount of linked connections and envrionments and, most importantly, git status (tested or not)
+On the Projects landing page you can see a list of projects associated with your Datacoves account.
 
-On the right side of each row, 3 action buttons are displayed: Test, Edit and Delete.
+For each project, you will see number of defined confection templates and environments. You will also see the status of the git connection(tested or not).
+
+Each row contains 3 action buttons, Test, Edit and Delete.
 
 ### Testing connection
 
-Testing your repo connection is what defines the availability of your different stack services: you may have configured (i.e.) Airflow successfuly, but if your Project has never been tested, ORCHESTRATE will not be ready for you to use.
+Testing your repo connection ensures that services like dbt docs and Orchestration are available. It is important to test the connection to git to make sure the system can clone your repository. If the test fails, this indicates that Datacoves cannot clone your repository. Edit your environment and check your settings.
 
 ## Create/Edit Project
 
 ![Projects Create or Edit Page](./assets/projects_editnew_page.png)
 
-Each Project consist of the following fields:
-- Name
-- Git Repo
-    - Clone strategy: preferred method of connecting to the Repo. Depending on selection, each strategy requires different information:
-        - SSH: if selected, a `SSH Key` will be automatically generated for you to configure in your git provider.
+A Project configuration consists of the following fields:
+- **Name** This is what will be displayed in the Datacoves landing page.
+- **Git Repo** This is the git repository associated with this project
+    - **Clone strategy** determines how Datacoves will communicate with your git repository(SSH or HTTPS). Each clone strategy is configured as follows:
+        - **SSH** When SSH is selected, an SSH public Key will be automatically generated for you to configure in your git provider as a deployment key.
         ![Repo SSH Key](./assets/projects_ssh_key.png)
-        - HTTPS: if selected, new input fields `Git HTTPS url`, `Username` and `Password` will appear, needed to connect to the repo via HTTPS
+        - **HTTPS** When HTTPS is selected, the following fields must be filled in `Git HTTPS url`, `Username` and `Password`
         ![Repo User Password Prompt](./assets/projects_https_data.png)
-    - Release branch: branch used by Datacoves
-- CI/CD Provider: if used in your Repo, here you can choose your provider and specify your `jobs home url`
-
-
-
+    - **Release branch** defines the default branch for on your repository. This is typically `main` or `master`
+- **CI/CD Provider** when provided, defines will display a link to your CI/CD jobs on the Observe tab of a Datacoves environment. Once you choose your provider, you will be able to specify your `CI jobs home url`

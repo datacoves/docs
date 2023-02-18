@@ -1,26 +1,32 @@
-# Service Connections Menu
+# Service Connections Admin
 
-## Concept
+## Overview
 
-<!-- TODO: Get a proper well-writen concept of what a Project in Datacoves is -->
-While Connections act as templates for connecting to a data warehouse provider, Service Connections are the ones that leverage the connection itself. They are the ones that create the connection for a user or a service account, by grabbing a Connection, adding the final connection details (authentication) and linking it to an Environment
+Service Connections are used by automated processes like Airflow jobs. Information entered here are injected as ENVIRONMENT variables that can then be used in a dbt profiles.yml file to establish a connection with your data warehouse.
 
-## Landing
+## Service Connection Listing
 
-![Service Connections Menu Landing](./assets/serviceconnection_landing.png)
+![Service Connections Listing](./assets/serviceconnection_landing.png)
 
-In the landing page of Service Connections' Menu, you can see a list of Service Connections linked to your Environment(s). In each of them, the service it connects and the type of Connection it connects to.
+On the Service Connections landing page you can see a list of service connections associated with each of your environments.
 
-Apart from the standard Edit and Delete actions, these SC can be tested and, more importantly, give you hints on how to use the Connections it'll create in your Environments.
+For each environment we can see the associated environment, the service that uses the connection, the name of the service connection, the warehouse type, and whether the connection was tested to assure the credentials are valid.
+
+Each row contains 3 action buttons, Test Connection, How to use the connection(?),  Edit, and Delete.
+
+Clicking the (?) icon will show the names of the ENVIRONMENT variables that will be injected into the service. These are what you must use in your dbt profiles.yml file.
 
 ## Create/Edit Service Connection
 
+To create a new Service Connection click the `New Connection` button.
+
 ![Service Connection Create or Edit Page](./assets/serviceconnection_editnew_page.png)
 
-Each Service Connection consist of the following fields:
-- Name
-- [Environment](/reference/admin-menu/environments.md)
-- Service
-- [Connection](/reference/admin-menu/connections.md): once selected, the Connection will expand it's templated information (fields that you can override by toggling their respective sliders), and you'll have to complete the missing ones.
+A Service Connection consists of the following fields:
+- **Name** Defines how the connection will be referred to by the automated service and will be included in the name of the environment variable like `DATACOVES__<name>__ROLE`
+- **Environment** The Datacoves environment associated with this service connection.
+- **Service** The Datacoves stack service where this connection should be made available e.g. Airflow
+- **Base Connection** The connection template to base this service connection on(i.e. the defaults)
+Depending on the Base connection selected, additional fields will be displayed some with the default values entered in the connection templated. These default values can be overridden by toggling the indicator next tto the given value.
 
 ![Service Connection Connection Details](./assets/serviceconnection_editnew_details.png)
