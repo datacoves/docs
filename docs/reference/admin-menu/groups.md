@@ -32,7 +32,7 @@ In terms of specific application permissions, i.e. Airflow and Superset, you can
   - Giving an application scope `write` access, gives the group the entire set of the application's permissions, and with it also to it's resources.
   - Giving an application scope `read` access, sets the group as viewer (read-only)
 
-- To give permissions to certain resources of an application, you can toggle only those of interest, leaving the general scope (for example, `Workbench>Airflow`) unmarked.
+- To give permissions to certain resources of an application, you can toggle `write` access on only those of interest, leaving the general scope (for example, `Workbench>Airflow`) unmarked.
 
   ![Superset General Permissions](./assets/groups_specific_app_permissions.png)
 
