@@ -34,6 +34,7 @@
 - [Tutorials](/tutorials/)
 - [Reference](/reference/)
   - [Administration Menu](reference/admin-menu/)
+    - [Groups](reference/admin-menu/groups.md)
     - [Settings & Billing](reference/admin-menu/settings_billing.md)
     - [Invitations](reference/admin-menu/invitations.md)
     - [Users](reference/admin-menu/users.md)
