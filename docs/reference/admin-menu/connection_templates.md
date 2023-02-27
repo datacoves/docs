@@ -30,9 +30,9 @@ Each Connection Template consist of the following fields:
 
     - **Provided by user** With this strategy, the user will have free access to write the desired username when creating a connection
 
-      > ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
+      ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
 
-      > **Note**
+      > **Note**<br>
       > We suggest not using the user-provided username if snowflake public key is added by datacoves
 
     - **Inferred from user's email** Defines the username field as read-only, pre-populating it with the user's email username (what comes before @domain.com)
