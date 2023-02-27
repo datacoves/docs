@@ -1,4 +1,4 @@
-# Connection Templates Admin
+# Groups Admin
 
 ## Overview
 
@@ -23,6 +23,10 @@ Each group consist of three main components:
 - `Description` (to help identify what each group permits and restricts)
 - A list of `Permissions`, which consist of single `read` and `write` authorizations, to help granulate the user experience as much as possible.
 
+Apart from these main fields, you can optionally map the group to a comma-separated list of `Active Directory groups`, as well as `Filter` the available permissions to enable/disable them with ease.
+
+![Groups Listing](./assets/groups_createedit.png)
+
 In terms of specific application permissions, i.e. Airflow and Superset, you can use both general and specific scopes:
 
 - To work permissions at global level (the entire application), you can give `read` or `write` permissions to it's entire scope:
@@ -43,7 +47,3 @@ In terms of specific application permissions, i.e. Airflow and Superset, you can
   - `Airflow > Dags`: running DAGs and jobs
   - `Superset > Data-Sources`: Superset data sources administration
   - `Superset > Security`: access to Superset's Security menu (users, roles, permissions, etc.)
-
-Apart from these main fields, you can specify a comma-separated list of `Active Directory groups`, as well as `Filter` the available permissions to enable/disable them with ease.
-
-![Groups Listing](./assets/groups_createedit.png)

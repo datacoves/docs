@@ -27,8 +27,14 @@ Each Connection Template consist of the following fields:
 
   - **User field configuration** Defines how the DB connection `Username` field will be treated. It can be `provided` by the end-user or inferred using two strategies: from his/her email, or based on templates.
     The difference in these approaches will be noticed when the final user creates their respective connections in `Settings -> Database connections`
+
     - **Provided by user** With this strategy, the user will have free access to write the desired username when creating a connection
-      ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
+
+      > ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
+
+      > **Note**
+      > We suggest not using the user-provided username if snowflake public key is added by datacoves
+
     - **Inferred from user's email** Defines the username field as read-only, pre-populating it with the user's email username (what comes before @domain.com)
       ![Inferred from email](./assets/connectiontemplates_inferred_from_email.png)
     - **Inferred from user info using a custom template** With this last approach, you can choose a template from which the username will be generated. If selected a new field will appear to select one of those.
