@@ -2,7 +2,7 @@
 
 Sometimes you need to know what exactly happened when DAGs ran over the weekend, but reviewing each task log through the Airflow UI could take you hours.
 
-We offer to our On-prem customers some tips to query Airflow logs using different solutions:
+We offer to our private cloud customers some tips to query Airflow logs using different solutions:
 
 ## AWS Cloudwatch
 
@@ -14,7 +14,7 @@ Amazon CloudWatch is configured to monitor your Kubernetes cluster logs, so you 
 
 ### 2. Select the log group(s) you need to query
 
-Tyipically EKS log groups names look like `/aws/containerinsights/<cluster name>/application`.
+Typically EKS log groups names look like `/aws/containerinsights/<cluster name>/application`.
 
 ### 3. Write the query
 
@@ -40,7 +40,7 @@ When using Datacoves, airflow worker images always contain the string "airflow-a
 
 ### Can I search for other strings in the logs?
 
-Of course, you can replace the query part `(@message like "error" or @message like "failed")` by any other string that fits better for your usecase.
+Of course, you can replace the query part `(@message like "error" or @message like "failed")` by any other string that fits better for your use case.
 
 ### I can't find logs for my workers
 

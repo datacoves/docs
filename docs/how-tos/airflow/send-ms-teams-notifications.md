@@ -1,30 +1,40 @@
+
+
+
+
+
+
+
+
+
+
+
 # How to send Microsoft Teams notifications on DAG's status
 
 As stated in [how to send email notifications](/how-tos/airflow/send-emails.md), Airflow allows multiple ways to inform users about DAGs and tasks status.
 
-Furthermore, it's important to understand Airflow handles these 4 status (`execute`, `failure`, `retry` and `success`) via callbacks. You can learn more about them [here](https://airflow.apache.org/docs/apache-airflow/2.2.1/logging-monitoring/callbacks.html)
+Furthermore, it's important to understand Airflow handles these 4 status (`failure`, `retry`, `success` and `missed SLA`) via callbacks. You can learn more about them [here](https://airflow.apache.org/docs/apache-airflow/2.2.1/logging-monitoring/callbacks.html)
 
-Below we're going to explain how to use those callbacks to send Microsoft Teams notifications.
+Below we explain how to use those callbacks to send Microsoft Teams notifications.
 
 ## Prepare Microsoft Teams
 
-Sending messages through Teams is done using Webhooks. These connections can be assigned to MS Teams channels (unfortunately you can't configure a Hook to another user).
+Sending messages through Teams is done using Webhooks. These connections can be assigned to MS Teams channels.
 
-Enter the channel you want to send Airflow notifications to, click the `...` -> `Connectors` and search for `Incoming Webhook`.
+In the channel you want to send Airflow notifications to, click the `...` -> `Connectors` and search for `Incoming Webhook`.
 
 ![Create channel Connector](./assets/create-channel-connector.png)
 
-Click `Configure`, give it a name, optionally select an image (it'll work as the sender's avatar), click `Create` and you will be given a webhook URL.
+Click `Configure`, give it a name, and optionally select an image to use as the sender's avatar, then click `Create` and you will be given a webhook URL.
 
 ![Create Incoming Webhook](./assets/create-incoming-webhook.png)
 
-> **Warning**
-> Keep this URL at hand, and in a safe place.
+?> **Warning** Store this URL in a safe place as you will need it in a subsequent step and anyone with this link can send notification to that MS Teams channel
 
 ## Prepare Airflow
 ### Create a new Integration
 
-First, create a new integration of type `MS Teams` by navigating to the Integrations Admin.
+In Datacoves, create a new integration of type `MS Teams` by navigating to the Integrations admin page.
 
 ![Integrations Admin](./assets/admin_integrations.png)
 
@@ -36,102 +46,157 @@ Provide a name and select `MS Teams`.
 
 Provide the required details and `Save` changes.
 
->**Important:**
->The name you specify will be used to create the Airflow-Teams connection
->It will be uppercased and joined by underscores -> `'transform notifications'` will become `TRANSFORM_NOTIFICATIONS` 
+?> **Important:** The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
+
 ### Add integration to an Environment
 
-Once you created the `MS Teams` integration, it's time to add it to the Airflow service in an environment.
+Once the `MS Teams` integration is created, it needs to be associated with the Airflow service within a Datacoves environment.
 
-First, go to the `Environments` admin.
+Go to the `Environments` admin screen.
 
 ![Environments admin](./assets/environments_admin.png)
 
-Edit the environment that has the Airflow service you want to configure, and then click on the `Integrations` tab.
+Edit the environment that has the Airflow service you want to configure and click on the `Integrations` tab.
 
 ![Edit integrations](./assets/edit_integrations.png)
 
-Click on the `+ Add new integration` button, and then, select the integration you created previously. In the second dropdown select `Airflow` as service.
+Click on the `+ Add new integration` button and select the integration you created previously. In the second dropdown select `Airflow` as the service.
 
 ![Add integration](./assets/add_msteams_integration.png)
 
-`Save` changes. The Airflow service will be restarted shortly and will now include the Teams configuration required to send notifications.
-
+`Save` changes. The Airflow service will be restarted and will include the Teams configuration required to send notifications.
 
 ## Implement DAG
 
-Once you set up both MS Teams and Airflow, it's time to start using Airflow Callbacks to notify your teams.
+Once MS Teams and Airflow are configured, you can start using the integration within Airflow Callbacks to send notifications to your MS Teams channel.
 
-We will send a card with a 'View Log' button to the channel, that users can click on and go directly to the log of the Task.
+MS Teams will receive a message with a 'View Log' link that users can click on and go directly to the Airflow log for the Task.
 
 ![Card message](./assets/teams-card-message.png)
 
+### Callback Configuration
+
+In the examples below, we will send a notification on failing tasks or when the full DAG completes successfully using our custom callbacks: `inform_failure` and `inform_success`.
+
+?> **Note:** In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
+
+To send MS Teams notifications, in the Airflow day we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
+
+- `context` This is provided by Airflow
+- `connection_id`: the name of the Datacoves Integration created above
+
+Additionally, other parameters can be passed to customize the message sent to teams and the color shown on the message by passing:
+
+- `message`: the body of the message
+- `color`: border color of the MS Teams card
+
 ### Python version
 
-In this case, we will use this Operator to notify on failing tasks, using Airflow's `on_failure_callback`. 
-
-> **Note:** You can replace `failure` with any of the events described at the beginning of this article (`on_[event]_callback` > `execute`, `failure`, `retry`, `success`)
-
-First of all, import `MSTeamsWebhookOperator` into your DAG. Next, create a method that receives Airflow's run `context`, and calls the imported `MSTeamsWebhookOperator`. After creating it, set this method to the `on_failure_callback` property of the DAG
-
 ```python
-import datetime
-import os
-import urllib.parse
+from datetime import datetime
+
 from airflow import DAG
-from ms_teams.ms_teams_webhook_operator import MSTeamsWebhookOperator
+from airflow.operators.bash import BashOperator
+from callbacks.microsoft_teams import inform_failure, inform_success
 
-AIRFLOW_BASE_URL = os.environ.get("AIRFLOW__WEBSERVER__BASE_URL")
+# This is the name defined above when the integration was created
+DATACOVES_INTEGRATION_NAME = "MS_TEAMS_NOTIFICATIONS"
 
-def ms_teams_send_logs(context):
-    dag_id = context["dag_run"].dag_id
-    task_id = context["task_instance"].task_id
-    context["task_instance"].xcom_push(key=dag_id, value=True)
-    timestamp = urllib.parse.quote(context['ts'])
+def run_inform_success(context):
+    inform_success(
+        context,
+        connection_id=DATACOVES_INTEGRATION_NAME,  # Only mandatory argument
+        # message="Custom python success message",
+        # color="FFFF00",
+    )
 
-    logs_url = f"{AIRFLOW_BASE_URL}/log?dag_id={dag_id}&task_id={task_id}&execution_date={timestamp}"
-    ms_teams_notification = MSTeamsWebhookOperator(
-        task_id="msteams_notify_failure", trigger_rule="all_done",
-        message="`{}` has failed on task: `{}`".format(dag_id, task_id),
-        button_text="View log", button_url=logs_url,
-        theme_color="FF0000", http_conn_id='TRANSFORM_NOTIFICATIONS')
+def run_inform_failure(context):
+    inform_failure(
+        context,
+        connection_id=DATACOVES_INTEGRATION_NAME,  # Only mandatory argument
+        # message="Custom python failure message",
+        # color="FF00FF",
+    )
 
-    ms_teams_notification.execute(context)
+# def set_task_callbacks(dag):  # Use if you want to set per-task callback / messages
+#     for task in dag.tasks:
+#         task.on_success_callback = run_inform_success
+#         task.on_failure_callback = run_inform_failure
 
 default_args = {
-    'owner' : 'airflow',
-    'description' : 'a test dag',
-    'start_date' : datetime(2019,8,8),
-    'on_failure_callback': ms_teams_send_logs # IMPORTANT: it's the reference to the method, do not call() it
+    'owner': 'airflow',
+    'email': 'some_user@example.com',
+    'email_on_failure': True,
+    'description': "Sample python dag with MS Teams notification",
 }
-```
 
-- `message`: card’s headline.
-- `subtitle`: card’s subtitle
-- `button_text`: text for action button at the bottom of the card
-- `button_url`: what URL the button sends the user to
-- `theme_color`: color for the card’s top line in HEX, without the #
-- `http_conn_id`: Integration name, in Environment Variable syntax (uppercased and joined by underscores): `TRANSFORM_NOTIFICATIONS`
+with DAG(
+    dag_id="python_sample_teams_dag",
+    default_args=default_args,
+    start_date=datetime(2023, 1, 1),
+    catchup=False,
+    tags=["version_17"],
+    description="Sample python dag dbt run",
+    schedule_interval="0 0 1 */12 *",
+    on_success_callback=run_inform_success,
+    on_failure_callback=run_inform_failure,
+) as dag:
+
+    successful_task = BashOperator(
+        task_id = "successful_task",
+        bash_command = "echo SUCCESS"
+    )
+
+    failing_task = BashOperator(
+        task_id = "failing_task",
+        bash_command = "some_non_existant_command"
+    )
+
+    # runs failing task
+    successful_task >> failing_task
+
+    successful_task
+```
 
 ### YAML version
 
-
 ```yaml
-my_dag:
-  start_date: 2021-01-01
+yaml_sample_teams_dag:
+  description: "Sample yaml dag dbt run"
+  schedule_interval: "0 0 1 */12 *"
+  tags:
+    - version_1
+  catchup: false
+
   default_args:
+    start_date: 2023-01-01
     owner: airflow
-    custom_callbacks:
-        on_success_callback:
-            module: callbacks.microsoft_teams
-            callable: inform_success
-            args:
-                - connection_id: TRANSFORM_NOTIFICATIONS 
-        on_failure_callback:
-            module: callbacks.microsoft_teams
-            callable: inform_failure
-            args:
-                - connection_id: TRANSFORM_NOTIFICATIONS 
+    # Replace with the email of the recipient for failures
+    email: some_person@example.com
+    email_on_failure: true
+  custom_callbacks:
+      on_success_callback:
+          module: callbacks.microsoft_teams
+          callable: inform_success
+          args:
+              - connection_id: MS_TEAMS_NOTIFICATIONS
+            #   - message: Custom YML success message
+            #   - color: 0000FF
+      on_failure_callback:
+          module: callbacks.microsoft_teams
+          callable: inform_failure
+          args:
+              - connection_id: MS_TEAMS_NOTIFICATIONS
+            #   - message: Custom YML success message
+            #   - color: 9900FF
   tasks:
-    # ... your tasks here...
+    successful_task:
+      operator: airflow.operators.bash_operator.BashOperator
+      bash_command: "echo SUCCESS!"
+
+    failing_task:
+      operator: airflow.operators.bash_operator.BashOperator
+      bash_command: "some_non_existant_command"
+      dependencies: ["successful_task"]
+
 ```

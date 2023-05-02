@@ -1,10 +1,10 @@
 # Run Airbyte sync jobs
 
-In our quest to simplify the way the different tools integrate together in the Modern Data Stack, we took a public project named [DAG Factory](https://github.com/ajbosco/dag-factory) which helps Analysts create Airflow DAGs using just yaml files, and enhance it by creating what we call `TasksGenerators`.
+In our quest to simplify the way the different tools integrate together in the Modern Data Stack, we took a public project [DAG Factory](https://github.com/ajbosco/dag-factory) which helps Analysts create Airflow DAGs using just yaml files, and enhanced it by creating what we call `TasksGenerators`.
 
-The main idea behind this concept is to read data from different systems (e.g. Airbyte's metadata) and dynamically create tasks that are connected to different sync jobs and can be dynamically triggered in an Airflow DAG.
+The main idea behind this concept is to use tags defined on dbt sources and read determine which data to load via different tools (e.g. Airbyte or Fivetran). Using this information, we can dynamically create _Extract and Load_ tasks in an Airflow DAG before running dbt.
 
-We've just added support for triggering `Fivetran` jobs! You can read more at [run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs).
+In addition to Airbyte, we also support Fivetran Tasks. You can learn how to [run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs).
 
 ## Before you start
 
@@ -14,21 +14,21 @@ Follow this guide on [How to set up Airflow](/how-tos/airflow/initial-setup)'s e
 
 ### Airbyte connection
 
-As Airflow will need to retrieve metadata from Airbyte's server, you need to set up a connection in Airflow.
+As Airflow will need to retrieve metadata from the Airbyte's server, you need to set up a connection in Airflow.
 
-If you were granted admin privileges, go to `Admin -> Connections` menu.
+A user with Airflow admin privileges must go to the Airflow `Admin -> Connections` menu.
 
 ![Admin Connections](./assets/admin-connections.png)
 
-Create a new connection using the following details:
+There they create a new connection using the following details:
 
 ![Admin Connections](./assets/airbyte-connection-details.png)
 
-Where `host` is formed by your `<environment id> (3 letters + 3 digits) + "-airbyte-airbyte-server-svc"`.
+Where `host` is created using your environment (3 letters + 3 digits like xyz123) `<environment slug> + "-airbyte-airbyte-server-svc"`.
 
 ### Turn off Airbyte's scheduler
 
-To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte scheduling its own jobs at the same time, we suggest you set `replication frequency` to `manual` on each Airbyte's connection that is going to be triggered from Airflow:
+To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte scheduling its own jobs at the same time, we suggest you set `replication frequency` to `manual` on each Airbyte connection that that will be triggered by Airflow:
 
 ![Replication frequency](./assets/airbyte-replication-frequency.png)
 
@@ -36,14 +36,14 @@ To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte schedulin
 
 In the following example DAG, you can notice a special task `load` that uses a `generator` instead of an `operator`.
 
-### Fields reference:
+### Field reference:
 
-- **generator**: The Airbyte Tasks Generator is being used thanks to the value `dagfactory.AirbyteDbtGenerator`.
-- **airflow_connection_id**: Id of the airflow connection that hold the information to connect to the source system
+- **generator**: The Airbyte Tasks Generator uses the value `dagfactory.AirbyteDbtGenerator`.
+- **airflow_connection_id**: Id of the airflow connection that holds the information to connect to Airbyte system. (this was set up above)
 - **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
-- **task_group_name**: Group where tasks will be grouped into
-- **virtualenv_path**: Virtualenv path that contains the `dbt` library
-- **dbt_list_args**: arguments sent to `dbt ls` to retrieve the dbt project sources used to retrieve Airbyte connections. The Tasks generator will match the Airbyte connections using destination's database, schema and relation name.
+- **task_group_name**: Group where _extract and load_ tasks dynamically generated will be grouped
+- **virtualenv_path**: Virtualenv path that contains the `dbt` dependencies
+- **dbt_list_args**: arguments sent to `dbt ls` to retrieve the dbt project sources used to retrieve Airbyte connections. The AirbyteDbtGenerator generator will find the Airbyte connections to trigger using dbt sources's database, schema and table name.
 
 ### YAML version
 

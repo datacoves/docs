@@ -8,11 +8,11 @@ However, as the volume of data increases, Excel becomes unusable and these users
 
 ## The Datacoves approach
 
-We want to give users an area where they can find the things they need to do their job, tailored to their use cases. These are Data Coves. In practical terms, they are schemas in a data warehouse that are tailored for a specific area of the business, in the example above, we would have an accounts_payable cove.
+We want to give users an area where they can find the things they need to do their job, tailored to their use cases. These are `Data Coves`. In practical terms, they are schemas in a data warehouse that are tailored for a specific area of the business, in the example above, we would have an accounts_payable cove.
 
 ## Data Flow
 
-A Data Cove is a user centric data area, but data doesn't start out this way. Companies receive data that needs to be cleansed and harmonized. Before data is made available to end users, we should also assure that some level of data quality checks are performed. This is what happens in the **inlets** and **bays**. These areas may also be referred to as "staging" and "core".
+A Data Cove is a user centric data area, but data doesn't start out this way. Companies receive data that needs to be cleansed and harmonized. Before data is made available to end users, we should also assure that some level of data quality checks are performed. This is what happens in the **inlets** and **bays**. These areas could also be referred to as "staging" and "core".
 
 ![inlets-bays-coves](./assets/inlets-bays-coves.png)
 
@@ -36,7 +36,7 @@ A cove is an analytics centric area focused on usability. It also adheres to Dat
 
 While a Bay may have a model for a customer dimension that may have hundreds of columns, when we expose that model in a cove we take into consideration which of those columns are needed by the given analytics area.
 
-Continuing from the example above, an accounts payable analyst that sees what is available in their accounts_payable cove should immediately be able to use the data just as they traditionally used their excel datasets.
+Continuing from the example above, an accounts payable analyst that sees what is available in their accounts_payable cove should immediately be able to use the data just as they traditionally used their excel datasets. Their view of a vendor would not have several addresses for the vendor, but instead would have the address that accounts payable needs for their analytics.
 
 The diagram below illustrates how data flows between each layer and what takes place in each.
 

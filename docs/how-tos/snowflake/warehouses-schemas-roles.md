@@ -8,7 +8,7 @@ Using Permifrost Configuration Files, we will manage the following:
 - Schema Creation
 - Role Creation
 
-We will also need to configure dbt to use the custom schemas by updating `dbt_project.yml`
+We will also need to configure dbt to use custom schemas by updating `dbt_project.yml`
 
 ### create_snowflake_objects.py
 
@@ -32,7 +32,7 @@ The script will also report objects that exist in Snowflake but which are missin
 
 ### Schema Creation
 
-Schema creation is similar to warehouse creation. Schemas are configured in `secure/databases.yml` and the `secure/create_snowflake_objects.py -s schemas -t prd` command is run to create them. Note this script should run with the same role that normally run your dbt jobs like _TRANSFORMER_DBT_
+Schema creation is similar to warehouse creation. Schemas are configured in `secure/databases.yml` and the `secure/create_snowflake_objects.py -s schemas -t prd` command is run to create them. Note this script should run with the same role that normally runs your dbt jobs like _TRANSFORMER_DBT_
 
 ![Creating Snowflake Schemas](assets/create_snowflake_objects_schemas.png)
 
@@ -52,6 +52,7 @@ Object roles are created for; warehouses, databases, schemas, and tables (we use
 
 We follow a naming convention as follows `z_<object>_<object_name>` for example:
 
+``` yaml
 - z_db_raw:
 - z_db_raw_write:
 
@@ -62,6 +63,7 @@ We follow a naming convention as follows `z_<object>_<object_name>` for example:
 
 - z_wh_loading:
 - z_wh_transforming:
+```
 
 We can then "bundle" these into higher level template roles by granting the object roles.
 

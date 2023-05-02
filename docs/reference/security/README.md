@@ -6,7 +6,7 @@ We are committed to keeping your data safe by following industry-leading standar
 
 ## Authentication
 
-Datacoves allows users to log in to the platform via Single Sign On(SSO) using your organization's Google account.
+Datacoves allows users to log in to the platform via Single Sign On(SSO) using your organization's Google or Microsoft account(contact support).
 
 ## Access Control
 
@@ -26,7 +26,7 @@ Datacoves supports user management and role-based access control (RBAC).
 
 ### IDE
 
-The data from your database will transit through the Datacoves infrastructure on the way to your browser when you write interactive queries from the IDE. But this information is not preserved in any way (caching or otherwise). Outside of your browser sessions, it does not reside on our servers.
+The data from your database will traverse the Datacoves infrastructure on the way to your browser when you write interactive queries from the IDE. But this information is not preserved in any way (caching or otherwise). Outside of your browser sessions, it does not reside on our servers.
 
 ### Airbyte Service
 
@@ -53,7 +53,7 @@ Datacoves stores the following data persistently:
 - Datacoves account details, such as job definitions, database connection details, user information, etc. Raw data from your warehouse is not included in cloud account information.
 - Logs associated with jobs and interactive queries you’ve run.
 
-Unless the code you write directs it, the warehouse's raw data is not included in logs or assets. For instance, you could create code that reads every piece of customer information from your customer table and logs it. Although it's generally not a good idea to do that, it is conceivable and would imply that data is stored in Datacoves.
+Unless the code you write creates it, the warehouse's data is not included in logs or assets. For instance, you could create code that reads every piece of customer information from your customer table and logs it. Although it's generally not a good idea to do that, it is conceivable and would imply that data is stored in Datacoves.
 
 ## Availability, Business Continuity, & Disaster Recovery
 
@@ -71,7 +71,7 @@ Datacoves runs operating systems that are actively maintained, long-term support
 
 We only allow a few senior personnel access to sensitive information.
 
-Before release, we examine new features for any security risks.
+Before deploying a platform release, we examine new features for any security risks.
 
 ## Security Recommendations
 

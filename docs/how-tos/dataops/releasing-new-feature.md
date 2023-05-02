@@ -21,8 +21,8 @@ The high-level process is shown below.
       1. A new database is created for each Pull Request
       2. Production manifest.json is downloaded
       3. A **dbt build** is executed building only the changed models and their dependencies along with tests
-      4. Developed code is checked against configured SQLFluff linting rules
-      5. Governance tests are run using pre-commit-dbt
+      4. Developed code is checked against configured [SQLFluff](https://docs.sqlfluff.com/en/stable/rules.html#rule-index) linting rules
+      5. Governance tests are run using [dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint)
       6. Airflow checks are performed
 
 3. **Code Review:**
@@ -38,8 +38,8 @@ The high-level process is shown below.
    1. **CD Automation**:
       1. A staging database is created by the blue/green deployment process by cloning the production database
       2. All changed models and their dependencies are created and tested in staging database
-      3. If all tests pass, the staging database is swapped to become the production database
-      4. Pull Request databases are dropped
+      3. If all tests pass, the staging database is swapped to become the production database and the old production database is dropped
+      4. Merged pull request databases are dropped
       5. dbt documentation is built and deployed
 
 ## Delivery Journey - New Source
@@ -52,7 +52,7 @@ The high-level process is shown below.
 
 2. **Development story:**
 
-   1. Use AirByte to ingest all data from the new source into Snowflake
+   1. Use AirByte, Fivetran or other ingestion tool to extract and load raw data from the new source into Snowflake
    2. Add Permifrost security config for the new source in raw database
    3. Apply permifrost config to grant developers access to raw source tables
    4. Create any flattening required to make the data usable
@@ -65,7 +65,7 @@ The high-level process is shown below.
 
 ## Ongoing Processes
 
-Before story is added to development backlog:
+Before a story is added to development backlog:
    1. Check sources are available in Snowflake for story or add story to ingest new data
    2. Initial discovery of data is performed to understand the data and determine what steps may be required to deliver the requested output. Any data model design is agreed and work is broken up into sprint tasks
    3. Assure any other requirements are well defined in story e.g. column descriptions, model layout, required tests, etc.

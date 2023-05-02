@@ -62,11 +62,11 @@ In the Database Connection Section, click _Add_
 
 ![Snowflake Setup Connection](./assets/user_settings_snowflake2.png)
 
-Give the connection a name, this will be used as your dbt target name and is typically _dev_. Next select a base connection. (A base connection will have defaults pre-configured by your administrator).
-
-Fill in the rest of the fields and click _Save_
+Give the connection a name, this will be used as your dbt target name and is typically _dev_. Next select a connection template. (A connection template will have defaults pre-configured by your administrator).
 
 ![Snowflake Setup Connection Details](./assets/user_settings_snowflake3.png)
+
+Fill in the rest of the fields and click _Save_
 
 Datacoves will test the connection and display _Tested_ next to the connection if successful. Note that you can create additional dbt targets as show below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
 

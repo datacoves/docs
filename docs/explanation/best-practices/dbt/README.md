@@ -20,18 +20,18 @@ Macros in *dbt-expectations* increases the testing suite significantly, includin
 
 One of the significant advantages of joining the global dbt community is the wide array of [open source libraries](https://datacoves.com/dbt-libs) and [dbt packages](https://hub.getdbt.com) we have available to us.
 
-These allow us to move faster, produce more reusable and readable code, and make it far easier for those who come after us to keep moving forward.
+These tools allow companies to move faster, produce more reusable and readable code, and make it far easier for those who come after us to keep moving forward.
 
 There are 3 primary types of tool:
 
-1. Coding environment extensions help find information quickly while developing data models, and make it easy to write good code quickly
+1. Coding environment extensions and python libraries help find information quickly while developing data models, and make it easy to write good code quickly
 2. Macros and packages extend the capability of SQL, by allowing reuse of advanced pieces of logic in a centralized, repeatable way.
-3. Standards and expectations build trust in our data via testing, and flag areas where the quality of code could be improved.
+3. Standards and expectations build trust in data and flag areas where the quality of code could be improved.
 
 Datacoves provides a web-based interface for AirByte, dbt, dbt Docs, Airflow, and Superset - streamlining the process of development by wrapping the below tools in a simple environment
 
 [dbt-coves](https://github.com/datacoves/dbt-coves) automates certain tasks such as creating source property(yml) files and initial staging models by querying the database eliminating tedious tasks.
 
-[Sqlfluff](https://www.sqlfluff.com/) provides baseline expectations of clean code and flags many common logic issues as SQL is developed
+[sqlfluff](https://www.sqlfluff.com/) provides baseline expectations of clean code and flags many common logic issues as SQL is developed
 
-[pre-commit-dbt](https://github.com/datacoves/pre-commit-dbt) helps us perform governance checks lie verifying the models have descriptions and table names are not hard coded
+[dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint) helps perform governance checks like verifying the models have descriptions and table names are not hard coded

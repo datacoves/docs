@@ -1,6 +1,6 @@
 # How to request more memory or cpu resources on a particular DAG task
 
-Sometimes you need to run tasks that require more memory or compute power. Airflow task's definition that use a kubernetes execution environment allow for that.
+Sometimes you need to run tasks that require more memory or compute power. Airflow task's definition that use a kubernetes execution environment allow for this type of configuration.
 
 Similarly to how you [overrode a worker's running environment](/how-tos/airflow/customize-worker-environment.md), you need to specify the `resources` argument on the container spec.
 
@@ -31,17 +31,28 @@ CONFIG = {
 }
 
 with DAG(
-    dag_id="my_dag",
-    start_date=datetime(2021, 1, 1),
+    dag_id = "python_sample_dag",
+    default_args = default_args,
+    start_date = datetime(2023, 1, 1),
+    catchup = False,
+    tags = ["version_4"],
+    description = "Sample python dag dbt run",
+    schedule_interval = "0 0 1 */12 *"
 ) as dag:
 
-    my_task = BashOperator(
-        task_id="my_task",
-        executor_config=CONFIG,
-        bash_command="echo SUCCESS!",
+    successful_task = BashOperator(
+        task_id = "successful_task",
+        executor_config = CONFIG,
+        # bash_command = "echo SUCCESS"
+        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build -s tag:loan_daily"
     )
 
-    my_task
+    failing_task = BashOperator(
+        task_id = 'failing_task',
+        bash_command = "some_non_existant_command"
+    )
+
+    successful_task >> failing_task
 ```
 
 ### YAML version

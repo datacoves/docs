@@ -16,11 +16,19 @@ The `automate/dbt/` folder has dbt specific scripts and the `profiles.yml` file 
 
 ## load/
 
-The `load/` folder contains a backup of extract and load configurations.
+The `load/` folder contains a extract and load configurations.
 
-## schedule/
+## orchestrate/
 
-The `schedule/` folder contains the Airflow job definitions.
+The `orchestrate/` folder contains Airflow related files.
+
+## orchestrate/dags
+
+The `orchestrate/dags` folder contains the Airflow job definitions.
+
+## orchestrate/images
+
+The `orchestrate/images` folder contains custom Airflow worker image definitions.
 
 ## secure/
 

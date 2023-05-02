@@ -14,13 +14,13 @@ The Datacoves landing page (Launch Pad) follows this hierarchy:
 
 On the Projects landing page you can see a list of projects associated with your Datacoves account.
 
-For each project, you will see number of defined confection templates and environments. You will also see the status of the git connection(tested or not).
+For each project, you will see number of defined connection templates and environments. You will also see the status of the git connection(tested or not).
 
 Each row contains 3 action buttons, Test, Edit and Delete.
 
 ### Testing connection
 
-Testing your repo connection ensures that services like dbt docs and Orchestration are available. It is important to test the connection to git to make sure the system can clone your repository. If the test fails, this indicates that Datacoves cannot clone your repository. Edit your environment and check your settings.
+Testing your repo connection ensures that services like dbt docs and Orchestration are available. It is important to test the connection to git to make sure the system can clone your repository. If the test fails, this indicates that Datacoves cannot clone your repository this will affect serving production dbt docs and Airflow jobs. Edit your environment and check your settings then click the test button again to assure the git status is "Tested".
 
 ## Create/Edit Project
 
@@ -34,5 +34,5 @@ A Project configuration consists of the following fields:
         ![Repo SSH Key](./assets/projects_ssh_key.png)
         - **HTTPS** When HTTPS is selected, the following fields must be filled in `Git HTTPS url`, `Username` and `Password`
         ![Repo User Password Prompt](./assets/projects_https_data.png)
-    - **Release branch** defines the default branch for on your repository. This is typically `main` or `master`
-- **CI/CD Provider** when provided, defines will display a link to your CI/CD jobs on the Observe tab of a Datacoves environment. Once you choose your provider, you will be able to specify your `CI jobs home url`
+    - **Release branch** defines the default branch in your repository. This is typically `main` or `master`
+- **CI/CD Provider** when provided, this will display a link to your CI/CD jobs on the Observe tab of a Datacoves environment. Once you choose your provider, you will be able to specify your `CI jobs home url`
