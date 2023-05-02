@@ -2,7 +2,7 @@
 
 ## Turn on Airflow
 
-First, go to the `Environments` admin.
+Go to the `Environments` admin screen.
 
 ![Environments admin](./assets/environments_admin.png)
 
@@ -16,7 +16,7 @@ Once you enabled Airflow, click on the `Services configuration` tab and configur
 
 ### Git branch name
 
-Git branch that Airflow will monitor for changes and reload DAGs on changes, typically `main` if airflow points to production Data Warehouse.
+Git branch that Airflow will monitor for changes, typically `main` or `master` for production runs.
 
 ### dbt profiles path
 

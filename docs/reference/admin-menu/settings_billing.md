@@ -1,8 +1,8 @@
-# Settings & Billing Admin
+# Account Settings & Billing
 
 ## Overview
 
-This page is where you adjust all your account level settings such as the account owner, your subscription type and billing options. You can also delete your Datacoves account.
+This page is where you adjust all your account level settings such as the account owner, your subscription type and billing options. Here you can also delete your Datacoves account.
 
 ## Account Settings
 

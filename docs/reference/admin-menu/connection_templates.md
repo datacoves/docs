@@ -33,7 +33,9 @@ Each Connection Template consist of the following fields:
       ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
 
       > **Note**<br>
-      > We suggest not using the user-provided username if snowflake public key is added by datacoves
+      > We suggest not using the user-provided username if snowflake public key is automatically added to Snowflake by datacoves like:
+      >
+      > _alter user \<some_user\> set rsa_public_kay = '\<some_key\>';_
 
     - **Inferred from user's email** Defines the username field as read-only, pre-populating it with the user's email username (what comes before @domain.com)
       ![Inferred from email](./assets/connectiontemplates_inferred_from_email.png)

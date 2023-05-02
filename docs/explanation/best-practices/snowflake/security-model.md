@@ -22,7 +22,7 @@ This is our recommended approach because this allows us to create granular permi
 
 ![db-auth-std-e1](./assets/db-auth-std1.png)
 
-As shown below we create granular object roles each allowing access to a single database, schema, warehouse (compute cluster), Data classification, and region/country. We then grant the full set of required object roles to a given functional role which are in turn granted users to allow them to query the database.
+As shown below we create granular object roles each allowing access to a single database, schema, warehouse (compute cluster), Data classification, and region/country. We then grant the full set of required object roles to a given functional role which are in turn granted to users to allow them to query the database.
 
 ![db-auth-std-e1](./assets/db-auth-std2.png)
 

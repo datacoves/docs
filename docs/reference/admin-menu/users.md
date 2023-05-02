@@ -2,7 +2,7 @@
 
 ## Overview
 
-In the page you can manage the users that belong to your account. Here you can grant them permissions to all or individual environments.
+In this page you can manage the users that belong to your account. Here you can grant or change the permission groups associated with each user.
 
 ## Users Listing
 

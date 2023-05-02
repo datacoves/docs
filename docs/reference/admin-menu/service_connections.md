@@ -2,7 +2,7 @@
 
 ## Overview
 
-Service Connections are used by automated processes like Airflow jobs. Information entered here are injected as ENVIRONMENT variables that can then be used in a dbt profiles.yml file to establish a connection with your data warehouse.
+Service Connections are used by automated processes like Airflow jobs. Details entered here are injected as **ENVIRONMENT** variables that can then be used within a dbt profiles.yml file to establish a connection with your data warehouse.
 
 ## Service Connection Listing
 

@@ -4,7 +4,7 @@
 
 An Environment in Datacoves defines a data stack and associated settings for a given project. These data stacks are isolated from each other and can be created for long term or temporary use to perform some tests such as to try out a new version of dbt with your project.
 
-These environments are displayed on the launchpad to users given they have permission to the environment.
+These environments are displayed on the launchpad to users that have the proper permission for the given environment.
 
 ![Launch Pad](./assets/launchpad_environments_projects.png)
 
@@ -30,7 +30,7 @@ Environment Settings are separated into different tabs.
 
   - The `name` to be displayed on the launchpad
   - The `Project` the environment should be associated with
-  - The `type` of environment (development, test or prod). It is best practice for users to do their work in a development environment and production jobs run in a production environment that is more controlled.
+  - The `type` of environment (development, test or prod). It is best practice for users to perform their work in a development environment and production jobs to run in a production environment which is typically more governed.
 
 - **Stack Services** Define which tools will be enabled for this environment. At least one service must be enabled. Available services include `LOAD (Airbyte)`,`TRANSFORM(dbt and VS Code)`, `OBSERVE(dbt docs)`, `ORCHESTRATE(Airflow)`, and `ANALYZE(Superset)`
   ![Environments Create or Edit Stack Services](./assets/environments_editnew_stackservices.png)

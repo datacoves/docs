@@ -47,31 +47,55 @@ Simply provide a `default_args` dict like so:
 ```python
 from datetime import datetime
 from airflow import DAG
+from airflow.operators.bash import BashOperator
+from kubernetes.client import models as k8s
 
 default_args = {
     'owner': 'airflow',
-    'email': '<RECIPIENT EMAIL ADDRESS>',   # Replace with recipient's email address
-    'email_on_failure': True
+    'email': 'some_user@example.com',
+    'email_on_failure': True,
+    'description': "Sample python dag"
 }
 
-dag = DAG(
-    dag_id='my_dag',
-    default_args=default_args,
-    start_date=datetime(2020, 1, 1),
-)
+with DAG(
+    dag_id = "python_sample_dag",
+    default_args = default_args,
+    start_date = datetime(2023, 1, 1),
+    catchup = False,
+    tags = ["version_2"],
+    description = "Sample python dag dbt run",
+    schedule_interval = "0 0 1 */12 *"
+) as dag:
 
-# your tasks here...
+    successful_task = BashOperator(
+        task_id = "successful_task",
+        executor_config = CONFIG,
+        # bash_command = "echo SUCCESS"
+        bash_command="echo Success!!!"
+    )
+
+    successful_task
 ```
 
 ### YAML version
 
 ```yaml
-my_dag:
-  start_date: 2021-01-01
+yaml_sample_dag:
+  description: "Sample yaml dag"
+  schedule_interval: "0 0 1 */12 *"
+  tags:
+    - version_2
+  catchup: false
+
   default_args:
+    start_date: 2023-01-01
     owner: airflow
-    email: <RECIPIENT EMAIL ADDRESS> # Replace with recipient's email address
+    # Replace with the email of the recipient for failures
+    email: some_user@example.com
     email_on_failure: true
+
   tasks:
-    # ... your tasks here...
+    successful_task:
+      operator: airflow.operators.bash_operator.BashOperator
+      bash_command: "echo SUCCESS!"
 ```

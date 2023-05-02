@@ -2,17 +2,18 @@
 
 Airflow monitors a git repository's branch running `git pull` every minute, so it requires the cloned repo's folder to be read-only.
 
-To run `dbt` commands on such context, we've added the possibility to run `dbt` commands on a prepared prepared environment:
+To run `dbt` commands easily, we provide a pre-configured dbt environment with the necessary python dependencies. Our Airflow also does the following automatically:
 
-- copying the read-only dbt project to a temp writable folder
-- running `dbt deps` if `dbt_modules` and `dbt_packages` folders don't exist.
+- Copies the cloned dbt project to a writable folder within Airflow
+- Runs `dbt deps` if `dbt_modules` and `dbt_packages` folders do not exist
 
-You can simply run `dbt-coves dbt <dbt subcommand>` and dbt-coves will do the magic.
+This means that you can simply run `dbt-coves dbt <dbt subcommand>` in your Airflow DAG and we will handle the rest.
 
 ## Create a DAG that uses the script
 
-If the command worked in your dev environment, you should be able to create a new DAG and start using it.
-Keep in mind that in an Airflow context `dbt-coves` comes installed on an isolated Python Virtual Environment to avoid clashing with Airflow python requirements.
+If your dbt command like `dbt run` works in your devevelopment environment, you should be able to create an Airflow DAG that will run this command automatically.
+
+Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python requirements.
 
 Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`.
 
@@ -21,26 +22,54 @@ Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/
 ```python
 from datetime import datetime
 from airflow import DAG
+from airflow.operators.bash import BashOperator
+
+default_args = {
+    'owner': 'airflow',
+    'email': 'some_user@examble.com',
+    'email_on_failure': True,
+    'description': "Sample python dag"
+}
 
 with DAG(
-    dag_id='my_dag',
-    start_date=datetime(2020, 1, 1),
+    dag_id = "python_sample_dag",
+    default_args = default_args,
+    start_date = datetime(2023, 1, 1),
+    catchup = False,
+    tags = ["version_4"],
+    description = "Sample python dag dbt run",
+    schedule_interval = "0 0 1 */12 *"
 ) as dag:
-    task_x = BashOperator(
-        task_id="dbt_build",
-        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build"
+
+    successful_task = BashOperator(
+        task_id = "successful_task",
+        executor_config = CONFIG,
+        # bash_command = "echo SUCCESS"
+        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build -s tag:loan_daily"
     )
 
-    task_x
+    successful_task
 ```
 
 ### YAML version
 
 ```yaml
-my_dag:
-  start_date: 2021-01-01
+yaml_sample_dag:
+  description: "Sample yaml dag dbt run"
+  schedule_interval: "0 0 1 */12 *"
+  tags:
+    - version_4
+  catchup: false
+
+  default_args:
+    start_date: 2023-01-01
+    owner: airflow
+    # Replace with the email of the recipient for failures
+    email: some_user@example.com
+    email_on_failure: true
+
   tasks:
-    dbt_build:
+    successful_task:
       operator: airflow.operators.bash_operator.BashOperator
       bash_command: "source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build"
 ```
