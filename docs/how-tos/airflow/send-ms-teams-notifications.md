@@ -32,6 +32,7 @@ Click `Configure`, give it a name, and optionally select an image to use as the 
 ?> **Warning** Store this URL in a safe place as you will need it in a subsequent step and anyone with this link can send notification to that MS Teams channel
 
 ## Prepare Airflow
+
 ### Create a new Integration
 
 In Datacoves, create a new integration of type `MS Teams` by navigating to the Integrations admin page.
@@ -99,7 +100,6 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from callbacks.microsoft_teams import inform_failure, inform_success
 
-# This is the name defined above when the integration was created
 DATACOVES_INTEGRATION_NAME = "MS_TEAMS_NOTIFICATIONS"
 
 def run_inform_success(context):
@@ -118,11 +118,6 @@ def run_inform_failure(context):
         # color="FF00FF",
     )
 
-# def set_task_callbacks(dag):  # Use if you want to set per-task callback / messages
-#     for task in dag.tasks:
-#         task.on_success_callback = run_inform_success
-#         task.on_failure_callback = run_inform_failure
-
 default_args = {
     'owner': 'airflow',
     'email': 'some_user@example.com',
@@ -135,7 +130,7 @@ with DAG(
     default_args=default_args,
     start_date=datetime(2023, 1, 1),
     catchup=False,
-    tags=["version_17"],
+    tags=["version_25"],
     description="Sample python dag dbt run",
     schedule_interval="0 0 1 */12 *",
     on_success_callback=run_inform_success,
@@ -147,15 +142,16 @@ with DAG(
         bash_command = "echo SUCCESS"
     )
 
-    failing_task = BashOperator(
-        task_id = "failing_task",
-        bash_command = "some_non_existant_command"
-    )
+    # failing_task = BashOperator(
+    #     task_id = "failing_task",
+    #     bash_command = "some_non_existant_command"
+    # )
 
     # runs failing task
-    successful_task >> failing_task
+    # successful_task >> failing_task
 
     successful_task
+
 ```
 
 ### YAML version
