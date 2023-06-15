@@ -1,94 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link data-rh="true" rel="icon" href="/assets/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <meta name="Datacoves Docs" content="Datacoves documentation" />
+    <title>Datacoves Docs</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link data-rh="true" rel="icon" href="/assets/favicon.ico">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
-  <meta name="Datacoves Docs" content="Datacoves documentation">
-  <title>Datacoves Docs</title>
+    <!-- Themes (light + dark) -->
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme: dark)"
+      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"
+    />
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme: light)"
+      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"
+    />
 
-  <!-- Themes (light + dark) -->
-  <link rel="stylesheet" media="(prefers-color-scheme: dark)"
-    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-  <link rel="stylesheet" media="(prefers-color-scheme: light)"
-    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-
-  <!-- Custom Styles -->
-  <style>
-    :root {
-      --cover-heading-color: #00044A;
-      --cover-blockquote-color: #00044A;
-    }
-    .sidebar-nav a {
-      white-space: normal;
-    }
-    /* selector for "edit on github" link */
-    .markdown-section p[style*="float: right"] {
-      position: fixed;
-      bottom: 0px;
-      right: 20px;
-    }
-    @media (max-width: 480px) {
-      .app-nav {
-        display: none;
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --cover-heading-color: #00044a;
+        --cover-blockquote-color: #00044a;
+      }
+      .sidebar-nav a {
+        white-space: normal;
       }
       /* selector for "edit on github" link */
       .markdown-section p[style*="float: right"] {
-        display: none;
+        position: fixed;
+        bottom: 0px;
+        right: 20px;
       }
-    }
-  </style>
-</head>
+      @media (max-width: 480px) {
+        .app-nav {
+          display: none;
+        }
+        /* selector for "edit on github" link */
+        .markdown-section p[style*="float: right"] {
+          display: none;
+        }
+      }
+    </style>
+  </head>
 
-<body>
-  <div id="app"></div>
+  <body>
+    <div id="app"></div>
 
-  <script>
-    // Docsify Configuration
-    window.$docsify = {
-        name: 'Datacoves Docs',
+    <script>
+      // Docsify Configuration
+      window.$docsify = {
+        name: "Datacoves Docs",
         loadSidebar: true,
         loadNavbar: true,
         coverpage: true,
         auto2top: true,
         subMaxLevel: 3,
         alias: {
-          '/.*/_sidebar.md': '/_sidebar.md',
-          '/.*/_navbar.md': '/_navbar.md',
+          "/.*/_sidebar.md": "/_sidebar.md",
+          "/.*/_navbar.md": "/_navbar.md",
         },
         subMaxLevel: 3,
         sidebarDisplayLevel: 0,
-        coverpage: 'cover.md',
-        logo: '/assets/dc-logo.svg',
+        coverpage: "cover.md",
+        logo: "/assets/dc-logo.svg",
         autoFooter: {
-          name:       "datacoves.com",
-          copyYear:   2021,
-          url:        "https://datacoves.com",
-          // policy:     Bool | String,   // show Privacy Policy (optional)
-          // terms:      Bool | String,   // show Terms of Service (optional)
-          // cookies:    Bool | String,   // show Cookies Policy (optional)
+          name: "datacoves.com",
+          copyYear: 2021,
+          url: "https://datacoves.com",
+          customStyle: "sidebar",
+          policy: "https://datacoves.com/privacy-policy",
+          terms: "https://datacoves.com/terms-of-service",
+          cookies: false,
         },
       };
-  </script>
+    </script>
 
-  <!-- Required -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+    <!-- Required -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
 
-  <!-- Recommended -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
-  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@markbattistella/docsify-sidebarfooter@latest"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+    <!-- Recommended -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+    <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@markbattistella/docsify-sidebarfooter@latest"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
 
-  <script>
-    window.$docsify.plugins = [EditOnGithubPlugin.create('https://github.com/datacoves/docs/blob/main/docs/', null, null)].concat(window.$docsify.plugins)
-  </script>
-</body>
-
+    <script>
+      window.$docsify.plugins = [
+        EditOnGithubPlugin.create(
+          "https://github.com/datacoves/docs/blob/main/docs/",
+          null,
+          null
+        ),
+      ].concat(window.$docsify.plugins);
+    </script>
+  </body>
 </html>
