@@ -8,7 +8,7 @@ Below we explain how to use those callbacks to send Slack notifications.
 
 ## Prepare Slack
 
-First of all, you must create a Slack App, which will act as a "bot" that will send messages. Visit [https://api.slack.com/apps](https://api.slack.com/apps) to start
+To send messages in Slack, you must first create a Slack App, which will act as a "bot" that sends messages. Visit [https://api.slack.com/apps](https://api.slack.com/apps) to start
 
 ![Slack Apps](./assets/slack_apps.png)
 
