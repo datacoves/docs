@@ -8,21 +8,21 @@ We need to connect this editor to your git repository and to your data warehouse
 
 At the top right corner of the page, click the User icon and select _Settings_
 
-![User Settings](./assets/user_settings.png)
+![User Settings](../assets/user_settings.png)
 
 ## Setup git connection credentials
 
 On the settings page scroll down to the Git SSH keys section.
 
-![Git Settings](./assets/user_settings_git.png)
+![Git Settings](../assets/user_settings_git.png)
 
 Click the Add drop down and select whether you want to provide an existing private key or have Datacoves auto generate one for you.
 
-![Git Settings Add](./assets/user_settings_git2.png)
+![Git Settings Add](../assets/user_settings_git2.png)
 
 Datacoves will generate and display the corresponding public key, you will need to configure the public key for your git provider.
 
-![Git Settings Public Key](./assets/user_settings_git3.png)
+![Git Settings Public Key](../assets/user_settings_git3.png)
 
 Click the _Copy_ button and follow the instructions to configure the public key for your git server.
 
@@ -34,11 +34,11 @@ Click the _Copy_ button and follow the instructions to configure the public key 
 
 Once your public SSH key has been added to your git server, test your connection.
 
-![Git Settings Test](./assets/user_settings_git4.png)
+![Git Settings Test](../assets/user_settings_git4.png)
 
 If Datacoves is able to connect to your Git repository, you will see _Tested_ next to the repository.
 
-![Git Settings Tested](./assets/user_settings_git5.png)
+![Git Settings Tested](../assets/user_settings_git5.png)
 
 ## Setup Snowflake Keys
 
@@ -48,7 +48,7 @@ If using key based authentication, you will need to provide or generate a key wh
 
 Provide or automatically generate your keys. Then add the public key to Snowflake.
 
-![Snowflake Settings Generate Keys](./assets/user_settings_snowflake.png)
+![Snowflake Settings Generate Keys](../assets/user_settings_snowflake.png)
 
 ```
 alter user <username> set rsa_public_key='<public key>';
@@ -60,18 +60,18 @@ More information can be found in the [Snowflake Documentation](https://docs.snow
 
 In the Database Connection Section, click _Add_
 
-![Snowflake Setup Connection](./assets/user_settings_snowflake2.png)
+![Snowflake Setup Connection](../assets/user_settings_snowflake2.png)
 
 Give the connection a name, this will be used as your dbt target name and is typically _dev_. Next select a connection template. (A connection template will have defaults pre-configured by your administrator).
 
-![Snowflake Setup Connection Details](./assets/user_settings_snowflake3.png)
+![Snowflake Setup Connection Details](../assets/user_settings_snowflake3.png)
 
 Fill in the rest of the fields and click _Save_
 
 Datacoves will test the connection and display _Tested_ next to the connection if successful. Note that you can create additional dbt targets as show below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
 
-![Snowflake Setup Connection Tested](./assets/user_settings_snowflake4.png)
+![Snowflake Setup Connection Tested](../assets/user_settings_snowflake4.png)
 
 You are now ready to transform your data with dbt. Scroll to the top of the screen, click _Workbench_. Note, Datacoves will take a couple of minutes to apply the new settings, clone your repo and finish setting up your environment for the first time.
 
-![Workbench Link](./assets/user_settings_workbench.png)
+![Workbench Link](../assets/user_settings_workbench.png)
