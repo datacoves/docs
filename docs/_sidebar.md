@@ -5,6 +5,7 @@
     - [Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Send Emails](/how-tos/airflow/send-emails.md)
     - [Send Microsoft Teams notifications](/how-tos/airflow/send-ms-teams-notifications.md)
+    - [Send Slack notifications](/how-tos/airflow/send-slack-notifications.md)
     - [Worker logs](/how-tos/airflow/worker-logs.md)
     - [Run dbt](/how-tos/airflow/run-dbt.md)
     - [Run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs.md)
