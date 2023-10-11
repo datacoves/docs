@@ -21,6 +21,7 @@ CONFIG = {
         spec=k8s.V1PodSpec(
             containers=[
                 k8s.V1Container(
+                    name="base",
                     resources=k8s.V1ResourceRequirements(
                         requests={"memory": "8Gi"}
                     )
