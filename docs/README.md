@@ -1,6 +1,4 @@
-# Home
-
-## Welcome to the Datacoves Documentation
+# Welcome to the Datacoves Documentation
 
 Our Mission is to be the _fast track to the Modern Data Stack_ so you can focus on **Delivering Results Quickly.**
 
@@ -11,12 +9,12 @@ This documentation is divided in 4 parts following the structure is inspired by 
 - **Explanation** give you an understanding as to the rationale for the suggestions we make
 - **Reference guides** give you detailed information on a given topic
 
-## Support
+# Support
 
-### Slack
+## Slack
 
 Our customers get priority support via Slack. To be added to our Slack community, send an email to support@datacoves.com with _your name, your email address, and the company you are with_.
 
-### Email
+## Email
 
 Send us an email and we will get back to you as quickly as possible. support@datacoves.com

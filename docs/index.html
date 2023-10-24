@@ -54,12 +54,20 @@
     <div id="app"></div>
 
     <script>
+      // Function to get parameter value from the fragment identifier
+      function getParameterValue(paramName) {
+        var match = window.location.hash.match(
+          new RegExp("[?&]" + paramName + "=([^&]+)")
+        );
+        return match ? match[1] : null;
+      }
+
       // Docsify Configuration
       window.$docsify = {
         name: "Datacoves Docs",
         loadSidebar: true,
-        loadNavbar: true,
-        coverpage: true,
+        loadNavbar: getParameterValue("navbar") !== "false",
+        // coverpage: true,
         auto2top: true,
         subMaxLevel: 3,
         alias: {
@@ -68,7 +76,7 @@
         },
         subMaxLevel: 3,
         sidebarDisplayLevel: 0,
-        coverpage: "cover.md",
+        // coverpage: "cover.md",
         logo: "/assets/dc-logo.svg",
         autoFooter: {
           name: "datacoves.com",
@@ -93,6 +101,10 @@
     <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@markbattistella/docsify-sidebarfooter@latest"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
 
     <script>
       window.$docsify.plugins = [
