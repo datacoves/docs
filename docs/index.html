@@ -77,7 +77,10 @@
         subMaxLevel: 3,
         sidebarDisplayLevel: 0,
         // coverpage: "cover.md",
-        logo: "/assets/dc-logo.svg",
+        logo:
+          getParameterValue("logo") !== "false"
+            ? "/assets/dc-logo.svg"
+            : undefined,
         autoFooter: {
           name: "datacoves.com",
           copyYear: 2021,
