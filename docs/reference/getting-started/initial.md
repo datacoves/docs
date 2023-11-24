@@ -26,7 +26,7 @@ Before diving into the setup process, ensure you have the following ready:
 2. **Git Access:** Ensure you have clone access with your Git provider such as GitHub or BitBucket. Have your git clone URL handy.
 3. **Network Access:** Verify if your Data Warehouse is accessible from outside your network. If not, you'll need to whitelist this specific IP - `55.55.555.555`
 
-### Next Steps
+## Next Steps
 
 1. **Send Email** with the answers to the following questions to **ngomez3@datacoves.com and mayra@datacoves.com**
    - What do you want to call your account? (This is usually the company name)
