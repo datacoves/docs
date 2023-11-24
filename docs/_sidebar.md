@@ -36,6 +36,7 @@
       - [GDPR and Time-Travel](explanation/best-practices/snowflake/time-travel)
 - [Tutorials](/tutorials/)
 - [Reference](/reference/)
+  - [Getting Started](reference/getting-started/initial.md)
   - [Administration Menu](reference/admin-menu/)
     - [Account Settings & Billing](reference/admin-menu/settings_billing.md)
     - [Groups](reference/admin-menu/groups.md)
