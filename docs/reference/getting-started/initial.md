@@ -24,7 +24,7 @@ Before diving into the setup process, ensure you have the following ready:
     | Databricks | Host, Schema, HTTP Path |
     | BigQuery | Dataset |
 2. **Git Access:** Ensure you have clone access with your Git provider such as GitHub or BitBucket. Have your git clone URL handy.
-3. **Network Access:** Verify if your Data Warehouse is accessible from outside your network. If not, you'll need to whitelist this specific IP - `55.55.555.555`
+3. **Network Access:** Verify if your Data Warehouse is accessible from outside your network. If not, you'll need to whitelist this specific IP - `40.76.152.251`
 
 ## Next Steps
 
