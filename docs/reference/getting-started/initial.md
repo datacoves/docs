@@ -6,11 +6,11 @@
 2. Prerequisites
 3. Next Steps
 
-## **Introduction**
+## Introduction
 
 Welcome to Datacoves! This guide is your first step towards setting up Datacoves for efficient data management and analysis. Whether you're initiating a new dbt project or incorporating an existing one, this guide will ensure a seamless setup process. 
 
-## **Prerequisites**
+## Prerequisites
 
 Before diving into the setup process, ensure you have the following ready:
 
