@@ -4,6 +4,10 @@
 
 Before the setup call with the Datacoves team, ensure you have the following ready.
 
+### dbt
+
+What version of dbt are you using? (**email us at ngomez3@datacoves.com and mayra@datacoves.com answer so we are ready for the call**)
+
 ### Data Warehouse
 
 **Warehouse Details** Know your data warehouse provider and have relevant access details handy. This includes the service account that Airflow will use.  
@@ -26,9 +30,6 @@ Before the setup call with the Datacoves team, ensure you have the following rea
 **Git Repo** If it is a new project, create a new repo and ensure at least one file is in the main branch such as a `README.md`. Have your git clone URL handy.
 
 **dbt Docs** Create a `dbt-docs` branch in your repo.
-
-# dbt
-What version of dbt are you using? (**email us at ngomez3@datacoves.com and mayra@datacoves.com answer so we are ready for the call**)
 
 ## During Call with Datacoves
 To ensure a smooth call, please have the answers to the following questions ready to go. 
