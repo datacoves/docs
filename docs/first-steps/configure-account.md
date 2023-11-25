@@ -2,26 +2,29 @@
 
 ## Prerequisites
 
-Before diving into the setup call, ensure you have the following ready:
+Before diving into the setup call, ensure you have the following ready.
 
 ### Data Warehouse
 
 **Warehouse Details** Know your data warehouse provider and have relevant access details handy. This includes the service account that Airflow will use.  
         
-    | Data Warehouse Provider | Information Needed |
-    | --- | --- |
-    | Snowflake | Account, Warehouse, Database, Role, User, Password, Schema |
-    | Redshift | Host, Database, User, Schema, Password |
-    | Databricks | Host, Schema, HTTP Path, Token |
-    | BigQuery | Dataset, Keyfile JSON |
+| Data Warehouse Provider | Information Needed |
+| --- | --- |
+| Snowflake | Account, Warehouse, Database, Role, User, Password, Schema |
+| Redshift | Host, Database, User, Schema, Password |
+| Databricks | Host, Schema, HTTP Path, Token |
+| BigQuery | Dataset, Keyfile JSON |
+
 
 **Network Access:** Verify if your Data Warehouse is accessible from outside your network. If not, you'll need to whitelist this specific IP - `40.76.152.251`
 
 
 ### Git
 
-**Git Access** Ensure you have access to add a deploypment key to the repo, as well as clone access.
-**Git Repo** If it is a new project, create a new repo and ensure at least one file is in the main branch such as a README.md. Have your git clone URL handy.
+**Git Access** Ensure your user has access to add a deploypment key to the repo, as well as clone access.
+
+**Git Repo** If it is a new project, create a new repo and ensure at least one file is in the main branch such as a `README.md`. Have your git clone URL handy.
+
 **dbt Docs** Create a `dbt-docs` branch in your repo.
 
 

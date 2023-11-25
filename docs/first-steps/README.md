@@ -6,4 +6,4 @@ Welcome to Datacoves! This guide is your first step towards setting up Datacoves
 
 #### Table of contents
 
-1. Configure your account with Datacoves
+1. [Configure your account with Datacoves](first-steps/configure-account.md)
