@@ -1,6 +1,6 @@
 - [Home](/)
-- [First Steps](reference/getting-started/initial.md)
-
+- [First Steps](first-steps/)
+  - [Configure your Account with Datacoves](first-steps/initial.md)
 - [How to](/how-tos/)
   - [Airflow](/how-tos/airflow/)
     - [Initial setup](/how-tos/airflow/initial-setup.md)
