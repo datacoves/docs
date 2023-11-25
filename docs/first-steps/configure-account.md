@@ -6,7 +6,7 @@ Before the setup call with the Datacoves team, ensure you have the following rea
 
 ### dbt
 
-What version of dbt are you using? (**email us at ngomez3@datacoves.com and mayra@datacoves.com the answer so we are ready for the call**)
+What version of dbt are you using? (**email us the answer at ngomez3@datacoves.com and mayra@datacoves.com so we are ready for the call**)
 
 ### Data Warehouse
 
