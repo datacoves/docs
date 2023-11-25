@@ -28,7 +28,7 @@ Before the setup call with the Datacoves team, ensure you have the following rea
 **dbt Docs** Create a `dbt-docs` branch in your repo.
 
 # dbt
-What version of dbt are you using? (email us this answer so we are ready for the call)
+What version of dbt are you using? (**email us at ngomez3@datacoves.com and mayra@datacoves.com answer so we are ready for the call**)
 
 ## During Call with Datacoves
 To ensure a smooth call, please have the answers to the following questions ready to go. 
