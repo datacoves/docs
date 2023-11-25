@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Before diving into the setup call, ensure you have the following ready.
+Before the setup call with the Datacoves team, ensure you have the following ready.
 
 ### Data Warehouse
 
@@ -16,7 +16,7 @@ Before diving into the setup call, ensure you have the following ready.
 | BigQuery | Dataset, Keyfile JSON |
 
 
-**Network Access:** Verify if your Data Warehouse is accessible from outside your network. If not, you'll need to whitelist this specific IP - `40.76.152.251`
+**Network Access:** Verify if your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `40.76.152.251`
 
 
 ### Git
@@ -27,14 +27,14 @@ Before diving into the setup call, ensure you have the following ready.
 
 **dbt Docs** Create a `dbt-docs` branch in your repo.
 
+# dbt
+What version of dbt are you using? (email us this answer so we are ready for the call)
 
 ## During Call with Datacoves
 To ensure a smooth call, please have the answers to the following questions ready to go. 
 
 - What do you want to call your account? (This is usually the company name)
-- What do you want to call your project? 
-- Do you have CI? Are you going to develop the CI scripts? Do you have anything already?
-- Do you need any specific python library on airflow or VS code? (outside the standard dbt stuff)
-
-
+- What do you want to call your project? (This can be something like Marketing DW, Finance 360, etc)
+- Do you currently have a CI/CD process and associated script like GitHub Actions workflow? If not, do you plan on creating a CI/CD process?
+- Do you need any specific python library on Airflow or VS code? (outside the standard dbt related items)
 
