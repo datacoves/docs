@@ -6,4 +6,4 @@ Welcome to Datacoves! This guide is your first step to set up Datacoves for effi
 
 ## Table of contents
 
-1. [Configure your account with Datacoves](first-steps/configure-account.md)
+1. [Configure your account with Datacoves](getting-started/configure-account.md)
