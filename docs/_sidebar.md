@@ -1,7 +1,7 @@
 - [Home](/)
 - **Getting Started**
 - [Account Setup](getting-started/)
-  - [Configuring your Datacoves Account](getting-started/configure-account.md)
+  - [Configuring your Datacoves Account](getting-started/account-setup/configure-account.md)
 - [Developer](getting-started/developer/)
   - [Transform Tab](getting-started/developer/transform-tab.md)
   - [Snowflake Extension](getting-started/developer/snowflake-extension.md)
