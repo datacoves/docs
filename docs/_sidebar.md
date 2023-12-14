@@ -2,6 +2,11 @@
 - **Getting Started**
 - [Account Setup](getting-started/)
   - [Configuring your Datacoves Account](getting-started/configure-account.md)
+- [Developer](getting-started/developer/)
+  - [Transform Tab](getting-started/developer/transform-tab.md)
+  - [Snowflake Extension](getting-started/developer/snowflake-extension.md)
+  - [Working with dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)
+  - [Using Git](getting-started/developer/using-git.md)
 - **Diving Deeper**
 - [How to](/how-tos/)
   - [Airflow](/how-tos/airflow/)
