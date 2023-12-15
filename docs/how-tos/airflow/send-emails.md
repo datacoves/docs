@@ -45,57 +45,54 @@ Simply provide a `default_args` dict like so:
 ### Python version
 
 ```python
-from datetime import datetime
-from airflow import DAG
-from airflow.operators.bash import BashOperator
-from kubernetes.client import models as k8s
+import datetime
 
-default_args = {
-    'owner': 'airflow',
-    'email': 'some_user@example.com',
-    'email_on_failure': True,
-    'description': "Sample python dag"
-}
+from airflow.decorators import dag
+from operators.datacoves.bash import DatacovesBashOperator
 
-with DAG(
-    dag_id = "python_sample_dag",
-    default_args = default_args,
-    start_date = datetime(2023, 1, 1),
-    catchup = False,
-    tags = ["version_2"],
-    description = "Sample python dag dbt run",
-    schedule_interval = "0 0 1 */12 *"
-) as dag:
 
-    successful_task = BashOperator(
-        task_id = "successful_task",
-        executor_config = CONFIG,
-        # bash_command = "echo SUCCESS"
-        bash_command="echo Success!!!"
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@datacoves.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG for dbt build",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_1"],
+    catchup=False,
+)
+def yaml_dbt_dag():
+    build_dbt = DatacovesBashOperator(
+        task_id="build_dbt",
+        bash_command="dbt-coves dbt -- run -s personal_loans",
     )
 
-    successful_task
+
+dag = yaml_dbt_dag()
 ```
 
 ### YAML version
 
 ```yaml
-yaml_sample_dag:
-  description: "Sample yaml dag"
-  schedule_interval: "0 0 1 */12 *"
-  tags:
-    - version_2
-  catchup: false
+description: "Sample DAG for dbt build"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_1
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  # Replace with the email of the recipient for failures
+  email: gomezn@datacoves.com
+  email_on_failure: true
+catchup: false
 
-  default_args:
-    start_date: 2023-01-01
-    owner: airflow
-    # Replace with the email of the recipient for failures
-    email: some_user@example.com
-    email_on_failure: true
 
-  tasks:
-    successful_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "echo SUCCESS!"
+nodes:
+  build_dbt:
+    type: task
+    operator: operators.datacoves.bash.DatacovesBashOperator
+    #virtualenv: /path/to/virtualenv or None: Datacoves Airflow venv will be used
+    bash_command: "dbt-coves dbt -- run -s personal_loans"
 ```
