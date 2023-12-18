@@ -11,6 +11,7 @@
 - [How to](/how-tos/)
   - [Airflow](/how-tos/airflow/)
     - [Initial setup](/how-tos/airflow/initial-setup.md)
+    - [Generate DAGs from yml](/how-tos/airflow/generate-dags-from-yml.md)
     - [Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Send Emails](/how-tos/airflow/send-emails.md)
     - [Send Microsoft Teams notifications](/how-tos/airflow/send-ms-teams-notifications.md)
