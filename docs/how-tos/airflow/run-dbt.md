@@ -20,38 +20,36 @@ Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/
 ### Python version
 
 ```python
-from datetime import datetime
-from airflow import DAG
-from airflow.operators.bash import BashOperator
+import datetime
 
-default_args = {
-    'owner': 'airflow',
-    'email': 'some_user@examble.com',
-    'email_on_failure': True,
-    'description': "Sample python dag"
-}
+from airflow.decorators import dag
+from operators.datacoves.bash import DatacovesBashOperator
 
-with DAG(
-    dag_id = "python_sample_dag",
-    default_args = default_args,
-    start_date = datetime(2023, 1, 1),
-    catchup = False,
-    tags = ["version_4"],
-    description = "Sample python dag dbt run",
-    schedule_interval = "0 0 1 */12 *"
-) as dag:
 
-    successful_task = BashOperator(
-        task_id = "successful_task",
-        executor_config = CONFIG,
-        # bash_command = "echo SUCCESS"
-        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build -s tag:loan_daily"
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@datacoves.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG for dbt build",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_1"],
+    catchup=False,
+)
+def yaml_dbt_dag():
+    build_dbt = DatacovesBashOperator(
+        task_id="build_dbt",
+        bash_command="dbt-coves dbt -- run -s personal_loans",
     )
 
-    successful_task
+
+dag = yaml_dbt_dag()
 ```
 
 ### YAML version
+The file name will be the DAG name. 
 
 ```yaml
 description: "Sample DAG for dbt build"
