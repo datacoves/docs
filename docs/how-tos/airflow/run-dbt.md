@@ -54,22 +54,22 @@ with DAG(
 ### YAML version
 
 ```yaml
-yaml_sample_dag:
-  description: "Sample yaml dag dbt run"
-  schedule_interval: "0 0 1 */12 *"
-  tags:
-    - version_4
-  catchup: false
+description: "Sample DAG for dbt build"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_1
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  # Replace with the email of the recipient for failures
+  email: gomezn@datacoves.com
+  email_on_failure: true
+catchup: false
 
-  default_args:
-    start_date: 2023-01-01
-    owner: airflow
-    # Replace with the email of the recipient for failures
-    email: some_user@example.com
-    email_on_failure: true
 
-  tasks:
-    successful_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build"
+nodes:
+  build_dbt:
+    type: task
+    operator: operators.datacoves.bash.DatacovesBashOperator
+    bash_command: "dbt-coves dbt -- run -s personal_loans"
 ```
