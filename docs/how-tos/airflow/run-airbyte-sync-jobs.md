@@ -45,7 +45,6 @@ In the following example DAG, you can notice a special task `load` that uses a `
 ### YAML version
 
 ```yaml
-example_dag:
   ...
 # DAG Tasks
 nodes:
@@ -57,7 +56,7 @@ nodes:
     dbt_list_args: "--select tag:daily_run_airbyte"
 
   transform:
-      ...
+  ...
 ```
 
 ### transform/.dbt-coves/config.yml
