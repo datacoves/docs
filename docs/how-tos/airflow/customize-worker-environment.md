@@ -10,14 +10,16 @@ TBD
 
 Every task in an Airflow DAG's can use a different docker image. Operators accept an `executor_config` argument that can be used to customize the executor context.
 
-Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as seen in the `CONFIG` dict in the example below.
+Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as seen in the `TRANSFORM_CONFIG` dict in the example below. The variable name for the Config dict will depend on what DAG task you are requesting more resources for. 
+
+eg) When writing your yaml, if you add the config under ` marketing_automation` the `CONFIG` variable will be dynamically named `MARKETING_AUTOMATION_CONFIG`. In the examples below, we added the config in a transform task so the `CONFIG` variable is named `TRANSFORM_CONFIG`.
 
 ### Python version
 
 ```python
 from datetime import datetime
 from airflow import DAG
-from airflow.operators.bash import BashOperator
+from operators.datacoves.bash import DatacovesBashOperator
 from kubernetes.client import models as k8s
 
 # Replace with your docker image repo path
@@ -33,7 +35,7 @@ default_args = {
     'description': "Sample python dag"
 }
 
-CONFIG = {
+TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
         spec = k8s.V1PodSpec(
             containers = [
@@ -71,16 +73,12 @@ yaml_sample_dag:
   nodes:
   ...
    transform:
-    operator: airflow.operators.bash.BashOperator
+    operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
     config:
       # Replace with your custom docker image <IMAGE REPO>:<IMAGE TAG>
       image: <IMAGE REPO>:<IMAGE TAG>
     
       bash_command: "echo SUCCESS!"
-
-    failing_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "some_non_existant_command"
-      dependencies: ["successful_task"]
+  ...
 ```

@@ -28,10 +28,10 @@ print_sample_dataframe()
 ```
 
 ## orchestrate/dags
-You then create a DAG in the dags directory. Below you see the environment containing the libraries and dependencies within the `DATACOVES_VIRTUAL_ENV`.
+You then create a DAG in the dags directory. By using the  `DatacovesBashOperator` instead of the Airflow BashOperator we take care of activating the preconfigured virtual environment behind the scenes.
 
-To run your custom DAG you will use the BashOperator to:
-- Activate the Virtal Environment `source {DATACOVES_VIRTIAL_ENV} &&`
+To run your custom DAG you will use the `DatacovesBashOperator` to:
+- Activate the Virtal Environment `source {DATACOVES_VIRTIAL_ENV}` (Behind the Scenes) 
 - cd into the dbt home directory `cd $DATACOVES__DBT_HOME`
 - Run the script containing your custom DAG `python ../orchestrate/python_scripts/sample_script.py`
 
@@ -39,7 +39,7 @@ To run your custom DAG you will use the BashOperator to:
 from pendulum import datetime
 from airflow import DAG
 from airflow.decorators import dag, task
-from airflow.operators.bash import BashOperator
+from operators.datacoves.bash import DatacovesBashOperator
 
 DATACOVES_VIRTIAL_ENV = '/opt/datacoves/virtualenvs/main/bin/activate'
 
@@ -63,20 +63,18 @@ DATACOVES_VIRTIAL_ENV = '/opt/datacoves/virtualenvs/main/bin/activate'
 def datacoves_sample_dag():
 
     # Calling dbt commands
-    dbt_task = BashOperator(
+    dbt_task = DatacovesBashOperator(
         task_id = "run_dbt_task",
         bash_command = f" \
-            source {DATACOVES_VIRTIAL_ENV} && \
             dbt-coves dbt -- debug \
         "
     )
 
     # This is calling an external Python file after activating the venv
     # use this instead of the Python Operator
-    python_task = BashOperator(
+    python_task = DatacovesBashOperator(
         task_id = "run_python_script",
         bash_command = f" \
-            source {DATACOVES_VIRTIAL_ENV} && \
             cd $DATACOVES__DBT_HOME && \
             python ../orchestrate/python_scripts/sample_script.py \
         "
@@ -87,6 +85,5 @@ def datacoves_sample_dag():
 
 # Invoke Dag
 dag = datacoves_sample_dag()
-
 ```
 

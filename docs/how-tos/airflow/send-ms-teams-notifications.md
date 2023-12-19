@@ -118,81 +118,47 @@ def run_inform_failure(context):
         # color="FF00FF",
     )
 
-default_args = {
-    'owner': 'airflow',
-    'email': 'some_user@example.com',
-    'email_on_failure': True,
-    'description': "Sample python dag with MS Teams notification",
-}
-
-with DAG(
-    dag_id="python_sample_teams_dag",
-    default_args=default_args,
-    start_date=datetime(2023, 1, 1),
-    catchup=False,
-    tags=["version_25"],
-    description="Sample python dag dbt run",
-    schedule_interval="0 0 1 */12 *",
-    on_success_callback=run_inform_success,
-    on_failure_callback=run_inform_failure,
-) as dag:
-
-    successful_task = BashOperator(
-        task_id = "successful_task",
-        bash_command = "echo SUCCESS"
-    )
-
-    # failing_task = BashOperator(
-    #     task_id = "failing_task",
-    #     bash_command = "some_non_existant_command"
-    # )
-
-    # runs failing task
-    # successful_task >> failing_task
-
-    successful_task
+...
 
 ```
 
 ### YAML version
 
 ```yaml
-yaml_sample_teams_dag:
-  description: "Sample yaml dag dbt run"
-  schedule_interval: "0 0 1 */12 *"
-  tags:
-    - version_1
-  catchup: false
+description: "Sample DAG with MS Teams notification, custom image, and resource requests"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_1
+  - ms_teams_notification
+  - blue_green
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  # Replace with the email of the recipient for failures
+  email: gomezn@example.com
+  email_on_failure: true
+catchup: false
 
-  default_args:
-    start_date: 2023-01-01
-    owner: airflow
-    # Replace with the email of the recipient for failures
-    email: some_person@example.com
-    email_on_failure: true
-  custom_callbacks:
-      on_success_callback:
-          module: callbacks.microsoft_teams
-          callable: inform_success
-          args:
-              - connection_id: MS_TEAMS_NOTIFICATIONS
-            #   - message: Custom YML success message
-            #   - color: 0000FF
-      on_failure_callback:
-          module: callbacks.microsoft_teams
-          callable: inform_failure
-          args:
-              - connection_id: MS_TEAMS_NOTIFICATIONS
-            #   - message: Custom YML success message
-            #   - color: 9900FF
-  tasks:
-    successful_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "echo SUCCESS!"
 
-    failing_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "some_non_existant_command"
-      dependencies: ["successful_task"]
+# Optional callbacks used to send notifications
+custom_callbacks:
+  on_success_callback:
+    module: callbacks.microsoft_teams
+    callable: inform_success
+    args:
+      connection_id: DATACOVES_MS_TEAMS
+      # message: Custom success message
+      color: 0000FF
+  on_failure_callback:
+    module: callbacks.microsoft_teams
+    callable: inform_failure
+    args:
+      connection_id: DATACOVES_MS_TEAMS
+      # message: Custom error message
+      color: 9900FF
 
+
+# DAG Tasks
+nodes:
+  ...
 ```

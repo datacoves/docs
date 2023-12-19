@@ -6,17 +6,17 @@ Similarly to how you [overrode a worker's running environment](/how-tos/airflow/
 
 ## Example DAG
 
-In the following example, we're requesting a minimum of 8Gb of memory to run the task. You could optionally request computing resources by specifying "cpu" in the `requests` dict. [Click here](https://pwittrock.github.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/) to learn more about resources requests and limits on a kubernetes running environment.
+In the following example, we're requesting a minimum of 8Gb of memory and 1000m of cpu in the `requests` dict to run the task. [Click here](https://pwittrock.github.io/docs/tasks/configure-pod-container/assign-cpu-ram-container/) to learn more about resources requests and limits on a kubernetes running environment.
 
-Keep in mind that if you request more resources than a node in the cluster could allocate the task will never run and the DAG will fail.
+**Note**: Keep in mind that if you request more resources than a node in the cluster could allocate the task will never run and the DAG will fail.
 
 ```python
 from datetime import datetime
 from airflow import DAG
-from airflow.operators.bash import BashOperator
+from operators.datacoves.bash import DatacovesBashOperator
 from kubernetes.client import models as k8s
 
-CONFIG = {
+TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
         spec=k8s.V1PodSpec(
             containers=[
@@ -43,7 +43,7 @@ In the yml DAG you can configure the memory and cpu resources.
 nodes:
 ...
   transform:
-    operator: airflow.operators.bash.BashOperator
+    operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
     config:
       image: datacoves/airflow-pandas:latest

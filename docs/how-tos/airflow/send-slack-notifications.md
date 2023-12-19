@@ -117,68 +117,45 @@ def run_inform_failure(context):
         connection_id=DATACOVES_INTEGRATION_NAME,
         # message="Custom python failure message",
     )
-
-default_args = {
-    'owner': 'airflow',
-    'email': 'some_user@example.com',
-    'email_on_failure': True,
-    'description': "Sample python dag with Slack notification",
-}
-
-with DAG(
-    dag_id="python_sample_slack_dag",
-    default_args=default_args,
-    start_date=datetime(2023, 1, 1),
-    catchup=False,
-    tags=["version_30"],
-    description="Sample python dag dbt run",
-    schedule_interval="0 0 1 */12 *",
-    on_success_callback=run_inform_success,
-    on_failure_callback=run_inform_failure,
-) as dag:
-
-    successful_task = BashOperator(
-        task_id = "successful_task",
-        bash_command = "echo SUCCESS",
-    )
-
-    successful_task
+...
 ```
 
 ### YAML version
 
 ```yaml
-slack_notifications_test:
-  description: "Sample yaml dag dbt run"
-  schedule_interval: "0 0 1 1 *"
-  tags:
-    - version_3
-  catchup: false
+description: "Sample DAG with Slack notification, custom image, and resource requests"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_1
+  - slack_notification
+  - blue_green
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  # Replace with the email of the recipient for failures
+  email: gomezn@example.com
+  email_on_failure: true
+catchup: false
 
-  default_args:
-    start_date: 2023-07-12
-    owner: airflow
 
-  custom_callbacks:
-    on_success_callback:
-      module: callbacks.slack_messages
-      callable: inform_success
-      args:
-        - connection_id: SLACK_NOTIFICATIONS
-        #   - message: Custom YML success message
-    on_failure_callback:
-      module: callbacks.slack_messages
-      callable: inform_failure
-      args:
-        - connection_id: SLACK_NOTIFICATIONS
-        #   - message: Custom YML success message
-  tasks:
-    successful_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "echo SUCCESS!"
+# Optional callbacks used to send notifications
+custom_callbacks:
+  on_success_callback:
+    module: callbacks.slack_messages
+    callable: inform_success
+    args:
+      connection_id: DATACOVES_SLACK
+      # message: Custom success message
+      color: 0000FF
+  on_failure_callback:
+    module: callbacks.slack_messages
+    callable: inform_failure
+    args:
+      connection_id: DATACOVES_SLACK
+      # message: Custom error message
+      color: 9900FF
 
-    failing_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      bash_command: "some_non_existant_command"
-      dependencies: ["successful_task"]
+# DAG Tasks
+nodes:
+...
 ```
