@@ -10,7 +10,7 @@ TBD
 
 Every task in an Airflow DAG's can use a different docker image. Operators accept an `executor_config` argument that can be used to customize the executor context.
 
-Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as in this example.
+Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as seen in the `CONFIG` dict in the example below.
 
 ### Python version
 
@@ -38,39 +38,19 @@ CONFIG = {
         spec = k8s.V1PodSpec(
             containers = [
                 k8s.V1Container(
-                    name = "base", image = f"{IMAGE_REPO}:{IMAGE_TAG}"
+                    name = "base", 
+                    image = f"{IMAGE_REPO}:{IMAGE_TAG}"
                 )
             ]
         )
     ),
 }
 
-with DAG(
-    dag_id = "python_sample_dag",
-    default_args = default_args,
-    start_date = datetime(2023, 1, 1),
-    catchup = False,
-    tags = ["version_4"],
-    description = "Sample python dag dbt run",
-    schedule_interval = "0 0 1 */12 *"
-) as dag:
-
-    successful_task = BashOperator(
-        task_id = "successful_task",
-        executor_config = CONFIG,
-        # bash_command = "echo SUCCESS"
-        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build -s tag:loan_daily"
-    )
-
-    failing_task = BashOperator(
-        task_id = 'failing_task',
-        bash_command = "some_non_existant_command"
-    )
-
-    successful_task >> failing_task
+...
 ```
 
 ### YAML version
+In the yml dag you can configure the image.
 
 ```yaml
 yaml_sample_dag:

@@ -27,8 +27,5 @@ You can use our example [Analytics project](https://github.com/datacoves/balboa)
 
 Relative path to the folder where Python DAGs are located, we suggest `/orchestrate/dags`.
 
-### YAML DAGs path
-
-Relative path to the folder where YAML DAGs are located, we suggest `/orchestrate/dags_yml_definitions`.
 
 

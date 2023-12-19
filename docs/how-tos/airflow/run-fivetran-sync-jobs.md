@@ -35,6 +35,7 @@ As stated in [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs), we
 ```yaml
 example_dag:
   ...
+# DAG Tasks
 nodes:
   extract_and_load_fivetran:
     generator: FivetranDbtGenerator

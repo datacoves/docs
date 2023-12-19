@@ -12,8 +12,9 @@ eg) `yml_dbt_dag.yml`
 ![Airflow yml](how-tos/../assets/airflow_yml.png)
 
 **Generate your python files from your yml files**
-- Run `dbt-coves generate-airflow` 
+- Run `dbt-coves generate-airflow` in your terminal.
 
 This will generate your python DAGs and place them in `orchestrate/dags`
+
 
 ![Airflow DAG python](how-tos/../assets/airflow_dag_ex.png)

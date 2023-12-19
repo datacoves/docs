@@ -86,7 +86,7 @@ default_args:
   # Replace with the email of the recipient for failures
   email: gomezn@datacoves.com
   email_on_failure: true
-catchup: false
+  catchup: false
 
 
 nodes:

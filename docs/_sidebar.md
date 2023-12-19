@@ -7,11 +7,13 @@
   - [Snowflake Extension](getting-started/developer/snowflake-extension.md)
   - [Working with dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)
   - [Using Git](getting-started/developer/using-git.md)
+- [Admin](getting-started/Admin/)
 - **Diving Deeper**
 - [How to](/how-tos/)
   - [Airflow](/how-tos/airflow/)
     - [Initial setup](/how-tos/airflow/initial-setup.md)
     - [Generate DAGs from yml](/how-tos/airflow/generate-dags-from-yml.md)
+    - [External Python DAGs](/how-tos/airflow/external-python-dag.md)
     - [Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Send Emails](/how-tos/airflow/send-emails.md)
     - [Send Microsoft Teams notifications](/how-tos/airflow/send-ms-teams-notifications.md)

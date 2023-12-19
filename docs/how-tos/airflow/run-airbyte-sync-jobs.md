@@ -47,7 +47,7 @@ In the following example DAG, you can notice a special task `load` that uses a `
 ```yaml
 example_dag:
   ...
-  # DAG Tasks
+# DAG Tasks
 nodes:
   extract_and_load_airbyte:
     generator: AirbyteDbtGenerator
