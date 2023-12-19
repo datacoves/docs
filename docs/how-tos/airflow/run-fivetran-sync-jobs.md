@@ -27,7 +27,7 @@ You can find, or generate, your Fivetran `API Key` and `API Secret` in [Fivetran
 As stated in [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs), we use  our custom DagFactory `generators` instead of `operator`
 
 ### Fields reference
-- **generator**: The Fivetran Tasks Generator uses the value `dagfactory.FivetranDbtGenerator`.
+- **generator**: The Fivetran Tasks Generator uses the value `dbt-coves.FivetranDbtGenerator`.
 - **dbt_list_args**: arguments sent to `dbt ls` to retrieve the dbt project sources used to retrieve Airbyte connections. The AirbyteDbtGenerator generator will find the Airbyte connections to trigger using dbt sources's database, schema and table name.
 
 ### YAML version

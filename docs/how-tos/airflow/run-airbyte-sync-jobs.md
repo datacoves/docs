@@ -38,7 +38,7 @@ In the following example DAG, you can notice a special task `load` that uses a `
 
 ### Field reference:
 
-- **generator**: The Airbyte Tasks Generator uses the value `dagfactory.AirbyteDbtGenerator`.
+- **generator**: The Airbyte Tasks Generator uses the value `dbt-coves.AirbyteDbtGenerator`.
 - **airflow_connection_id**: Id of the airflow connection that holds the information to connect to Airbyte system. (this was set up above)
 - **dbt_list_args**: arguments sent to `dbt ls` to retrieve the dbt project sources used to retrieve Airbyte connections. The AirbyteDbtGenerator generator will find the Airbyte connections to trigger using dbt sources's database, schema and table name.
 

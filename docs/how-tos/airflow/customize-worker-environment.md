@@ -8,7 +8,7 @@ TBD
 
 ## Using the custom image in your DAGs
 
-Every tast in an Airflow DAG's can use a different docker image. Operators accept an `executor_config` argument that can be used to customize the executor context.
+Every task in an Airflow DAG's can use a different docker image. Operators accept an `executor_config` argument that can be used to customize the executor context.
 
 Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as in this example.
 
@@ -87,13 +87,16 @@ yaml_sample_dag:
     email: some_user@exanple.com
     email_on_failure: true
 
-  tasks:
-    successful_task:
-      operator: airflow.operators.bash_operator.BashOperator
-      container_spec:
-        name: base
-        # Replace with your custom docker image <IMAGE REPO>:<IMAGE TAG>
-        image: <IMAGE REPO>:<IMAGE TAG>
+  # DAG Tasks
+  nodes:
+  ...
+   transform:
+    operator: airflow.operators.bash.BashOperator
+    type: task
+    config:
+      # Replace with your custom docker image <IMAGE REPO>:<IMAGE TAG>
+      image: <IMAGE REPO>:<IMAGE TAG>
+    
       bash_command: "echo SUCCESS!"
 
     failing_task:
