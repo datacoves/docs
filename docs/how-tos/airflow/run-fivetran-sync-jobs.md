@@ -22,6 +22,35 @@ Create a new connection using the following details:
 
 You can find, or generate, your Fivetran `API Key` and `API Secret` in [Fivetran Account settings](https://fivetran.com/account/settings)
 
+### transform/.dbt-coves/config.yml
+
+Below are the configurations in for dbt-coves airflow-dags. You will need to configure these if using dbt-coves to generate DAGS from YML
+
+### Field reference:
+- **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
+- **dags_path**: Relative path to dbt project where generated python DAGS will be stored
+- **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
+- **wait_for_completion**: creates an Airflow Sensor task that waits for the Fivetran Sync to be completed before triggering dependent tasks. Defaults to `True` if not specified
+- **poke_interval**: time interval (in seconds) in which the Sensor task checks Fivetran Sync status. Defaults to 30
+
+```yaml
+  airflow_dags:
+    secrets_manager: datacoves
+    secrets_tags: "extract_and_load_fivetran"
+    yml_path: /config/workspace/orchestrate/dags_yml_definitions/
+    dags_path: /config/workspace/orchestrate/dags/
+    generators_params:
+      FivetranDbtGenerator:
+        dbt_project_path: /config/workspace/transform
+        fivetran_conn_id: fivetran_connection
+        # Optional
+        wait_for_completion: true
+        run_dbt_compile: true
+        run_dbt_deps: false
+
+
+```
+
 ## Example DAG
 
 As stated in [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs), we use  our custom DagFactory `generators` instead of `operator`
@@ -46,33 +75,4 @@ nodes:
 
   transform:
       ...
-```
-### transform/.dbt-coves/config.yml
-
-Below are the configurations in for dbt-coves airflow-dags.
-
-### Field reference:
-- **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
-- **dags_path**: Relative path to dbt project where generated python DAGS will be stored
-- **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
-- **wait_for_completion**: creates an Airflow Sensor task that waits for the Fivetran Sync to be completed before triggering dependent tasks. Defaults to `True` if not specified
-- **poke_interval**: time interval (in seconds) in which the Sensor task checks Fivetran Sync status. Defaults to 30
-
-```yaml
-  airflow_dags:
-    secrets_manager: datacoves
-    secrets_tags: "extract_and_load_fivetran"
-    yml_path: /config/workspace/orchestrate/dags_yml_definitions/
-    dags_path: /config/workspace/orchestrate/dags/
-    generators_params:
-      FivetranDbtGenerator:
-        dbt_project_path: /config/workspace/transform
-        fivetran_conn_id: fivetran_connection
-
-        wait_for_completion: true
-        run_dbt_compile: true
-        run_dbt_deps: false
-
-      FivetranGenerator:
-        wait_for_completion: true
 ```

@@ -2,11 +2,12 @@
 
 ## Overview
 
-Integrations are used to configure external services such as Email and MS Teams notifications
+Integrations are used to configure external services such as Email, MS Teams and Slack notifications
 
 For more information see:
 - SMTP: used to [send email notifications from Airflow](/how-tos/airflow/send-emails.md)
 - MS Teams: used to [send Microsoft Teams messages from Airflow](/how-tos/airflow/send-ms-teams-notifications.md)
+- Slack: used to [send Slack messages from Airflow](/how-tos/airflow/send-slack-notifications.md)
 
 ## Integrations Listing
 
@@ -30,3 +31,4 @@ An Integration consists of the following fields:
 Depending on the type of integration selected, additional fields will be displayed. For information on these fields, see the following pages:
     - SMTP -> [send email notifications from Airflow](/how-tos/airflow/send-emails.md)
     - MS Teams -> [send Microsoft Teams messages from Airflow](/how-tos/airflow/send-ms-teams-notifications.md)
+    - Slack: -> [send Slack messages from Airflow](/how-tos/airflow/send-slack-notifications.md)
