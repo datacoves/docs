@@ -2,7 +2,7 @@
  
 You have the option to write out your DAGs in python or you can write them using yml and then have dbt-coves generate the python DAG for you.
 
-?>If using an Extract and Load tool in your DAG, ensure that you have configured it properly in `transform/.dbt-coves/config.yml`. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#transformdbt-covesconfigyml) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#transformdbt-covesconfigyml)
+?>If using an Extract and Load tool in your DAG, ensure that you have configured it properly in `transform/.dbt-coves/config.yml`. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
 
 ## Create the yml
 In `dags/dag_yml_definitions` directory create your yml file. 

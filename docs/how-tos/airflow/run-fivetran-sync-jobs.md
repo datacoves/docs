@@ -22,11 +22,39 @@ Create a new connection using the following details:
 
 You can find, or generate, your Fivetran `API Key` and `API Secret` in [Fivetran Account settings](https://fivetran.com/account/settings)
 
-### transform/.dbt-coves/config.yml
+### Configure transform/.dbt-coves/config.yml file
 
 Below are the configurations in for dbt-coves airflow-dags. You will need to configure these if using dbt-coves to generate DAGS from YML
 
 ### Field reference:
+- **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
+- **dags_path**: Relative path to dbt project where generated python DAGS will be stored
+- **fivetran_conn_id: Replace this with your id. To find it, navigate to the Setup tab in Fivetran and locate the `Fivetran Connector ID`
+![Fivetran Connector ID](./assets/fivetran_conn_id.png)
+- **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
+- **wait_for_completion**: creates an Airflow Sensor task that waits for the Fivetran Sync to be completed before triggering dependent tasks. Defaults to `True` if not specified
+- **poke_interval**: time interval (in seconds) in which the Sensor task checks Fivetran Sync status. Defaults to 30
+
+```yaml
+  airflow_dags:
+    yml_path: /config/workspace/orchestrate/dags_yml_definitions/
+    dags_path: /config/workspace/orchestrate/dags/
+    generators_params:
+      FivetranDbtGenerator:
+        dbt_project_path: /config/workspace/transform
+        fivetran_conn_id: fivetran_connection
+        # Optional
+        poke_interval: 60
+        wait_for_completion: true
+        run_dbt_compile: true
+        run_dbt_deps: false
+```
+
+Alterneravely you can use the Datacoves Secrets Manager
+
+### Field reference:
+- **secrets-manager**: The method used to store your Fivetran Secret. This means `datacoves` has the key configured securely.
+- **secrets-tag**: This tag is what Datacoves uses to reference the secret
 - **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
 - **dags_path**: Relative path to dbt project where generated python DAGS will be stored
 - **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
@@ -44,11 +72,10 @@ Below are the configurations in for dbt-coves airflow-dags. You will need to con
         dbt_project_path: /config/workspace/transform
         fivetran_conn_id: fivetran_connection
         # Optional
+        poke_interval: 60
         wait_for_completion: true
         run_dbt_compile: true
         run_dbt_deps: false
-
-
 ```
 
 ## Example DAG

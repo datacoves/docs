@@ -32,7 +32,7 @@ To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte schedulin
 
 ![Replication frequency](./assets/airbyte-replication-frequency.png)
 
-### transform/.dbt-coves/config.yml
+### Configure transform/.dbt-coves/config.yml file
 
 Below are the configurations in for dbt-coves airflow-dags. You will need to configure these if using dbt-coves to generate DAGS from YML.
 

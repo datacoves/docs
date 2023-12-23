@@ -4,6 +4,9 @@
 
 This page is used to invite users into your account.
 
+Navigate to the invitations page
+![Invitations Dropdown](./assets/invitations_dropdown.png)
+
 ## Invitation Listing
 
 This grid shows all pending invitations for your account. Each row also has two action buttons `delete` which cancels an invitation and `resend` to resend an invitation link.
