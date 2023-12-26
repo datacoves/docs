@@ -5,14 +5,33 @@ You have the option to write out your DAGs in python or you can write them using
 ?>If using an Extract and Load tool in your DAG, ensure that you have configured it properly in `transform/.dbt-coves/config.yml`. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
 
 ## Create the yml
-In `dags/dag_yml_definitions` directory create your yml file. 
+In the `dags/dag_yml_definitions` directory create your yml file. 
  
 The name of the file will be the name of the DAG. 
  
 eg) `yml_dbt_dag.yml`
 
+```yaml
+description: "Sample DAG for dbt build"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_1
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  # Replace with the email of the recipient for failures
+  email: gomezn@datacoves.com
+  email_on_failure: true
+catchup: false
 
-![Airflow yml](how-tos/../assets/airflow_yml.png)
+
+nodes:
+  build_dbt:
+    type: task
+    operator: operators.datacoves.bash.DatacovesBashOperator
+    #virtualenv: /path/to/virtualenv or None: Datacoves Airflow venv will be used
+    bash_command: "dbt-coves dbt -- run -s personal_loans"
+```
 
 ## Generate your python file from your yml file
 To generate your DAG, be sure you have the yml you wish to generate a DAG from open. Select `more` in the bottom bar
@@ -20,6 +39,7 @@ To generate your DAG, be sure you have the yml you wish to generate a DAG from o
 ![select More](how-tos/../assets/more.png)
 
 Select `Generate Airflow Dag for YML`. This will run the command to generate the individual yml.
+
 
 ![Generate Airflow Dag](how-tos/../assets/generate_airflow_dag.png)
 
@@ -31,3 +51,31 @@ To generate all of the DAGS from your `dags/dag_yml_definitions` directory
 - Run `dbt-coves generate-airflow` in your terminal.
 
 All generated python DAGs will be placed in the `orchestrate/dags`
+
+```python
+import datetime
+
+from airflow.decorators import dag
+from operators.datacoves.bash import DatacovesBashOperator
+
+
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@datacoves.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG for dbt build",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_1"],
+    catchup=False,
+)
+def yaml_dbt_dag():
+    build_dbt = DatacovesBashOperator(
+        task_id="build_dbt", bash_command="dbt-coves dbt -- run -s personal_loans"
+    )
+
+
+dag = yaml_dbt_dag()
+```
