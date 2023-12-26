@@ -56,7 +56,7 @@ For more information checkout our Airflow Section in the How-tos Tab or our Refe
 
     [Invite Users](reference/admin-menu/invitations.md)
 
-2. Once a user is registered you can edit and delete users
+2. Once a user is registered you can edit or delete users
 
     [Assign Role](reference/admin-menu/users.md)
 
