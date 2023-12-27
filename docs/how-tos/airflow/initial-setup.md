@@ -27,10 +27,5 @@ You can use our example [Analytics project](https://github.com/datacoves/balboa)
 
 Relative path to the folder where Python DAGs are located, we suggest `/orchestrate/dags`.
 
-### YAML DAGs path
+![Service Configuration](./assets/airflow_config.png)
 
-Relative path to the folder where YAML DAGs are located, we suggest `/orchestrate/dags`.
-
-In order to support Yaml DAGs definition in your project, you'll need to place a yaml parser in your `python dags path`.
-
-You can get that parser from our standard Analytics project [here](https://github.com/datacoves/balboa/blob/main/orchestrate/dags/yml_dags.py).

@@ -4,9 +4,9 @@
 
 Before the setup call with the Datacoves team, ensure you have the following ready.
 
-### dbt
-
-What version of dbt are you using? (**email us the answer at ngomez3@datacoves.com and mayra@datacoves.com so we are ready for the call**)
+?> Email ngomez3@datacoves.com and mayra@datacoves.com with the answers to the following 2 questions so we can be ready for the call.
+1. What version of dbt are you using?
+2. What type of account are you using to authenticate? ie) Google or Microsoft 
 
 ### Data Warehouse
 
@@ -21,7 +21,6 @@ What version of dbt are you using? (**email us the answer at ngomez3@datacoves.c
 
 
 **Network Access:** Verify if your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `40.76.152.251`
-
 
 ### Git
 
