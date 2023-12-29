@@ -57,6 +57,7 @@
     - [Connection Templates](reference/admin-menu/connection_templates.md)
     - [Service Connections](reference/admin-menu/service_connections.md)
     - [Integrations](reference/admin-menu/integrations.md)
+  - [Airflow Defaults](reference/Airflow/)
   - [Metrics & Logs](reference/metrics-and-logs/)
     - [Dashboards](reference/metrics-and-logs/dashboards.md)
   - [Security](/reference/security/)
