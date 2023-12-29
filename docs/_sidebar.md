@@ -1,7 +1,7 @@
 - [Home](/)
 - **Getting Started**
-- [Admin](getting-started/Admin/)
-  - [Create Account](getting-started/Admin/create-account.md)
+- [Administrator](getting-started/Admin/)
+  - [Account Pre-reqs](getting-started/Admin/create-account.md)
 - [Developer](getting-started/developer/)
   - [Transform Tab](getting-started/developer/transform-tab.md)
   - [Snowflake Extension](getting-started/developer/snowflake-extension.md)

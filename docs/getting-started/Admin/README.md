@@ -1,48 +1,59 @@
 # Datacoves Getting Started Guides - Admin
 
 ## Introduction
-Welcome Admin! 
+Welcome Datacoves Administrator! 
 
-You have the importand role of configuring the Datacoves platform to fit your needs. No worries, you are not alone. We are here to help you every step of the way so you and your team can start delivering valuable data insights in no time!
+You have the important role of configuring the Datacoves platform to fit your needs. No worries, you are not alone. We are here to help you every step of the way so you and your team can start delivering valuable insights in no time!
 
-## Create your account
+## Creating your Datacoves account
 
 The first step with Datacoves is setting up your account. We usually do this on a call with you. However, please view the important information before the call for a smooth onboarding.
 
-[Create your Account](getting-started/Admin/create-account.md)
+[Setting up your Datacoves Account](getting-started/Admin/create-account.md)
 
-## Airflow
-Now that you have your account, it is time to configure airflow. This proccess will take you from zero to airflow in no time!
+## Configuring Airflow
+You don't need Airflow to begin using Datacoves, but at some point you will want to orchestrate / schedule your dbt jobs. 
 
-1. Start with the initial setup of airflow in your environment. Be sure to double check your branch name, profiles path and DAG path.
+The following steps will take you from zero to Airflow in no time!
+
+1. Start with the initial configuration of Airflow in your Datacoves environment. Be sure to double check your branch name, profiles path and DAG path.
 
     [Initial Airflow Setup](how-tos/airflow/initial-setup.md)
 
-2. You are ready to set up your service connection. By creating your service connection you will be able to use it late in the integrations step.
+2. Airflow will authenticate to your data warehouse using a service connection. The credentials defined here will be used by dbt when your jobs run.
 
     [Setup Service Connection](reference/admin-menu/service_connections.md)
 
-3. We can now use our newly configured service connection to set an integration. We have a few ways to send notificiations. 
+3. When Airflow jobs rum you may want to receive notifications. We have a few ways to send notificiations in Datacoves. 
 
-    [Setup Email Integration](how-tos/airflow/send-emails.md)
+    - **Email:** [Setup Email Integration](how-tos/airflow/send-emails.md)
 
-    [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications.md)
+    - **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications.md)
     
-    [Setup Slack Integration](how-tos/airflow/send-slack-notifications.md)
+    - **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications.md)
 
-4. Lets get started creating DAGS!
+Now that Airflow is configured, you can begin creating DAGS!
 
-    We have a couple of ways to do this. We can use standard Python or we can generate our DAGS using yml. For DAG generation, it is important to note that if your DAG contains any Extract and Load steps, extra configuration will be needed.
 
-    [Generate DAGS from yml](how-tos/airflow/generate-dags-from-yml.md)
-
-5. Now that we have all the configuration of Airflow, notifications, Extract and Load, and yml DAG generation, here is the quickest way to run dbt.
+## Creating Aiflow Dags
+...
+    a. The simplest DAG you can create is one that only runs dbt
 
     [Run dbt](how-tos/airflow/run-dbt.md)
 
-6. Have a DAG that contains special libraries? Then they need to be run a different way. No worries, this simple guide will show you how
+
+    We have a couple of ways to do this. We can use standard Python or we can generate our DAGS using yml. For DAG generation, it is important to note that if your DAG contains any Extract and Load steps, additional configuration may be needed.
+
+    [Generate DAGS from yml](how-tos/airflow/generate-dags-from-yml.md)
+
+
 
     [External Python DAG](how-tos/airflow/external-python-dag.md)
+
+5. Now that we have all the configuration of Airflow, notifications, Extract and Load, and yml DAG generation, here is the quickest way to run dbt.
+
+
+
 
 7. Lastly, we can monitor our worker logs with AWS Cloudwatch
 
