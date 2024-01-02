@@ -2,6 +2,9 @@
 - **Getting Started**
 - [Administrator](getting-started/Admin/)
   - [Account Pre-reqs](getting-started/Admin/create-account.md)
+  - [Configure Airflow](getting-started/Admin/configure-airflow.md)
+  - [Creating Airflow Dags](getting-started/Admin/creating-airflow-dags.md)
+  - [User & Resource Management](getting-started/Admin/user-resource-management.md)
 - [Developer](getting-started/developer/)
   - [Transform Tab](getting-started/developer/transform-tab.md)
   - [Snowflake Extension](getting-started/developer/snowflake-extension.md)

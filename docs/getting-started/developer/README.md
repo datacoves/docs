@@ -5,7 +5,7 @@ Welcome Developer!
 
 Please use these getting started guides to accelerate your onboarding to Datacoves or as a quick refresher. 
 
-Happy Developing!
+-Datacoves Team
 
 ## Developer Essentials
 1. After [configuring your user settings](how-tos/datacoves/transform/initial.md), jump right in to your browser VS Code experience; everything you need, preconfigured at your fingertips. Remember, you will not be able to access the transform tab if your user settings have not been properly configured.
