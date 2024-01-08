@@ -20,7 +20,7 @@ To create a new connection template click the `Create Connection Template` butto
 
 ![Connections Create or Edit Page](./assets/connections_editnew_page.png)
 
-Each Connection Template consist of the following fields:
+### Each Connection Template consist of the following fields:
 
 - **Name** This is the name users will see when selecting the base connection template when entering credentials for themselves or service accounts.
 - **Enabled for users** This flag indicates whether this template will be available for users or only for service accounts. To simplify the end-user experience, it is best to show them only the primary template they should use when entering their credentials. If enabled, a new field will appear:
@@ -47,7 +47,19 @@ Each Connection Template consist of the following fields:
 - **Project** This defines the Datacoves project that should be associated with this connection template
 - **Type** Defines the data warehouse provider so that users are presented the appropriate fields when entering their credentials.
 - **Provider connection details** Based on the Provider Type selected, available default parameters will be displayed.
-  - For Snowflake, the available fields are: `Account`, `Warehouse`, `Database`, and `Role`
+  
+### For Snowflake, the available fields are: 
+  - `Account`:To locate this, visit your snowflake account > Click on the menu in the bottom left corner > Select the account > select the `Copy account identifier`. 
+  
+!> You must replace the `.`  with a `-` eg) `my.account` > `my-account` or you will get an error.
+
+![Snowflake Account Locator](assets/snowflake_account_locator.png)
+  - `Warehouse` - The default Snowflake warehouse
+  - `Database` - The default Snowflake database 
+  - `Role`- The default Snowflake role
     ![Snowflake Connection Type](./assets/connections_editnew_snowflake.png)
-  - For Redshift, the available fields are: `Host` and `Database`
+
+### For Redshift, the available fields are: 
+  - `Host`
+  - `Database`
     ![Redshift Connection Type](./assets/connections_editnew_redshift.png)

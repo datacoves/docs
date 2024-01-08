@@ -20,6 +20,8 @@ Here you will select the type of connection you want to create. For Snowflake, c
 
 Finally, enter your Snowflake credentials (these will be shared by all users, so use a service account that has read access to your data marts)
 
+?> For the`Account` field you will need to replace `.` with `-`. See [Here](reference/admin-menu/connection_templates.md#for-snowflake-the-available-fields-are) to find your Snowflake account locator.
+
 ![Snowflake Credentials](./assets/add-db-4.png)
 
 ## Adding a Dataset
