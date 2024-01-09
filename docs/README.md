@@ -9,6 +9,9 @@ This documentation is divided in 4 parts following the structure is inspired by 
 - **Explanation** give you an understanding as to the rationale for the suggestions we make
 - **Reference guides** give you detailed information on a given topic
 
+?>
+  If you are here for the first time, check out the **Getting Started** section on the sidebar.
+
 # Support
 
 ## Slack

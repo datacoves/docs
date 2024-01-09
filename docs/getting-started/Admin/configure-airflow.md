@@ -9,12 +9,13 @@ You don't need Airflow to begin using Datacoves, but at some point you will want
 
     [Setup Service Connection](reference/admin-menu/service_connections.md)
 
-3. When Airflow jobs run you may want to receive notifications. We have a few ways to send notificiations in Datacoves. 
+3. When Airflow jobs run you may want to receive notifications. We have a few ways to send notifications in Datacoves. 
 
     - **Email:** [Setup Email Integration](how-tos/airflow/send-emails.md)
 
     - **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications.md)
     
-    - **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications.md)
+    - **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications.md){:target="_blank"}
+    - **TEST:** <a href="/#/how-tos/airflow/send-slack-notifications" target="_blank">Hello, world!</a>
 
-Now that Airflow is configured, you can begin creating DAGS!
+Once Airflow is configured, you can begin creating DAGS!

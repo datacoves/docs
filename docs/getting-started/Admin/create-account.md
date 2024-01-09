@@ -19,9 +19,9 @@ Before the setup call with the Datacoves team, ensure you have the following rea
 | Databricks | Host, Schema, HTTP Path, Token |
 | BigQuery | Dataset, Keyfile JSON |
 
-?> For the Snowflake `Account` field you will need to replace `.` with `-`. See [Here](reference/admin-menu/connection_templates.md#for-snowflake-the-available-fields-are) to find your Snowflake account locator.
+?> For the Snowflake `Account` field you will need to find your account locator and replace `.` with `-`. Check out [our instructions](reference/admin-menu/connection_templates.md#for-snowflake-the-available-fields-are) on how to find your Snowflake account locator.
 
-**Network Access:** Verify if your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `40.76.152.251`
+**Network Access:** Verify that your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `40.76.152.251`
 
 ### Git
 
