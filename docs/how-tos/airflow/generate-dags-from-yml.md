@@ -2,7 +2,26 @@
  
 You have the option to write out your DAGs in python or you can write them using yml and then have dbt-coves generate the python DAG for you.
 
+## Configure transform/.dbt-coves/config.yml
+
+First, locate your `config.yml` file inside `transform/.dbt-coves`.
+- `airflow_dags`: These are the configurations for the `dbt-coves generate-airflow` command.
+  
 ?>If using an Extract and Load tool in your DAG, ensure that you have configured it properly in `transform/.dbt-coves/config.yml`. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
+  - `yaml_path`: This is where dbt-coves will look for the yaml files to generate your Python DAGS.
+  - `dags_path`: This is where dbt-coves will place your generated python DAGS.
+
+Add the following to your config.yml file. These are the recommended naming conventions for  `yaml_path` and `dags_path` but they can be customized.
+```yaml
+# config.yml
+
+airflow_dags:
+    # source location for yml files
+    yml_path: /config/workspace/orchestrate/dags_yml_definitions/
+
+    # destination for generated python dags
+    dags_path: /config/workspace/orchestrate/dags/
+```
 
 ## Create the yml
 In the `dags/dag_yml_definitions` directory create your yml file. 

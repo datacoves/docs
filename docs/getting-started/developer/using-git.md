@@ -53,5 +53,5 @@ For more in-depth information and advanced usage, please consult the **[Source C
 ## Resources
 
 - [Git Documentation](https://git-scm.com/doc)
-- [GitHub Learning Lab](https://lab.github.com/)
+- [GitHub Learning Lab](https://github.com/apps/github-learning-lab)
 - [Git Cheat Sheet](https://github.com/github/training-kit/blob/master/downloads/github-git-cheat-sheet.pdf)
