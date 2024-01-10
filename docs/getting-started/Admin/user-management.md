@@ -10,4 +10,4 @@
 
 3. When users no longer need access to Datacoves, you can delete their accounts.
 
-    <a href="/#/how-tos/airflow/worker-logs" target="_blank" rel="noopener">Monitor Worker Logs</a>
+    <a href="/#/reference/admin-menu/users.md#deleting-a-user" target="_blank" rel="noopener">Deleting a User</a>
