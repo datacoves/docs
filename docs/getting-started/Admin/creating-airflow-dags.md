@@ -9,7 +9,7 @@ Now that airflow is configured we can turn our attention to DAGS. Below are the 
 
     <a href="/#/how-tos/airflow/run-dbt" target="_blank" rel="noopener">Run dbt</a>
 
-3. You may also wish to use external libraries in your DAGs such as Pandas. In order to do that effectively, we create our Python DAGs in a seperate directory `python_scripts` and use the `DatacovesBashOperator` to handle all the behind the scenese work as well as run the custom DAG.
+3. You may also wish to use external libraries in your DAGs such as Pandas. In order to do that effectively, we create our Python DAGs in a separate directory `python_scripts` and use the `DatacovesBashOperator` to handle all the behind the scenes work as well as run the custom script.
 
     <a href="/#/how-tos/airflow/external-python-dag" target="_blank" rel="noopener">External Python DAG</a>
 

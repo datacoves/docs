@@ -10,7 +10,7 @@ This documentation is divided in 4 parts following the structure is inspired by 
 - **Reference guides** give you detailed information on a given topic
 
 ?>
-  If you are here for the first time, check out the **Getting Started** section on the sidebar.
+  If you are here for the first time, check out the **Getting Started** section for [Administrators](getting-started/Admin/) and [Developers](getting-started/developer/) on the sidebar.
 
 # Support
 
