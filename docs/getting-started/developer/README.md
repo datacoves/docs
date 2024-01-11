@@ -8,13 +8,13 @@ Please use these getting started guides to accelerate your onboarding. The guide
 -Datacoves Team
 
 ## Developer Essentials
-1. First, you will need to configuring your user settings. You will not be able to access the transform tab if your user settings have not been properly configured.  
+1. First, you will need to configure your user settings. You will not be able to access the transform tab if your user settings have not been properly configured.  
 
    <a href="/#/how-tos/datacoves/transform/initial" target="_blank" rel="noopener">Configuring Your User Settings</a>
 
 2. Once your user settings have been configured and your git repo has been tested, you will be able to jump right in to your browser VS Code experience; everything you need, pre-configured at your fingertips. This is where the dbt magic happens.
 
-    [Transform Tab](getting-started/developer/transform-tab.md)
+    [Transform Tab (VS Code)](getting-started/developer/transform-tab.md)
 
 3. With the Snowflake extension you don't have to leave the comfort of your Datacoves tab! Learn how to use this powerful extension, along with some handy tips and tricks. 
 
@@ -24,6 +24,6 @@ Please use these getting started guides to accelerate your onboarding. The guide
    
    [Working with dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)
 
-5. With the Git Extension, our git aliasing and more, use git with ease in Datacoves.
+5. Use git with ease via the VS Code Git Extension, our pre-configured git aliases, and more.
    
    [Using Git](getting-started/developer/using-git.md)

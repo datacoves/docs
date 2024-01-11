@@ -1,6 +1,6 @@
-# Getting Started with the Transform Tab
+# Getting Started with the VS Code in the browser via the Transform Tab
 
-## The getting started video guide covers
+## This video guide covers:
 
 - User Settings Configurations
 - Terminal setup
