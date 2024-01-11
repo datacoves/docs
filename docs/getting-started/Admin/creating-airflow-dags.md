@@ -12,8 +12,3 @@ Now that airflow is configured we can turn our attention to DAGS. Below are the 
 3. You may also wish to use external libraries in your DAGs such as Pandas. In order to do that effectively, we create our Python DAGs in a separate directory `python_scripts` and use the `DatacovesBashOperator` to handle all the behind the scenes work as well as run the custom script.
 
     <a href="/#/how-tos/airflow/external-python-dag" target="_blank" rel="noopener">External Python DAG</a>
-
-
-4. Lastly, we can monitor our worker logs with AWS Cloudwatch
-
-    <a href="/#/how-tos/airflow/worker-logs" target="_blank" rel="noopener">Monitor Worker Logs</a>

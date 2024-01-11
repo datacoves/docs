@@ -5,7 +5,7 @@ You have the option to write out your DAGs in python or you can write them using
 ## Configure config.yml
 ?>This configuration is for the `dbt-coves generate-airflow` command. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves settings.
 
-dbt-coves will read settings from `.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root level. Then add your`config.yml` file inside. Datacoves recommends having your dbt project inside of a transform directory. eg) `transform/.dbt-coves/config.yml`. 
+dbt-coves will read settings from `.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
 
   - `yaml_path`: This is where dbt-coves will look for the yaml files to generate your Python DAGS.
   - `dags_path`: This is where dbt-coves will place your generated python DAGS.
@@ -27,8 +27,17 @@ generate:
 ?>If using an Extract and Load tool in your DAG, additional configuration will be needed inside the config.yml file. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
 
 
-## Create the yml
-In the `dags/dag_yml_definitions` directory create your yml file. 
+## Airflow Folder Structure
+We recommend that all Airflow related files be located in an `orchestrate/`folder in your project root. Within that folder we suggest the following sub-folders:
+- `orchestrate/dags` this folder will contain python dags that airflow will read
+- `orchestrate/dag_yml_definitions` (optional) this folder will contain yml dag definition files that dbt-coves will compile
+- `orchestrate/python_scripts` (optional) this folder will contain custom python scripts that you can call from an Airflow DAG
+
+
+
+## Create the yml file for your Airflow DAG
+
+In the `orchestrate/dag_yml_definitions` directory create your yml file. 
  
 The name of the file will be the name of the DAG. 
  
