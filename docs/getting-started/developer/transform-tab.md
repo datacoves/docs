@@ -2,7 +2,7 @@
 
 ## The getting started video guide covers
 
-- User Settings Configurations
+- <a href="/#/how-tos/datacoves/transform/initial" target="_blank" rel="noopener"> User Settings Configurations</a>
 - Terminal setup
 - A high level overview of Vscode editor
 - How to reset your environment

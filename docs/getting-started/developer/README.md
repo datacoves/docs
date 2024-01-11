@@ -10,7 +10,7 @@ Please use these getting started guides to accelerate your onboarding. The guide
 ## Developer Essentials
 1. First, you will need to configuring your user settings. You will not be able to access the transform tab if your user settings have not been properly configured.  
 
-   <a href="/#/how-tos/datacoves/transform/initial" target="_blank" rel="noopener">Configuring Your User Settings</a>
+    [Configure Your User Settings](how-tos/datacoves/transform/initial.md)
 
 2. Once your user settings have been configured and your git repo has been tested, you will be able to jump right in to your browser VS Code experience; everything you need, pre-configured at your fingertips. This is where the dbt magic happens.
 
