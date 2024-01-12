@@ -1,7 +1,7 @@
 # Configuring Airflow
 You don't need Airflow to begin using Datacoves, but at some point you will want to orchestrate / schedule your dbt jobs. 
 
-1. Start with the initial configuration of Airflow in your Datacoves environment. Be sure to double check your branch name, profiles path and DAG path.
+1. Start with the initial configuration of Airflow in your Datacoves environment. You may need to make changes to your repository to have the correct profiles path and DAG path.
 
     <a href="/#/how-tos/airflow/initial-setup" target="_blank" rel="noopener">Initial Airflow Setup</a>
 

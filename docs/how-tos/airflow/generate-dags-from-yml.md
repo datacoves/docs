@@ -3,7 +3,7 @@
 You have the option to write out your DAGs in python or you can write them using yml and then have dbt-coves generate the python DAG for you.
 
 ## Configure config.yml
-?>This configuration is for the `dbt-coves generate-airflow` command. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves settings.
+?>This configuration is for the `dbt-coves generate-airflow` command which generates the DAGs from your yml files. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves configuration settings.
 
 dbt-coves will read settings from `.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
 
@@ -26,22 +26,15 @@ generate:
 
 ?>If using an Extract and Load tool in your DAG, additional configuration will be needed inside the config.yml file. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
 
-
-## Airflow Folder Structure
-We recommend that all Airflow related files be located in an `orchestrate/`folder in your project root. Within that folder we suggest the following sub-folders:
-- `orchestrate/dags` this folder will contain python dags that airflow will read
-- `orchestrate/dag_yml_definitions` (optional) this folder will contain yml dag definition files that dbt-coves will compile
-- `orchestrate/python_scripts` (optional) this folder will contain custom python scripts that you can call from an Airflow DAG
-
-
-
 ## Create the yml file for your Airflow DAG
 
-In the `orchestrate/dag_yml_definitions` directory create your yml file. 
+Inside your `orchestrate` folder, create a folder named `dag_yml_definitions`. dbt-coves will look for your yaml in this folder to generate your Python DAGs. 
+
+ie) `orchestrate/dag_yml_definitions`
  
-The name of the file will be the name of the DAG. 
+**Note**: The name of the file will be the name of the DAG. 
  
-eg) `yml_dbt_dag.yml`
+eg) `yml_dbt_dag.yml` = `yml_dbt_dag`
 
 ```yaml
 description: "Sample DAG for dbt build"
