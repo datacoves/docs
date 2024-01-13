@@ -3,23 +3,27 @@
 ## Introduction
 Welcome Developer! 
 
-Please use these getting started guides to accelerate your onboarding to Datacoves or as a quick refresher. 
+Please use these getting started guides to accelerate your onboarding. The guides cover everything from configuring your user settings to fundamental tips and shortcuts. 
 
-Happy Developing!
+-Datacoves Team
 
 ## Developer Essentials
-1. After [configuring your user settings](how-tos/datacoves/transform/initial.md), jump right in to your browser VS Code experience; everything you need, preconfigured at your fingertips. Remember, you will not be able to access the transform tab if your user settings have not been properly configured.
+1. First, you will need to configure your user settings. You will not be able to access the transform tab if your user settings have not been properly configured.  
 
-    [Transform Tab](getting-started/developer/transform-tab.md)
+    [Configure Your User Settings](how-tos/datacoves/transform/initial.md)
 
-2. With the Snowflake extension you don't have to leave the comfort of your Datacoves tab! Learn how to use this powerful extension, along with some handy tips and tricks. 
+2. Once your user settings have been configured and your git repo has been tested, you will be able to jump right in to your browser VS Code experience; everything you need, pre-configured at your fingertips. This is where the dbt magic happens.
+
+    [Transform Tab (VS Code)](getting-started/developer/transform-tab.md)
+
+3. With the Snowflake extension you don't have to leave the comfort of your Datacoves tab! Learn how to use this powerful extension, along with some handy tips and tricks. 
 
    [Snowflake Extension](getting-started/developer/snowflake-extension.md)
 
-3. Have the best and most efficient dbt experience with Datacoves! We cover some nifty shortcuts and accelerors to help you hit the ground running with dbt.
+4. Have the best and most efficient dbt experience with Datacoves! We cover some nifty shortcuts and accelerators to help you hit the ground running with dbt.
    
    [Working with dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)
 
-4. With the Git Extension, our git aliasing and more, use git with ease in Datacoves.
+5. Use git with ease via the VS Code Git Extension, our pre-configured git aliases, and more.
    
    [Using Git](getting-started/developer/using-git.md)

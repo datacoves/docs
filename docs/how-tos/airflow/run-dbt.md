@@ -1,21 +1,21 @@
 # How to run dbt from an Airflow worker
 
-Airflow monitors a git repository's branch running `git pull` every minute, so it requires the cloned repo's folder to be read-only.
+Airflow synchronizes a git repository's <a href="/#/reference/admin-menu/environments" target="_blank" rel="noopener">configured git branch</a> every minute.
 
 To run `dbt` commands easily, we provide a pre-configured dbt environment with the necessary python dependencies. Our Airflow also does the following automatically:
 
 - Copies the cloned dbt project to a writable folder within Airflow
 - Runs `dbt deps` if `dbt_modules` and `dbt_packages` folders do not exist
 
-This means that you can simply run `dbt-coves dbt <dbt subcommand>` in your Airflow DAG and we will handle the rest.
+This means that you can simply run `dbt-coves dbt -- <dbt subcommand>` in your Airflow DAG and we will handle the rest.
 
 ## Create a DAG that uses the script
 
-If your dbt command like `dbt run` works in your devevelopment environment, you should be able to create an Airflow DAG that will run this command automatically.
+If your dbt command like `dbt run` works in your development environment, you should be able to create an Airflow DAG that will run this command automatically.
 
 Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python requirements.
 
-Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`.
+Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. The `DatacovesBashOperator` will automatically activate that environment.
 
 ### Python version
 
@@ -24,7 +24,6 @@ import datetime
 
 from airflow.decorators import dag
 from operators.datacoves.bash import DatacovesBashOperator
-
 
 @dag(
     default_args={
@@ -49,7 +48,7 @@ dag = yaml_dbt_dag()
 ```
 
 ### YAML version
-The file name will be the DAG name. 
+The name of the file will used as the DAG name. 
 
 ```yaml
 description: "Sample DAG for dbt build"
@@ -63,7 +62,6 @@ default_args:
   email: gomezn@datacoves.com
   email_on_failure: true
 catchup: false
-
 
 nodes:
   build_dbt:

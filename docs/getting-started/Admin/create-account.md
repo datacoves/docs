@@ -4,9 +4,9 @@
 
 Before the setup call with the Datacoves team, ensure you have the following ready.
 
-?> Email ngomez3@datacoves.com and mayra@datacoves.com with the answers to the following 2 questions so we can be ready for the call.
+?> Email gomezn@datacoves.com and mayra@datacoves.com with the answers to the following 2 questions so we can be ready for the call.
 1. What version of dbt are you using?
-2. What type of account are you using to authenticate? ie) Google or Microsoft 
+2. Do you use Google / Google Workspace or Microsoft to authenticate? Datacoves leverages your existing authentication service.
 
 ### Data Warehouse
 
@@ -19,8 +19,9 @@ Before the setup call with the Datacoves team, ensure you have the following rea
 | Databricks | Host, Schema, HTTP Path, Token |
 | BigQuery | Dataset, Keyfile JSON |
 
+?> For the Snowflake `Account` field you will need to find your account locator and replace `.` with `-`. Check out <a href="/#/reference/admin-menu/connection_templates.md#for-snowflake-the-available-fields-are" target="_blank" >our instructions</a> on how to find your Snowflake account locator.
 
-**Network Access:** Verify if your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `40.76.152.251`
+**Network Access:** Verify that your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `40.76.152.251`
 
 ### Git
 
