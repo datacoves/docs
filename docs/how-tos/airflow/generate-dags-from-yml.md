@@ -53,7 +53,6 @@ nodes:
   build_dbt:
     type: task
     operator: operators.datacoves.bash.DatacovesBashOperator
-    #virtualenv: /path/to/virtualenv or None: Datacoves Airflow venv will be used
     bash_command: "dbt-coves dbt -- run -s personal_loans"
 ```
 
