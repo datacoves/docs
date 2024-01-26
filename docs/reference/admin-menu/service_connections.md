@@ -24,7 +24,15 @@ To create a new Service Connection click the `New Connection` button.
 
 A Service Connection consists of the following fields:
 
-- **Name** Defines how the connection will be referred to by the automated service and will be included in the name of the environment variable like `DATACOVES__<name>__ROLE`
+- **Name** Defines how the connection will be referred to by the automated service. Should be called `main` and will be included in the name of the environment variables like: 
+  - `DATACOVES__<NAME>__ROLE`
+  - `DATACOVES__<NAME>__ACCOUNT`
+  - `DATACOVES__<NAME>__WAREHOUSE`
+  - `DATACOVES__<NAME>__ROLE`
+  - `DATACOVES__<NAME>__DATABASE`
+  - `DATACOVES__<NAME>__SCHEMA`
+  - `DATACOVES__<NAME>__USER`
+  - `DATACOVES__<NAME>__PASSWORD`
 - **Environment** The Datacoves environment associated with this service connection.
 - **Service** The Datacoves stack service where this connection should be made available e.g. Airflow
 - **Connection Template** The connection template to base this service connection on(i.e. the defaults)
