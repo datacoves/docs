@@ -28,6 +28,8 @@
     - [Run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs.md)
     - [Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
   - [Datacoves](/how-tos/datacoves/)
+    - [Admin Setup](/how-tos/datacoves/)
+      - [Configure Connection Templates](/how-tos/datacoves/setup/how_to_connection_template.md)
     - [Transform](/how-tos/datacoves/)
       - [Initial Configuration](/how-tos/datacoves/transform/initial.md)
       - [Override VS Code settings](/how-tos/datacoves/transform/override.md)
