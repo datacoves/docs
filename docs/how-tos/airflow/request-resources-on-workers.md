@@ -22,7 +22,6 @@ TRANSFORM_CONFIG = {
             containers=[
                 k8s.V1Container(
                     name="base",
-                    image="datacoves/airflow-pandas:latest",
                     resources=k8s.V1ResourceRequirements(
                         requests={"memory": "8Gi", "cpu":"1000m"}
                     )
@@ -32,6 +31,29 @@ TRANSFORM_CONFIG = {
     ),
 }
 
+with DAG(
+    dag_id = "python_sample_dag",
+    default_args = default_args,
+    start_date = datetime(2023, 1, 1),
+    catchup = False,
+    tags = ["version_4"],
+    description = "Sample python dag dbt run",
+    schedule_interval = "0 0 1 */12 *"
+) as dag:
+
+    successful_task = DatacovesBashOperator(
+        task_id = "successful_task",
+        executor_config = TRANSFORM_CONFIG,
+        # bash_command = "echo SUCCESS"
+        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build -s tag:loan_daily"
+    )
+
+    failing_task = DatacovesBashOperator(
+        task_id = 'failing_task',
+        bash_command = "some_non_existent_command"
+    )
+
+    successful_task >> failing_task
 ...
 ```
 
@@ -46,7 +68,6 @@ nodes:
     operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
     config:
-      image: datacoves/airflow-pandas:latest
       resources:
         memory: 8Gi
         cpu: 1000m
