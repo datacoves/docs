@@ -31,10 +31,17 @@ Below are the configurations in for dbt-coves airflow-dags. You will need to con
 - **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
 - **dags_path**: Relative path to dbt project where generated python DAGS will be stored
 
+>[!TIP]We make use of environment variables that we have configured for you upon set up. For more information on these variables please see [Datacoves Environment Variables](reference/datacoves/datacoves-env-vars.md)
+
 ```yaml
-airflow_dags:
-    yml_path: /config/workspace/orchestrate/dags_yml_definitions/
-    dags_path: /config/workspace/orchestrate/dags/
+generate:
+...
+  airflow_dags:
+    # source location for yml files
+    yml_path: "/config/workspace/{{ env_var('DATACOVES__AIRFLOW_DAGS_YML_PATH') }}"
+
+    # destination for generated python dags
+    dags_path: "/config/workspace/{{ env_var('DATACOVES__AIRFLOW_DAGS_PATH') }}"
 ```
 
 ## Example DAG
@@ -99,11 +106,11 @@ nodes:
   transform:
     operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
+    # The daily_run_fivetran tag must be set in the source.yml
+    bash_command: "dbt -- build
+                  -s 'tag:daily_run_fivetran+ -t prd'"
 
-    bash_command: "dbt-coves dbt -- build
-                  -s 'tag:daily_run_airbyte+ tag:daily_run_fivetran+ -t prd'"
-
-    dependencies: ["extract_and_load_airbyte","extract_and_load_fivetran"]
+    dependencies: ["extract_and_load_fivetran"]
 
   marketing_automation:
     operator: airflow.operators.bash.BashOperator
@@ -132,7 +139,7 @@ from operators.datacoves.bash import DatacovesBashOperator
 
 
 @dag(
-    default_args={"start_date": "2021-01"},
+    default_args={"start_date": "2024-01"},
     description="Loan Run",
     schedule_interval="0 0 1 */12 *",
     tags=["version_1"],
@@ -152,7 +159,7 @@ def daily_loan_run():
         datacoves_snowflake_google_analytics_4_sensor = FivetranSensor(
             task_id="datacoves_snowflake_google_analytics_4_sensor",
             connector_id="speak_menial",
-            poke_interval=60,
+            poke_interval=30,
             fivetran_conn_id="fivetran_connection",
         )
         datacoves_snowflake_google_analytics_4_sensor.set_upstream(
@@ -162,9 +169,9 @@ def daily_loan_run():
     tg_extract_and_load_fivetran = extract_and_load_fivetran()
     transform = DatacovesBashOperator(
         task_id="transform",
-        bash_command="dbt-coves dbt -- build -s 'tag:daily_run_airbyte+ tag:daily_run_fivetran+ -t prd'",
+        bash_command="dbt -- build -s 'tag:daily_run_fivetran+ -t prd'",
     )
-    transform.set_upstream([tg_extract_and_load_airbyte, tg_extract_and_load_fivetran])
+    transform.set_upstream([tg_extract_and_load_fivetran])
     marketing_automation = BashOperator(
         task_id="marketing_automation",
         bash_command="echo 'send data to marketing tool'",

@@ -34,7 +34,8 @@ from airflow.decorators import dag, task
 from operators.datacoves.bash import DatacovesBashOperator
 from operators.datacoves.dbt import DatacovesDbtOperator
 from pendulum import datetime
-....
+...
+
 # Invoke Dag
 dag = datacoves_sample_dag()
 dag.doc_md = __doc__

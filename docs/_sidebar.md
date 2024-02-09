@@ -69,6 +69,8 @@
   - [Airflow](reference/airflow/)
     - [Airflow Config Defaults](reference/airflow/airflow-config-defaults.md)
     - [Datacoves Operators](reference/airflow/datacoves-operator.md)
+  - [Datacoves](reference/datacoves/)
+    - [Datacoves Environment Variables](reference/datacoves/datacoves-env-vars.md)
   - [Metrics & Logs](reference/metrics-and-logs/)
     - [Dashboards](reference/metrics-and-logs/dashboards.md)
   - [Security](/reference/security/)
