@@ -29,7 +29,7 @@ Click `Configure`, give it a name, and optionally select an image to use as the 
 
 ![Create Incoming Webhook](./assets/create-incoming-webhook.png)
 
-?> **Warning** Store this URL in a safe place as you will need it in a subsequent step and anyone with this link can send notification to that MS Teams channel
+>[!ATTENTION] Store this URL in a safe place as you will need it in a subsequent step and anyone with this link can send notification to that MS Teams channel
 
 ## Prepare Airflow
 
@@ -47,7 +47,7 @@ Provide a name and select `MS Teams`.
 
 Provide the required details and `Save` changes.
 
-?> **Important:** The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
+>[!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
 
 ### Add integration to an Environment
 
@@ -79,7 +79,7 @@ MS Teams will receive a message with a 'View Log' link that users can click on a
 
 In the examples below, we will send a notification on failing tasks or when the full DAG completes successfully using our custom callbacks: `inform_failure` and `inform_success`.
 
-?> **Note:** In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
+>[!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
 
 To send MS Teams notifications, in the Airflow day we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
 

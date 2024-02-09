@@ -44,8 +44,7 @@ If Datacoves is able to connect to your Git repository, you will see _Tested_ ne
 
 When connecting to Snowflake, you can use either key based authentication or username/password authentication.
 
-?>**Note**:<br>
-To enable key-pair authentication, you must select `Inferred from user info using a custom template` when setting up the [Connection Template](/how-tos/datacoves/setup/how_to_connection_template.md). The Snowflake username must match the first part of your email, please let us know if your username is different.
+>[!NOTE]To enable key-pair authentication, you must select `Inferred from user info using a custom template` when setting up the [Connection Template](/how-tos/datacoves/setup/how_to_connection_template.md). The Snowflake username must match the first part of your email, please let us know if your username is different.
 
 If using key based authentication, you will need to provide or generate a key which will need to be added to Snowflake (contact us for information on how to automate this integration with Snowflake).
 

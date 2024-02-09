@@ -6,7 +6,7 @@ Accessing the dashboards list is easy:
 
 ![Dashboards Nav menu](./assets/dashboards-nav.png)
 
-?> We recommend you bookmark your favorite dashboards so they are pinned in the home page.
+>[!TIP]We recommend you bookmark your favorite dashboards so they are pinned in the home page.
 
 ## Prebuilt dashboards
 
