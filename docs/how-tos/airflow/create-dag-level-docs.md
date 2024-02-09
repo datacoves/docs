@@ -8,6 +8,7 @@ The `dag.doc_md` attribute allows DAG authors to add markdown-formatted document
 2. After defining your DAG, assign the module's docstring (__doc__) to the dag.doc_md attribute. This makes the documentation written in the docstring visible in the Airflow UI.
    
 3. Once your DAG is deployed, you can view the documentation by navigating to the DAG's details page in the Airflow web interface. The markdown-formatted documentation will be displayed under the DAG Details tab.
+
 ![see dag docs](./assets/see-dag-docs.gif)
 
 ### Example: 
