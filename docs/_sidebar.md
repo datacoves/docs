@@ -14,7 +14,7 @@
 - **Diving Deeper**
 - [How to](/how-tos/)
   - [Airflow](/how-tos/airflow/)
-    - [Dag Documentation](how-tos/airflow/create-dag-level-docs.md)
+    - [Add Dag Documentation](how-tos/airflow/create-dag-level-docs.md)
     - [Initial setup](/how-tos/airflow/initial-setup.md)
     - [Generate DAGs from yml](/how-tos/airflow/generate-dags-from-yml.md)
     - [Get Current Branch Name from a DAG Task](/how-tos/airflow/get-current-branch-name.md)
