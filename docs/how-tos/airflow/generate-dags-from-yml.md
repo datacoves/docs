@@ -12,7 +12,7 @@ dbt-coves will read settings from `.dbt_coves/config.yml`. First, create your `.
 
 ### Place the following in your `config.yml file`:
 
->[!TIP]We use environment variables such as `DATACOVES__AIRFLOW_DAGS_YML_PATH` that are pre-configured for you. For more information on these variables see [Datacoves Environment Variables](reference/datacoves/datacoves-env-vars.md)
+>[!TIP]We use environment variables such as `DATACOVES__AIRFLOW_DAGS_YML_PATH` that are pre-configured for you. For more information on these variables see [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
 
 ```yml
 generate:
@@ -26,7 +26,7 @@ generate:
 ...
 ```
 
->[!ATTENTION]If using an Extract and Load tool in your DAG, additional configuration will be needed inside the config.yml file. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
+>[!TIP ]If using an Extract and Load tool in your DAG you can dynamically generate your sources; however, additional configuration will be needed inside the config.yml file. See [Airbyte](how-tos/airflow/run-airbyte-sync-jobs.md#configure-transformdbt-covesconfigyml-file) and [Fivetran](how-tos/airflow/run-fivetran-sync-jobs.md#configure-transformdbt-covesconfigyml-file)
 
 ## Create the yml file for your Airflow DAG
 

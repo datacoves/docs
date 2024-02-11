@@ -1,6 +1,6 @@
 # Run Fivetran sync jobs
 
-In Addition to triggering Airbyte loads jobs [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs)) you can also trigger Fivetran jobs from your Airflow DAG.
+In Addition to triggering Airbyte loads jobs [run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs) you can also trigger Fivetran jobs from your Airflow DAG.
 
 ## Before you start
 
@@ -20,7 +20,7 @@ Create a new connection using the following details:
 
 ![Admin Connections](./assets/fivetran-connection-details.png)
 
-You can find, or generate, your Fivetran `API Key` and `API Secret` in [Fivetran Account settings](https://fivetran.com/account/settings)
+>[!TIP]Once your Fivetran API key and secret have been generated, for security reasons, the secret cannot be viewed again through the Fivetran interface. If you lose or forget your API secret, you will need to generate a new API key and secret pair so be sure to store them somewhere secure for reference later. See <a href="https://fivetran.com/docs/rest-api/getting-started" targe="_blank" rel="noopener">Fivetran Documentation</a> on how to generate your Fivetran `API Key` and `API Secret`. 
 
 ### Configure your transform/.dbt-coves/config.yml file
 
@@ -31,7 +31,7 @@ Below are the configurations in for dbt-coves airflow-dags. You will need to con
 - **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
 - **dags_path**: Relative path to dbt project where generated python DAGS will be stored
 
->[!TIP]We make use of environment variables that we have configured for you upon set up. For more information on these variables please see [Datacoves Environment Variables](reference/datacoves/datacoves-env-vars.md)
+>[!TIP]We make use of environment variables that we have configured for you upon set up. For more information on these variables please see [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
 
 ```yaml
 generate:
@@ -97,7 +97,7 @@ nodes:
         # Change this to your specific connector ID 
         connector_id: speak_menial
         # Set your desired poke interval. Defaults to 60.
-        poke_interval: 30
+        poke_interval: 60
         fivetran_conn_id: fivetran_connection
         # Set your dependencies for tasks. This task depends on datacoves_snowflake_google_analytics_4_trigger
         dependencies:
@@ -107,7 +107,7 @@ nodes:
     operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
     # The daily_run_fivetran tag must be set in the source.yml
-    bash_command: "dbt -- build
+    bash_command: "dbt build
                   -s 'tag:daily_run_fivetran+ -t prd'"
 
     dependencies: ["extract_and_load_fivetran"]
@@ -159,7 +159,7 @@ def daily_loan_run():
         datacoves_snowflake_google_analytics_4_sensor = FivetranSensor(
             task_id="datacoves_snowflake_google_analytics_4_sensor",
             connector_id="speak_menial",
-            poke_interval=30,
+            poke_interval=60,
             fivetran_conn_id="fivetran_connection",
         )
         datacoves_snowflake_google_analytics_4_sensor.set_upstream(

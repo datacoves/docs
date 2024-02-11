@@ -1,10 +1,10 @@
 # Datacoves Environment Variables
 
-Datacoves streamlines your workflow by pre-setting environment variables, simplifying your YAML files for enhanced clarity and reduced error margins. Leverage these variables to expedite your processes. These adjustments are made automatically during the initial setup phase, courtesy of the setup wizard.
+Datacoves streamlines your workflow by pre-setting environment variables, simplifying your YML files for enhanced clarity and reduced error margins. Leverage these variables to expedite your processes. These adjustments are made automatically during the initial setup phase, courtesy of the setup wizard.
 
 To view your set variables run: 
 ``` bash
-env | grep DATACOVES
+env | grep DATACOVES | sort
 ```
 
 ## Variables

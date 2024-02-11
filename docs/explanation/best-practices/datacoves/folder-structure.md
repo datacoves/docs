@@ -24,7 +24,7 @@ The `orchestrate/dags` folder will contain the python dags that airflow will rea
 ## Recommended Folders
 The following folders are optional. Some are recommended and others are only necessary for specific use cases. 
 
->[!NOTE] Below `DATACOVES__DBT_HOME` refers to the location of your dbt project (where you dbt_project.yml file is located). See [Datacoves Environment Variables](reference/datacoves/datacoves-env-vars.md) for more information.
+>[!NOTE] Below `DATACOVES__DBT_HOME` refers to the location of your dbt project (where you dbt_project.yml file is located). See [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md) for more information.
 
 ### DATACOVES__DBT_HOME/.dbt-coves
 This folder is only needed if you are using the [dbt-coves library](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#dbt-coves). This show be at the same level as your dbt project. ie) The root or in the `transform` folder. 

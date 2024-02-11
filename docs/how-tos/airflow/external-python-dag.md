@@ -2,7 +2,7 @@
 
 If you need additional libraries for your DAG such as pandas, let us know so that we can configure them in your environment. 
 
->[!NOTE]You will need to create a `python_scripts` folder inside your `orchestrate` folder and develop your DAGS there.
+>[!NOTE]You will need to create a `python_scripts` folder inside your `orchestrate` folder and develop your scripts there.
 
 ## orchestrate/python_scripts
 
@@ -28,13 +28,9 @@ print_sample_dataframe()
 ```
 
 ## orchestrate/dags
-You then create a DAG in the `dags` folder.
+Create a DAG in the `dags` folder.
 
-To run your custom DAG you will use the `DatacovesBashOperator` to:
-- Activate the Virtual Environment `source {DATACOVES_VIRTIAL_ENV}` (By using the  `DatacovesBashOperator` instead of the Airflow `BashOperator` we take care of activating the preconfigured virtual environment behind the scenes.) 
-- cd into the dbt home directory `cd $DATACOVES__DBT_HOME`
-- Run the script containing your custom DAG above named `sample_script.py` with `python ../orchestrate/python_scripts/sample_script.py`
-  
+To run your custom DAG you will use the `DatacovesBashOperator` as seen in the `python_task` below.
 
 >[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
 
