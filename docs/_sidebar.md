@@ -29,7 +29,7 @@
     - [Send Slack notifications](/how-tos/airflow/send-slack-notifications.md)
     - [Worker logs](/how-tos/airflow/worker-logs.md)
   - [Datacoves](/how-tos/datacoves/)
-    - [Admin Setup](/how-tos/datacoves/)
+    - [Admin](/how-tos/datacoves/)
       - [Configure Connection Templates](/how-tos/datacoves/setup/how_to_connection_template.md)
       - [Configure Environments](how-tos/datacoves/setup/how_to_environments.md)
       - [Configure Groups](how-tos/datacoves/setup/how_to_groups.md)
