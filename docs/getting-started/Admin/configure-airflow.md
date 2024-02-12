@@ -8,7 +8,7 @@ You don't need Airflow to begin using Datacoves, but at some point you will want
 
 2. Airflow will authenticate to your data warehouse using a service connection. The credentials defined here will be used by dbt when your jobs run.
 
-    <a href="/#/reference/admin-menu/service_connections" target="_blank" rel="noopener">Setup Service Connection</a>
+    <a href="/#/how-tos/datacoves/setup/how_to_service_connections.md" target="_blank" rel="noopener">Setup Service Connection</a>
 
 3. When Airflow jobs run you may want to receive notifications. We have a few ways to send notifications in Datacoves. 
 

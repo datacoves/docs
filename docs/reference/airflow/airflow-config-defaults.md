@@ -1,6 +1,8 @@
 # Airflow Config Defaults
 
-For security reasons, we do not expose the Airflow config to end users via the Airflow *Admin -> Configuration* menu option. Below are some of the configs that we use which you may find useful:
+For security reasons, we do not expose the Airflow config to end users via the `Airflow *Admin -> Configuration` menu option. 
+
+Below are some of the configs that we use which you may find useful:
 
 ```
 [celery]
@@ -13,7 +15,8 @@ task_publish_max_retries = 3
 
 [celery_kubernetes_executor]
 kubernetes_queue = kubernetes
-
+```
+```
 [core]
 executor = KubernetesExecutor
 default_timezone = utc
@@ -26,14 +29,17 @@ dag_file_processor_timeout = 180
 task_runner = StandardTaskRunner
 killed_task_cleanup_time = 60
 default_task_retries = 2
-
+```
+```
 [database]
 max_db_retries = 3
-
+```
+```
 [email]
 default_email_on_retry = True
 default_email_on_failure = True
-
+```
+```
 [kubernetes]
 worker_pods_pending_timeout = 600
 worker_pods_pending_timeout_check_interval = 120
@@ -48,8 +54,8 @@ AIRFLOW__CORE__DAG_FILE_PROCESSOR_TIMEOUT = 180
 AIRFLOW__KUBERNETES__WORKER_PODS_PENDING_TIMEOUT = 600
 AIRFLOW__SCHEDULER__PARSING_PROCESSES = 1
 AIRFLOW__SCHEDULER__MAX_DAGRUNS_PER_LOOP_TO_SCHEDULE = 20
-
-
+```
+```
 [scheduler]
 run_duration = 41460
 job_heartbeat_sec = 5
@@ -68,15 +74,17 @@ zombie_detection_interval = 10.0
 parsing_processes = 1
 trigger_timeout_check_interval = 15
 run_duration = 41460
-
+```
+```
 [sensors]
 default_timeout = 604800
-
-
+```
+```
 [smtp]
 smtp_timeout = 30
 smtp_retry_limit = 5
-
+```
+```
 [webserver]
 default_ui_timezone = utc
 worker_refresh_interval = 6000
@@ -85,12 +93,6 @@ log_fetch_delay_sec = 2
 log_auto_tailing_offset = 30
 default_dag_run_display_number = 25
 auto_refresh_interval = 3
-
-
-
 ```
-
-
-
 
 >[!NOTE]If you have any questions, please send us an email at support@datacoves.com
