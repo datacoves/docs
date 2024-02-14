@@ -1,8 +1,8 @@
-# How to Configure your Transform tab
+# How to Configure your VS Code in the Datacoves Transform tab
 
-When you open the Transform tab for the first time you will see an empty Visual Studio Code Environment.
+When you first log into Datacoves, you will see that VS Code is disabled.
 
-We need to connect this editor to your git repository and to your data warehouse via dbt profile configuration.
+We need to connect to your git repository and to your data warehouse and configure your dbt profiles.yml. To do this, you need to update your user settings.
 
 ## Open Your User Settings
 
@@ -36,7 +36,7 @@ Once your public SSH key has been added to your git server, test your connection
 
 ![Git Settings Test](../assets/user_settings_git4.png)
 
-If Datacoves is able to connect to your Git repository, you will see _Tested_ next to the repository.
+If Datacoves is able to connect to your Git repository, you will see _Tested_ next to the repository url.
 
 ![Git Settings Tested](../assets/user_settings_git5.png)
 
@@ -44,9 +44,9 @@ If Datacoves is able to connect to your Git repository, you will see _Tested_ ne
 
 When connecting to Snowflake, you can use either key based authentication or username/password authentication.
 
->[!NOTE]To enable key-pair authentication, you must select `Inferred from user info using a custom template` when setting up the [Connection Template](/how-tos/datacoves/setup/how_to_connection_template.md). The Snowflake username must match the first part of your email, please let us know if your username is different.
+>[!NOTE]To enable key-pair authentication, you admin must select `Inferred from user info using a custom template` when setting up the [Connection Template](/how-tos/datacoves/setup/how_to_connection_template.md). The Snowflake username must match the username associated with the email used to authenticate with Datacoves for example `some_user` would be the snowflake username for `some_user@example.com`, please let us know if your username is different.
 
-If using key based authentication, you will need to provide or generate a key which will need to be added to Snowflake (contact us for information on how to automate this integration with Snowflake).
+If using key based authentication, you will need to provide or generate a key which will need to be added to Snowflake manually or contact us for information on how to automate this integration with Snowflake.
 
 Provide or automatically generate your keys. Then add the public key to Snowflake.
 
@@ -72,10 +72,10 @@ Give the connection a name, this will be used as your dbt target name and is typ
 
 Fill in the rest of the fields and click _Save_
 
-Datacoves will test the connection and display _Tested_ next to the connection if successful. Note that you can create additional dbt targets as show below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
+Datacoves will test the connection and display _Tested_ next to the connection if successful. Note that you can create additional dbt targets as shown below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
 
 ![Snowflake Setup Connection Tested](../assets/user_settings_snowflake4.png)
 
-You are now ready to transform your data with dbt. Scroll to the top of the screen, click _Workbench_. Note, Datacoves will take a couple of minutes to apply the new settings, clone your repo and finish setting up your environment for the first time.
+You are now ready to transform your data with dbt. Scroll to the top of the screen, click _Launchpad_ or the Datacoves logo, then click *Open* to go into your development environment. Note, Datacoves will take a couple of minutes to apply the new settings, clone your repo, and finish setting up your environment for the first time.
 
 ![Workbench Link](../assets/user_settings_workbench.png)

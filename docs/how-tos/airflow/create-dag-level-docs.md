@@ -3,7 +3,7 @@
 ## Overview
 The `dag.doc_md` attribute allows DAG authors to add markdown-formatted documentation directly to their DAGs. This documentation is visible in the Airflow web interface, offering a convenient way to describe the DAG's purpose, its dependencies, the tasks it includes, and any other relevant information. This feature enhances readability and maintainability, making it easier for teams to understand and collaborate on Airflow DAGs.
 
-1. Start by writing a multi-line docstring at the beginning of your DAG file. This docstring should provide a detailed explanation of the DAG's functionality, its schedule, and any important considerations. You can use Markdown syntax for formatting.
+1. Start by writing a multi-line docstring at the beginning of your DAG file. This docstring may provide a detailed explanation of the DAG's functionality, its schedule, and any important considerations. You can use Markdown syntax for formatting.
    
 2. After defining your DAG, assign the module's docstring (__doc__) to the dag.doc_md attribute. This makes the documentation written in the docstring visible in the Airflow UI.
    
@@ -31,8 +31,6 @@ It includes tasks for demonstration purposes.
 """
 
 from airflow.decorators import dag, task
-from operators.datacoves.bash import DatacovesBashOperator
-from operators.datacoves.dbt import DatacovesDbtOperator
 from pendulum import datetime
 ...
 

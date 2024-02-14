@@ -10,7 +10,7 @@ This guide covers essential Git commands for managing branches and making change
 
 - **View local branches - `git branch`:** List all local branches using the `git branch` command.
 
-- **Create a new branch - `git checkout -b <new-branch>`:** Create a new branch and switch to it with a single command.
+- **Create a new branch - `git checkout -b <new-branch> <from-branch>`:** Create a new branch and switch to it with a single command.
 
 - **Switch branches - `git checkout <branch-name>`:** Switch between existing branches in your repository.
 

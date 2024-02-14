@@ -18,10 +18,10 @@ Define which tools will be enabled for this environment. At least one service mu
 
 Available services include:
 - `LOAD (Airbyte)`
-- `TRANSFORM(dbt and VS Code)`
-- `OBSERVE(dbt docs)`
-- `ORCHESTRATE(Airflow)`
-- `ANALYZE(Superset)`
+- `TRANSFORM (dbt and VS Code)`
+- `OBSERVE (dbt docs)`
+- `ORCHESTRATE (Airflow)`
+- `ANALYZE (Superset)`
 
 ![Environments Create or Edit Stack Services](../assets/environments_editnew_stackservices.png)
 
@@ -30,9 +30,9 @@ The services enabled for the environment may require additional configurations. 
   
 For example: 
 
-- TRANSFORM(dbt & VS Code) requires:
+- TRANSFORM (dbt & VS Code) requires:
   -  **dbt project path** the path the location of the `dbt_project.yml` this allows you to either have the dbt project at the root of your git repository or in some sub-folder.
-- ORCHESTRATE(Airflow) requires: 
+- ORCHESTRATE (Airflow) requires: 
   - **branch** Determines git branch to synchronize to Airflow. This allows you to have one branch like `airflow_development` for a development environment and use `main` on a production environment.
   - **dbt profiles path** The location where Airflow will find dbt profiles.yml file to use during a dbt run.
   - **YAML DAGs path** When using yml based Airflow DAGs Airflow will look for the yml files in this location.

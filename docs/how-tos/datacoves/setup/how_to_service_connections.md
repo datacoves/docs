@@ -6,7 +6,7 @@ To create a new Service Connection click the `New Connection` button.
 
 A Service Connection consists of the following fields:
 
->[!TIP]The name variable serves to dynamically create variables which we inject into airflow. See [Datacoves Airflow Variables](reference/admin-menu/service_connections.md#datacoves-airflow-variables) for more information. 
+>[!TIP]The name of the service connection will be used to dynamically create environment variables which we inject into Airflow. See [Datacoves Airflow Variables](reference/admin-menu/service_connections.md#datacoves-airflow-variables) for more information. 
 - **Name** Defines how the connection will be referred to by the automated service. Should be called `main` and will be included in the name of the environment variables like: 
 - **Environment** The Datacoves environment associated with this service connection.
 - **Service** The Datacoves stack service where this connection should be made available e.g. Airflow

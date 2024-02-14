@@ -1,6 +1,6 @@
 
 # User Management
-1. To get new your users up and running, you need to invite them to the platform and grant them access to projects or specific environments. 
+1. To get your users up and running, you need to invite them to the platform and grant them access to projects or specific environments. 
 
     <a href="/#/how-tos/datacoves/setup/how_to_invitations.md" target="_blank" rel="noopener">Invite Users</a>
 

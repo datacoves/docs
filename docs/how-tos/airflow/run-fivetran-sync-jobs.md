@@ -24,7 +24,7 @@ Create a new connection using the following details:
 
 ### Configure your transform/.dbt-coves/config.yml file
 
-Currently, dbt-coves does not query the necessary information for Fivetran Extract and load. You will need to configure these in your yml DAG.
+By default, dbt-coves cannot query the necessary information for Fivetran connections. You will need to configure these in your yml DAG manually, or contact us to configure Datacoves with the necessary information.
 Below are the configurations in for dbt-coves airflow-dags. You will need to configure these if using dbt-coves to generate DAGS from YML
 
 ### Field reference:
@@ -62,7 +62,7 @@ You will need to define two operators: `fivetran_provider.operators.fivetran.Fiv
 - **example_task_sensor**: Name your Sensor task accordingly and define arguments below.
   -  **operator**: `fivetran_provider.sensors.fivetran.FivetranSensor`
   -  **connector_id**: Find in Fivetran UI.
-  -  **poke_interval**: The poke interval is the time in seconds that the sensor waits before rechecking the condition it's waiting for. Defaults to 60.
+  -  **poke_interval**: The poke interval is the time in seconds that the sensor waits before rechecking if the connector is done loading data. Defaults to 60.
   - **fivetran_conn_id**: This is the `connection_id` that was configured above in the Fivetran UI as seen [above](#id=fivetran-connection).
   - **dependencies**: A list of tasks this task depends on.
 ### YAML version
@@ -104,27 +104,12 @@ nodes:
           - datacoves_snowflake_google_analytics_4_trigger
 
   transform:
-    operator: operators.datacoves.bash.DatacovesBashOperator
+    operator: operators.datacoves.dbt.DatacovesDbtOperator
     type: task
     # The daily_run_fivetran tag must be set in the source.yml
-    bash_command: "dbt build
-                  -s 'tag:daily_run_fivetran+ -t prd'"
+    bash_command: "dbt build -s 'tag:daily_run_fivetran+'"
 
     dependencies: ["extract_and_load_fivetran"]
-
-  marketing_automation:
-    operator: airflow.operators.bash.BashOperator
-    type: task
-
-    bash_command: "echo 'send data to marketing tool'"
-    dependencies: ["transform"]
-
-  update_catalog:
-    operator: airflow.operators.bash.BashOperator
-    type: task
-
-    bash_command: "echo 'refresh data catalog'"
-    dependencies: ["transform"]
 ```
 ### Python version
 
@@ -132,11 +117,9 @@ nodes:
 import datetime
 
 from airflow.decorators import dag, task_group
-from airflow.operators.bash import BashOperator
 from fivetran_provider.operators.fivetran import FivetranOperator
 from fivetran_provider.sensors.fivetran import FivetranSensor
-from operators.datacoves.bash import DatacovesBashOperator
-
+from operators.datacoves.dbt import DatacovesDbtOperator
 
 @dag(
     default_args={"start_date": "2024-01"},
@@ -167,21 +150,11 @@ def daily_loan_run():
         )
 
     tg_extract_and_load_fivetran = extract_and_load_fivetran()
-    transform = DatacovesBashOperator(
+    transform = DatacovesDbtOperator(
         task_id="transform",
-        bash_command="dbt -- build -s 'tag:daily_run_fivetran+ -t prd'",
+        bash_command="dbt build -s 'tag:daily_run_fivetran+'",
     )
     transform.set_upstream([tg_extract_and_load_fivetran])
-    marketing_automation = BashOperator(
-        task_id="marketing_automation",
-        bash_command="echo 'send data to marketing tool'",
-    )
-    marketing_automation.set_upstream([transform])
-    update_catalog = BashOperator(
-        task_id="update_catalog", bash_command="echo 'refresh data catalog'"
-    )
-    update_catalog.set_upstream([transform])
-
 
 dag = daily_loan_run()
 ```

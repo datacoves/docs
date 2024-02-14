@@ -28,7 +28,7 @@ Where `host` is created using your environment (3 letters + 3 digits like xyz123
 
 ### Turn off Airbyte's scheduler
 
-To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte scheduling its own jobs at the same time, we suggest you set `replication frequency` to `manual` on each Airbyte connection that that will be triggered by Airflow:
+To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte scheduling its own jobs at the same time, we suggest you set `replication frequency` to `manual` on each Airbyte connection that will be triggered by Airflow:
 
 ![Replication frequency](./assets/airbyte-replication-frequency.png)
 
@@ -105,7 +105,7 @@ nodes:
     operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
 
-    bash_command: "dbt build -s 'tag:daily_run_airbyte+ -t prd'"
+    bash_command: "dbt build -s 'tag:daily_run_airbyte+'"
     dependencies: ["extract_and_load_airbyte"]
 
 ```

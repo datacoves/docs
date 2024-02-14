@@ -30,14 +30,13 @@ print_sample_dataframe()
 ## orchestrate/dags
 Create a DAG in the `dags` folder.
 
-To run your custom DAG you will use the `DatacovesBashOperator` as seen in the `python_task` below.
+To run your custom script from an Airflow DAG, you will use the `DatacovesBashOperator` as seen in the `python_task` below.
 
->[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
+>[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) documentation for more information on the Datacoves Airflow Operators.
 
 ```python
 from airflow.decorators import dag
 from operators.datacoves.bash import DatacovesBashOperator
-from operators.datacoves.dbt import DatacovesDbtOperator
 from pendulum import datetime
 
 # Only here for reference, this is automatically activated by Datacoves Operator
@@ -61,12 +60,6 @@ DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
 )
 def datacoves_sample_dag():
 
-    # Calling dbt commands
-    dbt_task = DatacovesDbtOperator(
-        task_id = "run_dbt_task",
-        bash_command = "dbt debug",
-    )
-
     # This is calling an external Python file after activating the venv
     # use this instead of the Python Operator
     python_task = DatacovesBashOperator(
@@ -75,10 +68,6 @@ def datacoves_sample_dag():
         # activate_venv=True,
         bash_command = "python orchestrate/python_scripts/sample_script.py"
     )
-
-    # Define task dependencies
-    python_task.set_upstream([dbt_task])
-
 
 # Invoke Dag
 dag = datacoves_sample_dag()

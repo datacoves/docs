@@ -14,20 +14,19 @@ Params:
 
 - `bash_command`: command to run
 - `cwd` (optional): relative path from repo root where to run command from
-- `virtualenv` (optional): relative path from repo root to a virtual environment
 - `activate_venv` (optional): whether to activate the Datacoves Airflow virtualenv or not
 
-## Datacoves Dbt Operator
+## Datacoves dbt Operator
 
-This custom operator is an extension of Datacoves Bash Operator.
-The main differences with Bash are:
+This custom operator is an extension of Datacoves Bash Operator and simplifies running dbt commands within Airflow.
+The operator does the following:
 
-- It runs commands inside the Project Root, not the Repository one.
+- Copies the entire Datacoves repo to a temporary directory, to avoid read-only errors when running `bash_command`.
 - It always activates the Datacoves Airflow virtualenv.
 - If 'dbt_packages' isn't found, it'll run `dbt deps` before the desired command
+- It runs dbt commands inside the dbt Project Root, not the Repository root.
 
 Params:
 
 - `bash_command`: command to run
 - `project_dir` (optional): relative path from repo root to a specific dbt project.
-- `virtualenv` (optional): relative path from repo root to a virtual environment

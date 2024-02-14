@@ -20,6 +20,6 @@ By default, one group comes shipped with your account, the `Account Admin`. Also
 
 On the Groups landing page you can see your account's list of groups
 
-For each group we can see it's name, the amount of permissions it has enabled, and how many users are using it.
+For each group we can see it's name, the number of permissions it has enabled, and how many users are using it.
 
 Each row contains 2 action buttons, Edit and Delete.

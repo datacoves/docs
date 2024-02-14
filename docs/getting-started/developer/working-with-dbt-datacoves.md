@@ -4,7 +4,7 @@ This guide covers various aspects of using Datacoves for creating, editing, runn
 
 ## Creating and Editing Models and Sources
 
-- **Manually creating Models and Sources:** Learn how to manually create models and sources within Datacoves.
+- **Manually creating dbt Sources and Model:** Learn how to create models and sources within Datacoves.
 
 - **Usage of [dbt-coves generate sources](https://github.com/datacoves/dbt-coves#readme):** Explore how to use the `dbt-coves` tool to generate sources efficiently.
 
@@ -22,7 +22,7 @@ This guide covers various aspects of using Datacoves for creating, editing, runn
 
 - **Quick model access using Cmd/Ctrl + P:** Learn how to quickly access models using the keyboard shortcut.
 
-- **Auto-complete feature for efficient coding:** Discover the auto-complete feature to streamline your coding process.
+- **Auto-complete feature for efficient coding:** Discover the auto-complete feature to streamline your development process.
 
 - **Cmd/Ctrl + Enter shortcut for CTE previews:** Utilize the Cmd/Ctrl + Enter shortcut to preview Common Table Expressions (CTEs).
 
@@ -30,7 +30,7 @@ This guide covers various aspects of using Datacoves for creating, editing, runn
 
 ## Compiled SQL vs Run SQL
 
-- **Using the `compile dbt` preview for error checking:** Explore how to use the `compile dbt` preview to check for errors.
+- **Viewing the compiled model for debugging:** Explore how to use the `compiled dbt` preview to debug dbt issues or to get SQL you can run in your Data Warehouse.
 
 - **Accessing compiled SQL:** Learn how to access compiled SQL code.
 
@@ -44,7 +44,7 @@ This guide covers various aspects of using Datacoves for creating, editing, runn
 
 ## Closing Tabs
 
-- **Closing models with Ctrl + Option/Alt + W:** Learn how to close tabs effectively.
+- **Closing models with Ctrl + Option/Alt + W:** Learn how to close tabs quickly.
 
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/fee7bd54660d4fb7884cc5beb040409f?sid=0f8c025f-623f-431b-9786-9099a5ac9f0d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>

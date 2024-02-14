@@ -1,14 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
 # How to send Microsoft Teams notifications on DAG's status
 
 As stated in [how to send email notifications](/how-tos/airflow/send-emails.md), Airflow allows multiple ways to inform users about DAGs and tasks status.
@@ -81,7 +70,7 @@ In the examples below, we will send a notification on failing tasks or when the 
 
 >[!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
 
-To send MS Teams notifications, in the Airflow day we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
+To send MS Teams notifications, in the Airflow DAG we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
 
 - `context` This is provided by Airflow
 - `connection_id`: the name of the Datacoves Integration created above
