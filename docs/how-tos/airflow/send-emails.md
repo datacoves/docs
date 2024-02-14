@@ -2,7 +2,7 @@
 
 Airflow allows multiple ways to keep the users informed about the status of a DAG. You can learn more about them [here](https://www.bhavaniravi.com/apache-airflow/sending-emails-from-airflow) and [here](https://naiveskill.com/send-email-from-airflow/).
 
-We're going to explain how you should send an email notification on DAG's failure.
+We're going to explain how you can send an email notification on DAG's failure.
 
 ## Create a new Integration
 
@@ -48,7 +48,7 @@ Simply provide a `default_args` dict like so:
 import datetime
 
 from airflow.decorators import dag
-from operators.datacoves.bash import DatacovesBashOperator
+from operators.datacoves.dbt import DatacovesDbtOperator
 
 
 @dag(
@@ -64,9 +64,9 @@ from operators.datacoves.bash import DatacovesBashOperator
     catchup=False,
 )
 def yaml_dbt_dag():
-    build_dbt = DatacovesBashOperator(
+    build_dbt = DatacovesDbtOperator(
         task_id="build_dbt",
-        bash_command="dbt-coves dbt -- run -s personal_loans",
+        bash_command="dbt run -s personal_loans",
     )
 
 
@@ -88,11 +88,9 @@ default_args:
   email_on_failure: true
   catchup: false
 
-
 nodes:
   build_dbt:
     type: task
-    operator: operators.datacoves.bash.DatacovesBashOperator
-    #virtualenv: /path/to/virtualenv or None: Datacoves Airflow venv will be used
-    bash_command: "dbt-coves dbt -- run -s personal_loans"
+    operator: operators.datacoves.dbt.DatacovesDbtOperator
+    bash_command: "dbt build -s 'tag:daily_run_fivetran+'"
 ```

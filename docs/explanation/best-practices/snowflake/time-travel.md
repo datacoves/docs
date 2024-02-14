@@ -27,7 +27,7 @@ alter database analytics_dev set data_retention_time_in_days = 7
 
 The default table materialization causes issues for Time Travel by dropping the table on every refresh. You will need to create a Time Travel specific table materialization that only recreates the table when the columns have changed. This Time Travel table materialization should be used in place of table materialization throughout the environment.
 
-?> Example materialization can be found [here](https://github.com/edx/snowflake_timetravel_table/blob/main/macros/snowflake_timetravel_table.sql)
+>[!TIP]Example materialization can be found [here](https://github.com/edx/snowflake_timetravel_table/blob/main/macros/snowflake_timetravel_table.sql)
 
 ## Time Travel Data Lifecycle
 

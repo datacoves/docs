@@ -1,6 +1,6 @@
 # How to Override default VS Code settings
 
-Once you have [set your Visual Studio Code up](/how-tos/datacoves/transform/initial), you have the possibility to override certain settings we provide by default. This is done in your Workspace settings.
+Once you have [set up your Visual Studio Code](/how-tos/datacoves/transform/initial) environment, you have the possibility to override certain settings we provide by default. This is done in your Workspace settings.
 
 ## Create your workspace settings file
 

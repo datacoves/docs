@@ -25,7 +25,7 @@ To create a new connection template click the `Create Connection Template` in th
       ![Inferred from email](../assets/connectiontemplates_inferred_from_email.png)
     - **Inferred from user info using a custom template** With this last approach, you can choose a template from which the username will be generated. If selected a new field will appear to select one of those.
       ![Inferred from template](../assets/connectiontemplates_inferred_from_template.png)
-      At this moment we only support our provided `Connection username for admins` template. With this template, the username will see `admin_{{username}}` when creating a DB connection.
+      By default we support `Connection username for admins` template. With this template, the username will see `admin_{{username}}` when creating a DB connection. Contact us to create a custom template for your account if you have different requirements.
       ![Username from template](../assets/connectiontemplates_username_from_template.png)
 
 - **Project** This defines the Datacoves project that should be associated with this connection template

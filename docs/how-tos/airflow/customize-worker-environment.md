@@ -1,10 +1,10 @@
 # How to set up a custom environment for your Airflow workers
 
-If you need to run tasks on Airflow on a custom environment that comes with pre-installed libraries and tools, we recommend you building your own custom docker image, upload it to a docker images repository and then reference it in your DAG's task operator.
+If you need to run tasks on Airflow on a custom environment that comes with pre-installed libraries and tools, we recommend building your own custom docker image, upload it to a docker image repository such as dockerhub and reference it in your DAG's task operator.
 
 ## Using the custom image in your DAGs
 
-Every task in an Airflow DAG's can use a different docker image. Operators accept an `executor_config` argument that can be used to customize the executor context.
+Every task in an Airflow DAG can use a different docker image. Operators accept an `executor_config` argument that can be used to customize the executor context.
 
 Given that Datacoves runs Airflow on a kubernetes execution context, you need to pass a `dict` with a `pod_override` key that will override the worker pod's configuration, as seen in the `TRANSFORM_CONFIG` dict in the example below. The variable name for the Config dict will depend on what DAG task you are requesting more resources for. 
 
@@ -57,16 +57,11 @@ with DAG(
     successful_task = DatacovesBashOperator(
         task_id = "successful_task",
         executor_config = TRANSFORM_CONFIG,
-        # bash_command = "echo SUCCESS"
-        bash_command="source /opt/datacoves/virtualenvs/main/bin/activate && dbt-coves dbt -- build -s tag:loan_daily"
+
+        bash_command="python my_script.py"
     )
 
-    failing_task = DatacovesBashOperator(
-        task_id = 'failing_task',
-        bash_command = "some_non_existent_command"
-    )
-
-    successful_task >> failing_task
+    successful_task
 ```
 
 ### YAML version
