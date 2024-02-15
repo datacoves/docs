@@ -62,7 +62,7 @@ Once the `Slack` integration is created, it needs to be associated with the Airf
 
 Go to the `Environments` admin screen.
 
-![Environments admin](./assets/environments_admin.png)
+![Environments admin](./assets/menu_environments.gif)
 
 Edit the environment that has the Airflow service you want to configure and click on the `Integrations` tab.
 

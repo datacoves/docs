@@ -46,13 +46,13 @@ Go to the `Environments` admin screen.
 
 ![Environments admin](./assets/menu_environments.gif)
 
-Edit the environment that has the Airflow service you want to configure and click on the `Integrations` tab.
+Select the Edit icon for the environment that has the Airflow service you want to configure and click on the `Integrations` tab.
 
 ![Edit integrations](./assets/edit_integrations.png)
 
 Click on the `+ Add new integration` button and select the integration you created previously. In the second dropdown select `Airflow` as the service.
 
-![Add integration](./assets/menu_integrations.gif)
+![Add integration](./assets/add_msteams_integration.png)
 
 `Save` changes. The Airflow service will be restarted and will include the Teams configuration required to send notifications.
 

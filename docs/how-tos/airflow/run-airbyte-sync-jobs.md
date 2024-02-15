@@ -4,7 +4,7 @@ In our quest to simplify the way the different tools integrate together in the M
 
 The main idea behind this concept is to use tags defined on dbt sources and determine which data to load via different tools (e.g. Airbyte or Fivetran). Using this information, we can dynamically create _Extract and Load_ tasks in an Airflow DAG before running dbt.
 
-Support for Fivetran Tasks coming soon. More Information in [run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs).
+>[!NOTE]Support for Fivetran Tasks coming soon. More Information in [run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs).
 
 ## Before you start
 
@@ -75,6 +75,9 @@ generate:
 ## Example YML DAG
 
 Now you are ready to write out your DAG using yml. In the following example DAG, you can notice a special task `load` that uses a `generator` instead of an `operator`. This will allow for the information to be pulled dynamically from airbyte such as connection_id. 
+
+>[!TIP]We make use of special generators from the dbt-coves extension. For more information please see [DAG Generators](reference/airflow/dag-generators.md)
+
 
 ### Field reference:
 

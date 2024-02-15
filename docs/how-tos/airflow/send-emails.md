@@ -24,9 +24,9 @@ Once you created the `SMTP` integration, it's time to add it to the Airflow serv
 
 First, go to the `Environments` admin.
 
-![Environments admin](./assets/environments_admin.png)
+![Environments admin](./assets/menu_environments.gif)
 
-Edit the environment that has the Airflow service you want to configure, and then click on the `Integrations` tab.
+Select the Edit icon for the environment that has the Airflow service you want to configure, and then click on the `Integrations` tab.
 
 ![Edit integrations](./assets/edit_integrations.png)
 

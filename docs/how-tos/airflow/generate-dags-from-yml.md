@@ -5,7 +5,7 @@ You have the option to write out your DAGs in python or you can write them using
 ## Configure config.yml
 >[!NOTE]This configuration is for the `dbt-coves generate-airflow` command which generates the DAGs from your yml files. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves configuration settings.
 
-dbt-coves will read settings from `<dbt_projext_path>/.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
+dbt-coves will read settings from `<dbt_project_path>/.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
 
   - `yml_path`: This is where dbt-coves will look for the yml files to generate your Python DAGS.
   - `dags_path`: This is where dbt-coves will place your generated python DAGS.
