@@ -44,7 +44,7 @@ Now your Slack App is ready to send messages to `#airflow-notifications-dev` via
 
 In Datacoves, create a new integration of type `Slack` by navigating to the Integrations admin page.
 
-![Integrations Admin](./assets/admin_integrations.png)
+![Integrations Admin](./assets/menu_integrations.gif)
 
 Click on the `+ New integration` button.
 

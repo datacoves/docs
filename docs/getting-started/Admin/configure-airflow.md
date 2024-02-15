@@ -3,19 +3,19 @@ You don't need Airflow to begin using Datacoves, but at some point you will want
 
 1. Start with the initial configuration of Airflow in your Datacoves environment. You may need to make changes to your repository to have the correct profiles path and DAG path.
 
-    <a href="/#/how-tos/airflow/initial-setup" target="_blank" rel="noopener">Initial Airflow Setup</a>
+    [Initial Airflow Setup](how-tos/airflow/initial-setup)
 
 
-2. Airflow will authenticate to your data warehouse using a service connection. The credentials defined here will be used by dbt when your jobs run.
+1. Airflow will authenticate to your data warehouse using a service connection. The credentials defined here will be used by dbt when your jobs run.
 
-    <a href="/#/how-tos/datacoves/setup/how_to_service_connections.md" target="_blank" rel="noopener">Setup Service Connection</a>
+    [Setup Service Connection](how-tos/datacoves/admin/how_to_service_connections.md)
 
-3. When Airflow jobs run you may want to receive notifications. We have a few ways to send notifications in Datacoves. 
+2. When Airflow jobs run you may want to receive notifications. We have a few ways to send notifications in Datacoves. 
 
-    - **Email:** <a href="/#/how-tos/airflow/send-emails" target="_blank" rel="noopener">Setup Email Integration</a>
+    - **Email:** [Setup Email Integration](how-tos/airflow/send-emails)
 
-    - **MS Teams:** <a href="/#/how-tos/airflow/send-ms-teams-notifications" target="_blank" rel="noopener">Setup MS Teams Integration</a>
+    - **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications)
 
-    - **Slack:** <a href="/#/how-tos/airflow/send-slack-notifications" target="_blank" rel="noopener">Setup Slack Integration</a>
+    - **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications)
 
 Once Airflow is configured, you can begin creating DAGS!

@@ -1,5 +1,9 @@
 # How to Create/Edit a Service Connection
 
+Navigate to the Service Connection page
+
+![Service Connection](../assets/menu_service_connection.gif)
+
 To create a new Service Connection click the `New Connection` button.
 
 ![Service Connection Create or Edit Page](../assets/serviceconnection_editnew_page.png)

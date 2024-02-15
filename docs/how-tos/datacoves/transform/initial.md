@@ -8,7 +8,7 @@ We need to connect to your git repository and to your data warehouse and configu
 
 At the top right corner of the page, click the User icon and select _Settings_
 
-![User Settings](../assets/user_settings.png)
+![User Settings](../assets/menu_user_settings.gif)
 
 ## Setup git connection credentials
 

@@ -1,5 +1,9 @@
 # How to Create/Edit an Integration
 
+Navigate to the Integrations Menu
+
+![Integrations Menu](../assets/menu_integrations.gif)
+
 To create a new integration click the `New Integration` button.
 
 ![Integration Create or Edit Page](../assets/integration_editnew_page.png) 

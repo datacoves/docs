@@ -8,7 +8,7 @@ We're going to explain how you can send an email notification on DAG's failure.
 
 First, create a new integration of type `SMTP` by navigating to the Integrations Admin.
 
-![Integrations Admin](./assets/admin_integrations.png)
+![Integrations Admin](./assets/menu_integrations.gif)
 
 Click on the `+ New integration` button.
 

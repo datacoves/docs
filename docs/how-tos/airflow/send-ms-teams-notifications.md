@@ -26,7 +26,7 @@ Click `Configure`, give it a name, and optionally select an image to use as the 
 
 In Datacoves, create a new integration of type `MS Teams` by navigating to the Integrations admin page.
 
-![Integrations Admin](./assets/admin_integrations.png)
+![Integrations Admin](./assets/menu_integrations.gif)
 
 Click on the `+ New integration` button.
 
@@ -44,7 +44,7 @@ Once the `MS Teams` integration is created, it needs to be associated with the A
 
 Go to the `Environments` admin screen.
 
-![Environments admin](./assets/environments_admin.png)
+![Environments admin](./assets/menu_environments.gif)
 
 Edit the environment that has the Airflow service you want to configure and click on the `Integrations` tab.
 
@@ -52,7 +52,7 @@ Edit the environment that has the Airflow service you want to configure and clic
 
 Click on the `+ Add new integration` button and select the integration you created previously. In the second dropdown select `Airflow` as the service.
 
-![Add integration](./assets/add_msteams_integration.png)
+![Add integration](./assets/menu_integrations.gif)
 
 `Save` changes. The Airflow service will be restarted and will include the Teams configuration required to send notifications.
 

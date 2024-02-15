@@ -1,4 +1,7 @@
 # How to Create/Edit a Project
+Navigate to the Projects page
+
+![Projects Page](../assets/menu_projects.gif)
 
 ![Projects Create or Edit Page](../assets/projects_editnew_page.png)
 

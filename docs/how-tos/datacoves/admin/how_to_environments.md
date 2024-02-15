@@ -1,10 +1,14 @@
 # How to Create/Edit an Environment
 
-![Environments Create or Edit Page](../assets/environments_editnew_page.png)
+Navigate to the Environments page
+
+![Environments](../assets/menu_environments.gif)
 
 To create a new environment click the `New Environment` button.
 
 Environment Settings are separated into different tabs.
+
+![Environments Create or Edit Page](../assets/environments_editnew_page.png)
 
 ## Basic information
 This tab has the base information for the environment.

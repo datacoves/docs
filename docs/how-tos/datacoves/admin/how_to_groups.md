@@ -1,4 +1,7 @@
 # How to Create/Edit a Group
+Navigate to the groups page in the admin menu
+
+![Group Menu](../assets/menu_groups.gif)
 
 Each group consist of three main components:
 
