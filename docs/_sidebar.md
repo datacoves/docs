@@ -6,7 +6,6 @@
   - [Creating Airflow Dags](getting-started/Admin/creating-airflow-dags.md)
   - [User Management](getting-started/Admin/user-management.md)
 - [Developer](getting-started/developer/)
-  - [Configure VS Code](how-tos/datacoves/transform/initial.md)
   - [Snowflake Extension](getting-started/developer/snowflake-extension.md)
   - [Transform Tab](getting-started/developer/transform-tab.md)
   - [Working with dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)
