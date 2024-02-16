@@ -5,6 +5,8 @@
 A Group in Datacoves is a collection of permissions, which can be assigned to your account's users.
 By default, one group comes shipped with your account, the `Account Admin`. Also, when you create a [Project](/reference/admin-menu/projects.md) or an [Environment](/reference/admin-menu/environments.md), two groups are created for each of them: `Project/Environment Developer` and `Project/Environment Viewer`
 
+>[!TIP]See our How To - [Groups](how-tos/datacoves/admin/how_to_groups.md)
+
 | Group type           | Group Name                                            | Default Privileges                                                                                                 |
 |----------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | Admin                | Account Admin                                         | Manages billing, and the rest of the options within the admin menu                                                 |
