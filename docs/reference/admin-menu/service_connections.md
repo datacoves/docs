@@ -14,7 +14,7 @@ For each environment we can see the associated environment, the service that use
 
 Each row contains 3 action buttons: Test Connection, Edit, and Delete.
 
-Clicking the (?) icon will show the names of the ENVIRONMENT variables that will be injected into the service. These are what you must use in your dbt profiles.yml file.
+>[!TIP]Clicking the (?) icon will show the names of the ENVIRONMENT variables that will be injected into the service. These are what you must use in your dbt profiles.yml file.
 
 ## Datacoves Airflow Variables
 
