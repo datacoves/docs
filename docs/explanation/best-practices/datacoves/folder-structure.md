@@ -63,3 +63,6 @@ The `visualization` folder is used to place configs related to superset or other
 
 ### visualization/streamlit
 The `visualization/streamlit` folder is used for Streamlit apps. This folder is only needed if using Streamlit.
+
+### .vscode/settings.json
+The `.vscode/settings.json` folder is used for customized settings in order to override the default workspace settings. This file can contain secrets so be sure to add it to the `.gitignore` to avoid version control. See our [How to Override default VS Code settings](how-tos/datacoves/transform/override.md) for more info

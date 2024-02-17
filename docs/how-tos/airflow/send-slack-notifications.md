@@ -96,28 +96,62 @@ Additionally, `message` can be passed to customize the message sent to Slack
 ### Python version
 
 ```python
-from datetime import datetime
+import datetime
 
-from airflow import DAG
-from airflow.operators.bash import BashOperator
+from airflow.decorators import dag
 from callbacks.slack_messages import inform_failure, inform_success
+from kubernetes.client import models as k8s
+from operators.datacoves.dbt import DatacovesDbtOperator
 
-DATACOVES_INTEGRATION_NAME = "SLACK_NOTIFICATIONS"
 
 def run_inform_success(context):
-    inform_success(
-        context,
-        connection_id=DATACOVES_INTEGRATION_NAME,
-        # message="Custom python success message",
-    )
+    inform_success(context, connection_id="DATACOVES_SLACK", color="0000FF")
+
 
 def run_inform_failure(context):
-    inform_failure(
-        context,
-        connection_id=DATACOVES_INTEGRATION_NAME,
-        # message="Custom python failure message",
+    inform_failure(context, connection_id="DATACOVES_SLACK", color="9900FF")
+
+
+TRANSFORM_CONFIG = {
+    "pod_override": k8s.V1Pod(
+        spec=k8s.V1PodSpec(
+            containers=[
+                k8s.V1Container(
+                    name="transform",
+                    image="datacoves/airflow-pandas:latest",
+                    resources=k8s.V1ResourceRequirements(
+                        requests={"memory": "8Gi", "cpu": "1000m"}
+                    ),
+                )
+            ]
+        )
+    ),
+}
+
+
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG with Slack notification, custom image, and resource requests",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_2", "slack_notification", "blue_green"],
+    catchup=False,
+    on_success_callback=run_inform_success,
+    on_failure_callback=run_inform_failure,
+)
+def yaml_slack_dag():
+    transform = DatacovesDbtOperator(
+        task_id="transform",
+        bash_command="dbt run -s personal_loans",
+        executor_config=TRANSFORM_CONFIG,
     )
-...
+
+
+dag = yaml_slack_dag()
 ```
 
 ### YAML version
@@ -126,7 +160,7 @@ def run_inform_failure(context):
 description: "Sample DAG with Slack notification, custom image, and resource requests"
 schedule_interval: "0 0 1 */12 *"
 tags:
-  - version_1
+  - version_2
   - slack_notification
   - blue_green
 default_args:
@@ -138,7 +172,7 @@ default_args:
 catchup: false
 
 
-# Optional callbacks used to send notifications
+# Optional callbacks used to send Slack notifications
 custom_callbacks:
   on_success_callback:
     module: callbacks.slack_messages
@@ -157,5 +191,14 @@ custom_callbacks:
 
 # DAG Tasks
 nodes:
-...
+  transform:
+    operator: operators.datacoves.dbt.DatacovesDbtOperator
+    type: task
+    config:
+      image: datacoves/airflow-pandas:latest
+      resources:
+        memory: 8Gi
+        cpu: 1000m
+
+    bash_command: "dbt run -s personal_loans"
 ```

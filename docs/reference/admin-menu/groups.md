@@ -19,7 +19,7 @@ By default, one group comes shipped with your account, the `Account Admin`. Also
 
 ## Groups Listing
 
-![Groups Listing](./assets/groups_listing.png)
+![Groups Listing](./assets/groups_listing.gif)
 
 On the Groups landing page you can see your account's list of groups
 

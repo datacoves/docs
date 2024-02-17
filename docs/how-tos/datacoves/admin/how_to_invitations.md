@@ -15,4 +15,4 @@ Using the checkboxes below you can select the Security Groups the user should be
 
 >[!TIP]See [Groups](reference/admin-menu/groups.md) for more information.
 
-![New Invitations](../assets/invitations_new_users.gif)
+![New Invitations](../assets/invitations_create.gif)

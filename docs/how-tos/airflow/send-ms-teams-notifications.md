@@ -83,41 +83,52 @@ Additionally, other parameters can be passed to customize the message sent to te
 ### Python version
 
 ```python
-from datetime import datetime
+import datetime
 
-from airflow import DAG
-from airflow.operators.bash import BashOperator
+from airflow.decorators import dag
 from callbacks.microsoft_teams import inform_failure, inform_success
+from operators.datacoves.dbt import DatacovesDbtOperator
 
-DATACOVES_INTEGRATION_NAME = "MS_TEAMS_NOTIFICATIONS"
 
 def run_inform_success(context):
-    inform_success(
-        context,
-        connection_id=DATACOVES_INTEGRATION_NAME,  # Only mandatory argument
-        # message="Custom python success message",
-        # color="FFFF00",
-    )
+    inform_success(context, connection_id="DATACOVES_MS_TEAMS", color="0000FF")
+
 
 def run_inform_failure(context):
-    inform_failure(
-        context,
-        connection_id=DATACOVES_INTEGRATION_NAME,  # Only mandatory argument
-        # message="Custom python failure message",
-        # color="FF00FF",
+    inform_failure(context, connection_id="DATACOVES_MS_TEAMS", color="9900FF")
+
+
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG with MS Teams notification",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_2", "ms_teams_notification", "blue_green"],
+    catchup=False,
+    on_success_callback=run_inform_success,
+    on_failure_callback=run_inform_failure,
+)
+def yaml_teams_dag():
+    transform = DatacovesDbtOperator(
+        task_id="transform", bash_command="dbt run -s personal_loans"
     )
 
-...
+
+dag = yaml_teams_dag()
 
 ```
 
 ### YAML version
 
 ```yaml
-description: "Sample DAG with MS Teams notification, custom image, and resource requests"
+description: "Sample DAG with MS Teams notification"
 schedule_interval: "0 0 1 */12 *"
 tags:
-  - version_1
+  - version_2
   - ms_teams_notification
   - blue_green
 default_args:
@@ -129,7 +140,7 @@ default_args:
 catchup: false
 
 
-# Optional callbacks used to send notifications
+# Optional callbacks used to send MS Teams notifications
 custom_callbacks:
   on_success_callback:
     module: callbacks.microsoft_teams
@@ -149,5 +160,9 @@ custom_callbacks:
 
 # DAG Tasks
 nodes:
-  ...
+  transform:
+    operator: operators.datacoves.dbt.DatacovesDbtOperator
+    type: task
+
+    bash_command: "dbt run -s personal_loans"
 ```

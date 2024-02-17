@@ -76,6 +76,12 @@ Datacoves will test the connection and display _Tested_ next to the connection i
 
 ![Snowflake Setup Connection Tested](../assets/user_settings_snowflake4.png)
 
-You are now ready to transform your data with dbt. Scroll to the top of the screen, click _Launchpad_ or the Datacoves logo, then click *Open* to go into your development environment. Note, Datacoves will take a couple of minutes to apply the new settings, clone your repo, and finish setting up your environment for the first time.
+You are now ready to transform your data with dbt.
 
-![Workbench Link](../assets/user_settings_workbench.png)
+- Scroll to the top of the screen, click `Launchpad` or the Datacoves logo.
+
+- Click `Open` to go into your development environment.
+
+>[!Note]Datacoves will take a couple of minutes to apply the new settings, clone your repo, and finish setting up your environment for the first time.
+
+![Workbench Link](../assets/navigation_launchpad.gif)

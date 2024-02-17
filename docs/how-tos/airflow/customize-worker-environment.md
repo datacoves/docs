@@ -13,74 +13,65 @@ eg) When writing your yaml, if you add the config under ` marketing_automation` 
 ### Python version
 
 ```python
-from datetime import datetime
-from airflow import DAG
-from operators.datacoves.bash import DatacovesBashOperator
+import datetime
+
+from airflow.decorators import dag
 from kubernetes.client import models as k8s
-
-# Replace with your docker image repo path
-IMAGE_REPO = "<IMAGE REPO>"
-
-# Replace with your docker image repo tag, or use "latest"
-IMAGE_TAG = "<IMAGE TAG>"
-
-default_args = {
-    'owner': 'airflow',
-    'email': 'some_user@exanple.com',
-    'email_on_failure': True,
-    'description': "Sample python dag"
-}
+from operators.datacoves.bash import DatacovesBashOperator
 
 TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
-        spec = k8s.V1PodSpec(
-            containers = [
+        spec=k8s.V1PodSpec(
+            containers=[
                 k8s.V1Container(
-                    name = "base", 
-                    image = f"{IMAGE_REPO}:{IMAGE_TAG}"
+                    name="transform",
+                    # Replace with your image repo and tag
+                    image="<IMAGE REPO>:<IMAGE TAG>",
+                    bash_command="echo SUCCESS!",
                 )
             ]
         )
     ),
 }
 
-with DAG(
-    dag_id = "python_sample_dag",
-    default_args = default_args,
-    start_date = datetime(2023, 1, 1),
-    catchup = False,
-    tags = ["version_4"],
-    description = "Sample python dag dbt run",
-    schedule_interval = "0 0 1 */12 *"
-) as dag:
 
-    successful_task = DatacovesBashOperator(
-        task_id = "successful_task",
-        executor_config = TRANSFORM_CONFIG,
-
-        bash_command="python my_script.py"
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG with custom image",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_2"],
+    catchup=False,
+    yaml_sample_dag={
+        "schedule_interval": "0 0 1 */12 *",
+        "tags": ["version_4"],
+        "catchup": False,
+        "default_args": {
+            "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+            "owner": "airflow",
+            "email": "some_user@exanple.com",
+            "email_on_failure": True,
+        },
+    },
+)
+def custommize_worker_dag():
+    transform = DatacovesBashOperator(
+        task_id="transform", executor_config=TRANSFORM_CONFIG
     )
 
-    successful_task
+
+dag = customize_worker_dag()
 ```
 
 ### YAML version
 In the yml dag you can configure the image.
 
 ```yaml
-yaml_sample_dag:
-  description: "Sample yaml dag dbt run"
-  schedule_interval: "0 0 1 */12 *"
-  tags:
-    - version_4
-  catchup: false
-
-  default_args:
-    start_date: 2023-01-01
-    owner: airflow
-    # Replace with the email of the recipient for failures
-    email: some_user@exanple.com
-    email_on_failure: true
+...
 
   # DAG Tasks
   nodes:

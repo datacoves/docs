@@ -20,9 +20,25 @@ For example, to change the line length at which VS Code shows it's ruler:
 }
 ```
 
-##### TIP: Read default Datacoves settings
+## How to change Buttons on Status Bar
+
+### Read default Datacoves settings
 
 To see our default settings, which can serve as example for you to overwrite in your own workspace `settings.json`, you can press `F1` to open VS Code's command palette and select `Open User Settings (JSON)`.
 
 ![Open User Settings](../assets/open_user_settings.png)
 ![User Settings JSON](../assets/user_settings_json.png)
+
+### Copy the betterStatusBar.commands
+
+
+### Paste them in your .vscode/settings.json file
+
+### Edit the buttons that show up in the bar
+You can edit:
+- If it shows up in the bar
+- Label
+- Color
+- Tool tip
+- Order it comes in on the bar
+
