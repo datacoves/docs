@@ -54,17 +54,18 @@
     <div id="app"></div>
 
     <script>
-      // Function to get parameter value from the fragment identifier
+      // Updated function for history mode - Function to get parameter value from the fragment identifier
       function getParameterValue(paramName) {
-        var match = window.location.hash.match(
+        var match = window.location.search.match(
           new RegExp("[?&]" + paramName + "=([^&]+)")
-        );
-        return match ? match[1] : null;
-      }
+      );
+      return match ? decodeURIComponent(match[1]) : null;
+}
 
       // Docsify Configuration
       window.$docsify = {
         name: "Datacoves Docs",
+        routerMode: 'history', // Use HTML5 history mode
         loadSidebar: true,
         loadNavbar: getParameterValue("navbar") !== "false",
         // coverpage: true,
