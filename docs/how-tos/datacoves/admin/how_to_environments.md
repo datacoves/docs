@@ -40,7 +40,7 @@ For example:
   - **branch** Determines git branch to synchronize to Airflow. This allows you to have one branch like `airflow_development` for a development environment and use `main` on a production environment.
   - **dbt profiles path** The location where Airflow will find dbt profiles.yml file to use during a dbt run.
   - **YAML DAGs path** When using yml based Airflow DAGs Airflow will look for the yml files in this location.
-  - **Python DAGs** This is the location Airflow will look for the DAG definition files
+  - **Python DAGs path** This is the location Airflow will look for the DAG definition files
 - OBSERVE (Docs) requires:
   -  **branch** Here we specify the branch that will be synchronized for production dbt docs. This branch must exist in your git repository.
   

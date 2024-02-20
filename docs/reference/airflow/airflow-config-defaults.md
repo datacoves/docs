@@ -94,5 +94,18 @@ log_auto_tailing_offset = 30
 default_dag_run_display_number = 25
 auto_refresh_interval = 3
 ```
+# Airflow Environment Variables
 
+Datacoves injects environment variables into Airflow.
+
+**DATACOVES__DAGS_FOLDER**: The folder where Airflow will look for DAGs. This is defined when you set your `python DAGs path` in the [environment setup](how-tos/datacoves/admin/how_to_environments.md#services-configuration).
+
+**DATACOVES__ENVIRONMENT_SLUG**: The slug for your environment. This is randomly generated upon creation of the environment.
+
+**The development slug can be seen on the launchpad screen:**
+
+`https://dev123.datacoves.localhost` in this case `DATACOVES__ENVIRONMENT_SLUG=dev123`
+
+
+![Launch Pad](../admin-menu/assets/launchpad_environments_projects.png)
 >[!NOTE]If you have any questions, please send us an email at support@datacoves.com
