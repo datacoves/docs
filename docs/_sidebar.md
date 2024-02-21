@@ -82,7 +82,7 @@
   - [VS Code](reference/vscode/)
     - [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
   - [Metrics & Logs](reference/metrics-and-logs/)
-    - [Dashboards](reference/metrics-and-logs/dashboards.md)
+    - [Grafana](reference/metrics-and-logs/grafana.md)
   - [Security](/reference/security/)
 
 <footer id="mb-footer"></footer>
