@@ -40,43 +40,18 @@ If Datacoves is able to connect to your Git repository, you will see _Tested_ ne
 
 ![Git Settings Tested](../assets/user_settings_git5.png)
 
-## Setup Snowflake Keys
+# Set up Database Connection 
 
-When connecting to Snowflake, you can use either key based authentication or username/password authentication.
+>[!NOTE]Below you will see a reference chart with the information you will need based on your data warehouse provider. **Select your data warehouse provider from the table below to see the how to guide.** 
 
->[!NOTE]To enable key-pair authentication, you admin must select `Inferred from user info using a custom template` when setting up the [Connection Template](/how-tos/datacoves/admin/how_to_connection_template.md). The Snowflake username must match the username associated with the email used to authenticate with Datacoves for example `some_user` would be the snowflake username for `some_user@example.com`, please let us know if your username is different.
+| Data Warehouse Provider | Information Needed |
+| --- | --- |
+| [BigQuery](how-tos/datacoves/transform/bigquery_setup.md)| Dataset, Keyfile JSON |
+| [Databricks](how-tos/datacoves/transform/databricks_setup.md) | Host, Schema, HTTP Path, Token |
+| [Redshift](how-tos/datacoves/transform/redshift_setup.md) | Host, Database, User, Schema, Password |
+| [Snowflake](how-tos/datacoves/transform/snowflake_setup.md) | Account, Warehouse, Database, Role, User, Password, Schema |
 
-If using key based authentication, you will need to provide or generate a key which will need to be added to Snowflake manually or contact us for information on how to automate this integration with Snowflake.
-
-Provide or automatically generate your keys. Then add the public key to Snowflake.
-
-![Snowflake Settings Generate Keys](../assets/user_settings_snowflake.png)
-
-## Assign the public key to the Snowflake User
-
-```
-alter user <username> set rsa_public_key='<public key>';
-```
-
-More information can be found in the [Snowflake Documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth.html#step-4-assign-the-public-key-to-a-snowflake-user)
-
-## Setup Snowflake Connection
-
-In the Database Connection Section, click _Add_
-
-![Snowflake Setup Connection](../assets/user_settings_snowflake2.png)
-
-Give the connection a name, this will be used as your dbt target name and is typically _dev_. Next select a connection template. (A connection template will have defaults pre-configured by your administrator).
-
-![Snowflake Setup Connection Details](../assets/user_settings_snowflake3.png)
-
-Fill in the rest of the fields and click _Save_
-
-Datacoves will test the connection and display _Tested_ next to the connection if successful. Note that you can create additional dbt targets as shown below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
-
-![Snowflake Setup Connection Tested](../assets/user_settings_snowflake4.png)
-
-You are now ready to transform your data with dbt.
+## Once your data warehouse is configured you are now ready to transform your data with dbt
 
 - Scroll to the top of the screen, click `Launchpad` or the Datacoves logo.
 
