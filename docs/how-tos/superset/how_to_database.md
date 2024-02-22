@@ -18,6 +18,6 @@ Here you will select the type of connection you want to create. For Snowflake, c
 
 Finally, enter your Snowflake credentials (these will be shared by all users, so use a service account that has read access to your data marts)
 
->[!WARNING] For the Snowflake `Account` field you will need to find your account locator and replace `.` with `-`. Check out [Snowflake Fields](how-tos/datacoves/admin/how_to_connection_template.md#for-snowflake-the-available-fields-are) on how to find your Snowflake account locator.
+>[!WARNING] For the Snowflake `Account` field you will need to find your account locator and replace `.` with `-`. Check out [Snowflake Fields](how-tos/datacoves/how_to_connection_template.md#for-snowflake-the-available-fields-are) on how to find your Snowflake account locator.
 
 ![Snowflake Credentials](./assets/add-db-4.png)

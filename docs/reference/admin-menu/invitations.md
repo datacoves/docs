@@ -4,7 +4,7 @@
 
 This page is used to invite users into your account.
 
->[!TIP]See our How To - [Invitations](how-tos/datacoves/admin/how_to_invitations.md)
+>[!TIP]See our How To - [Invitations](how-tos/datacoves/how_to_invitations.md)
 
 ## Invitation Listing
 

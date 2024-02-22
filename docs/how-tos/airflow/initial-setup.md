@@ -39,14 +39,13 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
         - **Role ARN**
   
 ### Logs Configuration
-There are 3 options for logs - EFS, S3 or MinIO. Below you will see the fields required.
+There are 2 options for logs - EFS and S3. Below you will see the fields required.
   - **EFS**
     - **Volume Handle**
   - **S3**
     - **Bucket Path**
     - **Access Key**
     - **Secret Key**
-  - **MinIO**
 
     ![Airflow Settings](./assets/environments_airflow_config.gif)
 

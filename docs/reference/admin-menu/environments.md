@@ -6,7 +6,7 @@ An Environment in Datacoves defines a data stack and associated settings for a g
 
 These environments are displayed on the launchpad to users that have the proper permission for the given environment.
 
->[!TIP]See our How To - [Environments](how-tos/datacoves/admin/how_to_environments.md)
+>[!TIP]See our How To - [Environments](how-tos/datacoves/how_to_environments.md)
 
 ![Launch Pad](./assets/launchpad_environments_projects.png)
 

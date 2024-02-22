@@ -4,7 +4,7 @@
 
 In this page you can manage the users that belong to your account. Here you can grant or change the permission groups associated with each user.
 
->[!TIP]See our How To - [Manage Users](how-tos/datacoves/admin/how_to_manage_users.md)
+>[!TIP]See our How To - [Manage Users](how-tos/datacoves/how_to_manage_users.md)
 
 ## Users Listing
 

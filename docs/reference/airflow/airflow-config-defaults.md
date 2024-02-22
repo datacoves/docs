@@ -98,7 +98,7 @@ auto_refresh_interval = 3
 
 Datacoves injects environment variables into Airflow.
 
-**DATACOVES__DAGS_FOLDER**: The folder where Airflow will look for DAGs. This is defined when you set your `python DAGs path` in the [environment setup](how-tos/datacoves/admin/how_to_environments.md#services-configuration).
+**DATACOVES__DAGS_FOLDER**: The folder where Airflow will look for DAGs. This is defined when you set your `python DAGs path` in the [environment setup](how-tos/datacoves/how_to_environments.md#services-configuration).
 
 **DATACOVES__ENVIRONMENT_SLUG**: The slug for your environment. This is randomly generated upon creation of the environment.
 

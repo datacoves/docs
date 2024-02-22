@@ -1,6 +1,6 @@
 # How to run dbt from an Airflow worker
 
-Airflow synchronizes a git repository's [configured git branch](/how-tos/datacoves/admin/how_to_environments#services-configuration) every minute.
+Airflow synchronizes a git repository's [configured git branch](/how-tos/datacoves/how_to_environments#services-configuration) every minute.
 
 To run `dbt` commands easily, we provide a pre-configured virtual environment with the necessary python dependencies such as dbt. Our Airflow Operator also does the following automatically:
 
@@ -18,6 +18,7 @@ Keep in mind that in an Airflow context `dbt` is installed in an isolated Python
 
 Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. The `DatacovesBashOperator` will automatically activate that environment.
 
+>[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
 ### Python version
 
 ```python

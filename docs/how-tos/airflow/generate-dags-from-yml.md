@@ -60,14 +60,14 @@ nodes:
 >[!TIP]In the examples we make use of the Datacoves Operators which handle things like copying and running dbt deps. For more information on what these operators handle, see [Datacoves Operators](reference/airflow/datacoves-operator.md)
 
 ## Generate your python file from your yml file
-To generate your DAG, be sure you have the yml you wish to generate a DAG from open. Select `more` in the bottom bar
+To generate your DAG, be sure you have the yml you wish to generate a DAG from open. 
 
-![select More](how-tos/../assets/more.png)
+Select `more` in the bottom bar.
 
 Select `Generate Airflow Dag for YML`. This will run the command to generate the individual yml.
 
 
-![Generate Airflow Dag](how-tos/../assets/generate_airflow_dag.png)
+![Generate Airflow Dag](./assets/generate_airflow_dag.gif)
 
 
 ## Generate all your python files

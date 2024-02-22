@@ -1,6 +1,6 @@
 # Welcome to the Datacoves Documentation
 
-Our Mission is to be the _fast track to the Modern Data Stack_ so you can focus on **Delivering Results Quickly.**
+Our Mission is to be the **fast track to the Modern Data Stack** so you can focus on **Delivering Results Quickly.**
 
 This documentation is divided in 4 parts following the structure is inspired by [Divio’s documentation system](https://documentation.divio.com/).
 
