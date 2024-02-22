@@ -6,7 +6,7 @@ Once you have [set up your Visual Studio Code](/how-tos/datacoves/transform/init
 
 Create a VS Code `settings.json` file under `.vscode/` in your repository root (make sure to add it to your `.gitignore` to keep it out of version control)
 
-![](../assets/create_workspace_settings.png)
+![](./assets/create_workspace_settings.png)
 
 ## Override settings
 
@@ -28,15 +28,15 @@ The defaults can be overridden for customization such as what buttons appear in 
 
 To see our default settings, which will serve as example for you to overwrite in your own workspace `settings.json`, press `F1` to open VS Code's command palette and select `Open User Settings (JSON)`.
 
-![Open User Settings](../assets/open_user_settings.png)
-![User Settings JSON](../assets/user_settings_json.png)
+![Open User Settings](./assets/open_user_settings.png)
+![User Settings JSON](./assets/user_settings_json.png)
 
 ### Copy the betterStatusBar.commands
 >[!NOTE]Only the commands you copy over to your settings.json will be available to you, so we recommend copying over all of them to avoid losing any during the customization process. 
 
 Paste them in your .vscode/settings.json file
 
-![Copy Button Commands](../assets/vscode_copy_buttons.gif)
+![Copy Button Commands](./assets/vscode_copy_buttons.gif)
 
 ### Edit the buttons that show up in the bar
 

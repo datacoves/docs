@@ -8,7 +8,7 @@ Once your destination is configured you can load data using one of [Airbyte's so
 
 ## Transforming Data <!-- {docsify-ignore} -->
 
-Each Analytics / Data Engineer will need access to your git repository and an account to your data warehouse in order to develop with dbt. Each user should [follow these steps to configure dbt](how-tos/datacoves/transform/initial.md).
+Each Analytics / Data Engineer will need access to your git repository and an account to your data warehouse in order to develop with dbt. Each user should [follow these steps to configure dbt](how-tos/vscode/initial.md).
 
 ## Orchestrating Runs <!-- {docsify-ignore} -->
 

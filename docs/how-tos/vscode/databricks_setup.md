@@ -2,7 +2,7 @@
 
 In the Database Connection Section, click `Add`
 
-![Databricks Setup Connection](../assets/connection_databricks_dropdown.png)
+![Databricks Setup Connection](./assets/connection_databricks_dropdown.png)
 
 Give the connection a name. 
 
@@ -15,6 +15,6 @@ Next select a connection template. A connection template will have defaults pre-
 Datacoves will test the connection and display `Tested` next to the connection if successful. 
 
 
-![Databricks Fields](../assets/connection_databricks_fields.png)
+![Databricks Fields](./assets/connection_databricks_fields.png)
 
 Click `Save`

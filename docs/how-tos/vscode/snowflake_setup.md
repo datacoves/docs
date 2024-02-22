@@ -10,7 +10,7 @@ If using key based authentication, you will need to provide or generate a key wh
 
 Provide or automatically generate your keys. Then add the public key to Snowflake.
 
-![Snowflake Settings Generate Keys](../assets/user_settings_snowflake.png)
+![Snowflake Settings Generate Keys](./assets/user_settings_snowflake.png)
 
 ## Assign the public key to the Snowflake User
 
@@ -24,7 +24,7 @@ More information can be found in the [Snowflake Documentation](https://docs.snow
 
 In the Database Connection Section, click `Add`
 
-![Snowflake Setup Connection](../assets/user_settings_snowflake2.png)
+![Snowflake Setup Connection](./assets/user_settings_snowflake2.png)
 
 Give the connection a name. 
 
@@ -32,7 +32,7 @@ Give the connection a name.
 
 Next select a connection template. A connection template will have defaults pre-configured by your administrator.
 
-![Snowflake Setup Connection Details](../assets/user_settings_snowflake3.png)
+![Snowflake Setup Connection Details](./assets/user_settings_snowflake3.png)
 
 ## Fill in connection details
 
@@ -40,16 +40,16 @@ Datacoves will test the connection and display `Tested` next to the connection i
 
 >[!NOTE]You can create additional dbt targets as shown below. This will allow you to execute dbt commands passing a specific target such as `dbt run my_model -t prd`
 
-![Snowflake Setup Connection Tested](../assets/user_settings_snowflake4.png)
+![Snowflake Setup Connection Tested](./assets/user_settings_snowflake4.png)
 
 ### Key Pair 
 
 If using key pair, you will need to change the auth method to key-pair.
 
-![Select Auth](../assets/connection_select_auth.png)
+![Select Auth](./assets/connection_select_auth.png)
 
 Select the drop down and your key you configured earlier should populate.
 
-![Select Key](../assets/connection_select_key.png)
+![Select Key](./assets/connection_select_key.png)
 
 Click `Save`

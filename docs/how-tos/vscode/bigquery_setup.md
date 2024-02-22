@@ -1,8 +1,8 @@
-# Redshift Setup
+# BigQuery Setup
 
 In the Database Connection Section, click `Add`
 
-![Redshift Setup Connection](../assets/connection_redshift_dropdown.png)
+![BigQuery Setup Connection](./assets/connection_bigquery_dropdown.png)
 
 Give the connection a name. 
 
@@ -14,7 +14,6 @@ Next select a connection template. A connection template will have defaults pre-
 
 Datacoves will test the connection and display `Tested` next to the connection if successful. 
 
-
-![Redshift Fields](../assets/connection_redshift_fields.png)
+![BigQuery Fields](./assets/connection_bigquery_fields.png)
 
 Click `Save`
