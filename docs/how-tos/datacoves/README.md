@@ -16,4 +16,4 @@ Once you are ready to operationalize your transformations, you will need to crea
 
 ## Analyzing Data <!-- {docsify-ignore} -->
 
-To begin analyzing data, [Follow these instructions](/how-tos/datacoves/analyze.md) to add a connection to your data warehouse on Superset.
+To begin analyzing data, [Follow these instructions](/how-tos/superset/analyze.md) to add a connection to your data warehouse on Superset.
