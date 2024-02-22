@@ -1,7 +1,7 @@
 # How to Create/Edit a Group
 Navigate to the groups page in the admin menu
 
-![Group Menu](../assets/menu_groups.gif)
+![Group Menu](./assets/menu_groups.gif)
 
 Each group consist of three main components:
 
@@ -11,20 +11,20 @@ Each group consist of three main components:
 
 Apart from these main fields, you can optionally map the group to a comma-separated list of `Active Directory groups`, as well as `Filter` the available permissions to enable/disable them with ease.
 
-![Groups Listing](../assets/groups_createedit.png)
+![Groups Listing](./assets/groups_createedit.png)
 
 In terms of specific application permissions, i.e. Airflow and Superset, you can use both general and specific scopes:
 
 - To work permissions at global level (the entire application), you can give `read` or `write` permissions to it's entire scope:
 
-  ![Superset General Permissions](../assets/groups_global_app_permision.png)
+  ![Superset General Permissions](./assets/groups_global_app_permision.png)
 
   - Giving an application scope `write` access, gives the group the entire set of the application's permissions, and with it also to it's resources.
   - Giving an application scope `read` access, sets the group as viewer (read-only)
 
 - To give permissions to certain resources of an application, you can toggle `write` access on only those of interest, leaving the general scope (for example, `Workbench>Airflow`) unmarked.
 
-  ![Superset General Permissions](../assets/groups_specific_app_permissions.png)
+  ![Superset General Permissions](./assets/groups_specific_app_permissions.png)
 
   Some of the specific component permissions include:
 

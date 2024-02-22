@@ -2,7 +2,7 @@
 
 Navigate to the invitations page
 
-![Invitations Dropdown](../assets/menu_invitations.gif)
+![Invitations Dropdown](./assets/menu_invitations.gif)
 
 Select the `+ invite user` button 
 
@@ -15,4 +15,4 @@ Using the checkboxes below you can select the Security Groups the user should be
 
 >[!TIP]See [Groups](reference/admin-menu/groups.md) for more information.
 
-![New Invitations](../assets/invitations_create.gif)
+![New Invitations](./assets/invitations_create.gif)

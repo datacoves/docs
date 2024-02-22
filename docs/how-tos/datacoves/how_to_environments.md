@@ -2,13 +2,13 @@
 
 Navigate to the Environments page
 
-![Environments](../assets/menu_environments.gif)
+![Environments](./assets/menu_environments.gif)
 
 To create a new environment click the `New Environment` button.
 
 Environment Settings are separated into different tabs.
 
-![Environments Create or Edit Page](../assets/environments_editnew_page.png)
+![Environments Create or Edit Page](./assets/environments_editnew_page.png)
 
 ## Basic information
 This tab has the base information for the environment.
@@ -27,7 +27,7 @@ Available services include:
 - `ORCHESTRATE (Airflow)`
 - `ANALYZE (Superset)`
 
-![Environments Create or Edit Stack Services](../assets/environments_editnew_stackservices.png)
+![Environments Create or Edit Stack Services](./assets/environments_editnew_stackservices.png)
 
 ## Services Configuration
 The services enabled for the environment may require additional configurations. This tab is where the services will be configured. 
@@ -44,4 +44,4 @@ For example:
 - OBSERVE (Docs) requires:
   -  **branch** Here we specify the branch that will be synchronized for production dbt docs. This branch must exist in your git repository.
   
-![Environments Create or Edit Services Configuration](../assets/environments_editnew_servicesconfig.png)
+![Environments Create or Edit Services Configuration](./assets/environments_editnew_servicesconfig.png)

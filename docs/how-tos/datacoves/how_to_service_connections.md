@@ -2,11 +2,11 @@
 
 Navigate to the Service Connection page
 
-![Service Connection](../assets/menu_service_connection.gif)
+![Service Connection](./assets/menu_service_connection.gif)
 
 To create a new Service Connection click the `New Connection` button.
 
-![Service Connection Create or Edit Page](../assets/serviceconnection_editnew_page.png)
+![Service Connection Create or Edit Page](./assets/serviceconnection_editnew_page.png)
 
 A Service Connection consists of the following fields:
 
@@ -17,4 +17,4 @@ A Service Connection consists of the following fields:
 - **Connection Template** The connection template to base this service connection on(i.e. the defaults)
   Depending on the template selected, additional fields will be displayed with the default values entered in the connection template. These default values can be overridden by toggling the indicator next to the given value.
 
-![Service Connection Connection Details](../assets/serviceconnection_editnew_details.png)
+![Service Connection Connection Details](./assets/serviceconnection_editnew_details.png)
