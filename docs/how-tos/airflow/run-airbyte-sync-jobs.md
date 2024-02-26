@@ -37,8 +37,8 @@ To avoid conflicts between Airflow triggering Airbyte jobs and Airbyte schedulin
 To connect Extract & Load with Transform in your DAG, you must configure your dbt-coves config file. We recommend the path to be `transform/.dbt-coves/config.yml`.
 
 ### Field reference:
-- **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
-- **dags_path**: Relative path to dbt project where generated python DAGS will be stored
+- **yml_path**: Relative path to dbt project where yml to generate python DAGs will be stored
+- **dags_path**: Relative path to dbt project where generated python DAGs will be stored
 - **dbt_project_path**: Relative path to dbt project, used to run `dbt ls` to discover sources
 - **airbyte_connection_id**: Id of the airflow connection that holds the information to connect to Airbyte system. (this was set up above)
 

@@ -23,7 +23,7 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
 
   ![Airflow Settings](./assets/environments_airflow_config.gif)
 
-    ### DAGS Sync Configuration
+    ### DAGs Sync Configuration
     There are 2 options to choose from for your DAGs sync - Git Sync and S3 Sync. Each requires specific information to be provided during configuration. The default is Git Sync.
 
     **Git Sync**

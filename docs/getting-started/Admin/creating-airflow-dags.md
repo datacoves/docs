@@ -1,5 +1,5 @@
 # Creating Aiflow Dags
-Now that Airflow is configured we can turn our attention to creating Dags which is what airflow uses to run dbt as well as other orchestration tasks. Below are the important things to know when creating DAGS and running dbt with Airflow.
+Now that Airflow is configured we can turn our attention to creating DAGs which is what airflow uses to run dbt as well as other orchestration tasks. Below are the important things to know when creating DAGs and running dbt with Airflow.
 
 1. In the initial Airflow setup you added the `orchestrate` folder and the `dags` folder to your repository. Here you will store your airflow DAGs. ie) `orchestrate/dags`
 
