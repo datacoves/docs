@@ -1,13 +1,13 @@
 # Creating Aiflow Dags
-Now that airflow is configured we can turn our attention to DAGS. Below are the important things to know when creating DAGS and running dbt with Airflow.
+Now that Airflow is configured we can turn our attention to creating Dags which is what airflow uses to run dbt as well as other orchestration tasks. Below are the important things to know when creating DAGS and running dbt with Airflow.
 
 1. In the initial Airflow setup you added the `orchestrate` folder and the `dags` folder to your repository. Here you will store your airflow DAGs. ie) `orchestrate/dags`
 
    See the recommended [folder structure](explanation/best-practices/datacoves/folder-structure.md) if you have not completed this step.
    
-2. You have 2 options when it comes to writing DAGs in Datacoves. You can write them out using Python and place them in the `orchestrate/dags` directory, or you can generate your DAGs with `dbt-coves` from YML. 
+2. You have 2 options when it comes to writing DAGs in Datacoves. You can write them out using Python and place them in the `orchestrate/dags` directory, or you can generate your DAGs with `dbt-coves` from a YML definition. 
     
-    [Generate DAGS from yml](how-tos/airflow/generate-dags-from-yml)
+    [Generate DAGs from yml definitions](how-tos/airflow/generate-dags-from-yml) this is simpler for users not accustomed to using Python
 
 3. Here is the simplest way to run dbt with Airflow.
 

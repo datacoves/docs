@@ -13,6 +13,6 @@ You will need the user's:
 
 Using the checkboxes below you can select the Security Groups the user should belong to for Development and Production Environments
 
->[!TIP]See [Groups](reference/admin-menu/groups.md) for more information.
+>[!TIP]See the [Groups](reference/admin-menu/groups.md) reference page for more information on Datacoves groups and their permissions.
 
 ![New Invitations](./assets/invitations_create.gif)

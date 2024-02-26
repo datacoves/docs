@@ -55,7 +55,7 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
         "owner": "Noel Gomez",
-        "email": "gomezn@datacoves.com",
+        "email": "gomezn@example.com",
         "email_on_failure": True,
     },
     description="Sample DAG for dbt build",
@@ -63,14 +63,14 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     tags=["version_1"],
     catchup=False,
 )
-def yaml_dbt_dag():
+def dbt_run():
     build_dbt = DatacovesDbtOperator(
         task_id="build_dbt",
         bash_command="dbt run -s personal_loans",
     )
 
 
-dag = yaml_dbt_dag()
+dag = dbt_run()
 ```
 
 ### YAML version
@@ -84,7 +84,7 @@ default_args:
   start_date: 2023-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
-  email: gomezn@datacoves.com
+  email: gomezn@example.com
   email_on_failure: true
   catchup: false
 

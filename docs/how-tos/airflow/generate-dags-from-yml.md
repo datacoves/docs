@@ -66,7 +66,6 @@ Select `more` in the bottom bar.
 
 Select `Generate Airflow Dag for YML`. This will run the command to generate the individual yml.
 
-
 ![Generate Airflow Dag](./assets/generate_airflow_dag.gif)
 
 
@@ -84,7 +83,6 @@ import datetime
 from airflow.decorators import dag
 from operators.datacoves.dbt import DatacovesDbtOperator
 
-
 @dag(
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
@@ -101,7 +99,6 @@ def yml_dbt_dag():
     run_dbt = DatacovesDbtOperator(
         task_id="run_dbt", bash_command="dbt run -s personal_loans"
     )
-
 
 dag = yml_dbt_dag()
 ```
