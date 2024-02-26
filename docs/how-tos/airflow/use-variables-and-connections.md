@@ -1,4 +1,5 @@
 # Variables and Connections
+>[!NOTE]dbt-coves generate airflow-dags does not support reading variables/connections.
 
 The best way to store and retrieve information within Airflow is to use `Variables` and `Connections`, both available on the `Admin` upper dropdown.
 

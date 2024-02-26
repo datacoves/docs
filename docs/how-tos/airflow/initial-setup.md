@@ -21,6 +21,8 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
 - **YAML DAG Path** Relative path to the folder where YAML DAGs for dbt-coves `generate airflow-dags` command are located. The default is `orchestrate/dags_yml_definitions`. 
 - **dbt profiles path** Relative path to a folder where a dbt profiles.yml file is located, used to run `dbt` commands. This file should use Environment variables and  should be placed in the recommended folder `automate/dbt/profiles.yml`. Please refer to our example [profiles.yml](https://github.com/datacoves/balboa/blob/main/automate/dbt/profiles.yml) in our [Sample Analytics project](https://github.com/datacoves/balboa).
 
+  ![Airflow Settings](./assets/environments_airflow_config.gif)
+
     ### DAGS Sync Configuration
     There are 2 options to choose from for your DAGs sync - Git Sync and S3 Sync. Each requires specific information to be provided during configuration. The default is Git Sync.
 
@@ -37,9 +39,11 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
         - **Access Key and Secret Key**
       - **IAM Role**
         - **Role ARN**
-  
+
 ### Logs Configuration
-There are 2 options for logs - EFS and S3. Below you will see the fields required.
+>[!NOTE]Log configuration is only for private deployments.
+
+There are 2 options for logs - EFS and S3. Below you will see the fields required for each:
   - **EFS**
     - **Volume Handle**
   - **S3**
@@ -47,5 +51,4 @@ There are 2 options for logs - EFS and S3. Below you will see the fields require
     - **Access Key**
     - **Secret Key**
 
-    ![Airflow Settings](./assets/environments_airflow_config.gif)
 
