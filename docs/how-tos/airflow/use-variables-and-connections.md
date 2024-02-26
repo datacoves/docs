@@ -4,7 +4,7 @@ The best way to store and retrieve information within Airflow is to use `Variabl
 
 ![select More](./assets/variables_connections_ui.png)
 
-The main difference between them is that [Variables](https://airflow.apache.org/docs/apache-airflow/2.3.1/howto/variable.html) is a generic multi-purpose store, while [Connections](https://airflow.apache.org/docs/apache-airflow/2.3.1/howto/connection.html) are aimed at third-party providers and are considered secrets.
+The main difference between them is that [Variables](https://airflow.apache.org/docs/apache-airflow/2.3.1/howto/variable.html) is a generic multi-purpose store, while [Connections](https://airflow.apache.org/docs/apache-airflow/2.3.1/howto/connection.html) are aimed at third-party providers.
 
 ## Usage
 
@@ -35,6 +35,22 @@ def variables_dag():
     )
 
 dag = variables_dag()
+```
+
+If a variable contains `SECRET` on it's name, value will be hidden:
+
+```python
+s3_password = Variable.get("S3_PASSWORD_SECRET")
+[...]
+transform = DatacovesDbtOperator(
+    task_id="transform",
+    bash_command=f"echo {s3_password}'",
+)
+```
+
+```shell
+Running command: ['bash', '-c', "source /opt/datacoves/virtualenvs/main/bin/activate" &&'echo ***']
+
 ```
 
 ### Connections
