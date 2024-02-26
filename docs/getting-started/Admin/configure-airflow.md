@@ -1,21 +1,20 @@
 # Configuring Airflow
-You don't need Airflow to begin using Datacoves, but at some point you will want to orchestrate / schedule your dbt jobs. 
+You don't need Airflow to begin using Datacoves, but at some point you will want to schedule your dbt jobs. The following steps will help you get started using Airflow. Keep in mind this is the basic setup, you can find additional Aiflow information in the how-tos and reference sections. 
 
-1. Start with the initial configuration of Airflow in your Datacoves environment. You may need to make changes to your repository to have the correct profiles path and DAG path.
+1. Start with the initial configuration of Airflow in your Datacoves environment. You may need to make changes to your repository to have the Datacoves default dbt  profiles path and Airflow DAG path.
 
-    <a href="/#/how-tos/airflow/initial-setup" target="_blank" rel="noopener">Initial Airflow Setup</a>
-
+    [Initial Airflow Setup](how-tos/airflow/initial-setup)
 
 2. Airflow will authenticate to your data warehouse using a service connection. The credentials defined here will be used by dbt when your jobs run.
 
-    <a href="/#/how-tos/datacoves/setup/how_to_service_connections.md" target="_blank" rel="noopener">Setup Service Connection</a>
+    [Setup Service Connection](how-tos/datacoves/how_to_service_connections.md)
 
 3. When Airflow jobs run you may want to receive notifications. We have a few ways to send notifications in Datacoves. 
 
-    - **Email:** <a href="/#/how-tos/airflow/send-emails" target="_blank" rel="noopener">Setup Email Integration</a>
+    - **Email:** [Setup Email Integration](how-tos/airflow/send-emails)
 
-    - **MS Teams:** <a href="/#/how-tos/airflow/send-ms-teams-notifications" target="_blank" rel="noopener">Setup MS Teams Integration</a>
+    - **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications)
 
-    - **Slack:** <a href="/#/how-tos/airflow/send-slack-notifications" target="_blank" rel="noopener">Setup Slack Integration</a>
+    - **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications)
 
-Once Airflow is configured, you can begin creating DAGS!
+Once Airflow is configured, you can begin scheduling your dbt jobs by creating Airflow DAGs!

@@ -4,4 +4,4 @@ The Datacoves Administration menu provides access to configurations of projects,
 
 The following pages explain each area in more detail.
 
-![Account Administration](./assets/gear_dropdown.png)
+![Account Administration](./assets/menu_admin.gif)

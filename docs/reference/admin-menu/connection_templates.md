@@ -4,6 +4,8 @@
 
 A Connection Template in Datacoves defines the basic information for your data warehouse. It acts as a template that can then be used for user and service connections. This simplifies the onboarding process for users.
 
+>[!TIP]See our How To - [Connection Templates](how-tos/datacoves/how_to_connection_template.md)
+
 ## Connection Templates Listing
 
 ![Connections Listing](./assets/connections_landing.png)

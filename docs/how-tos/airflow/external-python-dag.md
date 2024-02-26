@@ -2,7 +2,7 @@
 
 If you need additional libraries for your DAG such as pandas, let us know so that we can configure them in your environment. 
 
->[!NOTE]You will need to create a `python_scripts` folder inside your `orchestrate` folder and develop your scripts there.
+>[!NOTE]Below we make use of a `python_scripts` folder inside the `orchestrate` folder and develop as a best practice we locate our custom scripts in this location.
 
 ## orchestrate/python_scripts
 
@@ -30,7 +30,7 @@ print_sample_dataframe()
 ## orchestrate/dags
 Create a DAG in the `dags` folder.
 
-To run your custom script from an Airflow DAG, you will use the `DatacovesBashOperator` as seen in the `python_task` below.
+To run the custom script from an Airflow DAG, you will use the `DatacovesBashOperator` as seen in the `python_task` below.
 
 >[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) documentation for more information on the Datacoves Airflow Operators.
 
@@ -41,7 +41,6 @@ from pendulum import datetime
 
 # Only here for reference, this is automatically activated by Datacoves Operator
 DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
-
 
 @dag(
     default_args={
@@ -61,7 +60,7 @@ DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
 def datacoves_sample_dag():
 
     # This is calling an external Python file after activating the venv
-    # use this instead of the Python Operator
+    # use this instead of the Airflow Python Operator
     python_task = DatacovesBashOperator(
         task_id = "run_python_script",
         # Virtual Environment is automatically activated. Can be set to False to access Airflow environment variables.
@@ -72,4 +71,3 @@ def datacoves_sample_dag():
 # Invoke Dag
 dag = datacoves_sample_dag()
 ```
-

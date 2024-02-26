@@ -3,9 +3,9 @@
 You have the option to write out your DAGs in python or you can write them using yml and then have dbt-coves generate the python DAG for you.
 
 ## Configure config.yml
->[!NOTE]This configuration is for the `dbt-coves generate-airflow` command which generates the DAGs from your yml files. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves configuration settings.
+>[!NOTE]This configuration is for the `dbt-coves generate airflow-dags` command which generates the DAGs from your yml files. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves configuration settings.
 
-dbt-coves will read settings from `<dbt_projext_path>/.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
+dbt-coves will read settings from `<dbt_project_path>/.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
 
   - `yml_path`: This is where dbt-coves will look for the yml files to generate your Python DAGS.
   - `dags_path`: This is where dbt-coves will place your generated python DAGS.
@@ -60,14 +60,13 @@ nodes:
 >[!TIP]In the examples we make use of the Datacoves Operators which handle things like copying and running dbt deps. For more information on what these operators handle, see [Datacoves Operators](reference/airflow/datacoves-operator.md)
 
 ## Generate your python file from your yml file
-To generate your DAG, be sure you have the yml you wish to generate a DAG from open. Select `more` in the bottom bar
+To generate your DAG, be sure you have the yml you wish to generate a DAG from open. 
 
-![select More](how-tos/../assets/more.png)
+Select `more` in the bottom bar.
 
 Select `Generate Airflow Dag for YML`. This will run the command to generate the individual yml.
 
-
-![Generate Airflow Dag](how-tos/../assets/generate_airflow_dag.png)
+![Generate Airflow Dag](./assets/generate_airflow_dag.gif)
 
 
 ## Generate all your python files
@@ -83,7 +82,6 @@ import datetime
 
 from airflow.decorators import dag
 from operators.datacoves.dbt import DatacovesDbtOperator
-
 
 @dag(
     default_args={
@@ -101,7 +99,6 @@ def yml_dbt_dag():
     run_dbt = DatacovesDbtOperator(
         task_id="run_dbt", bash_command="dbt run -s personal_loans"
     )
-
 
 dag = yml_dbt_dag()
 ```

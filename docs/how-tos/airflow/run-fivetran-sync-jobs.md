@@ -20,7 +20,7 @@ Create a new connection using the following details:
 
 ![Admin Connections](./assets/fivetran-connection-details.png)
 
->[!TIP]Once your Fivetran API key and secret have been generated, for security reasons, the secret cannot be viewed again through the Fivetran interface. If you lose or forget your API secret, you will need to generate a new API key and secret pair so be sure to store them somewhere secure for reference later. See <a href="https://fivetran.com/docs/rest-api/getting-started" targe="_blank" rel="noopener">Fivetran Documentation</a> on how to generate your Fivetran `API Key` and `API Secret`. 
+>[!TIP]Once your Fivetran API key and secret have been generated, for security reasons, the secret cannot be viewed again through the Fivetran interface. If you lose or forget your API secret, you will need to generate a new API key and secret pair so be sure to store them somewhere secure for reference later. See <a href="https://fivetran.com/docs/rest-api/getting-started" target="_blank" rel="noopener">Fivetran Documentation</a> on how to generate your Fivetran `API Key` and `API Secret`. 
 
 ### Configure your transform/.dbt-coves/config.yml file
 

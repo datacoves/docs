@@ -1,19 +1,12 @@
-# How to Configure Datacoves
+# Admin Configuration in Datacoves
 
-## Loading Data <!-- {docsify-ignore} -->
+These how to guides are dedicated to **Datacoves admin configurations**. See how to configure:
 
-To load data into your warehouse, [configure your Snowflake destination on Airbyte.](https://docs.airbyte.com/integrations/destinations/snowflake)
+- Projects
+- Environments
+- Connection templates
+- Environments
+- User invitations
 
-Once your destination is configured you can load data using one of [Airbyte's source connectors](https://docs.airbyte.com/quickstart/add-a-source) Navigate to **Connector Catalog** -> **Sources** on the Airbyte documentation site for a full listing.
+And more! 
 
-## Transforming Data <!-- {docsify-ignore} -->
-
-Each Analytics / Data Engineer will need access to your git repository and an account to your data warehouse in order to develop with dbt. Each user should [follow these steps to configure dbt](/how-tos/datacoves/transform.md).
-
-## Orchestrating Runs <!-- {docsify-ignore} -->
-
-Once you are ready to operationalize your transformations, you will need to create Airflow jobs. See the [Airflow How-tos](/how-tos/airflow/) for configuring Airflow, creating jobs, and getting notifications.
-
-## Analyzing Data <!-- {docsify-ignore} -->
-
-To begin analyzing data, [Follow these instructions](/how-tos/datacoves/analyze.md) to add a connection to your data warehouse on Superset.

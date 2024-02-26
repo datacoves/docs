@@ -1,3 +1,3 @@
 # How to use Git
 
-Learn how to use Git and set it up properly.
+These how to guides cover some Git best practices as well as some setup guides.

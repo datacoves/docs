@@ -1,3 +1,5 @@
-# How to implement DataOps
+# DataOps in Datacoves
 
-Learn how to set up tools and define workflows to implement DataOps.
+These how to guides cover what we define as DataOps best practices.
+
+Learn how to set up tools, define workflows and more!

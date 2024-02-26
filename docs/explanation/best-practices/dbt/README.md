@@ -2,7 +2,7 @@
 
 As any data environment grows, it can become difficult for new team members to unravel complex pieces of logic within the project.
 
-To assist with future change & onboarding, each model should contain only what it must to get to the next stage of complexity. The [dbt project guidelines](dbt-guidelines.md) assist with decision-making to keep the environment clean.
+To assist with future change & onboarding, each model should contain only what it must to get to the next stage of complexity. The [dbt project guidelines](explanation/best-practices/dbt/dbt-guidelines.md) assist with decision-making to keep the environment clean.
 
 ## Macros
 

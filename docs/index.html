@@ -54,13 +54,13 @@
     <div id="app"></div>
 
     <script>
-      // Function to get parameter value from the fragment identifier
-      function getParameterValue(paramName) {
+       // Function to get parameter value from the fragment identifier
+       function getParameterValue(paramName) {
         var match = window.location.hash.match(
           new RegExp("[?&]" + paramName + "=([^&]+)")
         );
         return match ? match[1] : null;
-      }
+}
 
       // Docsify Configuration
       window.$docsify = {

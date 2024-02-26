@@ -9,6 +9,8 @@ For more information see:
 - MS Teams: used to [send Microsoft Teams messages from Airflow](/how-tos/airflow/send-ms-teams-notifications.md)
 - Slack: used to [send Slack messages from Airflow](/how-tos/airflow/send-slack-notifications.md)
 
+>[!TIP]See our How To - [Integrations](how-tos/datacoves/how_to_integrations.md) 
+
 ## Integrations Listing
 
 ![Integrations Listing](./assets/integration_landing.png)

@@ -10,7 +10,7 @@ This guide covers essential Git commands for managing branches and making change
 
 - **View local branches - `git branch`:** List all local branches using the `git branch` command.
 
-- **Create a new branch - `git checkout -b <new-branch> <from-branch>`:** Create a new branch and switch to it with a single command.
+- **Create a new branch - `git checkout -b <new_branch> <reference_branch>`:** Create a new branch and switch to it with a single command.
 
 - **Switch branches - `git checkout <branch-name>`:** Switch between existing branches in your repository.
 
@@ -48,7 +48,7 @@ This guide covers essential Git commands for managing branches and making change
 
 For more in-depth information and advanced usage, please consult the **[Source Control Extension Docs](https://code.visualstudio.com/docs/sourcecontrol/overview)**.
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/5f12fe8dcd534479b68e6331ce2c03d8?sid=3f88ccad-1e86-40b0-a79d-511c273d6abf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/63e00cd5d4124fef8e4d435806bfe6af?sid=7ba272f5-679e-43b6-b8ac-7f68c27a1b5f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## Resources
 

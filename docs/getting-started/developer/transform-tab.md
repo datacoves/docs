@@ -2,7 +2,7 @@
 
 ## This video guide covers:
 
-- <a href="/#/how-tos/datacoves/transform/initial" target="_blank" rel="noopener"> User Settings Configurations</a>
+- [User Settings Configurations](how-tos/datacoves/transform/initial)
 - Terminal setup
 - A high level overview of VS Code editor
 - How to reset your environment
