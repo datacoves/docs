@@ -29,7 +29,7 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
     **Git Sync**
     - **Provider** Select `Git`
     - **Git branch name** The branch airflow will monitor for changes. We suggest `airflow_development` for the development environment and `main` for the production environment.
-    >[!NOTE]Be sure to create your `airflow_development` branch in your repo first or Airflow will fail to start.
+    >[!NOTE]Be sure to create your `airflow_development` branch in your repo first or Airflow will fail to start. We recommend not separating airflow from your development. But you can separate them by having your airflow branch be its own repo and then give it its own [project](how-tos/datacoves/how_to_projects.md).
     
     **S3 Sync** 
     - **Provider** Select `S3`
