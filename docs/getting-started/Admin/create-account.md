@@ -26,6 +26,7 @@ To set up your Datacoves account, you will need to know your data warehouse prov
 ### Git
 
 To configure the git integration, you will need:
+>[!ATTENTION]The appropriate git and repo access is necessary, be sure that you can add ssh keys to the repo or we will not be able to finish setup.
 
 **Git Access** Ensure your user has access to add a deployment key to the repo, as well as access to clone and push changes.
 
