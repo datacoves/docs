@@ -66,7 +66,7 @@ The example below shows how to create your own task group with YAML.
 
 - **type**: This must be `task_group`
 - **tooltip**: Hover message for the task group. 
-- **Tasks**: Here is where you will define the individual tasks in the task group.
+- **tasks**: Here is where you will define the individual tasks in the task group.
 
 >[!NOTE] Specify the "task group" and "task" names at the beginning of their respective sections, as illustrated below:
 
