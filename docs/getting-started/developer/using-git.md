@@ -48,7 +48,7 @@ This guide covers essential Git commands for managing branches and making change
 
 For more in-depth information and advanced usage, please consult the **[Source Control Extension Docs](https://code.visualstudio.com/docs/sourcecontrol/overview)**.
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/c33a833308904a3ca8c8944639fa5d8b?sid=ac8eee7e-1ee6-4326-a7b2-0125f5788dca" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/67ea31eef4d94a5e844a5393684e4bc6?sid=f52c0561-ceb5-4baf-ba06-ab739ef3fcc5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## Resources
 
