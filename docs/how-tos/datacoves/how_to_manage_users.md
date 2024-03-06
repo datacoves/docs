@@ -8,7 +8,9 @@ Navigate to the Users page
 
 When you edit a user record, you can modify the users `Name`, `Email` and the assigned `Permission Groups`
 
-![Integration Create or Edit Page](./assets/users_edit_page.png)
+>[!NOTE]Select the project to edit user access.
+
+![Integration Create or Edit Page](./assets/users_edit_page.gif)
 
 ## Delete a User
 

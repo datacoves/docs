@@ -2,7 +2,7 @@
 
 ## This video guide covers:
 
-- [User Settings Configurations](how-tos/datacoves/transform/initial)
+- [User Settings Configurations](how-tos/vscode/initial.md)
 - Terminal setup
 - A high level overview of VS Code editor
 - How to reset your environment

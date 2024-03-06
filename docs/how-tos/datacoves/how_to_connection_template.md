@@ -33,7 +33,7 @@ To create a new connection template click the `Create Connection Template` in th
 - **Project** This defines the Datacoves project that should be associated with this connection template
 - **Type** Defines the data warehouse provider so that users are presented the appropriate fields when entering their credentials.
 - **Provider connection details** Based on the Provider Type selected, available default parameters will be displayed.
-  
+
 ### For Snowflake, the available fields are: 
   - `Account`:To locate this, visit your snowflake account > Click on the menu in the bottom left corner > Select the account > select the `Copy account identifier`. 
   

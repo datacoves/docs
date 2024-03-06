@@ -1,5 +1,7 @@
 # Configure your account with Datacoves
 
+>[!ATTENTION]The appropriate git repo access is required to be able to add deployment keys, be sure that you can add ssh keys to the repo or we will not be able to finish setup.
+
 ## Prerequisites
 
 Before the setup call with the Datacoves team, ensure you have the following ready.

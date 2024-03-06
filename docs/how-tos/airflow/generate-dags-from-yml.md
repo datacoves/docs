@@ -7,8 +7,8 @@ You have the option to write out your DAGs in python or you can write them using
 
 dbt-coves will read settings from `<dbt_project_path>/.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
 
-  - `yml_path`: This is where dbt-coves will look for the yml files to generate your Python DAGS.
-  - `dags_path`: This is where dbt-coves will place your generated python DAGS.
+  - `yml_path`: This is where dbt-coves will look for the yml files to generate your Python DAGs.
+  - `dags_path`: This is where dbt-coves will place your generated python DAGs.
 
 ### Place the following in your `config.yml file`:
 
@@ -34,8 +34,7 @@ Inside your `orchestrate` folder, create a folder named `dag_yml_definitions`. d
 
 eg) `orchestrate/dag_yml_definitions`
  
-**The name of the file will be the name of the DAG.**
- 
+>[!NOTE]The name of the file will be the name of the DAG.**
 eg) `yml_dbt_dag.yml` generates a dag named `yml_dbt_dag`
 
 ```yml
@@ -59,6 +58,38 @@ nodes:
 ```
 >[!TIP]In the examples we make use of the Datacoves Operators which handle things like copying and running dbt deps. For more information on what these operators handle, see [Datacoves Operators](reference/airflow/datacoves-operator.md)
 
+### How to create your own task group with YAML
+
+The example below shows how to create your own task group with YAML.
+
+#### Field Reference:
+
+- **type**: This must be `task_group`
+- **tooltip**: Hover message for the task group. 
+- **tasks**: Here is where you will define the individual tasks in the task group.
+
+>[!NOTE] Specify the "task group" and "task" names at the beginning of their respective sections, as illustrated below:
+
+```yaml
+nodes:
+  extract_and_load_dlt: # The name of the task group
+    type: task_group
+    tooltip: "dlt Extract and Load"
+
+    tasks:
+      load_us_population: # The name of the task 
+        operator: operators.datacoves.bash.DatacovesBashOperator
+        # activate_venv: true
+        # Virtual Environment is automatically activated
+
+        cwd: "load/dlt/csv_to_snowflake/"
+        bash_command: "python load_csv_data.py"
+
+      # Add more tasks here  
+      task_2:
+        ...  
+```
+
 ## Generate your python file from your yml file
 To generate your DAG, be sure you have the yml you wish to generate a DAG from open. 
 
@@ -71,7 +102,7 @@ Select `Generate Airflow Dag for YML`. This will run the command to generate the
 
 ## Generate all your python files
 
-To generate all of the DAGS from your `orchestrate/dag_yml_definitions/` directory
+To generate all of the DAGs from your `orchestrate/dag_yml_definitions/` directory
 
 - Run `dbt-coves generate airflow-dags` in your terminal.
 

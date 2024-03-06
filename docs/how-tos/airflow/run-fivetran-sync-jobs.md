@@ -25,11 +25,11 @@ Create a new connection using the following details:
 ### Configure your transform/.dbt-coves/config.yml file
 
 By default, dbt-coves cannot query the necessary information for Fivetran connections. You will need to configure these in your yml DAG manually, or contact us to configure Datacoves with the necessary information.
-Below are the configurations in for dbt-coves airflow-dags. You will need to configure these if using dbt-coves to generate DAGS from YML
+Below are the configurations in for dbt-coves airflow-dags. You will need to configure these if using dbt-coves to generate DAGs from YML
 
 ### Field reference:
-- **yml_path**: Relative path to dbt project where yml to generate python DAGS will be stored
-- **dags_path**: Relative path to dbt project where generated python DAGS will be stored
+- **yml_path**: Relative path to dbt project where yml to generate python DAGs will be stored
+- **dags_path**: Relative path to dbt project where generated python DAGs will be stored
 
 >[!TIP]We make use of environment variables that we have configured for you upon set up. For more information on these variables please see [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
 
