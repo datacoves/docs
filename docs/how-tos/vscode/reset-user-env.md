@@ -5,7 +5,7 @@ If you change the repo associated with your environment after one has already be
 - Open terminal and enter the following commands.
 
 ```bash
-cd .. 
+cd ~/
 ```
 ```bash
 rm -rf workspace
