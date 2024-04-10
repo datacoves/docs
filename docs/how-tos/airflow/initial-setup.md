@@ -53,4 +53,4 @@ There are 2 options for logs - EFS and S3. Below you will see the fields require
     - **Secret Key**
 
 ## Getting Started Next Steps 
-[Update Repository for Airflow](getting-started/Admin/configure-repository.md)
+[Setup Service Connection](how-tos/datacoves/how_to_service_connections.md)

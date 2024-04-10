@@ -10,6 +10,101 @@ Now that you have configured your Airflow settings you must ensure that your rep
 
 **Step 4:** **This step is optional** if you would like to make use of the dbt-coves' extension `dbt-coves generate airflow-dags` command. You must create a config file for dbt-coves. Please follow the [generate DAGs from yml](how-tos/airflow/generate-dags-from-yml.md) docs.
 
-## Getting Started Next Steps 
+## Create a profiles.yml
 
-[Set up a service connection](how-tos/datacoves/how_to_service_connections.md)!
+Upon creating a service connection these variables can be used in your profiles.yml file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse.
+
+  - `DATACOVES__<NAME>__ROLE`
+  - `DATACOVES__<NAME>__ACCOUNT`
+  - `DATACOVES__<NAME>__WAREHOUSE`
+  - `DATACOVES__<NAME>__ROLE`
+  - `DATACOVES__<NAME>__DATABASE`
+  - `DATACOVES__<NAME>__SCHEMA`
+  - `DATACOVES__<NAME>__USER`
+  - `DATACOVES__<NAME>__PASSWORD`
+
+
+To create your and your `profiles.yml`:
+
+**Step 1:** Create the `automate` folder at the root of your project
+
+**Step 2:** Create the `dbt` folder inside the `automate` folder 
+
+**Step 3:** Create the `profiles.yml` inside of your `automate` folder. ie) `automate/dbt/profiles.yml`
+
+**Step 4:** C opy the following configuration into your `profiles.yml`
+
+### Snowflake
+``` yaml
+default:
+  target: default_target
+  outputs:
+    default_target:
+      type: snowflake
+      threads: 8
+      client_session_keep_alive: true
+
+      account: "{{ env_var('DATACOVES__MAIN__ACCOUNT') }}"
+      database: "{{ env_var('DATACOVES__MAIN__DATABASE') }}"
+      schema: "{{ env_var('DATACOVES__MAIN__SCHEMA') }}"
+      user: "{{ env_var('DATACOVES__MAIN__USER') }}"
+      password: "{{ env_var('DATACOVES__MAIN__PASSWORD') }}"
+      role: "{{ env_var('DATACOVES__MAIN__ROLE') }}"
+      warehouse: "{{ env_var('DATACOVES__MAIN__WAREHOUSE') }}"
+```
+### Redshift 
+```yaml
+company-name:
+  target: dev
+  outputs:
+    dev:
+      type: redshift
+      host: "{{ env_var('DATACOVES__MAIN__HOST') }}"
+      user: "{{ env_var('DATACOVES__MAIN__USER') }}"
+      password: "{{ env_var('DATACOVES__MAIN__PASSWORD') }}"
+      dbname: "{{ env_var('DATACOVES__MAIN__DATABASE') }}"
+      schema: analytics
+      port: 5439
+      
+      # Optional Redshift configs:
+      sslmode: prefer
+      role: None
+      ra3_node: true 
+      autocommit: true 
+      threads: 4
+      connect_timeout: None
+```
+### BigQuery
+```yaml
+my-bigquery-db:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: GCP_PROJECT_ID
+      dataset:  "{{ env_var('DATACOVES__MAIN__DATASET') }}"
+      threads: 4 # Must be a value of 1 or greater
+      keyfile:  "{{ env_var('DATACOVES__MAIN__KEYFILE_JSON') }}"
+```
+### Databricks
+```yaml
+your_profile_name:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      catalog: [optional catalog name if you are using Unity Catalog]
+      schema: "{{ env_var('DATACOVES__MAIN__SCHEMA') }}" # Required
+      host: "{{ env_var('DATACOVES__MAIN__HOST') }}" # Required
+      http_path: "{{ env_var('DATACOVES__MAIN__HTTP_PATH') }}" # Required
+      token: "{{ env_var('DATACOVES__MAIN__HOST') }}" # Required Personal Access Token (PAT) if using token-based authentication
+      threads: [1 or more]  # Optional, default 1
+```
+## Getting Started Next Steps 
+**Set up notifications**
+- **Email:** [Setup Email Integration](how-tos/airflow/send-emails)
+
+- **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications)
+
+- **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications)
