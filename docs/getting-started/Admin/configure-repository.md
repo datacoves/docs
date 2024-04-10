@@ -102,7 +102,8 @@ your_profile_name:
       threads: [1 or more]  # Optional, default 1
 ```
 ## Getting Started Next Steps 
-**Set up notifications**
+
+You will want to set up notifications. Selet the option that works best for your organization.
 - **Email:** [Setup Email Integration](how-tos/airflow/send-emails)
 
 - **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications)

@@ -10,6 +10,5 @@ You have the important role of configuring the Datacoves platform to fit your ne
 ## Table of Contents
 1. [Setting up your Datacoves Account with our team](getting-started/Admin/create-account.md)
 2. [Configure Airflow](getting-started/Admin/configure-airflow.md)
-3. [Update your Repository](getting-started/Admin/configure-repository.md)
-4. [Creating Airflow Dags](getting-started/Admin/creating-airflow-dags.md)
-5. [User Management](getting-started/Admin/user-management.md)
+3. [Creating Airflow Dags](getting-started/Admin/creating-airflow-dags.md)
+4. [User Management](getting-started/Admin/user-management.md)

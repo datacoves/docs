@@ -21,4 +21,5 @@ You don't need Airflow to begin using Datacoves, but at some point you will want
 
     - **Slack:** [Setup Slack Integration](how-tos/airflow/send-slack-notifications)
 
-Once Airflow is configured, you can begin scheduling your dbt jobs by creating Airflow DAGs!
+## Getting Started Next Steps
+Once Airflow is configured, you can begin scheduling your dbt jobs by [creating Airflow DAGs](getting-started/Admin/creating-airflow-dags.md)!
