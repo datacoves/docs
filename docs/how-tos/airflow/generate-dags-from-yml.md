@@ -3,17 +3,19 @@
 You have the option to write out your DAGs in python or you can write them using yml and then have dbt-coves generate the python DAG for you.
 
 ## Configure config.yml
->[!NOTE]This configuration is for the `dbt-coves generate airflow-dags` command which generates the DAGs from your yml files. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves configuration settings.
+This configuration is for the `dbt-coves generate airflow-dags` command which generates the DAGs from your yml files. Visit the [dbt-coves docs](https://github.com/datacoves/dbt-coves?tab=readme-ov-file#settings) for the full dbt-coves configuration settings.
 
-dbt-coves will read settings from `<dbt_project_path>/.dbt_coves/config.yml`. First, create your `.dbt-coves` directory at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml`. Datacoves' recommended dbt project location is `transform/` so that's where you would create this file. eg) `transform/.dbt-coves/config.yml`. 
+dbt-coves will read settings from `<dbt_project_path>/.dbt_coves/config.yml`. We must create these files in order for dbt-coves to function. 
 
-  - `yml_path`: This is where dbt-coves will look for the yml files to generate your Python DAGs.
-  - `dags_path`: This is where dbt-coves will place your generated python DAGs.
+**Step 1:** Create the `.dbt-coves` folder at the root of your dbt project (where the dbt_project.yml file is located). Then create a file called `config.yml` inside of `.dbt-coves`. 
 
-### Place the following in your `config.yml file`:
+>[!NOTE]Datacoves' recommended dbt project location is `transform/` eg) `transform/.dbt-coves/config.yml`. This will require some minor refactoring and ensuring that the  `dbt project path ` in your environment settings reflects accordingly. 
 
->[!TIP]We use environment variables such as `DATACOVES__AIRFLOW_DAGS_YML_PATH` that are pre-configured for you. For more information on these variables see [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
+**Step 2:** We use environment variables such as `DATACOVES__AIRFLOW_DAGS_YML_PATH` that are pre-configured for you. For more information on these variables see [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
+- `yml_path`: This is where dbt-coves will look for the yml files to generate your Python DAGs.
+- `dags_path`: This is where dbt-coves will place your generated python DAGs.
 
+Place the following in your `config.yml file`
 ```yml
 generate:
 ...
@@ -30,12 +32,16 @@ generate:
 
 ## Create the yml file for your Airflow DAG
 
-Inside your `orchestrate` folder, create a folder named `dag_yml_definitions`. dbt-coves will look for your yml in this folder to generate your Python DAGs. 
-
-eg) `orchestrate/dag_yml_definitions`
+dbt-coves will look for your yml inside your `orchestrate/dags_yml_definition` folder to generate your Python DAGs. Please create these folders if you have not already done so.
  
->[!NOTE]The name of the file will be the name of the DAG.**
+>[!NOTE]When you create a DAG with YAML the name of the file will be the name of the DAG.
 eg) `yml_dbt_dag.yml` generates a dag named `yml_dbt_dag`
+
+Let's create our first DAG using YAML. 
+
+**Step 1**: Create a new file named `my_first_yml.py` in your `orchestrate/dags` folder.
+
+**Step 2:** Add the following YAML to your file and be sure to change 
 
 ```yml
 description: "Sample DAG for dbt build"
@@ -44,9 +50,8 @@ tags:
   - version_2
 default_args:
   start_date: 2023-01-01
-  owner: Noel Gomez
-  # Replace with the email of the recipient for failures
-  email: gomezn@example.com
+  owner: Noel Gomez # Replace this with your name
+  email: gomezn@example.com # Replace with the email of the recipient for failures
   email_on_failure: true
 catchup: false
 
@@ -54,7 +59,7 @@ nodes:
   run_dbt:
     type: task
     operator: operators.datacoves.dbt.DatacovesDbtOperator
-    bash_command: "dbt run -s personal_loans"
+    bash_command: "dbt run -s personal_loans" 
 ```
 >[!TIP]In the examples we make use of the Datacoves Operators which handle things like copying and running dbt deps. For more information on what these operators handle, see [Datacoves Operators](reference/airflow/datacoves-operator.md)
 

@@ -30,11 +30,11 @@ from operators.datacoves.dbt import DatacovesDbtOperator
 @dag(
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez",
-        "email": "gomezn@example.com",
+        "owner": "Noel Gomez", # Replace with name
+        "email": "gomezn@example.com", # Replace with your email
         "email_on_failure": True,
     },
-    description="Sample DAG for dbt build",
+    description="Sample DAG for dbt run",
     schedule_interval="0 0 1 */12 *",
     tags=["version_2"],
     catchup=False,
@@ -42,7 +42,7 @@ from operators.datacoves.dbt import DatacovesDbtOperator
 def yaml_dbt_dag():
     run_dbt = DatacovesDbtOperator(
         task_id="run_dbt", 
-        bash_command="dbt run -s personal_loans"
+        bash_command="dbt run -s personal_loans" # Replace with your model 
     )
 
 dag = yaml_dbt_dag()
@@ -52,15 +52,15 @@ dag = yaml_dbt_dag()
 The name of the file will used as the DAG name. 
 
 ```yaml
-description: "Sample DAG for dbt build"
+description: "Sample DAG for dbt run"
 schedule_interval: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
   start_date: 2023-01-01
-  owner: Noel Gomez
+  owner: Noel Gomez # Replace with your name
   # Replace with the email of the recipient for failures
-  email: gomezn@example.com
+  email: gomezn@example.com 
   email_on_failure: true
 catchup: false
 
@@ -68,5 +68,5 @@ nodes:
   run_dbt:
     type: task
     operator: operators.datacoves.dbt.DatacovesDbtOperator
-    bash_command: "dbt run -s personal_loans"
+    bash_command: "dbt run -s personal_loans" # Replace with your model name
 ```

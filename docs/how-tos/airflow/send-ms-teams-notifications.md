@@ -158,3 +158,7 @@ nodes:
 
     bash_command: "dbt run -s personal_loans"
 ```
+
+## Getting Started Next Steps 
+
+Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md)

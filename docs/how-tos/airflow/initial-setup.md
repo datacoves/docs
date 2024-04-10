@@ -1,4 +1,4 @@
-# How to set up Airflow for the first time
+# How to configure Airflow in Datacoves
 
 ## Turn on Airflow
 
@@ -10,8 +10,8 @@ Edit the desired environment and click on the `Stack Services` tab. Ensure that 
 
 ![Setup environment services](./assets/environment-stack-services.png)
 
-## Airflow setup
->[!ATTENTION]Changes may need to be made in your project repository to match our defaults. The path examples seen below follow our recommended folder structure pattern. Please see the recommended [folder structure](explanation/best-practices/datacoves/folder-structure.md).
+## Airflow Configurations 
+>[!ATTENTION] You will need to add folders to your project repository in order to match the folder defaults for Airflow; These folders are `orchestrate/dags` and `orchestrate/dags_yml_definitions`. Please see the recommended [folder structure](explanation/best-practices/datacoves/folder-structure.md) for all folder structure recommendations.
 
 Once you enabled Airflow, click on the `Services configuration > Airflow Settings` tab and configure each of the following fields accordingly:
 
@@ -24,13 +24,14 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
   ![Airflow Settings](./assets/environments_airflow_config.gif)
 
     ### DAGs Sync Configuration
-    There are 2 options to choose from for your DAGs sync - Git Sync and S3 Sync. Each requires specific information to be provided during configuration. The default is Git Sync.
+    There are **2 options** to choose from for your DAGs sync - **Git Sync** and **S3 Sync**. Each requires specific information to be provided during configuration. The default is Git Sync.
 
     **Git Sync**
     - **Provider** Select `Git`
-    - **Git branch name** The branch airflow will monitor for changes. We suggest `airflow_development` for the development environment and `main` for the production environment.
-    >[!NOTE]Be sure to create your `airflow_development` branch in your repo first or Airflow will fail to start. We recommend combining your transformations with dbt in the same project as your orchestration with Airflow. However, you may wish to separate orchestration from transformation in different git projects. In Datacoves, you can achieve this by having two projects. Each project will be associated with one git repo. Find out how to configure a [project](how-tos/datacoves/how_to_projects.md).
-    
+    - **Git branch name** The branch airflow will monitor for changes. We suggest `airflow_development` for the development environment and `main` for the production environment. You will be creating the `airflow_development` branch later in the getting started guide.
+   
+    >[!TIP]We recommend combining your dbt transformations in the same project as your Airflow orchestration. However, you may wish to separate orchestration from transformation into different git projects. In Datacoves you can achieve this by having two projects. Each project will be associated with one git repo. Find out how to configure a [project](how-tos/datacoves/how_to_projects.md).
+        
     **S3 Sync** 
     - **Provider** Select `S3`
     - **Bucket Path** The bucket and path that airflow will monitor and sync to the Airflow file system.
@@ -51,4 +52,5 @@ There are 2 options for logs - EFS and S3. Below you will see the fields require
     - **Access Key**
     - **Secret Key**
 
-
+## Getting Started Next Steps 
+[Update Repository for Airflow](getting-started/Admin/configure-repository.md)
