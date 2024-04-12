@@ -1,6 +1,6 @@
 # How to run dbt from an Airflow worker
 
-Airflow synchronizes a git repository's [configured git branch](/how-tos/datacoves/how_to_environments#services-configuration) every minute.
+Airflow synchronizes a git repository's [configured git branch](/how-tos/datacoves/how_to_environments#services-configuration) every minute. (The branch specified in  the `Git branch name` field in the environment's DAGs sync configuration)
 
 To run `dbt` commands easily, we provide a pre-configured virtual environment with the necessary python dependencies such as dbt. Our Airflow Operator also does the following automatically:
 
@@ -12,13 +12,17 @@ This means that you can simply run `dbt <dbt subcommand>` in your Airflow DAG an
 
 ## Create a DAG that uses the script
 
-If your dbt command like `dbt run` works in your development environment, you should be able to create an Airflow DAG that will run this command automatically.
+If your dbt command like `dbt run` works in your development environment(**Try dbt run in your terminal**), then you should be able to create an Airflow DAG that will run this command automatically.
 
-Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python dependencies.
+>[!TIP]Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python dependencies. Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. No need to worry about the complexity when using the `DatacovesBashOperator` because it will automatically activate that environment amongst other actions.
+See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
 
-Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. The `DatacovesBashOperator` will automatically activate that environment.
+### Lets create a DAG!
+**Step 1:** If using Git Sync, switch to your configured branch (`airflow_development` or `main`), create a python file inside of `orchestrate/dags` named `my_sample_dag.py`
 
->[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
+**Step 2:** Paste in the code below and be sure to replace information such as name, email and model name with your own.
+
+>[!NOTE]The name of the DAG will be the name you set for the file. ie) my_sample_dag.py = my_sample_dag
 ### Python version
 
 ```python
@@ -35,20 +39,27 @@ from operators.datacoves.dbt import DatacovesDbtOperator
         "email_on_failure": True,
     },
     description="Sample DAG for dbt run",
-    schedule_interval="0 0 1 */12 *",
+    schedule_interval="0 0 1 */12 *", # Replace with your desired schedule 
     tags=["version_2"],
     catchup=False,
 )
-def yaml_dbt_dag():
+def my_sample_dag():
     run_dbt = DatacovesDbtOperator(
         task_id="run_dbt", 
         bash_command="dbt run -s personal_loans" # Replace with your model 
     )
 
-dag = yaml_dbt_dag()
+dag = my_sample_dag()
 ```
+**Step 3:** Push your changes to the branch.
+
+**Step 4:** Head over to Airflow in the Datacoves UI and refresh. It may take a minute but you should see your DAG populate. 
+
+**Step 5:** Regardless of the schedule you set, the default during development is to have the DAG paused. You can trigger the DAG to see it in action or turn it on to test the schedule.
 
 ### YAML version
+If you are making use of the `dbt-coves generate airflow-dags` command, you can write DAGs using YML.
+
 The name of the file will used as the DAG name. 
 
 ```yaml

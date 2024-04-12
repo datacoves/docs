@@ -1,20 +1,18 @@
 # Creating Aiflow Dags
+
+## Pre-Requisites
 By now you should have:
-- Configured Airflow in Datacoves
-- Added `automate/dbt/profiles.yml` to your repo 
-- Added the `orchestrate/dags` folder to your repo
-- Set up notifications for Airflow
+- [Configured Airflow](getting-started/Admin/configure-airflow.md) in Datacoves
+- [Updated your repo](getting-started/Admin/configure-repository.md) to include `automate/dbt/profiles.yml` and `orchestrate/dags` folders
+- [Set up notifications](docs/how-tos/airflow/send-emails.md) for Airflow
 
-
+## Where to create your DAGs
 This means that Airflow is fully configured and we can turn our attention to creating DAGs! Airflow uses DAGs to run dbt as well as other orchestration tasks. Below are the important things to know when creating DAGs and running dbt with Airflow.
 
-During the Airflow setup you added the `orchestrate` folder and the `dags` folder to your repository. Here you will store your airflow DAGs. ie) `orchestrate/dags` 
+During the Airflow configuration step you added the `orchestrate` folder and the `dags` folder to your repository. Here you will store your airflow DAGs. ie) You will be writing your python files in `orchestrate/dags` 
 
->[!TIP]See how to [update your repository](/getting-started/Admin/configure-repository.md) if you have not completed this step.
-
- 
-   
-1. Here is the simplest way to run dbt with Airflow.
+## DAG 101 in Datacoves
+1. If you are eager to see Airflow and dbt in action within Datacoves, here is the simplest way to run dbt with Airflow.
 
     [Run dbt](how-tos/airflow/run-dbt)
 

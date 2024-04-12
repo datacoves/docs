@@ -12,17 +12,7 @@ Now that you have configured your Airflow settings you must ensure that your rep
 
 ## Create a profiles.yml
 
-Upon creating a service connection these variables can be used in your profiles.yml file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse.
-
-  - `DATACOVES__<NAME>__ROLE`
-  - `DATACOVES__<NAME>__ACCOUNT`
-  - `DATACOVES__<NAME>__WAREHOUSE`
-  - `DATACOVES__<NAME>__ROLE`
-  - `DATACOVES__<NAME>__DATABASE`
-  - `DATACOVES__<NAME>__SCHEMA`
-  - `DATACOVES__<NAME>__USER`
-  - `DATACOVES__<NAME>__PASSWORD`
-
+Upon creating a service connection, [environment variables](reference/vscode/datacoves-env-vars.md#warehouse-environment-variables) for your warehouse credentials were created to be used in your profiles.yml file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse. We have made it simple to set this up by completing the following steps.
 
 To create your and your `profiles.yml`:
 
@@ -32,7 +22,7 @@ To create your and your `profiles.yml`:
 
 **Step 3:** Create the `profiles.yml` inside of your `automate` folder. ie) `automate/dbt/profiles.yml`
 
-**Step 4:** C opy the following configuration into your `profiles.yml`
+**Step 4:** Copy the following configuration into your `profiles.yml`
 
 ### Snowflake
 ``` yaml
@@ -98,7 +88,7 @@ your_profile_name:
       schema: "{{ env_var('DATACOVES__MAIN__SCHEMA') }}" # Required
       host: "{{ env_var('DATACOVES__MAIN__HOST') }}" # Required
       http_path: "{{ env_var('DATACOVES__MAIN__HTTP_PATH') }}" # Required
-      token: "{{ env_var('DATACOVES__MAIN__HOST') }}" # Required Personal Access Token (PAT) if using token-based authentication
+      token: "{{ env_var('DATACOVES__MAIN__TOKEN') }}" # Required Personal Access Token (PAT) if using token-based authentication
       threads: [1 or more]  # Optional, default 1
 ```
 ## Getting Started Next Steps 

@@ -21,18 +21,7 @@ A Service Connection consists of the following fields:
 ![Service Connection Connection Details](./assets/serviceconnection_editnew_details.png)
 
 
-The name of the service connection will be used to dynamically create environment variables seen below which we inject into Airflow. 
-
->[!TIP] These variables can be used in your profiles.yml file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse.
-
-  - `DATACOVES__<NAME>__ROLE`
-  - `DATACOVES__<NAME>__ACCOUNT`
-  - `DATACOVES__<NAME>__WAREHOUSE`
-  - `DATACOVES__<NAME>__ROLE`
-  - `DATACOVES__<NAME>__DATABASE`
-  - `DATACOVES__<NAME>__SCHEMA`
-  - `DATACOVES__<NAME>__USER`
-  - `DATACOVES__<NAME>__PASSWORD`
+The name of the service connection will be used to dynamically create [environment variables](reference/vscode/datacoves-env-vars.md#warehouse-environment-variables) which we inject into Airflow. 
 
 ## Getting Started Next Steps 
 In the following step, you will update your repository by incorporating the necessary folders and files for Airflow. Specifically, you will add the `orchestrate/dags` directories along with `automate/dbt/profiles.yml`. 

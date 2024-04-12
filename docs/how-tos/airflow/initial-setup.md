@@ -24,15 +24,18 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
   ![Airflow Settings](./assets/environments_airflow_config.gif)
 
     ### DAGs Sync Configuration
-    There are **2 options** to choose from for your DAGs sync - **Git Sync** and **S3 Sync**. Each requires specific information to be provided during configuration. The default is Git Sync.
+    There are **2 options** to choose from for your DAGs sync - **Git Sync** and **S3 Sync**. Each requires specific information to be provided during configuration. Our recommended default is Git Sync.
 
     **Git Sync**
     - **Provider** Select `Git`
     - **Git branch name** The branch airflow will monitor for changes. We suggest `airflow_development` for the development environment and `main` for the production environment. You will be creating the `airflow_development` branch later in the getting started guide.
-   
-    >[!TIP]We recommend combining your dbt transformations in the same project as your Airflow orchestration. However, you may wish to separate orchestration from transformation into different git projects. In Datacoves you can achieve this by having two projects. Each project will be associated with one git repo. Find out how to configure a [project](how-tos/datacoves/how_to_projects.md).
+
+ >[!TIP]We recommend combining your dbt transformations in the same project as your Airflow orchestration. However, you may wish to separate orchestration from transformation into different git projects. In Datacoves you can achieve this by having two projects. Each project will be associated with one git repo. Find out how to configure a [project](how-tos/datacoves/how_to_projects.md).
         
     **S3 Sync** 
+    
+    You must create the s3 bucket and IAM user before this step.
+
     - **Provider** Select `S3`
     - **Bucket Path** The bucket and path that airflow will monitor and sync to the Airflow file system.
     - **Auth Mechanism** Choose the auth method. Below you will see the fields required.
@@ -40,11 +43,12 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
         - **Access Key and Secret Key**
       - **IAM Role**
         - **Role ARN**
+  
+Once configured, you will need to configure your CICD process to clone your project into the S3 bucket.
 
-### Logs Configuration
->[!NOTE]Log configuration is only available on private Datacoves deployments.
+### Logs Configuration - Private Deployment ONLY
 
-There are 2 options for logs - EFS and S3. Below you will see the fields required for each:
+There are **2 options** for logs - **EFS** and **S3**. Below you will see the fields required for each:
   - **EFS**
     - **Volume Handle**
   - **S3**

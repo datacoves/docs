@@ -69,8 +69,9 @@ Click `Save Changes`.
 
 The Airflow service will be restarted shortly and will now include the SMTP configuration required to send emails.
 
+>[!NOTE]You can skip this next step if going through the getting started guides since we will be completing the next step of the getting started guide: Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md).
+
 ## Implement in a DAG
->[!NOTE]You can skip this step if going through the getting started guides
 
 If you have already created a DAG it's time to modify your DAG to make use of our newly set up SMTP integration on Airflow. 
 
