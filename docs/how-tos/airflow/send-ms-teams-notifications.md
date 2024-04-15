@@ -18,7 +18,7 @@ Click `Configure`, give it a name, and optionally select an image to use as the 
 
 ![Create Incoming Webhook](./assets/create-incoming-webhook.png)
 
->[!ATTENTION] Store this URL in a safe place as you will need it in a subsequent step and anyone with this link can send notification to that MS Teams channel
+> [!ATTENTION] Store this URL in a safe place as you will need it in a subsequent step and anyone with this link can send notification to that MS Teams channel
 
 ## Prepare Airflow
 
@@ -36,7 +36,7 @@ Provide a name and select `MS Teams`.
 
 Provide the required details and `Save` changes.
 
->[!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
+> [!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
 
 ### Add integration to an Environment
 
@@ -68,31 +68,21 @@ MS Teams will receive a message with a 'View Log' link that users can click on a
 
 In the examples below, we will send a notification on failing tasks or when the full DAG completes successfully using our custom callbacks: `inform_failure` and `inform_success`.
 
->[!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
+> [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
 
-To send MS Teams notifications, in the Airflow DAG we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
+To send MS Teams notifications, in the Airflow DAG we need to import and use the appropriate [Notifier](https://airflow.apache.org/docs/apache-airflow/2.6.0/howto/notifications.html#using-a-notifier) with the following arguments:
 
-- `context` This is provided by Airflow
+- `message` Message you'd like to appear in the MS Teams message
 - `connection_id`: the name of the Datacoves Integration created above
 
-Additionally, other parameters can be passed to customize the message sent to teams and the color shown on the message by passing:
-
-- `message`: the body of the message
-- `color`: border color of the MS Teams card
+Additionally, you can pass a HEX `color` to further customize the message.
 
 ### Python version
 
 ```python
 import datetime
 from airflow.decorators import dag
-from callbacks.microsoft_teams import inform_failure, inform_success
-from operators.datacoves.dbt import DatacovesDbtOperator
-
-def run_inform_success(context):
-    inform_success(context, connection_id="DATACOVES_MS_TEAMS", color="0000FF")
-
-def run_inform_failure(context):
-    inform_failure(context, connection_id="DATACOVES_MS_TEAMS", color="9900FF")
+from notifiers.datacoves.ms_teams import MSTeamsNotifier
 
 @dag(
     default_args={
@@ -105,8 +95,8 @@ def run_inform_failure(context):
     schedule_interval="0 0 1 */12 *",
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
-    on_success_callback=run_inform_success,
-    on_failure_callback=run_inform_failure,
+    on_success_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} has succeeded"),
+    on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} has failed"),
 )
 def dbt_run():
     transform = DatacovesDbtOperator(
@@ -132,23 +122,20 @@ default_args:
   email_on_failure: true
 catchup: false
 
-# Optional callbacks used to send MS Teams notifications
-custom_callbacks:
+# Optional notifiers used to send MS Teams notifications
+callbacks:
   on_success_callback:
-    module: callbacks.microsoft_teams
-    callable: inform_success
+    callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
-      connection_id: DATACOVES_MS_TEAMS
-      # message: Custom success message
-      color: 0000FF
+      - connection_id: DATACOVES_MS_TEAMS
+      - message: Custom success message
+      - color: 0000FF
   on_failure_callback:
-    module: callbacks.microsoft_teams
-    callable: inform_failure
+    callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
-      connection_id: DATACOVES_MS_TEAMS
-      # message: Custom error message
-      color: 9900FF
-
+      - connection_id: DATACOVES_MS_TEAMS
+      - message: Custom error message
+      - color: 9900FF
 
 # DAG Tasks
 nodes:
