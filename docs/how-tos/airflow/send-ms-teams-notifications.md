@@ -68,7 +68,7 @@ MS Teams will receive a message with a 'View Log' link that users can click on a
 
 In the examples below, we will send a notification on failing tasks or when the full DAG completes successfully using our custom callbacks: `inform_failure` and `inform_success`.
 
-> [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`)
+> [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`.
 
 To send MS Teams notifications, in the Airflow DAG we need to import and use the appropriate [Notifier](https://airflow.apache.org/docs/apache-airflow/2.6.0/howto/notifications.html#using-a-notifier) with the following arguments:
 
@@ -105,6 +105,7 @@ def dbt_run():
 
 dag = yaml_teams_dag()
 ```
+> [!NOTE]Quotation marks are not needed when setting the custom message. However, making use of Jinja in a YAML file requires the message to be wrapped quotations to be parsed properly. eg) "{{ dag.dag_id }} failed"
 
 ### YAML version
 
@@ -128,13 +129,13 @@ callbacks:
     callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
       - connection_id: DATACOVES_MS_TEAMS
-      - message: Custom success message
+      - message: "{{ dag.dag_id }} succeded"
       - color: 0000FF
   on_failure_callback:
     callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
       - connection_id: DATACOVES_MS_TEAMS
-      - message: Custom error message
+      - message: "{{ dag.dag_id }} failed"
       - color: 9900FF
 
 # DAG Tasks
