@@ -10,7 +10,7 @@
   - [Transform Tab](getting-started/developer/transform-tab.md)
   - [Working with dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)
   - [Using Git](getting-started/developer/using-git.md)
--  [Migrate From dbt Cloud](getting-started/dbt-cloud-migration/)
+-  [Migrating from dbt Cloud](getting-started/dbt-cloud-migration/)
    -  [Setup User Environment](getting-started/dbt-cloud-migration/setup-user-environment.md)
    -  [dbt Airflow Config](getting-started/dbt-cloud-migration/dbt-airflow-config.md)
    -  [Deploy dbt Jobs](getting-started/dbt-cloud-migration/deploy-dbt-airflow.md)
