@@ -4,11 +4,11 @@ Now that you have completed the setup for Airflow in Datacoves we will walk you 
 
 **Step 1:** Inside your newly created `orchestrate/dags` directory create a file named `daily_run.py`. My dbt job was called daily run so I will name my DAG file `daily_run`. This can be replaced with your specific job names.
 
-**Step 2:** Figure out what dbt commands are being run for your dbt Cloud job by heading into the job UI in dbt Cloud. Do not include `dbt deps` and `dbt generate docs commands` since these commands be taken care of for you. 
+**Step 2:** Figure out what dbt commands are being run for your dbt Cloud job by heading into the job UI in dbt Cloud. Do not include `dbt deps` and `dbt generate docs` commands since these commands be taken care of for you. 
 
 For example:
 
-In my daily run I have `dbt_deps, dbt source freshness, dbt build, dbt docs generate` which will translate to `dbt source freshness && dbt build` bash command.
+I have a job named daily_run in dbt Cloud and it runs the following commands: `dbt_deps, dbt source freshness, dbt build, dbt docs generate`. This will translate to `dbt source freshness && dbt build` bash command for Airflow since `dbt deps` and `dbt generate docs` commands are taken care of for you. 
 
 **Step 3:** Inside `daily_run.py` paste the following code and be sure to replace the `bash_command` values with your own dbt commands following this syntax `command 1 && command 2 && ...`
 

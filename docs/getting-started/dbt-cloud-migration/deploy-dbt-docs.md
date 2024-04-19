@@ -11,7 +11,9 @@
 
 ## Production dbt Docs 
 
-Datacoves hosts your production docs and they are deployed via a CI/CD process with github actions. To configure this functionality:
+Datacoves hosts your production docs and they are deployed via a CI/CD process with github actions. 
+
+To configure this functionality:
 
 **Step 1:** Head to your Environment Settings 
 
