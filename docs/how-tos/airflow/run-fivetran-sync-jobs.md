@@ -86,14 +86,14 @@ nodes:
     tasks:
       # Rename with your desired task name. We recommend the suffix _trigger
       datacoves_snowflake_google_analytics_4_trigger:
-        operator: fivetran_provider.operators.fivetran.FivetranOperator
+        operator: fivetran_provider_async.operators.FivetranOperator
         # Change this to your specific connector ID 
         connector_id: speak_menial
         do_xcom_push: true
         fivetran_conn_id: fivetran_connection
       # Rename with your desired task name. We recommend the suffix _sensor
       datacoves_snowflake_google_analytics_4_sensor:
-        operator: fivetran_provider.sensors.fivetran.FivetranSensor
+        operator:fivetran_provider_async.sensors.FivetranSensor
         # Change this to your specific connector ID 
         connector_id: speak_menial
         # Set your desired poke interval. Defaults to 60.
@@ -117,8 +117,8 @@ nodes:
 import datetime
 
 from airflow.decorators import dag, task_group
-from fivetran_provider.operators.fivetran import FivetranOperator
-from fivetran_provider.sensors.fivetran import FivetranSensor
+from fivetran_provider_async.operators import FivetranOperator
+from fivetran_provider_async.sensors import FivetranSensor
 from operators.datacoves.dbt import DatacovesDbtOperator
 
 @dag(
