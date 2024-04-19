@@ -6,8 +6,9 @@ To mitigate such risks, a practical approach is to dynamically configure the sch
 
 Here is how to achieve this:
 
-**Step 1:** Create a `utilities` folder inside of `orchestrate/dags`
-**Step 2:** Inside `orchestrate/dags/utilities` create a file named `get_schedule.py` and paste the following code:
+**Step 1:** Create a `get_schedule.py` file inside of `orchestrate/dags/python_scripts`
+
+**Step 2:** Paste the following code:
 
 ```python
 # get_schedule.py
@@ -39,7 +40,7 @@ def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
     else:
         return default_input
 ```
-**Step 3:** In your DAG, import the `get_schedule` function using `from utilities.get_schedule import get_schedule` and pass in your desired schedule.
+**Step 3:** In your DAG, import the `get_schedule` function using `from orchestrate.python_scripts.get_schedule import get_schedule` and pass in your desired schedule.
 
 ie) If your desired schedule is `'0 1 * * *'` then you will set `schedule_interval=get_schedule('0 1 * * *')` as seen in the example below. 
 ```python
@@ -47,7 +48,8 @@ from airflow.decorators import dag
 from operators.datacoves.bash import DatacovesBashOperator
 from operators.datacoves.dbt import DatacovesDbtOperator
 from pendulum import datetime
-from utilities.get_schedule import get_schedule
+
+from orchestrate.python_scripts.get_schedule import get_schedule
 
 # Only here for reference, this is automatically activated by Datacoves Operator
 DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
