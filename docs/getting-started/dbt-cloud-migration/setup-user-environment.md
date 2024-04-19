@@ -1,27 +1,12 @@
-# Set up your user environment
+# Datacoves Launchpad
 
 After you have completed the wizard, you will see your project in the launch pad. 
 
-Your project has been associated to your repo during the wizard setup.
+At this point you may notice that some of your tools in the Launchpad are red. This just means they need to be configured. You can hover over them to get helpful messages, however, by the end of this migration guide they should be all green as seen in the image below 🎉
+
+Your **project** has been associated to your **repo** during the wizard setup as seen in the red box below.
 
 ![Migration Launch Pad](./assets/migration_launchpad.png)
-
-## Environment Settings
-
-- Head into your environment settings
-
-![Environment Menu](./assets/migration_environments.gif)
-- Edit your environment by selecting the pencil icon
-
-![Edit Environment](./assets/migration_edit_environment.png) 
-
-- Select Stack Services and turn on OBSERVE > Docs. (We will need this later to deploy our docs)
-  
->[!NOTE]For this migration guide we will not covering the configuration for LOAD and ANALYZE.
-  
-![Observe Settings](./assets/migration_observe_settings.gif)
-  
-- Click Save
 
 All other environment settings have been configured for you during the setup Wizard step. 
 
