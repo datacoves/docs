@@ -1,14 +1,5 @@
 # Deploy your dbt Docs
 
-## Local Docs 📖
-1. Simply run `dbt docs generate` in your terminal 
-   
-![Docs Generate](assets/migration_docs_generate.png)
-
-2. Click on the the Observe tab and view local docs
-   
-![Observe Tab](./assets/migration_observe_dbt_docs.png)
-
 ## Production dbt Docs 
 
 Datacoves hosts your production docs and they are deployed via a CI/CD process with github actions. 

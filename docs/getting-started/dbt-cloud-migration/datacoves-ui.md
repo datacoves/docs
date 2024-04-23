@@ -28,6 +28,16 @@ All other environment settings have been configured for you during the setup Wiz
 7️⃣ Verify the model populated in your warehouse using the Snowflake extension or by logging in to your data warehouse.
 
 **To learn more about the dbt workflow in Datacoves see [dbt in Datacoves](getting-started/developer/working-with-dbt-datacoves.md)**
+
+## Local Docs 📖
+1️⃣ Simply run `dbt docs generate` in your terminal 
+   
+![Docs Generate](assets/migration_docs_generate.png)
+
+2️⃣ Click on the the Observe tab and view local docs
+   
+![Observe Tab](./assets/migration_observe_dbt_docs.png)
+
 ## Next Steps
 
 You are now ready to [configure Airflow](getting-started/dbt-cloud-migration/dbt-airflow-config.md)
