@@ -35,7 +35,7 @@ The service will not be available until you complete this step as seen in the im
 
 ![Github Actions Permissions](assets/migration_github_actions_permissions.png)
 
-**Step 5:** In Github, head to the `repo settings > Secrets and Variables > Actions` to add the following variables and secrets for your data warehouse credentials. These should be set for the repository not the environment.
+**Step 5:** In Github, head to the `repo settings > Secrets and Variables > Actions` to add the following variables and secrets for your data warehouse credentials for production. These should be set for the repository not the environment.
 
 | Type     | Name                               |
 |----------|------------------------------------|
