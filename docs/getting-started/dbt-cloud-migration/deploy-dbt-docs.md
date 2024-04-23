@@ -146,3 +146,6 @@ jobs:
 
 ![Github Actions PR ](assets/migration_github_actions_pr.png)
 
+**Step 8:** View your production docs in the Datacoves UI. Click `Open > Observe > Docs`
+
+![dbt production docs](assets/migration_production_docs.png)
