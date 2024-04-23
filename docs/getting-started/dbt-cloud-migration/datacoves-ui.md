@@ -34,7 +34,7 @@ All other environment settings have been configured for you during the setup Wiz
    
 ![Docs Generate](assets/migration_docs_generate.png)
 
-2️⃣ Click on the the Observe tab and view local docs
+2️⃣ Click on the the `Observe` tab and view local docs
    
 ![Observe Tab](./assets/migration_observe_dbt_docs.png)
 
