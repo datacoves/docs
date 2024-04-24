@@ -1,6 +1,6 @@
 # dbt Airflow Configurations
 
-Now that Airflow is up and running we have some configuration to do to. This guide will walk you through all the pieces
+Now that Airflow is up and running we have some configuration to do to. This guide will walk you through all the steps.
 
 ## Set up your service connection
 **Step 1:** Navigate to the Service Connection page
@@ -15,8 +15,8 @@ Now that Airflow is up and running we have some configuration to do to. This gui
 
 **Step 4:** Fill out the following fields:
 
-- **Name** Defines how the connection will be referred to by the automated service. Should be called `main` and will be included in the name of the environment variables seen below. 
 - **Environment** The Datacoves environment associated with this service connection.
+- **Name** Defines how the connection will be referred to by the automated service. Should be called `main` and will be included in the name of the environment variables seen below. 
 - **Service** The Datacoves stack service where this connection should be made available e.g. Airflow
 - **Connection Template** The connection template to base this service connection on(i.e. the defaults)
   Depending on the template selected, additional fields will be displayed with the default values entered in the connection template. These default values can be overridden by toggling the indicator next to the given value. Enter the appropriate user, schema, and password. **This should be a service account. Be sure to configure your deployment (production) credentials by overriding the values. ie) prod warehouse, prod database ect.**
@@ -28,13 +28,14 @@ Now that Airflow is up and running we have some configuration to do to. This gui
 
 Now that you have setup your service connection you must create your profiles.yml to make use of the environment variables for your warehouse created from the service connection.
 
-**Step 1:** Head back to the Launch pad by clicking on the Datacoves logo on the top left and open your development environment by selecting `Open` 
+**Step 1:** Head back to the Launchpad by clicking on the Datacoves logo on the top left and open your development environment by selecting `Open` 
 
 **Step 2:** Select the `Transform Tab` and create the `automate` folder at the root of your project
 
 **Step 3** Create the `dbt` folder inside the `automate` folder 
 
 **Step 4:** Create the `profiles.yml` inside of your `automate` folder. ie) `automate/dbt/profiles.yml`. 
+>[!TIP]Create all the folders and files above by selecting the new file icon and typing`automate/dbt/profiles.yml`
 
 **Step 5:** Copy the following configuration into your `profiles.yml` based on your warehouse
 
@@ -112,7 +113,7 @@ When Airflow jobs run you may want to receive notifications. We have a few ways 
 
 >[!NOTE]Before using our tool with SMTP, ensure that your email account is configured to allow SMTP access.
 
-**Step 1:** Head back to the Launch pad by clicking on the Datacoves logo on the top left 
+**Step 1:** Head back to the Launchpad by clicking on the Datacoves logo on the top left 
 
 **Step 2:** Create a new integration of type `SMTP` by navigating to the Integrations Admin.
 
@@ -152,7 +153,7 @@ When Airflow jobs run you may want to receive notifications. We have a few ways 
 
 Once you created the `SMTP` integration, it's time to add it to the Airflow service in an environment.
 
-**Step 1:** Go to the `Environments` admin.
+**Step 1:** Go to `Environments` in the admin menu.
 
 ![Environments admin](./assets/migration_environments.gif)
 
@@ -160,7 +161,7 @@ Once you created the `SMTP` integration, it's time to add it to the Airflow serv
 
 ![Edit integrations](./assets/migration_edit_integrations.png)
 
-**Step 3:** Click on the `+ Add new integration` button, and then, select the integration you created previously. In the second dropdown select `Airflow` as service.
+**Step 3:** Click on the `+ Add new integration` button and then select the integration you created previously. In the second dropdown select `Airflow` as service.
 
 ![Add integration](./assets/migration_add_smtp_integration.png)
 
@@ -170,7 +171,7 @@ Once you created the `SMTP` integration, it's time to add it to the Airflow serv
 
 You are almost ready to write your first Airflow DAG in Datacoves. However, in order for our DAGs to be picked up by Airflow like we have configured, we must create the folder structure needed. 
 
-**Step 1:** Head back to the Launch pad by clicking on the Datacoves logo on the top left and open your development environment by selecting `Open` 
+**Step 1:** Head back to the Launchpad by clicking on the Datacoves logo on the top left and open your development environment by selecting `Open` 
 
 **Step 2:** Create a folder named `orchestrate` 
 
