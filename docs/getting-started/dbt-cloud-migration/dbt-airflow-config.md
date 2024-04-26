@@ -46,7 +46,7 @@ default:
   outputs:
     default_target:
       type: snowflake
-      threads: 8
+      threads: 16
       client_session_keep_alive: true
 
       account: "{{ env_var('DATACOVES__MAIN__ACCOUNT') }}"
@@ -59,7 +59,7 @@ default:
 ```
 ### Redshift 
 ```yaml
-company-name:
+default:
   target: dev
   outputs:
     dev:
@@ -68,7 +68,7 @@ company-name:
       user: "{{ env_var('DATACOVES__MAIN__USER') }}"
       password: "{{ env_var('DATACOVES__MAIN__PASSWORD') }}"
       dbname: "{{ env_var('DATACOVES__MAIN__DATABASE') }}"
-      schema: analytics
+      schema: "{{ env_var('DATACOVES__MAIN__SCHEMA') }}"
       port: 5439
       
       # Optional Redshift configs:

@@ -51,11 +51,6 @@ on:  # yamllint disable-line rule:truthy
       - closed
     branches:
       - main
-    paths:
-      - .github/workflows/*
-      - automate/*
-      - transform/* # Not needed if dbt project is at the root
-      - transform/**/* # Not needed if dbt project is at the root
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
