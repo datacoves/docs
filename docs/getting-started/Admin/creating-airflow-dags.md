@@ -4,7 +4,7 @@
 By now you should have:
 - [Configured Airflow](getting-started/Admin/configure-airflow.md) in Datacoves
 - [Updated your repo](getting-started/Admin/configure-repository.md) to include `automate/dbt/profiles.yml` and `orchestrate/dags` folders
-- [Set up notifications](docs/how-tos/airflow/send-emails.md) for Airflow
+- [Set up notifications](how-tos/airflow/send-emails.md) for Airflow
 
 ## Where to create your DAGs
 This means that Airflow is fully configured and we can turn our attention to creating DAGs! Airflow uses DAGs to run dbt as well as other orchestration tasks. Below are the important things to know when creating DAGs and running dbt with Airflow.
