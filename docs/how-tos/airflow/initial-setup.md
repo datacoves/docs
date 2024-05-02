@@ -28,7 +28,7 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
 
     **Git Sync**
     - **Provider** Select `Git`
-    - **Git branch name** The branch airflow will monitor for changes. We suggest `airflow_development` for the development environment and `main` for the production environment. You will be creating the `airflow_development` branch later in the getting started guide.
+    - **Git branch name** The branch airflow will monitor for changes. If you have more than 1 environment (Development and Production), we suggest `airflow_development` for the development environment and `main` for the production environment. Note: You would need to create an  `airflow_development` branch in your repo. If only have 1 environment, then the `Git branch name` should be `main`. 
 
  >[!TIP]We recommend combining your dbt transformations in the same project as your Airflow orchestration. However, you may wish to separate orchestration from transformation into different git projects. In Datacoves you can achieve this by having two projects. Each project will be associated with one git repo. Find out how to configure a [project](how-tos/datacoves/how_to_projects.md).
         
@@ -44,9 +44,9 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
       - **IAM Role**
         - **Role ARN**
   
-Once configured, you will need to configure your CICD process to clone your project into the S3 bucket.
+Once configured, you will need to configure your CI/CD process to clone your project into the S3 bucket.
 
-### Logs Configuration - Private Deployment ONLY
+### Logs Configuration - Private Deployment ONLY. Not applicable in SaaS.
 
 There are **2 options** for logs - **EFS** and **S3**. Below you will see the fields required for each:
   - **EFS**

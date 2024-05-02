@@ -27,16 +27,6 @@ Click on the `+ New integration` button.
 
 - **Host:** Enter the smtp server for your domain. 
 
-|**SMTP Provider**| **URL**     | **SMTP Settings**         |
-|---------------|----------------|---------------------------|
-| AOL           | aol.com        | smtp.aol.com              |
-| AT&T          | att.net        | smtp.mail.att.net         |
-| Comcast       | comcast.net    | smtp.comcast.net          |
-| iCloud        | icloud.com/mail| smtp.mail.me.com          |
-| Gmail         | gmail.com      | smtp.gmail.com            |
-| Outlook       | outlook.com    | smtp-mail.outlook.com     |
-| Yahoo!        | mail.yahoo.com | smtp.mail.yahoo.com       |
-
 - **Port:** TLS encryption on port 587. If you’d like to implement SSL encryption, use port 465. 
 
 - **From Address:** This is the address that you have configured for smtp
