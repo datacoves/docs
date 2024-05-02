@@ -9,11 +9,13 @@ Here is how to achieve this:
 **Step 1:** Create a `get_schedule.py` file inside of `orchestrate/dags/python_scripts`
 
 **Step 2:** Paste the following code:
-
+Note: Find your environment slug [here](reference/admin-menu/environments.md)
 ```python
 # get_schedule.py
 import os
 from typing import Union
+
+DEV_ENVIRONMENT_SLUG = "dev123" # Replace with your environment slug
 
 def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
     """
@@ -35,7 +37,7 @@ def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
       indicating that no schedule should be used in the dev environment.
     """
     env_slug = os.environ.get("DATACOVES__ENVIRONMENT_SLUG", "").lower()
-    if env_slug == "gay725":
+    if env_slug == DEV_ENVIRONMENT_SLUG = "dev123":
         return None
     else:
         return default_input
@@ -50,10 +52,6 @@ from operators.datacoves.dbt import DatacovesDbtOperator
 from pendulum import datetime
 
 from orchestrate.python_scripts.get_schedule import get_schedule
-
-# Only here for reference, this is automatically activated by Datacoves Operator
-DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
-
 
 @dag(
     default_args={

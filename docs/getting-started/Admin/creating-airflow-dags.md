@@ -20,6 +20,6 @@ During the Airflow configuration step you added the `orchestrate` folder and the
     
     [Generate DAGs from yml definitions](how-tos/airflow/generate-dags-from-yml) this is simpler for users not accustomed to using Python
 
-3. You may also wish to use external libraries in your DAGs such as Pandas. In order to do that effectively, you can create custom Python scripts in a separate directory such as `orchestrate/python_scripts` and use the `DatacovesBashOperator` to handle all the behind the scenes work as well as run your custom script.
+3. You may also wish to use external libraries in your DAGs such as Pandas. In order to do that effectively, you can create custom Python scripts in a separate directory such as `orchestrate/python_scripts` and use the `DatacovesBashOperator` to handle all the behind the scenes work as well as run your custom script.**You will need to contact us beforehand to pre-configure any python libraries you need.**
 
     [External Python DAG](how-tos/airflow/external-python-dag)

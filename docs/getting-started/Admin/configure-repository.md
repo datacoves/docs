@@ -55,14 +55,6 @@ company-name:
       dbname: "{{ env_var('DATACOVES__MAIN__DATABASE') }}"
       schema: analytics
       port: 5439
-      
-      # Optional Redshift configs:
-      sslmode: prefer
-      role: None
-      ra3_node: true 
-      autocommit: true 
-      threads: 4
-      connect_timeout: None
 ```
 ### BigQuery
 ```yaml
@@ -89,7 +81,7 @@ your_profile_name:
       host: "{{ env_var('DATACOVES__MAIN__HOST') }}" # Required
       http_path: "{{ env_var('DATACOVES__MAIN__HTTP_PATH') }}" # Required
       token: "{{ env_var('DATACOVES__MAIN__TOKEN') }}" # Required Personal Access Token (PAT) if using token-based authentication
-      threads: [1 or more]  # Optional, default 1
+      threads: 4 
 ```
 ## Getting Started Next Steps 
 
