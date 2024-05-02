@@ -70,19 +70,29 @@ In the examples below, we will send a notification on failing tasks or when the 
 
 > [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`.
 
-To send MS Teams notifications, in the Airflow DAG we need to import and use the appropriate [Notifier](https://airflow.apache.org/docs/apache-airflow/2.6.0/howto/notifications.html#using-a-notifier) with the following arguments:
+To send MS Teams notifications, in the Airflow DAG we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
 
-- `message` Message you'd like to appear in the MS Teams message
+- `context` This is provided by Airflow
 - `connection_id`: the name of the Datacoves Integration created above
 
-Additionally, you can pass a HEX `color` to further customize the message.
+Additionally, other parameters can be passed to customize the message sent to teams and the color shown on the message by passing:
+
+- `message`: the body of the message
+- `color`: border color of the MS Teams card
 
 ### Python version
 
 ```python
 import datetime
 from airflow.decorators import dag
-from notifiers.datacoves.ms_teams import MSTeamsNotifier
+from callbacks.microsoft_teams import inform_failure, inform_success
+from operators.datacoves.dbt import DatacovesDbtOperator
+
+def run_inform_success(context):
+    inform_success(context, connection_id="DATACOVES_MS_TEAMS", color="0000FF")
+
+def run_inform_failure(context):
+    inform_failure(context, connection_id="DATACOVES_MS_TEAMS", color="9900FF")
 
 @dag(
     default_args={
@@ -95,8 +105,8 @@ from notifiers.datacoves.ms_teams import MSTeamsNotifier
     schedule_interval="0 0 1 */12 *",
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
-    on_success_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} has succeeded"),
-    on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} has failed"),
+    on_success_callback=run_inform_success,
+    on_failure_callback=run_inform_failure,
 )
 def dbt_run():
     transform = DatacovesDbtOperator(
@@ -123,20 +133,23 @@ default_args:
   email_on_failure: true
 catchup: false
 
-# Optional notifiers used to send MS Teams notifications
-callbacks:
+# Optional callbacks used to send MS Teams notifications
+custom_callbacks:
   on_success_callback:
-    callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
+    module: callbacks.microsoft_teams
+    callable: inform_success
     args:
-      - connection_id: DATACOVES_MS_TEAMS
-      - message: "{{ dag.dag_id }} succeded"
-      - color: 0000FF
+      connection_id: DATACOVES_MS_TEAMS
+      # message: Custom success message
+      color: 0000FF
   on_failure_callback:
-    callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
+    module: callbacks.microsoft_teams
+    callable: inform_failure
     args:
-      - connection_id: DATACOVES_MS_TEAMS
-      - message: "{{ dag.dag_id }} failed"
-      - color: 9900FF
+      connection_id: DATACOVES_MS_TEAMS
+      # message: Custom error message
+      color: 9900FF
+
 
 # DAG Tasks
 nodes:

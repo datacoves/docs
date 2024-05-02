@@ -99,9 +99,18 @@ Additionally, `message` can be passed to customize the message sent to Slack
 import datetime
 
 from airflow.decorators import dag
-from airflow.providers.slack.notifications.slack_webhook import SlackWebhookNotifier
+from callbacks.slack_messages import inform_failure, inform_success
 from kubernetes.client import models as k8s
 from operators.datacoves.dbt import DatacovesDbtOperator
+
+
+def run_inform_success(context):
+    inform_success(context, connection_id="DATACOVES_SLACK", color="0000FF")
+
+
+def run_inform_failure(context):
+    inform_failure(context, connection_id="DATACOVES_SLACK", color="9900FF")
+
 
 TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
@@ -131,14 +140,8 @@ TRANSFORM_CONFIG = {
     schedule_interval="0 0 1 */12 *",
     tags=["version_2", "slack_notification", "blue_green"],
     catchup=False,
-    on_success_callback=SlackWebhookNotifier(
-        slack_webhook_conn_id="SLACK_NOTIFICATIONS",
-        text="The DAG {{ dag.dag_id }} succeeded",
-    ),
-    on_failure_callback=SlackWebhookNotifier(
-        slack_webhook_conn_id="SLACK_NOTIFICATIONS",
-        text="The DAG {{ dag.dag_id }} failed",
-    ),,
+    on_success_callback=run_inform_success,
+    on_failure_callback=run_inform_failure,
 )
 def yaml_slack_dag():
     transform = DatacovesDbtOperator(

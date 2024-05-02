@@ -81,20 +81,18 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
         "owner": "Noel Gomez",
-        "email": "gomezn@example.com", # Can be a list ["email1", "email2",...]
-        "email_on_failure": True,     # Email options
-        # 'email_on_failure': False,  # Email options
-        # 'email_on_retry': False,    # Email options
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
     },
-    description="Sample DAG for dbt run",
+    description="Sample DAG for dbt build",
     schedule_interval="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )
 def dbt_run():
     build_dbt = DatacovesDbtOperator(
-        task_id="run_dbt",
-        bash_command="dbt run -s personal_loans", # Replace the name of the model
+        task_id="build_dbt",
+        bash_command="dbt run -s personal_loans",
     )
 
 
