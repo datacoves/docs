@@ -30,13 +30,13 @@ The service will not be available until you complete this step as seen in the im
 
 | Type     | Name                               |
 |----------|------------------------------------|
-| variable | DATACOVES__MAIN__ACCOUNT           |
-| variable | DATACOVES__MAIN__DATABASE          |
-| variable | DATACOVES__MAIN__SCHEMA            |
-| variable | DATACOVES__MAIN__ROLE              |
-| variable | DATACOVES__MAIN__WAREHOUSE         |
-| variable | DATACOVES__MAIN__USER              |
-| secret   | DATACOVES__MAIN__PASSWORD          |
+| variable | DB_ACCOUNT                         |
+| variable | PROD_DATABASE                      |
+| variable | DB_SCHEMA                          |
+| variable | DB_ROLE                            |
+| variable | DB_WAREHOUSE                       |
+| variable | DB_USER                            |
+| secret   | DB_PASSWORD                        |
 
 **Step 6:** In your main branch, add a file at the root and type `.github/workflows/deploy-to-main.yml`. This will create the `deploy-to-main.yml` file inside of the `.github/workflows` folders. If your repository doesn't have a `.github/workflows`directory, go to the main page of the repository on GitHub, click Add file, then click Create new file, and name the file `.github/workflows/deploy-to-main.yml`. This creates the `.github` and `workflows` directories and the `deploy-to-main.yml` file in a single step.
 
@@ -88,16 +88,16 @@ jobs:
       # # If your dbt project is inside a transform directory.
     #   DATACOVES__DBT_HOME: /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}/transform 
 
-      DATACOVES__MAIN__ACCOUNT:   ${{ vars.DATACOVES__MAIN__ACCOUNT }}
+      DATACOVES__MAIN__ACCOUNT:   ${{ vars.DB_ACCOUNT }}
 
-      DATACOVES__MAIN__DATABASE:  ${{ vars.DATACOVES__MAIN__DATABASE }}
-      DATACOVES__MAIN__SCHEMA:    ${{ vars.DATACOVES__MAIN__SCHEMA }}
+      DATACOVES__MAIN__DATABASE:  ${{ vars.PROD_DATABASE }}
+      DATACOVES__MAIN__SCHEMA:    ${{ vars.DB_SCHEMA }}
 
-      DATACOVES__MAIN__ROLE:      ${{ vars.DATACOVES__MAIN__ROLE }}
-      DATACOVES__MAIN__WAREHOUSE: ${{ vars.DATACOVES__MAIN__WAREHOUSE }}
+      DATACOVES__MAIN__ROLE:      ${{ vars.DB_ROLE }}
+      DATACOVES__MAIN__WAREHOUSE: ${{ vars.DB_WAREHOUSE }}
 
-      DATACOVES__MAIN__USER:      ${{ vars.DATACOVES__MAIN__USER }}
-      DATACOVES__MAIN__PASSWORD:  ${{ secrets.DATACOVES__MAIN__PASSWORD }}
+      DATACOVES__MAIN__USER:      ${{ vars.DB_USER }}
+      DATACOVES__MAIN__PASSWORD:  ${{ secrets.DB_PASSWORD }}
 
     steps:
       - name: Checkout branch
