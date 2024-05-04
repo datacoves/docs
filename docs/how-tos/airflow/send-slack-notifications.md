@@ -54,7 +54,7 @@ Provide a name and select `Slack`.
 
 Provide the required details and `Save` changes.
 
->[!TIP]The name you specify will be used to create the Airflow-Slack connection. It will be uppercased and joined by underscores -> `'SLACK NOTIFICATIONS'` will become `SLACK_NOTIFICATIONS`. You will need this name below.
+> [!TIP]The name you specify will be used to create the Airflow-Slack connection. It will be uppercased and joined by underscores -> `'SLACK NOTIFICATIONS'` will become `SLACK_NOTIFICATIONS`. You will need this name below.
 
 ### Add integration to an Environment
 
@@ -84,7 +84,7 @@ Slack will receive a message with a 'Logs' link that users can click on and go d
 
 In the examples below, we will send a notification on failing tasks or when the full DAG completes successfully using our custom callbacks: `inform_failure` and `inform_success`.
 
->[!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`
+> [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`
 
 To send Slack notifications, in the Airflow DAG we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
 
@@ -171,23 +171,18 @@ default_args:
   email_on_failure: true
 catchup: false
 
-
 # Optional callbacks used to send Slack notifications
-custom_callbacks:
+callbacks:
   on_success_callback:
-    module: callbacks.slack_messages
-    callable: inform_success
+    callback: airflow.providers.slack.notifications.slack_webhook.SlackWebhookNotifier
     args:
-      connection_id: DATACOVES_SLACK
-      # message: Custom success message
-      color: 0000FF
+      - slack_webhook_conn_id: SLACK_NOTIFICATIONS
+      - text: Custom success message
   on_failure_callback:
-    module: callbacks.slack_messages
-    callable: inform_failure
+    callback: airflow.providers.slack.notifications.slack_webhook.SlackWebhookNotifier
     args:
-      connection_id: DATACOVES_SLACK
-      # message: Custom error message
-      color: 9900FF
+      - slack_webhook_conn_id: SLACK_NOTIFICATIONS
+      - text: Custom error message
 
 # DAG Tasks
 nodes:
@@ -202,3 +197,6 @@ nodes:
 
     bash_command: "dbt run -s personal_loans"
 ```
+## Getting Started Next Steps 
+
+Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md)

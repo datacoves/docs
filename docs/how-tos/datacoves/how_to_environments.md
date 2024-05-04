@@ -31,17 +31,19 @@ Available services include:
 
 ## Services Configuration
 The services enabled for the environment may require additional configurations. This tab is where the services will be configured. 
-  
-For example: 
 
 - TRANSFORM (dbt & VS Code) requires:
-  -  **dbt project path** the path the location of the `dbt_project.yml` this allows you to either have the dbt project at the root of your git repository or in some sub-folder.
-- ORCHESTRATE (Airflow) requires: 
-  - **branch** Determines git branch to synchronize to Airflow. This allows you to have one branch like `airflow_development` for a development environment and use `main` on a production environment.
-  - **dbt profiles path** The location where Airflow will find dbt profiles.yml file to use during a dbt run.
-  - **YAML DAGs path** When using yml based Airflow DAGs Airflow will look for the yml files in this location.
-  - **Python DAGs path** This is the location Airflow will look for the DAG definition files
-- OBSERVE (Docs) requires:
-  -  **branch** Here we specify the branch that will be synchronized for production dbt docs. This branch must exist in your git repository.
+  -  **dbt project path:** The path the location of the `dbt_project.yml` this allows you to either have the dbt project at the root of your git repository or in some sub-folder. If you have implemented the recommended folder structure this will be `transform`. If your dnt project is at the root, leave it blank.
+  -  **dbt profile name:** dbt profile name as defined in dbt_project.yml with the key profile. The standard is `default`.
   
+![Environments Create or Edit Services Configuration](./assets/environments_editnew_servicesconfig_general.png)
+
+- ORCHESTRATE (Airflow) requires: 
+  - **branch:** Determines git branch to synchronize to Airflow. This allows you to have one branch for a development environment and `main` for a production environment. In other words, in development we recommend making this field `airflow_development` and `main` in production. Please be aware that you will need to create an `airflow_development` branch in your repository. 
+  - **dbt profiles path:** The location where Airflow will find dbt profiles.yml file to use during a dbt run. This should be `automate/dbt`. Please be aware that you will need to create the `automate` and`dbt` folders as well as the `profiles.yml` in your repository. 
+  - **YAML DAGs path:** When using yml based Airflow DAGs Airflow will look for the yml files in this location. We recommend this be set to `orchestrate/dags`. Please be aware that you will need to create the `orchestrate` and `dags` folders in your repository.
+  - **Python DAGs path:** This is the location Airflow will look for the DAG definition files.  We recommend this be set to `orchestrate/dag_yml_definitions`. Please be aware that you will need to create the `orchestrate` and `dag_yml_definitions` folders in your repository.
+- OBSERVE (Docs) requires:
+  -  **branch:** Here we specify the branch that will be synchronized for production dbt docs. This branch must exist in your git repository.
+
 ![Environments Create or Edit Services Configuration](./assets/environments_editnew_servicesconfig.png)

@@ -3,6 +3,10 @@
 When utilizing dbt-coves to generate DAGs, it's crucial to grasp the functionality of the two frequently used operators and their behind-the-scenes operations, enhancing your Airflow experience.
 
 ## Datacoves Bash Operator
+
+```
+from operators.datacoves.bash import DatacovesBashOperator 
+```
 This custom operator is an extension of Airflow's default Bash Operator. It:
 
 - Copies the entire Datacoves repo to a temporary directory, to avoid read-only errors when running `bash_command`.
@@ -18,6 +22,10 @@ Params:
 
 ## Datacoves dbt Operator
 >[!WARNING]If you have either `dbt_modules` or `dbt_packages` folders in your project repo we won't run `dbt deps`.
+
+``` 
+from operators.datacoves.dbt import DatacovesDbtOperator
+```
 
 This custom operator is an extension of Datacoves Bash Operator and simplifies running dbt commands within Airflow.
 The operator does the following:
