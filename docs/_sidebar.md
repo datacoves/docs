@@ -90,5 +90,4 @@
   - [Metrics & Logs](reference/metrics-and-logs/)
     - [Grafana](reference/metrics-and-logs/grafana.md)
   - [Security](/reference/security/)
-- [Service Level Agreement](sla.md)
 <footer id="mb-footer"></footer>
