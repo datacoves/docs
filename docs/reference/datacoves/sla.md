@@ -1,26 +1,26 @@
 # Service Level Agreement (SLA)
 
-This is our Service Level Agreement, outlining Datacoves' responsibility with regards to outages and other issues with the Datacoves system.
+This document outlines Datacoves' responsibility with regards to outages and other issues with the Datacoves platform.
 
 ## Support
 
-Datacoves monitors their platforms continually, 24 hours a day.  Support is based on severity level of the issue, with 1 being the highest and 3 being the lowest:
+Datacoves monitors their platforms continually, 24 hours a day, 7 days a week.  Support is based on severity level of the issue, with 1 being the highest and 3 being the lowest:
 
 | Severity Level | Level of Effort | Initial response | Status Updates |
 | :--------------: | --------------- | ---------------- | -------------- |
-| 1 | Commercially reasonable efforts, during normal business hours. | Immediate, but in no event to exceed 24 hours. | Every 1 Business Days prior to a Work Around and every 2 Business Days thereafter |
-| 2 | Commercially reasonable efforts, during normal business hours. | 24 hours | Every 1 Business Days prior to a Work Around and every 2 Business Days thereafter |
-| 3 | Commercially reasonable efforts, during normal business hours | 3 Business Days | Every 2 Business Days prior to a Work Around and every 5 Business Days Thereafter |
+| 1 | Commercially reasonable efforts, during normal business hours. | Immediate and in no event to exceed 24 hours. | Every 1 Business Day or sooner via email or Slack communication |
+| 2 | Commercially reasonable efforts, during normal business hours. | 24 hours |Every 1 Business Day or sooner via email or Slack communication |
+| 3 | Commercially reasonable efforts, during normal business hours | 3 Business Days | Every 2 Business Days prior to a work around and every 5 business days thereafter |
 
-Business hours are defined as between 9 AM Eastern US time and 8 PM Eastern US time.  Typically, we are able to respond to issues at all levels within an hour or less during Business Hours.  Support is provided remotely by English-speaking resources via customer-specific Slack channels.
+Business hours are defined as between 9 AM Eastern US time and 8 PM Eastern US time.  Typically, we are able to respond to issues at all levels within an hour or less during Business Hours.  Support is provided remotely by English-speaking resources via customer-specific Slack channels or via email to support@datacoves.com.
 
 We provide support for the following types of issues:
 
 | Type | Example | Price |
 | :--: | ------- | ----- |
 | Bug | User logs into Datacoves and can't get to the dbt environment due to a bug with the platform. | Included |
-| System Integration (Non-bug issues) | Ping Identity (internal tool) is updated and users cannot log into Datacoves, requiring a specific fix to support that customer-specific integration. | 12 included; additional would fall under professional services |
-| Enhancements | Customer has a custom CI/CD process and requires specific work from Datacoves to integrate it | Not Included - Professional Services |
+| System Integration (Non-Datacoves issues) | Github is updated and users cannot pull or push changes, requiring a specific fix to support that  integration. | 12 incidents included; additional would fall under professional services |
+| Enhancements | Customer has a CI/CD process that impacted by a change to dbt Core | Not Included - Professional Services |
 
 Datacoves strives to be helpful to its customers and we will do our best to provide assistance with most issues.
 
@@ -28,7 +28,7 @@ Datacoves strives to be helpful to its customers and we will do our best to prov
 
 Datacoves maintains a status page at the following URL: https://status.datacoves.com/
 
-We are pro-active in our approach to support, and we notify all applicable customer Slack support channels when there is a notification regarding an upgrade, outage, or other item that may impact a customer's usage of the system.
+We are pro-active in our approach to support and we notify all applicable customer Slack support channels when there is a notification regarding an upgrade, outage, or other item that may impact a customer's usage of the system.
 
 ## Requesting Support
 
