@@ -28,7 +28,7 @@ Datacoves strives to be helpful to its customers and we will do our best to prov
 
 Datacoves maintains a status page at the following URL: https://status.datacoves.com/
 
-We are pro-active in our approach to support and we notify all applicable customer Slack support channels when there is a notification regarding an upgrade, outage, or other item that may impact a customer's usage of the system.
+We are pro-active in our approach to support and we notify all applicable customer Slack support channels when there is a notification regarding an upgrade, outage, or other items that may impact a customer's usage of the system.
 
 ## Requesting Support
 
