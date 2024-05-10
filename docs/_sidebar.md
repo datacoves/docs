@@ -90,5 +90,6 @@
   - [Metrics & Logs](reference/metrics-and-logs/)
     - [Grafana](reference/metrics-and-logs/grafana.md)
   - [Security](/reference/security/)
+- [Datacoves Status Tracker](https://datacoves.statuspage.io/)
   
 <footer id="mb-footer"></footer>
