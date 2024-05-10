@@ -22,7 +22,7 @@ For example, to change the line length at which VS Code shows it's ruler:
 
 ## How to customize the Status Bar
 
-The defaults can be overridden for customization such as what buttons appear in the status bar, the order and more.
+The defaults can be overridden for customization such as what buttons appear in the status bar, the order and more. The status bar is the blue bar at the bottom of the screen.
 
 ### Read default Datacoves settings
 
