@@ -83,14 +83,13 @@
     - [Airflow Config Defaults](reference/airflow/airflow-config-defaults.md)
     - [DAG Generators](/reference/airflow/dag-generators.md)
     - [Datacoves Operators](reference/airflow/datacoves-operator.md)
-  - [Datacoves](reference/datacoves/)
-    - [Datacoves SLA](reference/datacoves/sla.md)
   - [VS Code](reference/vscode/)
     - [Datacoves Environment Variables](reference/vscode/datacoves-env-vars.md)
   - [Metrics & Logs](reference/metrics-and-logs/)
     - [Grafana](reference/metrics-and-logs/grafana.md)
   - [Security](/reference/security/)
-- **Monitoring**
-- [Datacoves Status Tracker](https://datacoves.statuspage.io/)
+- **Platform**
+- [Status Tracker](https://datacoves.statuspage.io/)
+- [SLA](sla.md)
   
 <footer id="mb-footer"></footer>
