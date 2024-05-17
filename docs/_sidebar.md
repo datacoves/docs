@@ -36,6 +36,7 @@
         - [Snowflake](/how-tos/vscode/snowflake_setup.md)
     - [Override VS Code settings](/how-tos/vscode/override.md)
     - [Reset User Env](/how-tos/vscode/reset-user-env.md)
+    - [Reset Git](how-tos/vscode/reset-git.md)
   - [Datacoves](/how-tos/datacoves/)
     - [Configure Connection Templates](/how-tos/datacoves/how_to_connection_template.md)
     - [Configure Environments](how-tos/datacoves/how_to_environments.md)
