@@ -1,6 +1,6 @@
 # Reset git 
 
-If you would like to reset your git environment, simply delete the .git file with the following command. 
+If you would like to reset your git clone in your environment, simply delete the .git file with the following command.
 
 ```bash
 rm -rf /config/workspace/.git
