@@ -12,7 +12,7 @@ Datacoves monitors their platforms continually, 24 hours a day, 7 days a week.  
 | 2 | Commercially reasonable efforts, during normal business hours. | 24 hours |Every 1 Business Day or sooner via email or Slack communication |
 | 3 | Commercially reasonable efforts, during normal business hours | 3 Business Days | Every 2 Business Days prior to a work around and every 5 business days thereafter |
 
-Business hours are defined as between 9 AM Eastern US time and 8 PM Eastern US time.  Typically, we are able to respond to issues at all levels within an hour or less during Business Hours.  Support is provided remotely by English-speaking resources via customer-specific Slack channels or via email to support@datacoves.com.
+Business hours are defined as between 8 AM Eastern US time and 8 PM Eastern US time.  Typically, we are able to respond to issues at all levels within an hour or less during Business Hours.  Support is provided remotely by English-speaking resources via customer-specific Slack channels or via email to support@datacoves.com.
 
 ### Severity Levels
 
