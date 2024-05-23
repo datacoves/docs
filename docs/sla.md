@@ -14,6 +14,18 @@ Datacoves monitors their platforms continually, 24 hours a day, 7 days a week.  
 
 Business hours are defined as between 9 AM Eastern US time and 8 PM Eastern US time.  Typically, we are able to respond to issues at all levels within an hour or less during Business Hours.  Support is provided remotely by English-speaking resources via customer-specific Slack channels or via email to support@datacoves.com.
 
+### Severity Levels
+
+Our severity levels are defined as follows:
+
+| Severity Level | Definition |
+| :------------: | ---------- |
+| 1 | Any error that renders the platform or any major portion of it inoperative, or majorly impacts the customer's use of the platform in a production environment.  For instance, if the platform has a total loss of service, frequent instabilities, or a loss of ability to communicate as intended. |
+| 2 | Any error that impairs the use of one or more features of the platform, but not a major portion of it, unusable in a production environment.  This also covers errors in non-production environments that would be a level 1 error in production. |
+| 3 | Any error that has a minimal impact on the performance or operation of the platform, and most errors in non-production environments that are not severe enough to fall under level 2. |
+
+### Types of Issues
+
 We provide support for the following types of issues:
 
 | Type | Example | Price |
