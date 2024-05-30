@@ -28,12 +28,13 @@
     - [Get Current Branch Name from a DAG Task](/how-tos/airflow/get-current-branch-name.md)
     - [Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
+    - [Dump Airflow database](/how-tos/airflow/dump-database.md)
   - [VS Code](/how-tos/vscode/)
     - [Initial Configuration](/how-tos/vscode/initial.md)
-        - [BigQuery](/how-tos/vscode/bigquery_setup.md)
-        - [Databricks](/how-tos/vscode/databricks_setup.md)
-        - [Redshift](/how-tos/vscode/redshift_setup.md)
-        - [Snowflake](/how-tos/vscode/snowflake_setup.md)
+      - [BigQuery](/how-tos/vscode/bigquery_setup.md)
+      - [Databricks](/how-tos/vscode/databricks_setup.md)
+      - [Redshift](/how-tos/vscode/redshift_setup.md)
+      - [Snowflake](/how-tos/vscode/snowflake_setup.md)
     - [Override VS Code settings](/how-tos/vscode/override.md)
     - [Reset User Env](/how-tos/vscode/reset-user-env.md)
     - [Reset Git](how-tos/vscode/reset-git.md)
@@ -92,5 +93,5 @@
 - **Platform**
 - [Status Tracker](https://datacoves.statuspage.io/)
 - [SLA](sla.md)
-  
+
 <footer id="mb-footer"></footer>
