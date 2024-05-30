@@ -28,7 +28,7 @@
     - [Get Current Branch Name from a DAG Task](/how-tos/airflow/get-current-branch-name.md)
     - [Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
-    - [Dump Airflow database](/how-tos/airflow/dump-database.md)
+    - [Sync Airflow database](/how-tos/airflow/sync-database.md)
   - [VS Code](/how-tos/vscode/)
     - [Initial Configuration](/how-tos/vscode/initial.md)
       - [BigQuery](/how-tos/vscode/bigquery_setup.md)
