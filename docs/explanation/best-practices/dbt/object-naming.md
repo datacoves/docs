@@ -11,6 +11,7 @@ As a general rule, names should use full words and increase in granularity left-
 ## Databases
 
 The warehouse should be separated into two primary parts:
+
 1. The **raw** database where data gets ingested and which is not exposed to most users.
 2. The **analytics** database is where the transformed data exists. This is where dbt operates.
 
@@ -83,6 +84,7 @@ Inlet Schema names should match those in the RAW database for traceability.
 The first step in making raw data usable is to flatten and do some basic cleanup of the data. In dbt we use the inlets folder and we mirror the schema name created in the raw database.
 
 Here we do some basic transformation including:
+
 - flattening
 - aliasing columns for clarity
 - casting

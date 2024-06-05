@@ -21,6 +21,7 @@ Params:
 - `activate_venv` (optional): whether to activate the Datacoves Airflow virtualenv or not
 
 ## Datacoves dbt Operator
+
 >[!WARNING]If you have either `dbt_modules` or `dbt_packages` folders in your project repo we won't run `dbt deps`.
 
 ``` 

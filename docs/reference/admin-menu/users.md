@@ -15,5 +15,6 @@ On the Users landing page you can see a list of user associated with your Dataco
 For each user we can see the user's name, their email, the security groups they were granted, and last time they logged into Datacoves.
 
 Each row contains 2 action buttons:
+
 - Edit
 - Delete

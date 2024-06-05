@@ -35,17 +35,20 @@ To create a new connection template click the `Create Connection Template` in th
 - **Provider connection details** Based on the Provider Type selected, available default parameters will be displayed.
 
 ### For Snowflake, the available fields are: 
-  - `Account`:To locate this, visit your snowflake account > Click on the menu in the bottom left corner > Select the account > select the `Copy account identifier`. 
+
+- `Account`: To locate this, visit your snowflake account > Click on the menu in the bottom left corner > Select the account > select the `Copy account identifier`. 
   
 >[!ATTENTION]You must replace the `.`  with a `-` eg) `my.account` > `my-account` or you will get an error.
 
 ![Snowflake Account Locator](./assets/snowflake_account_locator.png)
-  - `Warehouse` - The default Snowflake warehouse
-  - `Database` - The default Snowflake database 
-  - `Role`- The default Snowflake role
-    ![Snowflake Connection Type](./assets/connections_editnew_snowflake.png)
+
+- `Warehouse` - The default Snowflake warehouse
+- `Database` - The default Snowflake database 
+- `Role`- The default Snowflake role
+  ![Snowflake Connection Type](./assets/connections_editnew_snowflake.png)
 
 ### For Redshift, the available fields are: 
-  - `Host`
-  - `Database`
-    ![Redshift Connection Type](./assets/connections_editnew_redshift.png)
+
+- `Host`
+- `Database`
+  ![Redshift Connection Type](./assets/connections_editnew_redshift.png)

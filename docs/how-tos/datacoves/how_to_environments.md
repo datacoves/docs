@@ -11,16 +11,18 @@ Environment Settings are separated into different tabs.
 ![Environments Create or Edit Page](./assets/environments_editnew_page.png)
 
 ## Basic information
+
 This tab has the base information for the environment.
 
-  - The `name` to be displayed on the launchpad
-  - The `Project` the environment should be associated with
-  - The `type` of environment (development, test or prod). It is best practice for users to perform their work in a development environment and production jobs to run in a production environment which is typically more governed.
+- The `name` to be displayed on the launchpad
+- The `Project` the environment should be associated with
+- The `type` of environment (development, test or prod). It is best practice for users to perform their work in a development environment and production jobs to run in a production environment which is typically more governed.
 
 ## Stack Services
 Define which tools will be enabled for this environment. At least one service must be enabled. 
 
 Available services include:
+
 - `LOAD (Airbyte)`
 - `TRANSFORM (dbt and VS Code)`
 - `OBSERVE (dbt docs)`

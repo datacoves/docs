@@ -86,6 +86,7 @@ your_profile_name:
 ## Getting Started Next Steps 
 
 You will want to set up notifications. Selet the option that works best for your organization.
+
 - **Email:** [Setup Email Integration](how-tos/airflow/send-emails)
 
 - **MS Teams:** [Setup MS Teams Integration](how-tos/airflow/send-ms-teams-notifications)
