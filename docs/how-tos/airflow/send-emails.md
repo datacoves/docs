@@ -66,6 +66,7 @@ The Airflow service will be restarted shortly and will now include the SMTP conf
 If you have already created a DAG it's time to modify your DAG to make use of our newly set up SMTP integration on Airflow. 
 
 Simply provide a `default_args` dict like so:
+
 >[!TIP]You can add as many email recipients needed by passing a list into the email field. eg) `email: ["gomezn@example.com", "mayra@example.com", "walter@example.com"]` 
 
 ### Python version

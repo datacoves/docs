@@ -7,6 +7,7 @@
 Before the setup call with the Datacoves team, ensure you have the following ready.
 
 >[!NOTE]Email gomezn@datacoves.com and mayra@datacoves.com with the answers to the following two questions so we can be ready for the call.
+
 1. What version of dbt are you using?
 2. Do you use Google / Google Workspace or Microsoft to authenticate? Datacoves leverages your existing authentication service.
 

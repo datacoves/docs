@@ -57,6 +57,6 @@ If Datacoves is able to connect to your Git repository, you will see _Tested_ ne
 
 - Click `Open` to go into your development environment.
 
->[!Note]Datacoves will take a couple of minutes to apply the new settings, clone your repo, and finish setting up your environment for the first time.
+>[!NOTE]Datacoves will take a couple of minutes to apply the new settings, clone your repo, and finish setting up your environment for the first time.
 
 ![Workbench Link](./assets/navigation_launchpad.gif)

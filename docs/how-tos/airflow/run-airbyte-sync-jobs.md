@@ -70,7 +70,7 @@ generate:
         run_dbt_compile: true
         run_dbt_deps: false
 
-  ```
+```
 
 ## Example YML DAG
 

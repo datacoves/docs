@@ -22,11 +22,11 @@ Each row contains 3 action buttons: Test Connection, Edit, and Delete.
 
 Datacoves uses the service connection to dynamically create the following variables which are then injected into Airflow.
 
-  - `DATACOVES__<NAME>__ROLE`
-  - `DATACOVES__<NAME>__ACCOUNT`
-  - `DATACOVES__<NAME>__WAREHOUSE`
-  - `DATACOVES__<NAME>__ROLE`
-  - `DATACOVES__<NAME>__DATABASE`
-  - `DATACOVES__<NAME>__SCHEMA`
-  - `DATACOVES__<NAME>__USER`
-  - `DATACOVES__<NAME>__PASSWORD`
+- `DATACOVES__<NAME>__ROLE`
+- `DATACOVES__<NAME>__ACCOUNT`
+- `DATACOVES__<NAME>__WAREHOUSE`
+- `DATACOVES__<NAME>__ROLE`
+- `DATACOVES__<NAME>__DATABASE`
+- `DATACOVES__<NAME>__SCHEMA`
+- `DATACOVES__<NAME>__USER`
+- `DATACOVES__<NAME>__PASSWORD`

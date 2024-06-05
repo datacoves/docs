@@ -32,6 +32,7 @@ To see our default settings, which will serve as example for you to overwrite in
 ![User Settings JSON](./assets/user_settings_json.png)
 
 ### Copy the betterStatusBar.commands
+
 >[!NOTE]Only the commands you copy over to your settings.json will be available to you, so we recommend copying over all of them to avoid losing any during the customization process. 
 
 Paste them in your .vscode/settings.json file

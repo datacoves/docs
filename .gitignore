@@ -6,6 +6,10 @@
 /lib
 /node_modules
 /themes
+/venv/*
+/output/*
+*/__pycache__/*
 
 # exceptions
 !.gitkeep
+
