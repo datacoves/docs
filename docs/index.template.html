@@ -242,10 +242,9 @@
                 </div>
             </button>
             <aside class="sidebar">
-                <!-- Search doesn't work yet
                 <div class="search">
                     <div class="input-wrap">
-                      <input type="search" value="" aria-label="Search text" placeholder="Type to search">
+                      <input id="searchbox" type="search" value="" aria-label="Search text" placeholder="Type to search">
                       <button class="clear-button" aria-label="Clear search">
                         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="8" cy="8" r="8" fill="black"></circle>
@@ -254,9 +253,8 @@
                         </svg>
                       </button>
                     </div>
-                    <div class="results-panel"></div>
+                    <div id="resultsbox" class="results-panel"></div>
                 </div>
-                -->
                 <h1 class="app-name">
                     <a class="app-name-link" data-nosearch="" href="/">
                         <img alt="Datacoves Docs" src="/assets/dc-logo.svg">
@@ -298,5 +296,6 @@
         <div class="progress" style="opacity: 0; width: 0%;"></div>
     </body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.min.js"></script>
     <script src="/assets/custom.js"></script>
 </html>
