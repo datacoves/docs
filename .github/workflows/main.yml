@@ -45,21 +45,8 @@ jobs:
         run: rm package-lock.json && npm install
       - name: Build index
         run: node indexer.js output/ output/assets/search-index.js
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: ./output
-          name: github-pages
-          retention-days: 1
-      - name: Archive Artifact
-        run: tar --dereference --hard-dereference --directory ./output -cvf "$RUNNER_TEMP/artifact.tar" .
-      - name: Push Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: github-pages
-          path: /home/runner/work/_temp/artifact.tar
-          retention-days: 1
-          if-no-files-found: error
-          compression-level: 6
-          ovewrite: false
-  
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          public_dir: ./output
