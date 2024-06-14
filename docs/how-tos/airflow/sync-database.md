@@ -49,4 +49,4 @@ dag = snowflake_airflow_sync()
 
 > [!NOTE]The example DAG above uses the service connection `raw`
 
-![Service Connection Main](assets/service_connection_raw.png)
+![Service Connection Raw](assets/service_connection_raw.png)
