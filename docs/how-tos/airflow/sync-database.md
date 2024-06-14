@@ -21,7 +21,7 @@ These operators can receive:
 - `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example airflow-qwe123
 - `service_connection_name`: the name of your Airflow Service Connection in Datacoves that will be used by the operator. By default it looks for a connection named `load_airflow`.
   
-![airflow_load](assets/service_connection_airflow_load.png)
+![airflow_load](assets/service_connection_airflow_raw.png)
 ## Example DAG
 
 ```python
@@ -40,13 +40,13 @@ def snowflake_airflow_sync():
     airflow_sync = DatacovesDataSyncOperatorSnowflake(
         additional_tables=["log", "log_template"],
         destination_schema="airflow-tables",
-        service_connection_name="main", 
+        service_connection_name="raw", 
     )
 
 
 dag = snowflake_airflow_sync()
 ```
 
-> [!NOTE]The example DAG above uses the service connection `main`
+> [!NOTE]The example DAG above uses the service connection `raw`
 
-![Service Connection Main](assets/service_connection_main.png)
+![Service Connection Main](assets/service_connection_raw.png)
