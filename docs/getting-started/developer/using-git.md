@@ -55,3 +55,6 @@ For more in-depth information and advanced usage, please consult the **[Source C
 - [Git Documentation](https://git-scm.com/doc)
 - [GitHub Learning Lab](https://github.com/apps/github-learning-lab)
 - [Git Cheat Sheet](https://github.com/github/training-kit/blob/master/downloads/github-git-cheat-sheet.pdf)
+- [Git rebase - Why, When & How to fix conflicts ](https://youtube.com/watch?v=DkWDHzmMvyg&si=WE4VeEY1HKa_ejEA)
+- [Git merge/pull tutorial](https://youtube.com/watch?v=DloR0BOGNU0&si=3EfopCU41XvkYkJJ)
+- [Git pull rebase](https://youtube.com/watch?v=xN1-2p06Urc&si=8ZGMhJSy-A6N62l6)
