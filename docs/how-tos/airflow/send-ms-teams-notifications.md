@@ -70,29 +70,19 @@ In the examples below, we will send a notification on failing tasks or when the 
 
 > [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`.
 
-To send MS Teams notifications, in the Airflow DAG we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
+To send MS Teams notifications, in the Airflow DAG we need to import the appropriate notifier and use it with the following parameters:
 
-- `context` This is provided by Airflow
 - `connection_id`: the name of the Datacoves Integration created above
-
-Additionally, other parameters can be passed to customize the message sent to teams and the color shown on the message by passing:
-
 - `message`: the body of the message
-- `color`: border color of the MS Teams card
+- `theme_color`: theme color of the MS Teams card
 
 ### Python version
 
 ```python
 import datetime
 from airflow.decorators import dag
-from callbacks.microsoft_teams import inform_failure, inform_success
 from operators.datacoves.dbt import DatacovesDbtOperator
-
-def run_inform_success(context):
-    inform_success(context, connection_id="DATACOVES_MS_TEAMS", color="0000FF")
-
-def run_inform_failure(context):
-    inform_failure(context, connection_id="DATACOVES_MS_TEAMS", color="9900FF")
+from notifiers.datacoves.ms_teams import MSTeamsNotifier
 
 @dag(
     default_args={
@@ -105,8 +95,8 @@ def run_inform_failure(context):
     schedule_interval="0 0 1 */12 *",
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
-    on_success_callback=run_inform_success,
-    on_failure_callback=run_inform_failure,
+    on_success_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Succeeded"),
+    on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Failed"),
 )
 def dbt_run():
     transform = DatacovesDbtOperator(
@@ -115,6 +105,7 @@ def dbt_run():
 
 dag = yaml_teams_dag()
 ```
+
 > [!NOTE]Quotation marks are not needed when setting the custom message. However, making use of Jinja in a YAML file requires the message to be wrapped quotations to be parsed properly. eg) "{{ dag.dag_id }} failed"
 
 ### YAML version
@@ -134,22 +125,19 @@ default_args:
 catchup: false
 
 # Optional callbacks used to send MS Teams notifications
-custom_callbacks:
+notifications:
   on_success_callback:
-    module: callbacks.microsoft_teams
-    callable: inform_success
+    notifier: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
       connection_id: DATACOVES_MS_TEAMS
-      # message: Custom success message
+      message: "DAG {{ dag.dag_id }} Succeeded"
       color: 0000FF
   on_failure_callback:
-    module: callbacks.microsoft_teams
-    callable: inform_failure
+    notifier: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
       connection_id: DATACOVES_MS_TEAMS
-      # message: Custom error message
+      message: "DAG {{ dag.dag_id }} Failed"
       color: 9900FF
-
 
 # DAG Tasks
 nodes:
@@ -160,6 +148,6 @@ nodes:
     bash_command: "dbt run -s personal_loans"
 ```
 
-## Getting Started Next Steps 
+## Getting Started Next Steps
 
 Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md)
