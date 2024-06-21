@@ -86,12 +86,10 @@ In the examples below, we will send a notification on failing tasks or when the 
 
 > [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`
 
-To send Slack notifications, in the Airflow DAG we need to import the appropriate callbacks and create a method that receives the following mandatory parameters:
+To send Slack notifications, in the Airflow DAG we need to import the appropriate callbacks and call them with:
 
-- `context` This is provided by Airflow
-- `connection_id`: the name of the Datacoves Integration created above
-
-Additionally, `message` can be passed to customize the message sent to Slack
+- `slack_webhook_conn_id`: the name of the Datacoves Integration created above
+- `text`: to customize the message sent to Slack.
 
 ### Python version
 
@@ -99,18 +97,9 @@ Additionally, `message` can be passed to customize the message sent to Slack
 import datetime
 
 from airflow.decorators import dag
-from callbacks.slack_messages import inform_failure, inform_success
 from kubernetes.client import models as k8s
 from operators.datacoves.dbt import DatacovesDbtOperator
-
-
-def run_inform_success(context):
-    inform_success(context, connection_id="DATACOVES_SLACK", color="0000FF")
-
-
-def run_inform_failure(context):
-    inform_failure(context, connection_id="DATACOVES_SLACK", color="9900FF")
-
+from airflow.providers.slack.notifications.slack_webhook import send_slack_webhook_notification
 
 TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
@@ -140,8 +129,12 @@ TRANSFORM_CONFIG = {
     schedule_interval="0 0 1 */12 *",
     tags=["version_2", "slack_notification", "blue_green"],
     catchup=False,
-    on_success_callback=run_inform_success,
-    on_failure_callback=run_inform_failure,
+    on_success_callback=send_slack_webhook_notification(
+        slack_webhook_conn_id="SLACK_NOTIFICATIONS", text="The dag {{ dag.dag_id }} succeeded"
+    ),
+    on_failure_callback=send_slack_webhook_notification(
+        slack_webhook_conn_id="SLACK_NOTIFICATIONS", text="The dag {{ dag.dag_id }} failed"
+    ),
 )
 def yaml_slack_dag():
     transform = DatacovesDbtOperator(
@@ -174,12 +167,12 @@ catchup: false
 # Optional callbacks used to send Slack notifications
 callbacks:
   on_success_callback:
-    callback: airflow.providers.slack.notifications.slack_webhook.SlackWebhookNotifier
+    callback: airflow.providers.slack.notifications.slack_webhook.send_slack_webhook_notification
     args:
       - slack_webhook_conn_id: SLACK_NOTIFICATIONS
       - text: Custom success message
   on_failure_callback:
-    callback: airflow.providers.slack.notifications.slack_webhook.SlackWebhookNotifier
+    callback: airflow.providers.slack.notifications.slack_webhook.send_slack_webhook_notification
     args:
       - slack_webhook_conn_id: SLACK_NOTIFICATIONS
       - text: Custom error message
@@ -197,6 +190,7 @@ nodes:
 
     bash_command: "dbt run -s personal_loans"
 ```
-## Getting Started Next Steps 
+
+## Getting Started Next Steps
 
 Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md)
