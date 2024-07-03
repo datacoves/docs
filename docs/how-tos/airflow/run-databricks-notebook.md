@@ -11,13 +11,13 @@ Using Airflow in Datacoves, you can trigger a Databricks job to run code that yo
 
 **Step 1:** Sign into your Databricks account.
 
-**Step 2:** Navigate to compute
+**Step 2:** Navigate to compute.
 
 ![databricks compute](assets/databricks_compute.png)
 
-**Step 3:** Click into your desired cluster
+**Step 3:** Click into your desired cluster.
 
-**Step 4:** Scroll to `Advanced Options` and `JDBC/ODBC`. Copy the value under `Server Hostname` The host value will look something like this: `abc-123-defghi-45jk.cloud.databricks.com`
+**Step 4:** Scroll to `Advanced Options` and `JDBC/ODBC`. Copy the value under `Server Hostname`. The host value will look something like this: `abc-123-defghi-45jk.cloud.databricks.com`.
 
 ### How to get DATABRICKS_TOKEN 
 
@@ -38,7 +38,7 @@ If you do not have admin privileges, work with an admin to get the token. Follow
 
 ![Databricks Connection](assets/airflow_databricks_connection.png)
 
-**Step 3:** Click `Save`.
+**Step 3:** Click `Save`
 
 ## Handling Databricks Variables in Airflow
 
