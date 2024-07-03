@@ -1,6 +1,6 @@
 # Use Microsoft Azure Data Factory Operators 
 
-Using Airflow in Datacoves you can use Microsoft Azure Data Factory Operators to run operations such as running a Data Factory pipeline. This guide will walk you through this process. 
+You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipeline. This guide will walk you through this process. 
 
 ## Prerequisites 
 
@@ -9,19 +9,19 @@ Using Airflow in Datacoves you can use Microsoft Azure Data Factory Operators to
 
 ### How to get the connection information 
 
-**Step 1:**  Login to your Microsoft Azure console and navigate to the [data factories section](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DataFactory%2FdataFactories).
+**Step 1:**  Login to your Microsoft Azure console and navigate to the [Data Factories service](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DataFactory%2FdataFactories).
 
-**Step 2:** Copy both the`DATA_FACTORY_NAME` and the `RESOURCE_GROUP_NAME`.
+**Step 2:** Copy the`DATA_FACTORY_NAME` for the factory which holds your data pipeline.
 
-**Step 3:** Click into your data factory and copy the `SUBSCRIPTION_ID`.
+**Step 3:** Open the factory and copy the `RESOURCE_GROUP_NAME`, and the `SUBSCRIPTION_ID` from the Overview tab 
 
-**Step 4:** Navigate to the overview tab of your chosen Microsoft Entra Application and copy the `APPLICATION_CLIENT_ID` and `TENANT_ID`.
+**Step 4:** Navigate to the Azure Entra ID service, click on number next to *Applicaitons* on the Overview tab. Next click the *All Applications* tab, open the application or register a new application then open it and copy the `APPLICATION_CLIENT_ID` and Directory`TENANT_ID`.
 
-**Step 5:** Generate a new secret for your Microsoft Entra Application and copy the value which is the `CLIENT_SECRET`.
+**Step 5:** Click on *Certificates and Secrets* and generate a new secret for your Microsoft Entra Application and copy the *Value*. This is the `CLIENT_SECRET`.
 
 ## Create a Microsoft Azure Data Factory Connection in Airflow 
 
-**Step 1:** A user with Airflow admin privileges must go to the `Airflow Admin -> Connection` menu.
+**Step 1:** In Datacoves, a user with Airflow the `securityadmin` role must go to the `Airflow Admin -> Connection` menu.
 
  ![Airflow Connection](assets/admin-connections.png)
 
@@ -41,10 +41,10 @@ Using Airflow in Datacoves you can use Microsoft Azure Data Factory Operators to
 
 ![adf connection](assets/airflow_adf_connection.png)
 
->[!NOTE]`RESOURCE_GROUP_NAME` and `DATA_FACTORY_NAME` are blank because these must be set as variables as they are required parameters in the AzureDataFactoryRunPipelineOperator. 
+>[!NOTE]`RESOURCE_GROUP_NAME` and `DATA_FACTORY_NAME` are left blank because these will be set as Airflow variables and used in the AzureDataFactoryRunPipelineOperator. 
 
 
-## Handling ADF variables in Airflow 
+## Adding the Airflow Variables for ADF
 
 **Step 1:** A user with Airflow admin privileges must go to the `Airflow Admin -> Connection` menu and set the following variables.
 

@@ -1,6 +1,6 @@
 # Run Databricks Notebooks 
 
-Using Airflow in Datacoves, you can trigger a Databricks job to run code that you have in a Databricks notebook. This guide will walk you through this process.
+You can use Airflow in Datacoves to trigger a Databricks notebook. This guide will walk you through this process. 
 
 ## Prerequisites 
 
