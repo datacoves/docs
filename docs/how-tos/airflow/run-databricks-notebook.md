@@ -9,7 +9,15 @@ Using Airflow in Datacoves, you can trigger a Databricks job to run code that yo
 
 ### How to get DATABRICKS_HOST 
 
-Sign into your Databricks account and look at the URL. The host value is the bit after `https://` up until `.com` and it will look something like this: `abc-123-defghi-45jk.cloud.databricks.com`
+**Step 1:** Sign into your Databricks account.
+
+**Step 2:** Navigate to compute
+
+![databricks compute](assets/databricks_compute.png)
+
+**Step 3:** Click into your desired cluster
+
+**Step 4:** Scroll to `Advanced Options` and `JDBC/ODBC`. Copy the value under `Server Hostname` The host value will look something like this: `abc-123-defghi-45jk.cloud.databricks.com`
 
 ### How to get DATABRICKS_TOKEN 
 
@@ -57,7 +65,7 @@ It is best practice to use Airflow variables for values that may need to change 
 
 **Step 2:** Click on the cluster that you wish to use to run your Databricks notebook.
 
-**Step 3:** Look at the URL bar and copy the value after `/clusters/` and before the `?` character. It will look something like this: `0123-5678910-abcdefghijk`.
+**Step 3:** Scroll to `Tags` and expand `Automatically added tags`. Your ClusterId should look something like this: `0123-5678910-abcdefghijk`.
 
 ### Adding Variables to Airflow 
 
