@@ -5,7 +5,7 @@ Using Airflow in Datacoves, you can trigger a Databricks job to run code that yo
 ## Prerequisites 
 
 - **Databricks Account:** Ensure you have access to your Databricks account.
-- **API Token:** If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
+- **Databricks Token:** If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
 
 ### How to get DATABRICKS_HOST 
 
