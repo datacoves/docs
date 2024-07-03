@@ -21,6 +21,7 @@
     - [Dynamically Set Schedule](/how-tos/airflow/dynamically-set-schedule.md)
     - [Run Airbyte sync jobs](/how-tos/airflow/run-airbyte-sync-jobs.md)
     - [Run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs.md)
+    - [Run Databricks Notebook](/how-tos/airflow/run-databricks-notebook.md)
     - [Add Dag Documentation](/how-tos/airflow/create-dag-level-docs.md)
     - [Send Emails](/how-tos/airflow/send-emails.md)
     - [Send Microsoft Teams notifications](/how-tos/airflow/send-ms-teams-notifications.md)
