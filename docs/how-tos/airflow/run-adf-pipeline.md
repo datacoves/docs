@@ -6,8 +6,15 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
 
 -  You will need to set up a [Microsoft Entra Application](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal).
 -  Assign the `Data Factory Contributor` role to your Microsoft Entra Application. You can do this by heading into Resource Groups and then following [these instructions](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal#assign-a-role-to-the-application).
+-  Collect the following from your ADF account:
+   -  `DATA_FACTORY_NAME`
+   -  `RESOURCE_GROUP_NAME`
+   -  `SUBSCRIPTION_ID`
+   -  `APPLICATION_CLIENT_ID`
+   -  `TENANT_ID`
+   -  `CLIENT_SECRET`
 
-### How to get the connection information 
+### How to get the ADF information 
 
 **Step 1:**  Login to your Microsoft Azure console and navigate to the [Data Factories service](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DataFactory%2FdataFactories).
 
