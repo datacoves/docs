@@ -4,8 +4,12 @@ You can use Airflow in Datacoves to trigger a Databricks notebook. This guide wi
 
 ## Prerequisites 
 
-- **Databricks Account:** Ensure you have access to your Databricks account.
+You will need to collect the following from your Databricks account. 
+
+- **Databricks Host:** This is the URL of your Databricks workspace. It typically looks like `https://<databricks-instance>.databricks.com`.
 - **Databricks Token:** If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
+- **Databricks Notebook Path:** This is the full path to the notebook you want to run in your Databricks workspace. 
+- **Databricks Cluster ID:** This is the identifier of the cluster you want to use to run your notebook. 
 
 ### How to get DATABRICKS_HOST 
 
@@ -17,37 +21,11 @@ You can use Airflow in Datacoves to trigger a Databricks notebook. This guide wi
 
 **Step 3:** Click into your desired cluster.
 
-**Step 4:** Scroll to `Advanced Options` and `JDBC/ODBC`. Copy the value under `Server Hostname`. The host value will look something like this: `abc-123-defghi-45jk.cloud.databricks.com`.
+**Step 4:** Scroll to `Advanced Options` and `JDBC/ODBC`. Copy the value under `Server Hostname`. The host value will look something like this: `https://<databricks-instance>.databricks.com`.
 
 ### How to get DATABRICKS_TOKEN 
 
 If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
-
-## Create a Databricks Connection in Airflow
-
-**Step 1:** A user with Airflow admin privileges must go to the `Airflow Admin -> Connection` menu.
-
-![admin connection](assets/admin-connections.png)
-
-**Step 2:** Create a new connection using the following details:
-
-- **Connection Id:** `databricks_default`
-- **Connection Type:** `Databricks`
-- **Host:** Your Databricks host. Ex) `abc-123-defghi-45jk.cloud.databricks.com`
-- **Password:** Enter your `DATABRICKS_TOKEN`
-
-![Databricks Connection](assets/airflow_databricks_connection.png)
-
-**Step 3:** Click `Save`
-
-## Handling Databricks Variables in Airflow
-
-It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
-
-- **DATABRICKS_CLUSTER_ID**
-- **DATABRICKS_NOTEBOOK_PATH**
-
-> [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
 
 ### How to get DATABRICKS_NOTEBOOK_PATH 
 
@@ -66,6 +44,32 @@ It is best practice to use Airflow variables for values that may need to change 
 **Step 2:** Click on the cluster that you wish to use to run your Databricks notebook.
 
 **Step 3:** Scroll to `Tags` and expand `Automatically added tags`. Your ClusterId should look something like this: `0123-5678910-abcdefghijk`.
+
+## Create a Databricks Connection in Airflow
+
+**Step 1:** A user with Airflow admin privileges must go to the `Airflow Admin -> Connection` menu.
+
+![admin connection](assets/admin-connections.png)
+
+**Step 2:** Create a new connection using the following details:
+
+- **Connection Id:** `databricks_default`
+- **Connection Type:** `Databricks`
+- **Host:** Your Databricks host. Ex) `https://<databricks-instance>.databricks.com`
+- **Password:** Enter your `DATABRICKS_TOKEN`
+
+![Databricks Connection](assets/airflow_databricks_connection.png)
+
+**Step 3:** Click `Save`
+
+## Handling Databricks Variables in Airflow
+
+It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
+
+- **DATABRICKS_CLUSTER_ID**
+- **DATABRICKS_NOTEBOOK_PATH**
+
+> [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
 
 ### Adding Variables to Airflow 
 
