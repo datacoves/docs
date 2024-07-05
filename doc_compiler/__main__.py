@@ -18,6 +18,8 @@ from markdown.extensions import Extension
 from markdown.extensions.codehilite import CodeHiliteExtension
 from pygments.formatters import HtmlFormatter
 
+DATACOVES_DOCS_URL = "https://docs.datacoves.com"
+
 
 class BlockQuoteWithAttributes(BlockQuoteProcessor):
     """This adds the [!TIP], [!WARNING], etc. support to blockquotes"""
@@ -255,9 +257,7 @@ class DocsifyTemplate:
 
 
 def recursive_process_dirs(
-    template: DocsifyTemplate,
-    base_in: str,
-    base_out: str
+    template: DocsifyTemplate, base_in: str, base_out: str, static_collector: list
 ):
     """For each file in directory base_in, process in the following fashion:
     * Files starting with _ are ignored
@@ -276,7 +276,9 @@ def recursive_process_dirs(
             if not os.path.isdir(fullpath_out):
                 os.makedirs(fullpath_out)
 
-            recursive_process_dirs(template, fullpath_in, fullpath_out)
+            recursive_process_dirs(
+                template, fullpath_in, fullpath_out, static_collector
+            )
 
         elif filename[0] != '_' and filename[-3:] == ".md":
             # If filename is README.md, the destination becomes index.html
@@ -289,10 +291,24 @@ def recursive_process_dirs(
 
             with open(fullpath_out, "wt") as output:
                 output.write(template.render(fullpath_in))
-
-        elif 'assets' in fullpath_in:
+            static_collector.append(fullpath_out)
+        elif "assets" in fullpath_in:
             # Copy assets over
             shutil.copyfile(fullpath_in, fullpath_out)
+
+
+def generate_sitemap_txt(out_dir: str, statics_generated: list[str]):
+    """
+    Generate a sitemap.txt with all the static pages generated
+    Place it in output/robots.txt file
+    """
+    sitemap_path = f"{out_dir}/sitemap.txt"
+    with open(sitemap_path, "w") as sitemap:
+        for static in statics_generated:
+            sitemap.write(f"{static.replace(out_dir, DATACOVES_DOCS_URL)}\n")
+    with open(f"{out_dir}/robots.txt", "w") as robots:
+        robots.write(f"Sitemap: {sitemap_path.replace(out_dir, DATACOVES_DOCS_URL)}")
+
 
 def main():
     if len(sys.argv) != 3:
@@ -316,8 +332,11 @@ def main():
     template = DocsifyTemplate(input_base)
 
     # Iterate over directories.
-    recursive_process_dirs(template, input_base, output_base)
-    
+    statics_collector = []
+    recursive_process_dirs(template, input_base, output_base, statics_collector)
+
+    generate_sitemap_txt(output_base, statics_collector)
+
 
 if __name__ == "__main__":
     main()
