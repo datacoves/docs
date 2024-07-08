@@ -6,7 +6,7 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
 
 -  You will need to set up a [Microsoft Entra Application](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal).
 -  Assign the `Data Factory Contributor` role to your Microsoft Entra Application. You can do this by heading into Resource Groups and then following [these instructions](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal#assign-a-role-to-the-application).
--  Collect the following from your ADF account:
+-  Collect the following values from your ADF account, more information on where to find these items in the next section:
    -  `DATA_FACTORY_NAME`
    -  `RESOURCE_GROUP_NAME`
    -  `SUBSCRIPTION_ID`
@@ -28,13 +28,13 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
 
 ## Create a Microsoft Azure Data Factory Connection in Airflow 
 
-**Step 1:** In Datacoves, a user with Airflow the `securityadmin` role must go to the `Airflow Admin -> Connection` menu.
+**Step 1:** In Datacoves, a user with the `securityadmin` role must go to the `Airflow Admin -> Connection` menu.
 
  ![Airflow Connection](assets/admin-connections.png)
 
 **Step 2:** Create a new connection using the following details.
 
-- **Connection Id:** `azure_data_factory_default` 
+- **Connection Id:** `azure_data_factory_default` <- this name will be used in the Airflow DAG and is the default name used by the ADF Operator
 
 - **Connection Type:** `Azure Data Factory` 
 
@@ -50,6 +50,8 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
   
 - **Subscription ID:** Your `SUBSCRIPTION_ID` 
 
+>[!NOTE] Replace the values in the screenshot below with the actual values found above.
+
 ![adf connection](assets/airflow_adf_connection.png)
  
 ## Example DAG 
@@ -63,7 +65,6 @@ Once you have configured your Databricks connection and variables, you are ready
 """Example Airflow Azure Data Factory DAG."""
 
 from datetime import datetime
-from airflow.models import Variable
 from airflow.decorators import dag
 from airflow.providers.microsoft.azure.operators.data_factory import (
     AzureDataFactoryRunPipelineOperator)
@@ -80,8 +81,8 @@ def adf_example_run():
 
     AzureDataFactoryRunPipelineOperator(
         task_id="run_pipeline",
-        pipeline_name="myTestPipeline", # Rename to your Pipeline name
-        parameters={"myParam": "value"},
+        pipeline_name="myTestPipeline", # Replace with the ADF Pipeline you wish to trigger
+        parameters={"myParam": "value"}, # Pass any paramenters needed by your pipeline
     )
 
 DAG = adf_example_run()
