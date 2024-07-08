@@ -44,22 +44,13 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
 
 - **Tenant ID:** Your `TENANT_ID` 
 
+- **Factory Name**: Your `DATA_FACTORY_NAME`
+
+- **Resource Group Name**: Your `RESOURCE_GROUP_NAME`
+  
 - **Subscription ID:** Your `SUBSCRIPTION_ID` 
 
 ![adf connection](assets/airflow_adf_connection.png)
-
->[!NOTE]`RESOURCE_GROUP_NAME` and `DATA_FACTORY_NAME` are left blank because these will be set as Airflow variables and used in the AzureDataFactoryRunPipelineOperator. 
-
-
-## Adding the Airflow Variables for ADF
-
-**Step 1:** A user with Airflow admin privileges must go to the `Airflow Admin -> Connection` menu and set the following variables.
-
-- **ADF_RESOURCE_GROUP_NAME:** Your `RESOURCE_GROUP_NAME`
-
-- **ADF_DATA_FACTORY_NAME:** Your `DATA_FACTORY_NAME`
-  
-![adf Variable](assets/adf_variables.png)
  
 ## Example DAG 
 >[!NOTE] You will need to find your pipeline name in the Azure Data Factory Studio and update the `pipeline_name` argument below with the correct name.
@@ -87,8 +78,6 @@ def adf_example_run():
         task_id="run_pipeline",
         pipeline_name="myTestPipeline", # Rename to your Pipeline name
         parameters={"myParam": "value"},
-        resource_group_name=Variable.get ("ADF_RESOURCE_GROUP_NAME"),
-        factory_name=Variable.get ("ADF_DATA_FACTORY_NAME"),
     )
 
 DAG = adf_example_run()
