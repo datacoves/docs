@@ -27,14 +27,6 @@ You will need to collect the following from your Databricks account.
 
 If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
 
-### How to get DATABRICKS_NOTEBOOK_PATH 
-
-**Step 1:** Navigate to your notebook in the Databricks user interface.
-
-**Step 2:** To the right of the notebook name, there will be three little dots. Click on this and select the option to copy the full path to your clipboard.
-
-![copy url](assets/databricks_copyurl.png)
-
 ### How to get DATABRICKS_CLUSTER_ID 
 
 **Step 1:** Navigate to the compute section in the Databricks user interface.
@@ -44,6 +36,27 @@ If you do not have admin privileges, work with an admin to get the token. Follow
 **Step 2:** Click on the cluster that you wish to use to run your Databricks notebook.
 
 **Step 3:** Scroll to `Tags` and expand `Automatically added tags`. Your ClusterId should look something like this: `0123-5678910-abcdefghijk`.
+
+### How to get DATABRICKS_NOTEBOOK_PATH 
+
+**Step 1:** Navigate to your notebook in the Databricks user interface.
+
+**Step 2:** To the right of the notebook name, there will be three little dots. Click on this and select the option to copy the full path to your clipboard.
+
+![copy url](assets/databricks_copyurl.png)
+
+## Handling Databricks Variables in Airflow
+
+It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
+
+- **DATABRICKS_CLUSTER_ID**
+- **DATABRICKS_NOTEBOOK_PATH**
+
+> [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
+
+**Step 1:** A user with Airflow admin privileges must go to the Airflow `Admin -> Variables` menu and add the variables and their values.
+
+![databricks variables](assets/airflow_databricks_variables.png)
 
 ## Create a Databricks Connection in Airflow
 
@@ -61,21 +74,6 @@ If you do not have admin privileges, work with an admin to get the token. Follow
 ![Databricks Connection](assets/airflow_databricks_connection.png)
 
 **Step 3:** Click `Save`
-
-## Handling Databricks Variables in Airflow
-
-It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
-
-- **DATABRICKS_CLUSTER_ID**
-- **DATABRICKS_NOTEBOOK_PATH**
-
-> [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
-
-### Adding Variables to Airflow 
-
-**Step 1:** A user with Airflow admin privileges must go to the Airflow `Admin -> Variables` menu and add the variables and their values.
-
-![databricks variables](assets/airflow_databricks_variables.png)
 
 ## Example DAG 
 

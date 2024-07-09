@@ -55,7 +55,7 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
 ![adf connection](assets/airflow_adf_connection.png)
  
 ## Example DAG 
->[!NOTE] You will need to find your pipeline name in the Azure Data Factory Studio and update the `pipeline_name` argument below with the correct name.
+>[!NOTE] You will need to update the `pipeline_name`, `resource_group_name`, and `factory_name` arguments below with the correct names.
 
 Once you have configured your Databricks connection and variables, you are ready to create your DAG. Head into the `Transform` tab to begin writing your DAG inside `orchestrate/dags`.
 
