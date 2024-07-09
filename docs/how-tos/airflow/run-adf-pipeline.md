@@ -68,7 +68,6 @@ from datetime import datetime
 from airflow.decorators import dag, task_group
 from airflow.providers.microsoft.azure.operators.data_factory import AzureDataFactoryRunPipelineOperator
 from airflow.providers.microsoft.azure.sensors.data_factory import AzureDataFactoryPipelineRunStatusSensor
-from typing import cast
 
 @dag(
     schedule="@daily",
