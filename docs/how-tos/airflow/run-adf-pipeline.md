@@ -22,7 +22,7 @@ You can use Airflow in Datacoves to trigger a Microsoft Azure Data Factory pipel
 
 **Step 3:** Open the factory and copy the `RESOURCE_GROUP_NAME`, and the `SUBSCRIPTION_ID` from the Overview tab 
 
-**Step 4:** Navigate to the Azure Entra ID service, click on number next to *Applicaitons* on the Overview tab. Next click the *All Applications* tab, open the application or register a new application then open it and copy the `APPLICATION_CLIENT_ID` and Directory`TENANT_ID`.
+**Step 4:** Navigate to the Microsoft Entra ID service, click on number next to *Applicaitons* on the Overview tab. Next click the *All Applications* tab, open the application or register a new application then open it and copy the `APPLICATION_CLIENT_ID` and Directory`TENANT_ID`.
 
 **Step 5:** Click on *Certificates and Secrets* and generate a new secret for your Microsoft Entra Application and copy the *Value*. This is the `CLIENT_SECRET`.
 
@@ -65,25 +65,44 @@ Once you have configured your Databricks connection and variables, you are ready
 """Example Airflow Azure Data Factory DAG."""
 
 from datetime import datetime
-from airflow.decorators import dag
-from airflow.providers.microsoft.azure.operators.data_factory import (
-    AzureDataFactoryRunPipelineOperator)
+from airflow.decorators import dag, task_group
+from airflow.providers.microsoft.azure.operators.data_factory import AzureDataFactoryRunPipelineOperator
+from airflow.providers.microsoft.azure.sensors.data_factory import AzureDataFactoryPipelineRunStatusSensor
+from typing import cast
 
-@dag (
-schedule="@daily",
-start_date=datetime (2024, 1, 1),
-tags= ["version_1"],
-catchup=False
+@dag(
+    schedule="@daily",
+    start_date=datetime(2024, 1, 1),
+    tags=["version_1"],
+    catchup=False,
+    default_args={
+        "azure_data_factory_conn_id": "azure_data_factory_default",
+        "factory_name": "adf-datacoves",
+        "resource_group_name": "datacoves_demo_resources",
+    },
 )
-
 def adf_example_run():
-    """Run an Azure Data Factory pipeline."""
+    """Run an Azure Data Factory pipeline with async status checking."""
 
-    AzureDataFactoryRunPipelineOperator(
-        task_id="run_pipeline",
-        pipeline_name="myTestPipeline", # Replace with the ADF Pipeline you wish to trigger
-        parameters={"myParam": "value"}, # Pass any paramenters needed by your pipeline
-    )
+    @task_group(group_id="adf_pipeline_group", tooltip="ADF Pipeline Group")
+    def adf_pipeline_tasks():
+        run_pipeline = AzureDataFactoryRunPipelineOperator(
+            task_id="run_pipeline",
+            pipeline_name="myTestPipeline",  # Rename to your Pipeline name
+            parameters={"myParam": "value"},
+            wait_for_termination=False,
+        )
+
+        # Deferrable sensor for async pipeline status checking
+        pipeline_run_async_sensor = AzureDataFactoryPipelineRunStatusSensor(
+            task_id="pipeline_run_async_sensor",
+            run_id=run_pipeline.output["run_id"],
+            deferrable=True,
+        )
+
+        run_pipeline >> pipeline_run_async_sensor
+
+    adf_pipeline_group = adf_pipeline_tasks()
 
 DAG = adf_example_run()
 ```
