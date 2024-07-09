@@ -1,17 +1,15 @@
 # Run Databricks Notebooks 
 
-You can use Airflow in Datacoves to trigger a Databricks notebook. This guide will walk you through this process. 
+You can use Airflow in Datacoves to trigger a Databricks notebook. This guide will walk you through the configuration process. 
 
 ## Prerequisites 
 
-You will need to collect the following from your Databricks account. 
-
-- **Databricks Host:** This is the URL of your Databricks workspace. It typically looks like `https://<databricks-instance>.databricks.com`.
+- **Databricks Host:** This is the URL of your Databricks cluster. It typically looks like `https://<databricks-instance>.databricks.com`.
+- **Databricks Cluster ID:** This is the identifier of the cluster you want to use to run your notebook.
 - **Databricks Token:** If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
-- **Databricks Notebook Path:** This is the full path to the notebook you want to run in your Databricks workspace. 
-- **Databricks Cluster ID:** This is the identifier of the cluster you want to use to run your notebook. 
+- **Databricks Notebook Path:** This is the full path to the notebook you want to trigger from Airflow.
 
-### How to get DATABRICKS_HOST 
+### How to get DATABRICKS_HOST and DATABRICKS_CLUSTER_ID
 
 **Step 1:** Sign into your Databricks account.
 
@@ -19,29 +17,21 @@ You will need to collect the following from your Databricks account.
 
 ![databricks compute](assets/databricks_compute.png)
 
-**Step 3:** Click into your desired cluster.
+**Step 3:** Click on your desired cluster.
 
 **Step 4:** Scroll to `Advanced Options` and `JDBC/ODBC`. Copy the value under `Server Hostname`. The host value will look something like this: `https://<databricks-instance>.databricks.com`.
+
+**Step 5:** Scroll to `Tags` and expand `Automatically added tags`. Your ClusterId should look something like this: `0123-5678910-abcdefghijk`.
 
 ### How to get DATABRICKS_TOKEN 
 
 If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
 
-### How to get DATABRICKS_CLUSTER_ID 
-
-**Step 1:** Navigate to the compute section in the Databricks user interface.
-
-![databricks compute](assets/databricks_compute.png)
-
-**Step 2:** Click on the cluster that you wish to use to run your Databricks notebook.
-
-**Step 3:** Scroll to `Tags` and expand `Automatically added tags`. Your ClusterId should look something like this: `0123-5678910-abcdefghijk`.
-
 ### How to get DATABRICKS_NOTEBOOK_PATH 
 
 **Step 1:** Navigate to your notebook in the Databricks user interface.
 
-**Step 2:** To the right of the notebook name, there will be three little dots. Click on this and select the option to copy the full path to your clipboard.
+**Step 2:** To the right of the notebook name, there will be three dots. Click on this and select the option to copy the full path to your clipboard.
 
 ![copy url](assets/databricks_copyurl.png)
 
@@ -66,9 +56,9 @@ It is best practice to use Airflow variables for values that may need to change 
 
 **Step 2:** Create a new connection using the following details:
 
-- **Connection Id:** `databricks_default`
+- **Connection Id:** `databricks_default` <- this name will be used in your DAG
 - **Connection Type:** `Databricks`
-- **Host:** Your Databricks host. Ex) `https://<databricks-instance>.databricks.com`
+- **Host:** Your Databricks host. E.g. `https://<databricks-instance>.databricks.com`
 - **Password:** Enter your `DATABRICKS_TOKEN`
 
 ![Databricks Connection](assets/airflow_databricks_connection.png)
@@ -77,10 +67,9 @@ It is best practice to use Airflow variables for values that may need to change 
 
 ## Example DAG 
 
-Once you have configured your Databricks connection and variables, you are ready to create your DAG. Head into the `Transform` tab to begin writing your DAG inside `orchestrate/dags`.
+Once you have configured your Databricks connection and variables, you are ready to create your DAG. Head into the `Transform` tab to begin writing your DAG inside the dags folder, e.g. `orchestrate/dags`.
 
 ```python
-# databricks_example_run.py
 
 import os
 from datetime import datetime
@@ -110,9 +99,9 @@ def databricks_example_run():
     }
 
     DatabricksSubmitRunOperator(
-        task_id="notebook_task",  # Rename with appropriate name
-        json=notebook_task_params,
-        databricks_conn_id="databricks_default"  # Must match databricks connection id
+        task_id = "notebook_task",  # Rename with appropriate name
+        json = notebook_task_params,
+        databricks_conn_id = "databricks_default"  # Must match databricks connection id set above
     )
 
 dag = databricks_example_run()
