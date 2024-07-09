@@ -77,8 +77,8 @@ from typing import cast
     catchup=False,
     default_args={
         "azure_data_factory_conn_id": "azure_data_factory_default",
-        "factory_name": "adf-datacoves",
-        "resource_group_name": "datacoves_demo_resources",
+        "factory_name": "your-factory-name", 
+        "resource_group_name": "your-resource-name",
     },
 )
 def adf_example_run():
