@@ -9,6 +9,11 @@ The following diagram shows the main services required by Datacoves when deploye
 
 ## Dependencies
 
+Datacoves can be deployed on AWS, Azure or Google Cloud.
+
+Here is the list of services required, each cloud provider offers the service with a different name/brand.
+
+
 | Service      |  Purpose        |  Requirements    |   Quantity |
 |--------------|-----------------|--------------------------|------------|
 | Database | Datacoves core services | PostgreSQL > v.14, Minimum 2vcpu, 16Gb memory __(*)__ | 1 server |
