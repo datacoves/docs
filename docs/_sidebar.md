@@ -85,6 +85,8 @@
     - [Airflow Config Defaults](/reference/airflow/airflow-config-defaults.md)
     - [DAG Generators](/reference/airflow/dag-generators.md)
     - [Datacoves Operators](/reference/airflow/datacoves-operator.md)
+  - [Datacoves](/reference/datacoves/)
+    - [VPC Deployment](/reference/datacoves/vpc-deployment.md)  
   - [VS Code](/reference/vscode/)
     - [Datacoves Environment Variables](/reference/vscode/datacoves-env-vars.md)
   - [Metrics & Logs](/reference/metrics-and-logs/)
