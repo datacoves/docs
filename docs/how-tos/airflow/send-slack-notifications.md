@@ -117,6 +117,14 @@ TRANSFORM_CONFIG = {
     ),
 }
 
+run_inform_success = send_slack_webhook_notification(
+    slack_webhook_conn_id="SLACK_NOTIFICATIONS",  # Slack integration name slug -- double check in Datacoves integrations' admin
+    text="The dag {{ dag.dag_id }} succeeded",
+)
+
+run_inform_failure = send_slack_webhook_notification(
+    slack_webhook_conn_id="SLACK_NOTIFICATIONS", text="The dag {{ dag.dag_id }} failed"
+)
 
 @dag(
     default_args={
@@ -129,12 +137,8 @@ TRANSFORM_CONFIG = {
     schedule_interval="0 0 1 */12 *",
     tags=["version_2", "slack_notification", "blue_green"],
     catchup=False,
-    on_success_callback=send_slack_webhook_notification(
-        slack_webhook_conn_id="SLACK_NOTIFICATIONS", text="The dag {{ dag.dag_id }} succeeded"
-    ),
-    on_failure_callback=send_slack_webhook_notification(
-        slack_webhook_conn_id="SLACK_NOTIFICATIONS", text="The dag {{ dag.dag_id }} failed"
-    ),
+    on_success_callback=[run_inform_success],
+    on_failure_callback=[run_inform_failure],
 )
 def yaml_slack_dag():
     transform = DatacovesDbtOperator(
