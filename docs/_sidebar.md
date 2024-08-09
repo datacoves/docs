@@ -51,6 +51,8 @@
   - [Superset](/how-tos/superset/)
     - [Add a Database](/how-tos/superset/how_to_database.md)
     - [Add a Data Set](/how-tos/superset/how_to_data_set.md)
+  - [Datahub](/how-tos/datahub/)
+    - [Manage datahub using CLI](/how-tos/datahub/how_to_datahub_cli.md)
   - [DataOps](/how-tos/dataops/)
     - [Releasing a new feature](/how-tos/dataops/releasing-new-feature)
   - [Git](/how-tos/git/)
