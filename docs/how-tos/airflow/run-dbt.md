@@ -42,7 +42,7 @@ from operators.datacoves.dbt import DatacovesDbtOperator
         "email_on_failure": True,
     },
     description="Sample DAG for dbt run",
-    schedule_interval="0 0 1 */12 *", # Replace with your desired schedule 
+    schedule="0 0 1 */12 *", # Replace with your desired schedule 
     tags=["version_2"],
     catchup=False,
 )
@@ -68,7 +68,7 @@ The name of the file will used as the DAG name.
 
 ```yaml
 description: "Sample DAG for dbt run"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:

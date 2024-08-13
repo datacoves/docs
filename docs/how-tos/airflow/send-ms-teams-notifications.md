@@ -92,7 +92,7 @@ from notifiers.datacoves.ms_teams import MSTeamsNotifier
         "email_on_failure": True,
     },
     description="Sample DAG with MS Teams notification",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
     on_success_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Succeeded"),
@@ -112,7 +112,7 @@ dag = yaml_teams_dag()
 
 ```yaml
 description: "Sample DAG with MS Teams notification"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_2
   - ms_teams_notification

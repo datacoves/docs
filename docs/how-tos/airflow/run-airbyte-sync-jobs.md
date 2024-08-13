@@ -88,7 +88,7 @@ Now you are ready to write out your DAG using yml. In the following example DAG,
 
 ```yml
 description: "Loan Run"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_1
 default_args:

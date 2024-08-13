@@ -41,11 +41,11 @@ TRANSFORM_CONFIG = {
         "email_on_failure": True,
     },
     description="Sample DAG with custom resources",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_2"],
     catchup=False,
     yaml_sample_dag={
-        "schedule_interval": "0 0 1 */12 *",
+        "schedule": "0 0 1 */12 *",
         "tags": ["version_4"],
         "catchup": False,
         "default_args": {

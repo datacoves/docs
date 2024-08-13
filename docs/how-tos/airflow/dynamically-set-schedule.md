@@ -44,7 +44,7 @@ def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
 ```
 **Step 3:** In your DAG, import the `get_schedule` function using `from orchestrate.python_scripts.get_schedule import get_schedule` and pass in your desired schedule.
 
-ie) If your desired schedule is `'0 1 * * *'` then you will set `schedule_interval=get_schedule('0 1 * * *')` as seen in the example below. 
+ie) If your desired schedule is `'0 1 * * *'` then you will set `schedule=get_schedule('0 1 * * *')` as seen in the example below. 
 ```python
 from airflow.decorators import dag
 from operators.datacoves.bash import DatacovesBashOperator
@@ -66,7 +66,7 @@ from orchestrate.python_scripts.get_schedule import get_schedule
     # This is a regular CRON schedule. Helpful resources
     # https://cron-ai.vercel.app/
     # https://crontab.guru/
-    schedule_interval=get_schedule('0 1 * * *'), # Replace with desired schedule
+    schedule=get_schedule('0 1 * * *'), # Replace with desired schedule
 )
 def datacoves_sample_dag():
     # Calling dbt commands
