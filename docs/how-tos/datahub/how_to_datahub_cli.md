@@ -28,12 +28,16 @@ datahub init
 
 ### Obtaining and Using a DataHub API Token
 
-Next, you need to provide a DataHub access token to authenticate your connection:
+Next, you will be prompted to provide a DataHub access token to authenticate your connection.
 
 ![DataHub token](assets/datahub-token.png)
 
-1. On a new tab, navigate to Datacoves, and then go to DataHub.
+**Please follow these steps:**
+
+1. Open a new tab, navigate to Datacoves, head to the Observe tab within your environment, and click on DataHub.
+
 2. Go to `Settings` (gear icon on the top right corner)
+
 3. Click on the `Access Tokens` nav bar menu item
 
 ![DataHub access tokens](assets/datahub-access-tokens.png)
@@ -42,12 +46,14 @@ Next, you need to provide a DataHub access token to authenticate your connection
 
 ![DataHub new token](assets/datahub-new-token.png)
 
-5. Click on create and right after you'll see the new JWT token generated.
-6. Copy the token clicking on this button and don't close the window as you won’t be able to see it again.
+5. Click on create. Immediately after you will get a popup with the new token. Please don't close the window as you won’t be able to see it again.
+
+6. Copy the token clicking on the copy button. 
 
 ![DataHub copy token](assets/datahub-copy-token.png)
 
 7. Go back to the tab were you have VSCode terminal waiting for your input and paste the copied token. Press Enter.
+
 8. You can validate that the connection was correctly configured by running `datahub check server-config`:
 
 ![DataHub check](assets/datahub-check.png)
