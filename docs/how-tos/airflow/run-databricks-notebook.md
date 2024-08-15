@@ -69,7 +69,7 @@ It is best practice to use Airflow variables for values that may need to change 
 
 Once you have configured your Databricks connection and variables, you are ready to create your DAG. Head into the `Transform` tab to begin writing your DAG inside the dags folder, e.g. `orchestrate/dags`.
 
-### Workbook as the source
+### Workspace Notebook as the source
 With Databricks, you have the option of triggering a workbook through Airflow.
 
 ```python
@@ -109,7 +109,7 @@ def databricks_example_run():
 dag = databricks_example_run()
 ```
 
-### Git repo as the source (Recommended)
+### Git Notebook as the source (Recommended)
 
 We recommend using a git as the source to leverage version control when developing notebooks. Be aware that if changes are made in the databricks tracked branch (`GIT_BRANCH`), they will be executed in Airflow regardless if the changes are committed into Git. The best practice is to have users develop on feature branches and then merge to main.
 
