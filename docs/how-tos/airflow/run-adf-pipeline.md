@@ -109,10 +109,4 @@ DAG = adf_example_run()
 
 - Understand how to [authenticate with ADF](https://airflow.apache.org/docs/apache-airflow-providers-microsoft-azure/stable/connections/adf.html).
 - The DAG makes use of the [AzureDataFactoryRunPipelineOperator](https://airflow.apache.org/docs/apache-airflow-providers-microsoft-azure/stable/operators/adf_run_pipeline.html) to run an Azure Data Factory pipeline. It also shows how it’s possible to pass parameters that can be used in the pipeline. 
-
-
- 
-
- 
-
- 
+  
