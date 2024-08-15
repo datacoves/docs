@@ -138,7 +138,7 @@ def databricks_example_run():
         "notebook_task": {
             "notebook_path": DATABRICKS_NOTEBOOK_PATH,
             "base_parameters": {
-                "branch": GIT_BRANCH  # Specify the branch here
+                "branch": GIT_BRANCH  # Specify the branch in variable above
             }
         },
         "source": "GIT",
