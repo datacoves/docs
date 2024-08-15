@@ -73,12 +73,11 @@ Once you have configured your Databricks connection and variables, you are ready
 With Databricks, you have the option of triggering a workbook through Airflow.
 
 ```python
-
 import os
 from datetime import datetime
 from airflow.models import Variable
 from airflow.decorators import dag
-from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunOperator
+from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunDeferrableOperator
 
 DATABRICKS_CLUSTER_ID = Variable.get("DATABRICKS_CLUSTER_ID")
 DATABRICKS_NOTEBOOK_PATH = Variable.get("DATABRICKS_NOTEBOOK_PATH")
@@ -98,10 +97,10 @@ def databricks_example_run():
         },
         "source": "WORKSPACE",
         "existing_cluster_id": DATABRICKS_CLUSTER_ID,
-        "run_name": "your-run-name",  # Update with a unique name
+        "run_name": "datbricks_workbook_run",  # Update with a unique name
     }
 
-    DatabricksSubmitRunOperator(
+    DatabricksSubmitRunDeferrableOperator(
         task_id = "notebook_task",  # Rename with appropriate name
         json = notebook_task_params,
         databricks_conn_id = "databricks_default"  # Must match databricks connection id set above
@@ -112,27 +111,19 @@ dag = databricks_example_run()
 
 ### Git repo as the source (Recommended)
 
-We recommend using git as the source instead of a workbook because it will prevent simple changes to a workbook causing issues in production.
-
-**You will need to gather and configure some extra variables in Airflow:**
-
-- **git_url:** This is the URL of your Git repository, which Databricks will use to pull the notebook. Save as `DATABRICKS_GIT_REPO_URL` variable in Airflow.
-- **git_provider:** Specify the provider; can be `gitHub`, `bitbucket`, `azureDevOps`, etc.
-- **git_branch:** This is the branch of the repository where the notebook is located. Save as `DATABRICKS_GIT_BRANCH` variable in Airflow.
-- **git_token:** If the repository is private, you need to provide a Git token. Save as `DATABRICKS_GIT_TOKEN` variable in Airflow.
+We recommend using a git as the source to leverage version control when developing notebooks. Be aware that if changes are made in the databricks tracked branch (`GIT_BRANCH`), they will be executed in Airflow regardless if the changes are committed into Git. The best practice is to have users develop on feature branches and then merge to main.
 
 ```python
 import os
 from datetime import datetime
 from airflow.models import Variable
 from airflow.decorators import dag
-from airflow.providers.databricks.operators.databricks import DatabricksNotebookRunOperator
+from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunDeferrableOperator
 
 DATABRICKS_CLUSTER_ID = Variable.get("DATABRICKS_CLUSTER_ID")
-DATABRICKS_NOTEBOOK_PATH = Variable.get("DATABRICKS_NOTEBOOK_PATH")
-DATABRICKS_GIT_REPO_URL = Variable.get("DATABRICKS_GIT_REPO_URL")
-DATABRICKS_GIT_BRANCH = Variable.get("DATABRICKS_GIT_BRANCH")
-DATABRICKS_GIT_TOKEN = Variable.get("DATABRICKS_GIT_TOKEN")
+# DATABRICKS_NOTEBOOK_PATH = Variable.get("DATABRICKS_NOTEBOOK_PATH")
+DATABRICKS_NOTEBOOK_PATH = "/Workspace/Repos/mayra@datacoves.com/databricks_notebooks/insert_into_raw"
+GIT_BRANCH = "main"  # Specify the branch you want to use
 
 @dag(
     schedule="@daily",
@@ -142,21 +133,26 @@ DATABRICKS_GIT_TOKEN = Variable.get("DATABRICKS_GIT_TOKEN")
 )
 def databricks_example_run():
 
-    DatabricksNotebookRunOperator(
-        task_id="notebook_task",  # Rename with appropriate name
-        databricks_conn_id="databricks_default",  # Must match databricks connection id set above
-        existing_cluster_id=DATABRICKS_CLUSTER_ID,
-        notebook_path=DATABRICKS_NOTEBOOK_PATH,
-        git_source={
-            "git_url": DATABRICKS_GIT_REPO_URL,
-            "git_branch": DATABRICKS_GIT_BRANCH,
-            "git_token": DATABRICKS_GIT_TOKEN
+    notebook_task_params = {
+        "task_key": "unique-task-key",
+        "notebook_task": {
+            "notebook_path": DATABRICKS_NOTEBOOK_PATH,
+            "base_parameters": {
+                "branch": GIT_BRANCH  # Specify the branch here
+            }
         },
-        run_name="your-run-name",  # Update with a unique name
+        "source": "GIT",
+        "existing_cluster_id": DATABRICKS_CLUSTER_ID,
+        "run_name": "databricks_workbook_run",  # Update with a unique name
+    }
+
+    DatabricksSubmitRunDeferrableOperator(
+        task_id="notebook_task",  # Rename with appropriate name
+        json=notebook_task_params,
+        databricks_conn_id="databricks_default"  # Must match databricks connection id set above
     )
 
 dag = databricks_example_run()
-
 ```
 ## Understanding the Airflow DAG 
 
