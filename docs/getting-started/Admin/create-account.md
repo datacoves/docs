@@ -42,5 +42,5 @@ To ensure a smooth call, please have the answers to the following questions read
 - What do you want to call your account? (This is usually the company name)
 - What do you want to call your project? (This can be something like Marketing DW, Finance 360, etc)
 - Do you currently have a CI/CD process and associated script like GitHub Actions workflow? If not, do you plan on creating a CI/CD process?
-- Do you need any specific python library on Airflow or VS code? (outside the standard dbt related items)
+- Do you need any specific python library on Airflow or VS Code? (outside the standard dbt related items)
 

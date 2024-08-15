@@ -1,7 +1,7 @@
 
-# How to use DataHub's CLI from your VSCode terminal
+# How to use DataHub's CLI from your VS Code terminal
 
-Connecting to your DataHub instance via your VSCode terminal can be extremely useful for performing maintenance on your metadata, running ingestions, deleting data, and more.
+Connecting to your DataHub instance via your VS Code terminal can be extremely useful for performing maintenance on your metadata, running ingestions, deleting data, and more.
 
 ## Configure DataHub CLI
 
@@ -9,7 +9,7 @@ Connecting to your DataHub instance via your VSCode terminal can be extremely us
 
 To establish a secure connection to your DataHub server, follow these steps:
 
-1. Open a terminal in VSCode and run the following command:
+1. Open a terminal in VS Code and run the following command:
 
 ```bash
 datahub init
@@ -52,7 +52,7 @@ Next, you will be prompted to provide a DataHub access token to authenticate you
 
 ![DataHub copy token](assets/datahub-copy-token.png)
 
-7. Go back to the tab were you have VSCode terminal waiting for your input and paste the copied token. Press Enter.
+7. Go back to the tab were you have VS Code terminal waiting for your input and paste the copied token. Press Enter.
 
 8. You can validate that the connection was correctly configured by running `datahub check server-config`:
 
