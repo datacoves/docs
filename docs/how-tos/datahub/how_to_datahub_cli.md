@@ -60,10 +60,12 @@ Next, you will be prompted to provide a DataHub access token to authenticate you
 
 ## Useful commands
 
-Once you've successfully configured the DataHub CLI, you can run `datahub` in the terminal and explore the different options the tool has to offer.
+Once you successfully configured DataHub CLI, you can run `datahub` on the terminal and explore the different options the tool has to offer.
 
 ### Delete ingested data
 
-If you’ve loaded some data for testing purposes and need to delete it, you can easily do so using the `datahub delete` command, as the DataHub UI might not provide a way to delete it.
+Sometimes you loaded some data for testing purposes and the DataHub UI does not provide a way to delete it, you can easily achieve that by running `datahub delete`.
+
+The command accepts different filters, a straight-forward one is `--platform`, i.e. `datahub delete --platform dbt`.
 
 The command accepts different filters. A straightforward one is `--platform`, for example, `datahub delete --platform dbt`.
