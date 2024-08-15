@@ -7,7 +7,7 @@ You can use Airflow in Datacoves to trigger a Databricks notebook. This guide wi
 - **Databricks Host:** This is the URL of your Databricks cluster. It typically looks like `https://<databricks-instance>.databricks.com`.
 - **Databricks Cluster ID:** This is the identifier of the cluster you want to use to run your notebook.
 - **Databricks Token:** If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
-- **Databricks Notebook Path:** This is the full path to the notebook you want to trigger from Airflow.
+- **Databricks Notebook Repo Path:** This is the full path to the notebook you want to trigger from Airflow. We recommend using the Git Notebook feature in Databricks. This notebook is usually located in a Repos directory in Databricks.
 
 ### How to get Databricks Host and Databricks Cluster ID
 
