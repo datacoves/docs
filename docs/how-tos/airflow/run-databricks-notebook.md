@@ -138,7 +138,7 @@ def databricks_example_run():
         "notebook_task": {
             "notebook_path": DATABRICKS_NOTEBOOK_PATH,
             "base_parameters": {
-                "branch": GIT_BRANCH  # Specify the branch in variable above
+                "branch": GIT_BRANCH  # Specify the branch in variable
             }
         },
         "source": "GIT",
@@ -158,6 +158,6 @@ dag = databricks_example_run()
 
 - The DAG makes use of the [`DatabricksSubmitRunOperator`](https://airflow.apache.org/docs/apache-airflow-providers-databricks/1.0.0/operators.html) which uses the [jobs/runs/submit](https://docs.databricks.com/api/workspace/jobs/submit) endpoint of the Databricks API. You can see the full list of options available by looking at the previous two links. 
  
-- We’re passing it a [Notebook task object](https://docs.databricks.com/api/workspace/jobs/submit#notebook_task) with a source set to `WORKSPACE` meaning the notebook will be retrieved from the local Databricks workspace. Alternatively, you can set the `git_source` to pull the notebook code from a version-controlled Git repository, which is generally more reliable for production environments.
+- We’re passing it a [Notebook task object](https://docs.databricks.com/api/workspace/jobs/submit#notebook_task) with a source set to `WORKSPACE` meaning the notebook will be retrieved from the local Databricks workspace. Alternatively, you can set the `GIT` to pull the notebook code from a version-controlled Git repository, which is generally more reliable for production environments.
   
 - And lastly, we have customized the `run_name`. In a non-example DAG, you would want this to be unique so you can better identify the runs in Airflow and Databricks. 
