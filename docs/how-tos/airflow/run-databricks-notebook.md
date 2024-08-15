@@ -40,7 +40,7 @@ If you do not have admin privileges, work with an admin to get the token. Follow
 It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
 
 - **DATABRICKS_CLUSTER_ID**: Your databricks Cluster ID
-- **MY_NOTEBOOK_NOTEBOOK_PATH**: This should be a meaningful name as you may have many notebooks you wish to trigger eg) INSERT_INTO_RAW_NOTEBOOK_PATH
+- **MY_NOTEBOOK_REPO_PATH**: This should be a meaningful name as you may have many notebooks you wish to trigger eg) INSERT_INTO_RAW_NOTEBOOK_PATH
 
 > [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
 
@@ -59,7 +59,7 @@ It is best practice to use Airflow variables for values that may need to change 
 - **Connection Id:** `databricks_default` <- this name will be used in your DAG
 - **Connection Type:** `Databricks`
 - **Host:** Your Databricks host. E.g. `https://<databricks-instance>.databricks.com`
-- **Password:** Enter your `DATABRICKS_TOKEN`
+- **Password:** Enter your `Databricks Token`
 
 ![Databricks Connection](assets/airflow_databricks_connection.png)
 
@@ -81,7 +81,7 @@ from airflow.decorators import dag
 from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunDeferrableOperator
 
 DATABRICKS_CLUSTER_ID = Variable.get("DATABRICKS_CLUSTER_ID")
-MY_NOTEBOOK_NOTEBOOK_PATH = "/PATH/TO/MY/NOTEBOOK"
+MY_NOTEBOOK_REPO_PATH = "/PATH/TO/MY/NOTEBOOK"
 GIT_BRANCH = "main"  # Specify the branch you want to use
 
 @dag(
@@ -95,7 +95,7 @@ def databricks_example_run():
     notebook_task_params = {
         "task_key": "unique-task-key",
         "notebook_task": {
-            "notebook_path": MY_NOTEBOOK_NOTEBOOK_PATH,
+            "notebook_path": MY_NOTEBOOK_REPO_PATH,
             "base_parameters": {
                 "branch": GIT_BRANCH  # Specify the branch in variable
             }
