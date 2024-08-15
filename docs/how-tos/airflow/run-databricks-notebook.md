@@ -9,7 +9,7 @@ You can use Airflow in Datacoves to trigger a Databricks notebook. This guide wi
 - **Databricks Token:** If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
 - **Databricks Notebook Path:** This is the full path to the notebook you want to trigger from Airflow.
 
-### How to get DATABRICKS_HOST and DATABRICKS_CLUSTER_ID
+### How to get Databricks Host and Databricks Cluster ID
 
 **Step 1:** Sign into your Databricks account.
 
@@ -23,11 +23,11 @@ You can use Airflow in Datacoves to trigger a Databricks notebook. This guide wi
 
 **Step 5:** Scroll to `Tags` and expand `Automatically added tags`. Your `ClusterId` should look something like this: `0123-5678910-abcdefghijk`.
 
-### How to get DATABRICKS_TOKEN 
+### How to get Databricks Token
 
 If you do not have admin privileges, work with an admin to get the token. Follow the [Databricks documentation here](https://docs.databricks.com/en/dev-tools/auth/pat.html).
 
-### How to get DATABRICKS_NOTEBOOK_PATH 
+### How to get Databricks Notebook Path
 
 **Step 1:** Navigate to your notebook in the Databricks user interface.
 
@@ -39,8 +39,8 @@ If you do not have admin privileges, work with an admin to get the token. Follow
 
 It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
 
-- **DATABRICKS_CLUSTER_ID**
-- **DATABRICKS_NOTEBOOK_PATH**
+- **DATABRICKS_CLUSTER_ID**: Your databricks Cluster ID
+- **MY_NOTEBOOK_NOTEBOOK_PATH**: This should be a meaningful name as you may have many notebooks you wish to trigger eg) INSERT_INTO_RAW_NOTEBOOK_PATH
 
 > [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
 
@@ -69,46 +69,6 @@ It is best practice to use Airflow variables for values that may need to change 
 
 Once you have configured your Databricks connection and variables, you are ready to create your DAG. Head into the `Transform` tab to begin writing your DAG inside the dags folder, e.g. `orchestrate/dags`.
 
-### Workspace Notebook as the source
-With Databricks, you have the option of triggering a workbook through Airflow.
-
-```python
-import os
-from datetime import datetime
-from airflow.models import Variable
-from airflow.decorators import dag
-from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunDeferrableOperator
-
-DATABRICKS_CLUSTER_ID = Variable.get("DATABRICKS_CLUSTER_ID")
-DATABRICKS_NOTEBOOK_PATH = Variable.get("DATABRICKS_NOTEBOOK_PATH")
-
-@dag(
-    schedule="@daily",
-    start_date=datetime(2024, 1, 1),
-    tags=["version_1"],
-    catchup=False
-)
-def databricks_example_run():
-
-    notebook_task_params = {
-        "task_key": "unique-task-key",
-        "notebook_task": {
-            "notebook_path": DATABRICKS_NOTEBOOK_PATH,
-        },
-        "source": "WORKSPACE",
-        "existing_cluster_id": DATABRICKS_CLUSTER_ID,
-        "run_name": "datbricks_workbook_run",  # Update with a unique name
-    }
-
-    DatabricksSubmitRunDeferrableOperator(
-        task_id = "notebook_task",  # Rename with appropriate name
-        json = notebook_task_params,
-        databricks_conn_id = "databricks_default"  # Must match databricks connection id set above
-    )
-
-dag = databricks_example_run()
-```
-
 ### Git Notebook as the source (Recommended)
 
 We recommend using a git as the source to leverage version control when developing notebooks. Be aware that if changes are made in the databricks tracked branch (`GIT_BRANCH`), they will be executed in Airflow regardless if the changes are committed into Git. The best practice is to have users develop on feature branches and then merge to main.
@@ -121,8 +81,7 @@ from airflow.decorators import dag
 from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunDeferrableOperator
 
 DATABRICKS_CLUSTER_ID = Variable.get("DATABRICKS_CLUSTER_ID")
-# DATABRICKS_NOTEBOOK_PATH = Variable.get("DATABRICKS_NOTEBOOK_PATH")
-DATABRICKS_NOTEBOOK_PATH = "/Workspace/Repos/mayra@datacoves.com/databricks_notebooks/insert_into_raw"
+MY_NOTEBOOK_NOTEBOOK_PATH = "/PATH/TO/MY/NOTEBOOK"
 GIT_BRANCH = "main"  # Specify the branch you want to use
 
 @dag(
@@ -136,7 +95,7 @@ def databricks_example_run():
     notebook_task_params = {
         "task_key": "unique-task-key",
         "notebook_task": {
-            "notebook_path": DATABRICKS_NOTEBOOK_PATH,
+            "notebook_path": MY_NOTEBOOK_NOTEBOOK_PATH,
             "base_parameters": {
                 "branch": GIT_BRANCH  # Specify the branch in variable
             }
@@ -156,8 +115,8 @@ dag = databricks_example_run()
 ```
 ## Understanding the Airflow DAG 
 
-- The DAG makes use of the [`DatabricksSubmitRunOperator`](https://airflow.apache.org/docs/apache-airflow-providers-databricks/1.0.0/operators.html) which uses the [jobs/runs/submit](https://docs.databricks.com/api/workspace/jobs/submit) endpoint of the Databricks API. You can see the full list of options available by looking at the previous two links. 
+- The DAG makes use of the [`DatabricksSubmitRunDeferrableOperator`](https://airflow.apache.org/docs/apache-airflow-providers-databricks/stable/operators/submit_run.html) which uses the [jobs/runs/submit](https://docs.databricks.com/api/workspace/jobs/submit) endpoint of the Databricks API. You can see the full list of options available by looking at the previous two links. 
  
-- We’re passing it a [Notebook task object](https://docs.databricks.com/api/workspace/jobs/submit#notebook_task) with a source set to `WORKSPACE` meaning the notebook will be retrieved from the local Databricks workspace. Alternatively, you can set the `GIT` to pull the notebook code from a version-controlled Git repository, which is generally more reliable for production environments.
+- We’re passing a [Notebook task object](https://docs.databricks.com/api/workspace/jobs/submit#notebook_task) with the source set to `GIT`, meaning the notebook will be retrieved from Databricks Repos, which is synced with a version-controlled Git repository. Alternatively, you can set the source to `WORKSPACE` to pull the notebook code directly from the local Databricks workspace. Using `GIT` is generally more reliable for production environments because it ensures that the notebook code is managed through a version-controlled system, providing consistency and traceability.
   
 - And lastly, we have customized the `run_name`. In a non-example DAG, you would want this to be unique so you can better identify the runs in Airflow and Databricks. 
