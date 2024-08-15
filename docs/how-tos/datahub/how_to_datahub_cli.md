@@ -9,15 +9,15 @@ Connecting to your DataHub instance via your VSCode terminal might be really hel
 
 First of all, you need to establish a secure connection to your DataHub server.
 
-Open a terminal on VSCode and run `DataHub init`:
+Open a terminal on VSCode and run `datahub init`:
 
 ![DataHub init](assets/datahub-init.png)
 
-Type the DataHub host url, following this pattern: `http://{environment slug}-DataHub-DataHub-gms:8080`, the environment slug can be found next to your environment name in the header.
+Type the DataHub host url, following this pattern: `http://{environment slug}-datahub-datahub-gms:8080`, the environment slug can be found next to your environment name in the header.
 
 ![Environment slug](assets/datahub-env-slug.png)
 
-In this example it's `DEV123`, so the url becomes: http://dev123-DataHub-DataHub-gms:8080.
+In this example it's `DEV123`, so the url becomes: http://dev123-datahub-datahub-gms:8080.
 
 ### DataHub API token
 
@@ -41,17 +41,17 @@ The next element you need to provide is a DataHub access token:
 ![DataHub copy token](assets/datahub-copy-token.png)
 
 7. Go back to the tab were you have VSCode terminal waiting for your input and paste the copied token. Press Enter.
-8. You can validate that the connection was correctly configured by running `DataHub check server-config`:
+8. You can validate that the connection was correctly configured by running `datahub check server-config`:
 
 ![DataHub check](assets/datahub-check.png)
 
 ## Useful commands
 
-Once you successfully configured DataHub CLI, you can run `DataHub` on the terminal and explore the different options the tool has to offer.
+Once you successfully configured DataHub CLI, you can run `datahub` on the terminal and explore the different options the tool has to offer.
 
 ### Delete ingested data
 
-Sometimes you loaded some data for testing purposes and the DataHub UI does not provide a way to delete it, you can easily achieve that by running `DataHub delete`.
+Sometimes you loaded some data for testing purposes and the DataHub UI does not provide a way to delete it, you can easily achieve that by running `datahub delete`.
 
-The command accepts different filters, a straight-forward one is `--platform`, i.e. `DataHub delete --platform dbt`.
+The command accepts different filters, a straight-forward one is `--platform`, i.e. `datahub delete --platform dbt`.
 
