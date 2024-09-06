@@ -36,7 +36,7 @@ Provide a name and select `MS Teams`.
 
 Provide the required details and `Save` changes.
 
-> [!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
+> [!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'ms teams'` will become `MS_TEAMS`. You will need this name below.
 
 ### Add integration to an Environment
 
@@ -73,6 +73,7 @@ In the examples below, we will send a notification on failing tasks or when the 
 To send MS Teams notifications, in the Airflow DAG we need to import the appropriate notifier and use it with the following parameters:
 
 - `connection_id`: the name of the Datacoves Integration created above
+  - if no connection_id is specified, MSTeams Notifier will use `ms_teams`
 - `message`: the body of the message
 - `theme_color`: theme color of the MS Teams card
 
@@ -95,7 +96,9 @@ from notifiers.datacoves.ms_teams import MSTeamsNotifier
     schedule="0 0 1 */12 *",
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
-    on_success_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Succeeded"),
+    on_success_callback=MSTeamsNotifier(
+      connection_id="MS_TEAMS", # This is redundant if using 'ms teams' as Integration
+      message="DAG {{ dag.dag_id }} Succeeded"),
     on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Failed"),
 )
 def dbt_run():
@@ -129,13 +132,13 @@ notifications:
   on_success_callback:
     notifier: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
-      connection_id: DATACOVES_MS_TEAMS
+      connection_id: MS_TEAMS
       message: "DAG {{ dag.dag_id }} Succeeded"
       color: 0000FF
   on_failure_callback:
     notifier: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
-      connection_id: DATACOVES_MS_TEAMS
+      connection_id: MS_TEAMS
       message: "DAG {{ dag.dag_id }} Failed"
       color: 9900FF
 
