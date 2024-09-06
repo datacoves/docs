@@ -51,7 +51,7 @@
     - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles)
   - [Superset](/how-tos/superset/)
     - [Add a Database](/how-tos/superset/how_to_database.md)
-    - [Add a Data Set](/how-tos/superset/how_to_data_set.md)
+    - [Add a Dataset](/how-tos/superset/how_to_data_set.md)
   - [VS Code](/how-tos/vscode/)
     - [Initial Configuration](/how-tos/vscode/initial.md)
       - [BigQuery](/how-tos/vscode/bigquery_setup.md)
