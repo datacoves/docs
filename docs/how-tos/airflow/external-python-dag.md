@@ -55,7 +55,7 @@ DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
     # This is a regular CRON schedule. Helpful resources
     # https://cron-ai.vercel.app/
     # https://crontab.guru/
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
 )
 def datacoves_sample_dag():
 

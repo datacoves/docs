@@ -32,7 +32,7 @@ from operators.datacoves.data_sync import DatacovesDataSyncOperatorSnowflake
 @dag(
     default_args={"start_date": "2021-01"},
     description="sync_airflow_db",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )

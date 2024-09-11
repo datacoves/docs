@@ -1,32 +1,43 @@
 
-# How to use DataHub's CLI from your VSCode terminal
+# How to use DataHub's CLI from your VS Code terminal
 
-Connecting to your DataHub instance via your VSCode terminal might be really helpful to perform some maintenance in your metadata, run ingestions, delete data, etc.
+Connecting to your DataHub instance via your VS Code terminal can be extremely useful for performing maintenance on your metadata, running ingestions, deleting data, and more.
 
 ## Configure DataHub CLI
 
-### DataHub host url
+### Setting the DataHub Host URL
 
-First of all, you need to establish a secure connection to your DataHub server.
+To establish a secure connection to your DataHub server, follow these steps:
 
-Open a terminal on VSCode and run `datahub init`:
+1. Open a terminal in VS Code and run the following command:
 
+```bash
+datahub init
+```
 ![DataHub init](assets/datahub-init.png)
 
-Type the DataHub host url, following this pattern: `http://{environment slug}-datahub-datahub-gms:8080`, the environment slug can be found next to your environment name in the header.
+2. When prompted, enter the DataHub host URL using the following pattern: 
+
+```bash
+ http://{environment-slug}-datahub-datahub-gms:8080
+ ```
+
+ >[!TIP] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`
 
 ![Environment slug](assets/datahub-env-slug.png)
 
-In this example it's `DEV123`, so the url becomes: http://dev123-datahub-datahub-gms:8080.
+### Obtaining and Using a DataHub API Token
 
-### DataHub API token
-
-The next element you need to provide is a DataHub access token:
+Next, you will be prompted to provide a DataHub access token to authenticate your connection.
 
 ![DataHub token](assets/datahub-token.png)
 
-1. On a new tab, navigate to Datacoves and then DataHub
+**Please follow these steps:**
+
+1. Open a new tab, navigate to Datacoves, head to the Observe tab within your environment, and click on DataHub.
+
 2. Go to `Settings` (gear icon on the top right corner)
+
 3. Click on the `Access Tokens` nav bar menu item
 
 ![DataHub access tokens](assets/datahub-access-tokens.png)
@@ -35,12 +46,14 @@ The next element you need to provide is a DataHub access token:
 
 ![DataHub new token](assets/datahub-new-token.png)
 
-5. Click on create and right after you'll see the new JWT token generated.
-6. Copy the token clicking on this button and don't close the window as you won’t be able to see it again.
+5. Click on create. Immediately after you will get a popup with the new token. Please don't close the window as you won’t be able to see it again.
+
+6. Copy the token clicking on the copy button. 
 
 ![DataHub copy token](assets/datahub-copy-token.png)
 
-7. Go back to the tab were you have VSCode terminal waiting for your input and paste the copied token. Press Enter.
+7. Go back to the tab were you have VS Code terminal waiting for your input and paste the copied token. Press Enter.
+
 8. You can validate that the connection was correctly configured by running `datahub check server-config`:
 
 ![DataHub check](assets/datahub-check.png)
@@ -55,3 +68,4 @@ Sometimes you loaded some data for testing purposes and the DataHub UI does not 
 
 The command accepts different filters, a straight-forward one is `--platform`, i.e. `datahub delete --platform dbt`.
 
+The command accepts different filters. A straightforward one is `--platform`, for example, `datahub delete --platform dbt`.

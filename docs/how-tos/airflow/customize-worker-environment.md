@@ -24,10 +24,8 @@ TRANSFORM_CONFIG = {
         spec=k8s.V1PodSpec(
             containers=[
                 k8s.V1Container(
-                    name="transform",
-                    # Replace with your image repo and tag
+                    name="base",
                     image="<IMAGE REPO>:<IMAGE TAG>",
-                    bash_command="echo SUCCESS!",
                 )
             ]
         )
@@ -46,43 +44,41 @@ TRANSFORM_CONFIG = {
     schedule_interval="0 0 1 */12 *",
     tags=["version_2"],
     catchup=False,
-    yaml_sample_dag={
-        "schedule_interval": "0 0 1 */12 *",
-        "tags": ["version_4"],
-        "catchup": False,
-        "default_args": {
-            "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-            "owner": "airflow",
-            "email": "some_user@exanple.com",
-            "email_on_failure": True,
-        },
-    },
 )
-def custommize_worker_dag():
+def yaml_teams_dag():
     transform = DatacovesBashOperator(
-        task_id="transform", executor_config=TRANSFORM_CONFIG
+        task_id="transform",
+        bash_command="echo SUCCESS!",
+        executor_config=TRANSFORM_CONFIG,
     )
 
 
-dag = customize_worker_dag()
+dag = yaml_teams_dag()
 ```
 
 ### YAML version
 In the yml dag you can configure the image.
 
 ```yaml
-...
+description: "Sample DAG with custom image"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_2
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  email: gomezn@example.com
+  email_on_failure: true
+catchup: false
 
-  # DAG Tasks
-  nodes:
-  ...
-   transform:
+# DAG Tasks
+nodes:
+  transform:
     operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
     config:
       # Replace with your custom docker image <IMAGE REPO>:<IMAGE TAG>
       image: <IMAGE REPO>:<IMAGE TAG>
-    
-      bash_command: "echo SUCCESS!"
-  ...
+
+    bash_command: "echo SUCCESS!"
 ```

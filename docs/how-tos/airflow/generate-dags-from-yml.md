@@ -45,7 +45,7 @@ Let's create our first DAG using YAML.
 
 ```yml
 description: "Sample DAG for dbt build"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
@@ -127,7 +127,7 @@ from operators.datacoves.dbt import DatacovesDbtOperator
         "email_on_failure": True,
     },
     description="Sample DAG for dbt build",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_2"],
     catchup=False,
 )
