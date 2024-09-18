@@ -2,10 +2,10 @@
 
 ## Overview
 
-Secrets are used to manage confidential information that is used by tools running on VSCode, or services like Airflow.
+Secrets are used to manage confidential information that are used by tools running in VSCode, or services like Airflow.
 
 Some uses could be:
-- Storing airbyte connections credentials using `dbt-coves extract` and `dbt-coves load` commands.
+- Storing Airbyte connections credentials using `dbt-coves extract` and `dbt-coves load` commands.
 - Storing Airflow connections or variables used by Airflow DAGs
 
 >[!TIP]See our How To - [Secrets](how-tos/datacoves/how_to_secrets.md) 

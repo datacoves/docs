@@ -15,7 +15,7 @@
   - [Airflow](/how-tos/airflow/)
     - [Airflow - Initial setup](/how-tos/airflow/initial-setup.md)
     - [Airflow - Sync Airflow database](/how-tos/airflow/sync-database.md)
-    - [AWS Secrets Manager](/how-tos/airflow/use-aws-secrets-manager.md)
+    - [Airflow - AWS Secrets Manager](/how-tos/airflow/use-aws-secrets-manager.md)
     - [DAGs - Add Dag Documentation](/how-tos/airflow/create-dag-level-docs.md)
     - [DAGs - Calling External Python Scripts](/how-tos/airflow/external-python-dag.md) 
     - [DAGs - Dynamically Set Schedule](/how-tos/airflow/dynamically-set-schedule.md)
