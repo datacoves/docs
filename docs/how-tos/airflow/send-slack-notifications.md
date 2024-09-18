@@ -97,25 +97,9 @@ To send Slack notifications, in the Airflow DAG we need to import the appropriat
 import datetime
 
 from airflow.decorators import dag
-from kubernetes.client import models as k8s
 from operators.datacoves.dbt import DatacovesDbtOperator
 from airflow.providers.slack.notifications.slack_webhook import send_slack_webhook_notification
 
-TRANSFORM_CONFIG = {
-    "pod_override": k8s.V1Pod(
-        spec=k8s.V1PodSpec(
-            containers=[
-                k8s.V1Container(
-                    name="transform",
-                    image="datacoves/airflow-pandas:latest",
-                    resources=k8s.V1ResourceRequirements(
-                        requests={"memory": "8Gi", "cpu": "1000m"}
-                    ),
-                )
-            ]
-        )
-    ),
-}
 
 run_inform_success = send_slack_webhook_notification(
     slack_webhook_conn_id="SLACK_NOTIFICATIONS",  # Slack integration name slug -- double check in Datacoves integrations' admin
@@ -133,9 +117,9 @@ run_inform_failure = send_slack_webhook_notification(
         "email": "gomezn@example.com",
         "email_on_failure": True,
     },
-    description="Sample DAG with Slack notification, custom image, and resource requests",
-    schedule_interval="0 0 1 */12 *",
-    tags=["version_2", "slack_notification", "blue_green"],
+    description="Sample DAG with Slack notification",
+    schedule="0 0 1 */12 *",
+    tags=["version_2"],
     catchup=False,
     on_success_callback=[run_inform_success],
     on_failure_callback=[run_inform_failure],
@@ -144,7 +128,6 @@ def yaml_slack_dag():
     transform = DatacovesDbtOperator(
         task_id="transform",
         bash_command="dbt run -s personal_loans",
-        executor_config=TRANSFORM_CONFIG,
     )
 
 
@@ -155,11 +138,9 @@ dag = yaml_slack_dag()
 
 ```yaml
 description: "Sample DAG with Slack notification, custom image, and resource requests"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_2
-  - slack_notification
-  - blue_green
 default_args:
   start_date: 2023-01-01
   owner: Noel Gomez
@@ -186,11 +167,6 @@ nodes:
   transform:
     operator: operators.datacoves.dbt.DatacovesDbtOperator
     type: task
-    config:
-      image: datacoves/airflow-pandas:latest
-      resources:
-        memory: 8Gi
-        cpu: 1000m
 
     bash_command: "dbt run -s personal_loans"
 ```

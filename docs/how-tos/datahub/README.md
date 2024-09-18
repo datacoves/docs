@@ -2,4 +2,4 @@
 
 These how to guides are dedicated to DataHub in Datacoves. See how to:
 
-- Manage your DataHub instance from the VSCode terminal
+- Manage your DataHub instance from the VS Code terminal
