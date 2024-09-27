@@ -98,7 +98,7 @@ You will need to gather the following Application information to configure your 
 
 **Step 1:** From your [Azure Portal](https://portal.azure.com) search for EntraID.
 
-**Step 2:** Select `Overview` and then `App Registrations` from the left navigation menu.
+**Step 2:** Select `App Registrations` from the left navigation menu.
 
 ![App Registration](assets/azure_devops_overview.png)
 
