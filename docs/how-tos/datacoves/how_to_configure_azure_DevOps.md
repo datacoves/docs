@@ -26,7 +26,7 @@ If you do not have an Entra ID application created you can do so by following th
 
 ## Add Application as a user in DevOps Portal
 
-**Step 1:** In a another tab (You will need to return to your application later), sign in to your [Azure DevOps Portal](dev.azure.com) and click `Organization settings` at the bottom of the left  navigation.
+**Step 1:** In a another tab (You will need to return to your application later), sign in to your [Azure DevOps Portal](https://dev.azure.com) and click `Organization settings` at the bottom of the left  navigation.
 
 ![Organization Settings](assets/azure_devops_organization_settings.png)
 
@@ -38,7 +38,7 @@ If you do not have an Entra ID application created you can do so by following th
 
 ![Add User button](assets/azure_devops_add_user_button.png)
 
-**Step 4:** Set the User as the application you created above, give it Basic Access and select `Send email invites`
+**Step 4:** Set the User as the application you created above, give it Basic Access and select `Send email invites`.
 
 ![Add User menu](assets/azure_devops_add_user_menu.png)
 
@@ -60,7 +60,7 @@ To configure a secret:
 
 **Step 3:** Give it a meaningful description and set your desired expiration date.
 
-**Step 3:** Copy the `Value`, this will be entered into the **Client Secret:** field in the Datacoves Project setup screen  
+**Step 3:** Copy the Value onto a notepad
 
 ![Azure Secret](assets/azure_devops_secret.jpg)
 
@@ -92,7 +92,7 @@ To configure a certificate:
 
 To configure your Datacoves project which we will do in the following section, you will need to collect some information.
 
-### Application (Client) ID and Directory (Tenent) ID
+### Application (Client) ID and Directory (Tenant) ID
 
 You will need to gather the following Application information to configure your project to use Azure DevOps for cloning.
 
@@ -104,26 +104,26 @@ You will need to gather the following Application information to configure your 
 
 **Step 3:** Select `All Applications` and select your newly created app.
 
-**Step 4:** Copy your Application (Client) ID and Directory (Tenent) ID
+**Step 4:** Copy your Application (Client) ID and Directory (Tenant) ID.
 
 ![Azure DevOps Details](assets/azure_devops_app_details.jpg)
 
 ### Secret Based Authentication
 
-If using Secrets based authentication, you should have the secret value from above [earlier section](how-tos/datacoves/how_to_configure_azure_DevOps?id=secret-based-authentication)
+You should have the secret value you save in an [earlier section](how-tos/datacoves/how_to_clone_with_azure.md#secret)
 
 ### Repo SSH and HTTP urls
 
-**Step 1:** Log in to your [Azure DevOps Portal](dev.azure.com) **and** 
+**Step 1:** Log in to your [Azure DevOps Portal](dev.azure.com).
 
-**Step 2:** Navigate to your project
+**Step 2:** Navigate to your project.
 
-**Step 3:** Navigate to your repo and select the `clone` button
+**Step 3:** Navigate to your repo and select the `Clone` button.
 
 **Step 2:** Copy **both** the SSH **and** HTTP urls and enter in the appropriate fields in the project setup screen in Datacoves.
 ![SSH and HTTP](assets/azure_devops_https.png)
 
-Congrats, with the information above, you should be able to complete [configuration of your Datacoves project](how-tos/datacoves/how_to_projects.md)
+Congrats, you are now ready to [configure your project](how-tos/datacoves/how_to_projects.md)
 
 
 

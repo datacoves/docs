@@ -9,7 +9,7 @@ A Project configuration consists of the following fields:
 
 - **Name** This is what will be displayed in the Datacoves landing page.
 - **Git Repo** This is the git repository associated with this project
-  - **Clone strategy** determines how Datacoves will communicate with your git repository(SSH or HTTPS). Each clone strategy is configured as follows:
+  - **Clone strategy** determines how Datacoves will communicate with your git repository(SSH, HTTPS, or Azure DevoOps Secret/Certificate). Each clone strategy is configured as follows:
   
     - **SSH** When SSH is selected, an SSH public Key will be automatically generated for you to configure in your git provider as a deployment key.
       ![Repo SSH Key](./assets/projects_ssh_key.png)
