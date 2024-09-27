@@ -38,7 +38,7 @@
     - [Configure Integrations](/how-tos/datacoves/how_to_integrations.md)
     - [Configure Invitations](/how-tos/datacoves/how_to_invitations.md)
     - [Configure Projects](/how-tos/datacoves/how_to_projects.md)
-      - [Clone with Azure](/how-tos/datacoves/how_to_clone_with_azure.md)
+      - [Configure Azure DevOps](/how-tos/datacoves/how_to_configure_azure_DevOps.md)
     - [Configure Service Connections](/how-tos/datacoves/how_to_service_connections.md)
     - [Manage Users](/how-tos/datacoves/how_to_manage_users.md)
     - [Update Repository](/getting-started/Admin/configure-repository.md)

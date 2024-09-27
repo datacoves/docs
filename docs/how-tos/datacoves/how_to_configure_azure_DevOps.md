@@ -1,20 +1,19 @@
 # How to clone with Azure DevOps
 
-To leverage cloning via Azure DevOps you must complete a series of steps outlined in this how to.
+To enable Datacoves cloning from Azure DevOps you must complete a series of steps outlined in this how to.
 
-- [Create your Application](how-tos/datacoves/how_to_clone_with_azure.md#create-your-application)
-- [Add your Application as a User in the DevOps Portal](how-tos/datacoves/how_to_clone_with_azure.md#add-application-as-a-user-in-devops-portal)
-- [Configure your Secret or Certificate to Authenticate](how-tos/datacoves/how_to_clone_with_azure.md#configure-your-secret-or-certificate-to-Authenticate)
-- [Gather Application Information](how-tos/datacoves/how_to_clone_with_azure.md#gather-application-information)
-- [Configure your Datacoves Project to use Azure DevOps](how-tos/datacoves/how_to_projects.md)
+- [Create your Application](how-tos/datacoves/how_to_configure_azure_DevOps.md#create-your-application)
+- [Add your Application as a User in the DevOps Portal](how-tos/datacoves/how_to_configure_azure_DevOps.md#add-application-as-a-user-in-devops-portal)
+- [Configure Secret or Certificate Based Authentication](how-tos/datacoves/how_to_configure_azure_DevOps.md#configure-your-secret-or-certificate-to-authenticate)
+- [Gather Application Information](how-tos/datacoves/how_to_configure_azure_DevOps.md#gather-application-information)
 
 ## Create your application
 
-If you do not have an application created you can do so by following the steps:
+If you do not have an Entra ID application created you can do so by following the following steps:
 
 **Step 1:** From your [Azure Portal](https://portal.azure.com) search for EntraID.
 
-**Step 2:** Select `Overview` and then `App Registrations` from the left navigation menu.
+**Step 2:** Select `App Registrations` from the left navigation menu.
 
 ![App Registration](assets/azure_devops_overview.png)
 
@@ -53,7 +52,7 @@ Select the `Certificates & Secrets` option in the left navigation menu.
 
 ![Navigtion](assets/azure_devops_secret_nav.jpg)
 
-### Secret
+### Secret Based Authentication
 
 To configure a secret: 
 
@@ -61,11 +60,11 @@ To configure a secret:
 
 **Step 3:** Give it a meaningful description and set your desired expiration date.
 
-**Step 3:** Copy the Value onto a notepad
+**Step 3:** Copy the `Value`, this will be entered into the **Client Secret:** field in the Datacoves Project setup screen  
 
 ![Azure Secret](assets/azure_devops_secret.jpg)
 
-### Certificate 
+### Certificate Based Authentication
 
 To configure a certificate:
 
@@ -79,7 +78,7 @@ To configure a certificate:
 
 ![Certificates](assets/azure_devops_certificate.jpg)
 
-**Step 5:** Copy the certificate and save it as a PEM file on your desktop.
+**Step 5:** Copy the certificate and save it as a plain text file on your desktop with a pem extension `datacoves_cert.pem`.
 
 ![Certificate PEM file](assets/azure_devops_certificate_copy.jpg)
 
@@ -109,9 +108,9 @@ You will need to gather the following Application information to configure your 
 
 ![Azure DevOps Details](assets/azure_devops_app_details.jpg)
 
-### Secret value
+### Secret Based Authentication
 
-You should have the secret value you save in an [earlier section](how-tos/datacoves/how_to_clone_with_azure.md#secret)
+If using Secrets based authentication, you should have the secret value from above [earlier section](how-tos/datacoves/how_to_configure_azure_DevOps?id=secret-based-authentication)
 
 ### Repo SSH and HTTP urls
 
@@ -121,10 +120,10 @@ You should have the secret value you save in an [earlier section](how-tos/dataco
 
 **Step 3:** Navigate to your repo and select the `clone` button
 
-**Step 2:** Copy your **both** the SSH **and** HTTP url
+**Step 2:** Copy **both** the SSH **and** HTTP urls and enter in the appropriate fields in the project setup screen in Datacoves.
 ![SSH and HTTP](assets/azure_devops_https.png)
 
-Congrats, you are now ready to [configure your project](how-tos/datacoves/how_to_projects.md)
+Congrats, with the information above, you should be able to complete [configuration of your Datacoves project](how-tos/datacoves/how_to_projects.md)
 
 
 

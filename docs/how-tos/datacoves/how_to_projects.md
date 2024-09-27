@@ -17,7 +17,7 @@ A Project configuration consists of the following fields:
     - **HTTPS** When HTTPS is selected, the following fields must be filled in `Git HTTPS url`, `Username` and `Password`
       ![Repo User Password Prompt](./assets/projects_https_data.png)
 
-    -  **Azure DataOps Secret** When Azure DataOps Secret is selected, a secret key is required for authentication. See this [how-to guide on configuring your Azure secret](how-tos/datacoves/how_to_clone_with_azure.md) for detailed configuration information.
+    -  **Azure DataOps Secret** When Azure DataOps Secret is selected, a secret key is required for authentication. See this [how-to guide on configuring Azure DevOps](how-tos/datacoves/how_to_configure_azure_DevOps.md) for detailed configuration information.
        -  **Git SSH url:** Cloning url found in Azure DevOps Portal
        -  **Azure HTTPS Clone url** Cloning url found in Azure DevOps Portal
        -  **Tenant ID:** ID found in Azure Portal
@@ -25,7 +25,7 @@ A Project configuration consists of the following fields:
        -  **Client Secret:** This will be the [secret value](how-tos/datacoves/how_to_clone_with_azure.md#secret) found in Azure Portal.
        -  **Release Branch:** This will be the branch you would like to clone. It should be `main`
     
-    -  **Azure DataOps Certificate** When Azure DataOps Certificate is selected, a certificate is needed for secure communication. See this [how-to guide on configuring your certificate](how-tos/datacoves/how_to_clone_with_azure.md) for detailed configuration information.
+    -  **Azure DataOps Certificate** When Azure DataOps Certificate is selected, a certificate is needed for secure communication. See this [how-to guide on configuring Azure DevOps](how-tos/datacoves/how_to_configure_azure_DevOps.md) for detailed configuration information.
        -  **Certificate PEM file**: You will need to copy the PEM file to your desktop and [upload in Azure](how-tos/datacoves/how_to_clone_with_azure.md#certificate).
        -  **Git SSH url:** Cloning url found in Azure DevOps Portal
        -  **Azure HTTPS Clone url** Cloning url found in Azure DevOps Portal
