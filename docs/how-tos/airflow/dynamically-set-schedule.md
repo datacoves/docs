@@ -1,8 +1,8 @@
 # How to Dynamically set the schedule Interval
 
-The default schedule for DAG development is `paused`. However, there may be scenarios where this default configuration doesn't align with your requirements. For instance, you might forget to add/adjust the schedule interval before deploying to production, leading to unintended behaviors. 
+By default, DAGs are created with a `paused` state in Airflow, but you can change this with the `is_paused_on_creation=True` option. However, in some cases, you might forget to configure the schedule interval before pushing your DAG to production, which can lead to unexpected results.
 
-To mitigate such risks, a practical approach is to dynamically configure the schedule according to the environment — development or production. This can be done by implementing a function named `get_schedule`. This function will  determine the appropriate schedule based on the current environment, ensuring that DAGs operate correctly across different stages of deployment.
+To avoid this, a more flexible approach is to dynamically set the schedule interval based on your environment (development or production). By using a function called get_schedule, you can ensure that the correct schedule is applied depending on whether you're in a development or production environment. This method helps reduce mistakes and ensures consistent scheduling behavior across environments.
 
 Here is how to achieve this:
 
@@ -60,6 +60,7 @@ from orchestrate.python_scripts.get_schedule import get_schedule
         "email": "gomezn@example.com",
         "email_on_failure": True,
     },
+    is_paused_on_creation=True, 
     catchup=False,
     tags=["version_8"],
     description="Datacoves Sample dag",
