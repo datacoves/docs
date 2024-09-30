@@ -133,3 +133,4 @@ COPY INTO VARIANT_TABLE
 Our variant table now looks like this: 
 
 ![json variant table](assets/json_variant_table.jpg)
+
