@@ -86,6 +86,7 @@
     - [Service Connections](/reference/admin-menu/service_connections.md)
     - [Users](/reference/admin-menu/users.md)
   - [Airflow](/reference/airflow/)
+    - [Airflow Best Practices](/reference/airflow/airflow-best-practices.md)
     - [Airflow Config Defaults](/reference/airflow/airflow-config-defaults.md)
     - [DAG Generators](/reference/airflow/dag-generators.md)
     - [Datacoves Operators](/reference/airflow/datacoves-operator.md)
