@@ -36,7 +36,7 @@ Provide a name and select `MS Teams`.
 
 Provide the required details and `Save` changes.
 
-> [!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'MS Teams notifications'` will become `MS_TEAMS_NOTIFICATIONS`. You will need this name below.
+> [!NOTE] The name you specify will be used to create the Airflow-Teams connection. It will be uppercased and joined by underscores -> `'ms teams'` will become `MS_TEAMS`. You will need this name below.
 
 ### Add integration to an Environment
 
@@ -70,18 +70,19 @@ In the examples below, we will send a notification on failing tasks or when the 
 
 > [!NOTE]In addition to `inform_failure` and `inform_success`, we support these callbacks `inform_failure`, `inform_success`, `inform_retry`, `inform_sla_miss`.
 
-To send MS Teams notifications, in the Airflow DAG we need to import and use the appropriate [Notifier](https://airflow.apache.org/docs/apache-airflow/2.6.0/howto/notifications.html#using-a-notifier) with the following arguments:
+To send MS Teams notifications, in the Airflow DAG we need to import the appropriate notifier and use it with the following parameters:
 
-- `message` Message you'd like to appear in the MS Teams message
 - `connection_id`: the name of the Datacoves Integration created above
-
-Additionally, you can pass a HEX `color` to further customize the message.
+  - if no connection_id is specified, MSTeams Notifier will use `ms_teams`
+- `message`: the body of the message
+- `theme_color`: theme color of the MS Teams card
 
 ### Python version
 
 ```python
 import datetime
 from airflow.decorators import dag
+from operators.datacoves.dbt import DatacovesDbtOperator
 from notifiers.datacoves.ms_teams import MSTeamsNotifier
 
 @dag(
@@ -92,11 +93,13 @@ from notifiers.datacoves.ms_teams import MSTeamsNotifier
         "email_on_failure": True,
     },
     description="Sample DAG with MS Teams notification",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
-    on_success_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} has succeeded"),
-    on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} has failed"),
+    on_success_callback=MSTeamsNotifier(
+      connection_id="MS_TEAMS", # This is redundant if using 'ms teams' as Integration
+      message="DAG {{ dag.dag_id }} Succeeded"),
+    on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Failed"),
 )
 def dbt_run():
     transform = DatacovesDbtOperator(
@@ -105,13 +108,14 @@ def dbt_run():
 
 dag = yaml_teams_dag()
 ```
+
 > [!NOTE]Quotation marks are not needed when setting the custom message. However, making use of Jinja in a YAML file requires the message to be wrapped quotations to be parsed properly. eg) "{{ dag.dag_id }} failed"
 
 ### YAML version
 
 ```yaml
 description: "Sample DAG with MS Teams notification"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_2
   - ms_teams_notification
@@ -123,20 +127,20 @@ default_args:
   email_on_failure: true
 catchup: false
 
-# Optional notifiers used to send MS Teams notifications
-callbacks:
+# Optional callbacks used to send MS Teams notifications
+notifications:
   on_success_callback:
-    callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
+    notifier: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
-      - connection_id: DATACOVES_MS_TEAMS
-      - message: "{{ dag.dag_id }} succeded"
-      - color: 0000FF
+      connection_id: MS_TEAMS
+      message: "DAG {{ dag.dag_id }} Succeeded"
+      color: 0000FF
   on_failure_callback:
-    callback: notifiers.datacoves.ms_teams.MSTeamsNotifier
+    notifier: notifiers.datacoves.ms_teams.MSTeamsNotifier
     args:
-      - connection_id: DATACOVES_MS_TEAMS
-      - message: "{{ dag.dag_id }} failed"
-      - color: 9900FF
+      connection_id: MS_TEAMS
+      message: "DAG {{ dag.dag_id }} Failed"
+      color: 9900FF
 
 # DAG Tasks
 nodes:
@@ -147,6 +151,6 @@ nodes:
     bash_command: "dbt run -s personal_loans"
 ```
 
-## Getting Started Next Steps 
+## Getting Started Next Steps
 
 Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md)

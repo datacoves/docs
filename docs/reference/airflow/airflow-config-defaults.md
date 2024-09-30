@@ -108,4 +108,5 @@ Datacoves injects environment variables into Airflow.
 
 
 ![Launch Pad](../admin-menu/assets/launchpad_environments_projects.png)
+
 >[!NOTE]If you have any questions, please send us an email at support@datacoves.com

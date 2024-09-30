@@ -15,14 +15,17 @@ This means that you can simply run `dbt <dbt subcommand>` in your Airflow DAG an
 If your dbt command like `dbt run` works in your development environment(**Try dbt run in your terminal**), then you should be able to create an Airflow DAG that will run this command automatically.
 
 >[!TIP]Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python dependencies. Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. No need to worry about the complexity when using the `DatacovesBashOperator` because it will automatically activate that environment amongst other actions.
+
 See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
 
 ### Lets create a DAG!
+
 **Step 1:** If using Git Sync, switch to your configured branch (`airflow_development` or `main`), create a python file inside of `orchestrate/dags` named `my_sample_dag.py`
 
 **Step 2:** Paste in the code below and be sure to replace information such as name, email and model name with your own.
 
 >[!NOTE]The name of the DAG will be the name you set for the file. ie) my_sample_dag.py = my_sample_dag
+
 ### Python version
 
 ```python
@@ -39,7 +42,7 @@ from operators.datacoves.dbt import DatacovesDbtOperator
         "email_on_failure": True,
     },
     description="Sample DAG for dbt run",
-    schedule_interval="0 0 1 */12 *", # Replace with your desired schedule 
+    schedule="0 0 1 */12 *", # Replace with your desired schedule 
     tags=["version_2"],
     catchup=False,
 )
@@ -51,6 +54,7 @@ def my_sample_dag():
 
 dag = my_sample_dag()
 ```
+
 **Step 3:** Push your changes to the branch.
 
 **Step 4:** Head over to Airflow in the Datacoves UI and refresh. It may take a minute but you should see your DAG populate. 
@@ -64,7 +68,7 @@ The name of the file will used as the DAG name.
 
 ```yaml
 description: "Sample DAG for dbt run"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:

@@ -27,16 +27,6 @@ Click on the `+ New integration` button.
 
 - **Host:** Enter the smtp server for your domain. 
 
-|**SMTP Provider**| **URL**     | **SMTP Settings**         |
-|---------------|----------------|---------------------------|
-| AOL           | aol.com        | smtp.aol.com              |
-| AT&T          | att.net        | smtp.mail.att.net         |
-| Comcast       | comcast.net    | smtp.comcast.net          |
-| iCloud        | icloud.com/mail| smtp.mail.me.com          |
-| Gmail         | gmail.com      | smtp.gmail.com            |
-| Outlook       | outlook.com    | smtp-mail.outlook.com     |
-| Yahoo!        | mail.yahoo.com | smtp.mail.yahoo.com       |
-
 - **Port:** TLS encryption on port 587. If you’d like to implement SSL encryption, use port 465. 
 
 - **From Address:** This is the address that you have configured for smtp
@@ -76,6 +66,7 @@ The Airflow service will be restarted shortly and will now include the SMTP conf
 If you have already created a DAG it's time to modify your DAG to make use of our newly set up SMTP integration on Airflow. 
 
 Simply provide a `default_args` dict like so:
+
 >[!TIP]You can add as many email recipients needed by passing a list into the email field. eg) `email: ["gomezn@example.com", "mayra@example.com", "walter@example.com"]` 
 
 ### Python version
@@ -91,20 +82,18 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
         "owner": "Noel Gomez",
-        "email": "gomezn@example.com", # Can be a list ["email1", "email2",...]
-        "email_on_failure": True,     # Email options
-        # 'email_on_failure': False,  # Email options
-        # 'email_on_retry': False,    # Email options
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
     },
-    description="Sample DAG for dbt run",
-    schedule_interval="0 0 1 */12 *",
+    description="Sample DAG for dbt build",
+    schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )
 def dbt_run():
     build_dbt = DatacovesDbtOperator(
-        task_id="run_dbt",
-        bash_command="dbt run -s personal_loans", # Replace the name of the model
+        task_id="build_dbt",
+        bash_command="dbt run -s personal_loans",
     )
 
 
@@ -115,7 +104,7 @@ dag = dbt_run()
 
 ```yaml
 description: "Sample DAG for dbt run"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_1
 default_args:

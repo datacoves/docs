@@ -69,7 +69,7 @@ You will need to define two operators: `fivetran_provider.operators.fivetran.Fiv
 
 ```yaml
 description: "Loan Run"
-schedule_interval: "0 0 1 */12 *"
+schedule: "0 0 1 */12 *"
 tags:
   - version_1
 default_args:
@@ -124,7 +124,7 @@ from operators.datacoves.dbt import DatacovesDbtOperator
 @dag(
     default_args={"start_date": "2024-01"},
     description="Loan Run",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )

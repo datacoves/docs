@@ -1,4 +1,5 @@
 # Variables and Connections
+
 >[!NOTE]dbt-coves generate airflow-dags does not support reading variables/connections, but you may generate the initial Python Airflow DAG and add the connection / variable information.
 
 The best way to store and retrieve information within Airflow is to use `Variables` and `Connections`, both available on the `Admin` upper dropdown.
@@ -25,7 +26,7 @@ daily_run_tag = Variable.get("DBT_DAILY_RUN_TAG")
 @dag(
     default_args={"start_date": "2021-01"},
     description="DAG that outputs a Variable",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )
@@ -72,7 +73,7 @@ airbyte_connection = Connection.get_connection_from_secrets(conn_id="AIRBYTE_CON
 @dag(
     default_args={"start_date": "2021-01"},
     description="DAG that outputs Airbyte Hostname",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )

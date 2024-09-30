@@ -12,11 +12,11 @@ In the following example, we're requesting a minimum of 8Gb of memory and 1000m 
 
 ```python
 import datetime
-
 from airflow.decorators import dag
 from kubernetes.client import models as k8s
 from operators.datacoves.bash import DatacovesBashOperator
 
+# Configuration for Kubernetes Pod Override with Resource Requests
 TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
         spec=k8s.V1PodSpec(
@@ -32,7 +32,6 @@ TRANSFORM_CONFIG = {
     ),
 }
 
-
 @dag(
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
@@ -41,26 +40,15 @@ TRANSFORM_CONFIG = {
         "email_on_failure": True,
     },
     description="Sample DAG with custom resources",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",
     tags=["version_2"],
     catchup=False,
-    yaml_sample_dag={
-        "schedule_interval": "0 0 1 */12 *",
-        "tags": ["version_4"],
-        "catchup": False,
-        "default_args": {
-            "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-            "owner": "airflow",
-            "email": "some_user@exanple.com",
-            "email_on_failure": True,
-        },
-    },
 )
 def request_resources_dag():
-    transform = DatacovesBashOperator(
-        task_id="transform", executor_config=TRANSFORM_CONFIG
+    transform_task = DatacovesBashOperator(
+        task_id="transform", 
+        executor_config=TRANSFORM_CONFIG
     )
-
 
 dag = request_resources_dag()
 ```
@@ -69,9 +57,19 @@ dag = request_resources_dag()
 In the yml DAG you can configure the memory and cpu resources.
 
 ```yaml
+description: "Sample DAG with custom resources"
+schedule_interval: "0 0 1 */12 *"
+tags:
+  - version_2
+default_args:
+  start_date: 2023-01-01
+  owner: Noel Gomez
+  email: gomezn@example.com
+  email_on_failure: true
+catchup: false
+
 # DAG Tasks
 nodes:
-...
   transform:
     operator: operators.datacoves.bash.DatacovesBashOperator
     type: task
@@ -79,5 +77,4 @@ nodes:
       resources:
         memory: 8Gi
         cpu: 1000m
-...
 ```

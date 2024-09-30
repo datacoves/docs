@@ -9,11 +9,13 @@ Here is how to achieve this:
 **Step 1:** Create a `get_schedule.py` file inside of `orchestrate/dags/python_scripts`
 
 **Step 2:** Paste the following code:
-
+Note: Find your environment slug [here](reference/admin-menu/environments.md)
 ```python
 # get_schedule.py
 import os
 from typing import Union
+
+DEV_ENVIRONMENT_SLUG = "dev123" # Replace with your environment slug
 
 def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
     """
@@ -35,14 +37,14 @@ def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
       indicating that no schedule should be used in the dev environment.
     """
     env_slug = os.environ.get("DATACOVES__ENVIRONMENT_SLUG", "").lower()
-    if env_slug == "gay725":
+    if env_slug == DEV_ENVIRONMENT_SLUG = "dev123":
         return None
     else:
         return default_input
 ```
 **Step 3:** In your DAG, import the `get_schedule` function using `from orchestrate.python_scripts.get_schedule import get_schedule` and pass in your desired schedule.
 
-ie) If your desired schedule is `'0 1 * * *'` then you will set `schedule_interval=get_schedule('0 1 * * *')` as seen in the example below. 
+ie) If your desired schedule is `'0 1 * * *'` then you will set `schedule=get_schedule('0 1 * * *')` as seen in the example below. 
 ```python
 from airflow.decorators import dag
 from operators.datacoves.bash import DatacovesBashOperator
@@ -50,10 +52,6 @@ from operators.datacoves.dbt import DatacovesDbtOperator
 from pendulum import datetime
 
 from orchestrate.python_scripts.get_schedule import get_schedule
-
-# Only here for reference, this is automatically activated by Datacoves Operator
-DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
-
 
 @dag(
     default_args={
@@ -68,7 +66,7 @@ DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
     # This is a regular CRON schedule. Helpful resources
     # https://cron-ai.vercel.app/
     # https://crontab.guru/
-    schedule_interval=get_schedule('0 1 * * *'), # Replace with desired schedule
+    schedule=get_schedule('0 1 * * *'), # Replace with desired schedule
 )
 def datacoves_sample_dag():
     # Calling dbt commands
