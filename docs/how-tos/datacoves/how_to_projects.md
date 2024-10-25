@@ -22,11 +22,11 @@ A Project configuration consists of the following fields:
        -  **Azure HTTPS Clone url** Cloning url found in Azure DevOps Portal
        -  **Tenant ID:** ID found in Azure Portal
        -  **Application ID:** ID found in Azure Portal
-       -  **Client Secret:** This will be the [secret value](how-tos/datacoves/how_to_clone_with_azure.md#secret) found in Azure Portal.
+       -  **Client Secret:** This will be the [secret value](how-tos/datacoves/how_to_configure_azure_DevOps.md#secret-based-authentication) found in Azure Portal.
        -  **Release Branch:** This will be the branch you would like to clone. It should be `main`
     
     -  **Azure DataOps Certificate** When Azure DataOps Certificate is selected, a certificate is needed for secure communication. See this [how-to guide on configuring Azure DevOps](how-tos/datacoves/how_to_configure_azure_DevOps.md) for detailed configuration information.
-       -  **Certificate PEM file**: You will need to copy the PEM file to your desktop and [upload in Azure](how-tos/datacoves/how_to_clone_with_azure.md#certificate).
+       -  **Certificate PEM file**: You will need to copy the PEM file to your desktop and [upload in Azure](how-tos/datacoves/how_to_configure_azure_DevOps.md#certificate-based-authentication).
        -  **Git SSH url:** Cloning url found in Azure DevOps Portal
        -  **Azure HTTPS Clone url** Cloning url found in Azure DevOps Portal
        -  **Tenant ID:** ID found in Azure Portal
