@@ -24,7 +24,7 @@ To set up your Datacoves account, you will need to know your data warehouse prov
 
 >[!WARNING] For the Snowflake `Account` field you will need to find your account locator and replace `.` with `-`. Check out [Snowflake Fields](how-tos/datacoves/how_to_connection_template.md#for-snowflake-the-available-fields-are) on how to find your Snowflake account locator.
 
-**Network Access:** Verify that your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `74.179.248.157`
+**Network Access:** Verify that your Data Warehouse is accessible from outside your network. You'll need to whitelist the Datacoves IP - `74.179.200.137`
 
 ### Git
 
