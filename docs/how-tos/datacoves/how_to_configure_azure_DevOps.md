@@ -110,7 +110,7 @@ You will need to gather the following Application information to configure your 
 
 ### Secret Based Authentication
 
-You should have the secret value you save in an [earlier section](how-tos/datacoves/how_to_clone_with_azure.md#secret)
+You should have the secret value you save in an [earlier section](how-tos/datacoves/how_to_configure_azure_DevOps.md#secret-based-authentication)
 
 ### Repo SSH and HTTP urls
 
