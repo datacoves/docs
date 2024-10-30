@@ -31,6 +31,7 @@
     - [Notifications - Send Slack notifications](/how-tos/airflow/send-slack-notifications.md)
     - [Worker - Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Worker - Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
+    - [API - Getting Started](/how-tos/airflow/api-getting-started.md)
   - [Datacoves](/how-tos/datacoves/)
     - [Configure Connection Templates](/how-tos/datacoves/how_to_connection_template.md)
     - [Configure Environments](/how-tos/datacoves/how_to_environments.md)
