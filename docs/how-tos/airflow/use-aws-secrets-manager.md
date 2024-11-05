@@ -60,7 +60,8 @@ Please follow the how to below to achieve these requirements.
 - **Access Key ID** The Access Key ID you configured earlier
 - **Secret Access Key** The Secret Access Key attached to the IAM User configured earlier 
 - **Region Code** This is the region were the Secrets Manager is running, i.e. `us-east-1`, `us-west-1`, etc. Find a complete list [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
-- You can leave the rest of the variables as the default or view the [Secrets Manager documentation](https://airflow.apache.org/docs/apache-airflow-providers-amazon/stable/secrets-backends/aws-secrets-manager.html#aws-secrets-manager-backend) for more customization options. 
+
+>[!TIP] See the [Secrets Manager documentation](https://airflow.apache.org/docs/apache-airflow-providers-amazon/stable/secrets-backends/aws-secrets-manager.html#aws-secrets-manager-backend) for more customization options. 
 
 ![Secrets Backend](assets/aws_secrets_connection.jpg)
 
@@ -91,14 +92,13 @@ When using `Variable.get` Airflow will look in several places to find the variab
 
 Once a variable is found Airflow will stop its search. 
 
-Each time a variable is accessed, an API call is made to AWS Secrets Manager. If not configured properly, this API call may occur every time a DAG is parsed, not just during task execution. Since AWS is the first place Airflow looks for variables, repeated calls can significantly increase API usage and lead to a higher-than-expected AWS bill. You can read more about this [here](https://medium.com/apache-airflow/setting-up-aws-secrets-backends-with-airflow-in-a-cost-effective-way-dac2d2c43f13) . 
+Each time a variable is accessed, an API call is made to AWS Secrets Manager. If not configured properly, this API call may occur every time a DAG is parsed, not just during task execution. Since AWS is the first place Airflow looks for variables, repeated calls can significantly increase API usage and lead to a higher-than-expected AWS bill. You can read more about this [here](https://medium.com/apache-airflow/setting-up-aws-secrets-backends-with-airflow-in-a-cost-effective-way-dac2d2c43f13). 
 
 ### To solve for this there are 2 best practices to follow:
 
 1. Always call your `Variable.get` from within the `@task` decorator
 2. Make use of the `connections_lookup_pattern` and `variables_lookup_pattern` when setting up your secondary backend above. This means only variables and connections prefixed with `aws_` would be make an API call to AWS Secrets Manager. eg) `aws_mayras_secret`
-3. Create a task to return your variable (This might not be right FIX ME)
-
+   
 
 ```python
 import datetime
