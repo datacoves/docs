@@ -132,3 +132,7 @@ This should be like this instead:
 ```
 
 ... with just 2 spaces before the nested list items.  It is almost always one of these problems if you have a rendering issue, so check your spaces and make sure you have blank lines before new block elements.
+
+### Tabs Functionality
+
+Please see the [docsify-tabs](https://jhildenbiddle.github.io/docsify-tabs/#/) 
