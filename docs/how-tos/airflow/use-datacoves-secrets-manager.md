@@ -9,15 +9,16 @@ Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md)
 **Step 2:** Select `+ New Secret`
 
 **Step 3:** Define the following
-- **Reference Key (slug):** This is how the secret will be retrieved in your DAG. We recommend prefixing all of your secrets stored in the Datacoves Secrets Manager with `datacoves_`
+- **Reference Key (slug):** This is how the secret will be retrieved in your DAG. We recommend prefixing all of your secrets stored in the Datacoves Secrets Manager with `datacoves_`.
 - **Format:** Select what format you would like to use to store your secret. ie) key-value, JSON, or multiple key-value pairs.
-- **Scope:** Select whether you want to share the secret at the project or environment level
+- **Scope:** Select whether you want to share the secret at the project or environment level.
+- **Project** Select what project this variable belongs to.
 
 **Step 4:** Toggle on `Share with developers` if this variable needs to be accessed by developers who do not have Admin access.
 
 **Step 5:** Toggle on `Share with stack services`. This must be toggled on for Aiflow to have access to the variable
 
-INSERT IMAGE WHEN FIXED. REMOVE NAME
+![Toggle secret access](assets/datacoves_secrets_sharing_toggle.jpg)
 
 ## Read variable from Datacoves Secrets manager
 
@@ -31,19 +32,18 @@ Once you save your changes you are ready to use your variable in a DAG. When usi
 
 Once a variable is found Airflow will stop its search. 
 
-### Best practices to follow when using a Secrets Manager varaible
+![secrets flowchart](assets/variablle_flow.png)
+
+### Best practices to follow when using a Secrets Manager variable
 
 1. Always call your `Variable.get` from within the `@task` decorator
 2. Make use of prefixes like `datacoves_` to help you identify where your secret is stored. eg) `datacoves_mayras_secret`
-3. Create a task to return your variable (This might not be right FIX ME)
+
 
 ```python
 import datetime
-
 from airflow.decorators import dag, task
-from airflow.models import Variable
 from operators.datacoves.dbt import DatacovesDbtOperator
-
 
 @dag(
     default_args={
@@ -54,31 +54,34 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     },
     description="Sample DAG for dbt build",
     schedule_interval="0 0 1 */12 *",
-    tags=["version_2"],
+    tags=["version_3"],
     catchup=False,
 )
-def yaml_dbt_dag():
+def tester_dag():
 
-	@task
-    def print_variable():
-        my_var = Variable.get("datacoves_mayras_secret")  
-
-        print(f"aws_mayras_secret: {my_var}")
-
-		# Return the value to be passed to the next task
-        return my_var
-
-    # Task to run dbt using the DatacovesDbtOperator and pass the variable
     @task
-    def run_dbt_task(fetched_var):
-        # Use the fetched variable in the dbt command
-        run_dbt = DatacovesDbtOperator(
-            task_id="run_dbt", 
-            bash_command=f"dbt run -s personal_loans --vars '{{my_var: {fetched_var}}}'"
-        )
-        run_dbt.execute(context={})
+    def get_variable():
+        from airflow.models import Variable
+        # Fetch the variable from Airflow's Variables
+        my_var = Variable.get("datacoves_mayras_secret")
+        return my_var  # Return the value for downstream tasks
 
-dag = yaml_dbt_dag()
+    fetched_variable = get_variable()
+
+    # Task to run dbt using the DatacovesDbtOperator and pass the fetched variable
+    @task
+    def run_dbt_task(dbt_var):
+        # Use the fetched variable in the dbt command
+        DatacovesDbtOperator(
+            task_id="run_dbt",
+            bash_command=f"dbt run -s personal_loans --vars '{{my_var: \"{fetched_variable}\"}}'"
+        )
+
+    run_dbt_task(dbt_var = fetched_variable)
+
+dag = tester_dag()
+
+
 
 ```
 

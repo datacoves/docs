@@ -92,6 +92,8 @@ When using `Variable.get` Airflow will look in several places to find the variab
 
 Once a variable is found Airflow will stop its search. 
 
+![secrets flowchart](assets/variablle_flow.png)
+
 Each time a variable is accessed, an API call is made to AWS Secrets Manager. If not configured properly, this API call may occur every time a DAG is parsed, not just during task execution. Since AWS is the first place Airflow looks for variables, repeated calls can significantly increase API usage and lead to a higher-than-expected AWS bill. You can read more about this [here](https://medium.com/apache-airflow/setting-up-aws-secrets-backends-with-airflow-in-a-cost-effective-way-dac2d2c43f13). 
 
 ### To solve for this there are 2 best practices to follow:
@@ -102,11 +104,8 @@ Each time a variable is accessed, an API call is made to AWS Secrets Manager. If
 
 ```python
 import datetime
-
 from airflow.decorators import dag, task
-from airflow.models import Variable
 from operators.datacoves.dbt import DatacovesDbtOperator
-
 
 @dag(
     default_args={
@@ -120,30 +119,34 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     tags=["version_2"],
     catchup=False,
 )
-def yaml_dbt_dag():
+def aws_dag():
 
-	@task
-    def print_variable():
-        my_var = Variable.get("aws_mayras_secret") # Will make and AWS secrets manager API call 
-		my_other_var = Variable.get("mayras_secret") # Will NOT make and AWS secrets manager API call 
-
-        print(f"aws_mayras_secret: {my_var}")
-        print(f"mayras_secret: {my_other_var}")
-
-		# Return the value to be passed to the next task
-        return my_var
-
-    # Task to run dbt using the DatacovesDbtOperator and pass the variable
     @task
-    def run_dbt_task(fetched_var):
-        # Use the fetched variable in the dbt command
-        run_dbt = DatacovesDbtOperator(
-            task_id="run_dbt", 
-            bash_command=f"dbt run -s personal_loans --vars '{{my_var: {fetched_var}}}'"
-        )
-        run_dbt.execute(context={})
+    def get_variables():
+        from airflow.models import Variable
+        # Fetches the variable, potentially making an AWS Secrets Manager API call
+        aws_var = Variable.get("aws_mayras_secret")
+        datacoves_var = Variable.get("datacoves_mayras_secret")
+        return [aws_var, datacoves_var]
 
-dag = yaml_dbt_dag()
+    #
+    my_variables = get_variables()
+    aws_var = my_variables[0]
+    datacoves_var = my_variables[1]
+
+    # Task to run dbt using the DatacovesDbtOperator and pass the variables
+    @task
+    def run_dbt_task(aws_var, datacoves_var):
+        # Use the fetched variables in the dbt command
+        DatacovesDbtOperator(
+            task_id="run_dbt",
+            bash_command=f"dbt run -s personal_loans --vars '{{my_aws_variable: \"{aws_var}\", datacoves_variable: \"{datacoves_var}\"}}'"
+        )
+
+    run_dbt_task(aws_var=aws_var, datacoves_var=datacoves_var)
+
+dag = aws_dag()
+
 
 ```
 

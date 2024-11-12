@@ -37,7 +37,7 @@ def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
       indicating that no schedule should be used in the dev environment.
     """
     env_slug = os.environ.get("DATACOVES__ENVIRONMENT_SLUG", "").lower()
-    if env_slug == DEV_ENVIRONMENT_SLUG = "dev123":
+    if env_slug == DEV_ENVIRONMENT_SLUG:
         return None
     else:
         return default_input
