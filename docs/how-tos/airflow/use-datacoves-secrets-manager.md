@@ -1,28 +1,10 @@
 # How to use Datacoves Secrets Manager in Airflow
 
-Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md) that allows you to securely store and manage secrets for both administrators and developers. Secrets can be stored at the project or environment level and easily shared across other tools in your stack, ensuring seamless integration and enhanced security.
-
-**Step 1:** Navigate to `Secrets` in the Admin menu
-
-![secrets](assets/admin_menu_secrets.gif)
-
-**Step 2:** Select `+ New Secret`
-
-**Step 3:** Define the following
-- **Reference Key (slug):** This is how the secret will be retrieved in your DAG. We recommend prefixing all of your secrets stored in the Datacoves Secrets Manager with `datacoves_`.
-- **Format:** Select what format you would like to use to store your secret. ie) key-value, JSON, or multiple key-value pairs.
-- **Scope:** Select whether you want to share the secret at the project or environment level.
-- **Project** Select what project this variable belongs to.
-
-**Step 4:** Toggle on `Share with developers` if this variable needs to be accessed by developers who do not have Admin access.
-
-**Step 5:** Toggle on `Share with stack services`. This must be toggled on for Aiflow to have access to the variable
-
-![Toggle secret access](assets/datacoves_secrets_sharing_toggle.jpg)
+Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md) that allows you to securely store and manage secrets for both administrators and developers. Secrets can be stored at the project or environment level and easily shared across other tools in your stack, ensuring seamless integration and enhanced security. [Creating or editing a secret](/how-tos/datacoves/how_to_secrets.md) in the Datacoves Secret Manager is straightforward.
 
 ## Read variable from Datacoves Secrets manager
 
-Once you save your changes you are ready to use your variable in a DAG. When using `Variable.get` Airflow will look in several places to find the variable. 
+Once you save your variable in the Datacoves Secret Manager you are ready to use your variable in a DAG. This is done using `Variable.get`. Airflow will look in several places to find the variable. 
 
 ### The order of places it will look for are as follows:
 
@@ -36,8 +18,10 @@ Once a variable is found Airflow will stop its search.
 
 ### Best practices to follow when using a Secrets Manager variable
 
-1. Always call your `Variable.get` from within the `@task` decorator
-2. Make use of prefixes like `datacoves_` to help you identify where your secret is stored. eg) `datacoves_mayras_secret`
+There are some best practices that we recommend when using the Datacoves Secrets manager which will improve performance and cost.
+
+1. Always call your `Variable.get` from within the `@task` decorator. This ensures the variable is only fetched at runtime.
+2. Make use of prefixes like `datacoves_` to help you identify and debug your variables. eg) `datacoves_mayras_secret`
 
 
 ```python
