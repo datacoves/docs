@@ -16,7 +16,7 @@ Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md)
 
 **Step 4:** Toggle on `Share with developers` if this variable needs to be accessed by developers who do not have Admin access.
 
-**Step 5:** Toggle on `Share with stack services`. This must be toggled on for Aiflow to have access to the variable
+**Step 5:** Toggle on `Share with stack services`. This must be toggled on for Airflow to have access to the variable
 
 ![Toggle secret access](assets/datacoves_secrets_sharing_toggle.jpg)
 
