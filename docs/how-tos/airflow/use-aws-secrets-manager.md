@@ -1,7 +1,6 @@
 # How to use AWS Secrets Manager in Airflow
 
-Datacoves implements the Airflow Secrets Backend Interface to support different types of secrets managers
-including AWS Secrets Manager.
+Datacoves integrates with the Airflow Secrets Backend Interface, offering seamless support for both its native Datacoves Secrets Backend and AWS Secrets Manager. If you’re interested in using additional Airflow-compatible Secrets Managers, please reach out to us.
 
 Secrets backends are configured at the project level, this means that you can use a different Secrets Manager for each project. Please see additional documentation to [configure your AWS Secrets Manager](/how-tos/datacoves/how_to_configure_aws_secrets_manager.md)
 
