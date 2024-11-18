@@ -22,4 +22,4 @@ When a new secret is created, it can be shared across the entire project, or sha
 
 ### Secrets store
 
-Secrets could be stored on encrypted on Datacoves own data stores, or use a third party service, such as Amazon Secrets Manager, among others.
+Secrets could be stored encrypted on the Datacoves database, or use a third party service, such as Amazon Secrets Manager, among others.
