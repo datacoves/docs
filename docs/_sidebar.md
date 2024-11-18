@@ -40,7 +40,7 @@
     - [Configure Integrations](/how-tos/datacoves/how_to_integrations.md)
     - [Configure Invitations](/how-tos/datacoves/how_to_invitations.md)
     - [Configure Projects](/how-tos/datacoves/how_to_projects.md)
-      - [Configure AWS Secrets](/how-tos/datacoves/how_to_configure_aws_secrets_manager.md)
+      - [Configure AWS Secrets Manager](/how-tos/datacoves/how_to_configure_aws_secrets_manager.md)
       - [Configure Azure DevOps](/how-tos/datacoves/how_to_configure_azure_DevOps.md)
         - [Create your EntraID App](/how-tos/datacoves/create_your_entraid_application.md)
         - [Add EntraID App to DevOps Portal](/how-tos/datacoves/add_entraid_app_as_user.md)
