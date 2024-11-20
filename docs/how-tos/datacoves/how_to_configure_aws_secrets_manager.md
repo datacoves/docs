@@ -78,6 +78,6 @@ Please, follow the [AWS Secrets Manager documentation](https://docs.aws.amazon.c
 
 ![Secrets Backend](assets/aws_secrets_connection.jpg)
 
-To learn how to read a variable from the Datacoves secrets manager check out our [How To](/how-tos/airflow/use-aws-secrets-manager.md)
+To learn how to read a variable from the AWS Secrets Manager check out our [How To](/how-tos/airflow/use-aws-secrets-manager.md)
 
 >[!NOTE]For security purposes, once this has been saved you will not be able to view the values. To modify the Secrets backend you will need to set the Secrets backend to `None` and save the changes. Then start the setup again. 
