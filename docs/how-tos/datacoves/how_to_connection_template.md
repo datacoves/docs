@@ -15,21 +15,24 @@ To create a new connection template click the `Create Connection Template` in th
 
   - **User field configuration** Defines how the DB connection `Username` field will be treated. It can be `provided` by the end-user or inferred using two strategies: from his/her email, or based on templates.
     The difference in these approaches will be noticed when the final user creates their respective connections in `Settings -> Database connections`
-
-    - **Provided by user** With this strategy, the user will have free access to write the desired username when creating a connection
-
-      ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
-
+    - **Email**: Use the users email. Case sensitive. 
+      ![Email](assets/connectiontemplates_email.jpg)
+    - **Email (Uppercase)**: Use the users email in uppercase.
+      ![Email Uppercase](assets/connectiontemplates_email_uppercase.jpg)
+    - **Provided by user** With this strategy, the user will have free access to write the desired username when creating a connection.
     >[!TIP]We suggest not using the user-provided username if snowflake public key is automatically added to Snowflake by datacoves like:
     > `_alter user \<some_user\> set rsa_public_kay = '\<some_key\>';`
+      
+      ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
 
-    - **Inferred from user's email** Defines the username field as read-only, pre-populating it with the user's email username (what comes before @domain.com)
+    - **Username from email** Defines the username field as read-only, pre-populating it with the user's email username (what comes before @domain.com)
       ![Inferred from email](./assets/connectiontemplates_inferred_from_email.png)
-    - **Inferred from user info using a custom template** With this last approach, you can choose a template from which the username will be generated. If selected a new field will appear to select one of those.
+    - **Custom template** With this last approach, you can choose a template from which the username will be generated. If selected a new field will appear to select one of those.
       ![Inferred from template](./assets/connectiontemplates_inferred_from_template.png)
       By default we support `Connection username for admins` template. With this template, the username will see `admin_{{username}}` when creating a DB connection. Contact us to create a custom template for your account if you have different requirements.
       ![Username from template](./assets/connectiontemplates_username_from_template.png)
 
+ >[!NOTE] These templates above are to simplify the setup experience and minimize errors, however the user field is simply the the username for your data warehouse.
 - **Project** This defines the Datacoves project that should be associated with this connection template
 - **Type** Defines the data warehouse provider so that users are presented the appropriate fields when entering their credentials.
 - **Provider connection details** Based on the Provider Type selected, available default parameters will be displayed.
