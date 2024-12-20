@@ -1,25 +1,53 @@
 # How to send email notifications on DAG's failure
 
-Getting notifications when there is a failure is critical for data teams and Airflow allows multiple ways to keep the users informed about the status of a DAG. You can learn more about them [here](https://www.bhavaniravi.com/apache-airflow/sending-emails-from-airflow) and [here](https://naiveskill.com/send-email-from-airflow/).
+Getting notifications when there is a failure is critical for data teams and Airflow allows multiple ways to keep users informed about the status of a DAG.
 
-We're going to explain how you can send an email notification on DAG's failure. By the end of this page you will have: 
-- Created an smtp Integration for Airflow
-- Added the integration to your environment
-- Created a DAG that makes use of the notification integration
+This page will show you how to:
+- Use the Datacoves default SMTP 
+- Add the integration to your environment
+- Create a custom smtp Integration for Airflow (optional)
+- Create a DAG that makes use of the notification integration
+- Bonus: DRY default_args
 
-By completing these steps you will be able to receive notifications upon DAG failure. 
+After completing these steps you will be able to receive email notifications upon DAG failure. 
 
 Let's get started! 
 
-## Create a new Integration
+## Configure SMTP integration in Environment
 
+Datacoves provides a **pre-configured SMTP** which will send out a failure email from `hey@datacoves.com` to email recipients you configure in your DAGs.
+With this default SMTP all you have to do is configure the SMTP in your environment.
+
+- First, go to the `Environments` admin.
+
+![Environments admin](./assets/menu_environments.gif)
+
+- Click the Edit icon for the environment containing the Airflow service you want to configure, then navigate to the `Integrations` tab.
+
+![Edit Icon](assets/environment_edit_icon.jpg)
+
+- Click on the `+ Add new integration` button. 
+
+![Edit integrations](./assets/edit_integrations.png)
+
+- Select `Datacoves_SMTP`. In the second dropdown select `Airflow` as service. 
+
+![Add default integration](assets/add_smtp_datacoves.jpg)
+
+- Click `Save Changes`. 
+
+Viola!🎉 The Airflow service will be restarted shortly and will now include the SMTP configuration required to send emails.
+
+>[!NOTE] **Getting Started Guide:** If you are making your way through our [getting started guide](/getting-started/Admin/README.md), please continue on to [developing DAGs](getting-started/Admin/creating-airflow-dags.md).
+
+## Set up a custom SMTP (Optional)
+
+If you do not wish to use the default SMTP, you can configure your own.
 First, create a new integration of type `SMTP` by navigating to the Integrations Admin.
 
 ![Integrations Admin](./assets/menu_integrations.gif)
 
-Click on the `+ New integration` button.
-
-## Fill out the following fields
+Click on the `+ New integration` button. **Fill out the fields as seen below:**
 
 - **Name:** Provide a descriptive name such as `Mail Service `
 
@@ -43,23 +71,20 @@ Click `Save Changes`
 
 Once you created the `SMTP` integration, it's time to add it to the Airflow service in an environment.
 
-First, go to the `Environments` admin.
+- First, go to the `Environments` admin.
 
 ![Environments admin](./assets/menu_environments.gif)
 
-Select the Edit icon for the environment that has the Airflow service you want to configure, and then click on the `Integrations` tab.
+- Select the Edit icon for the environment that has the Airflow service you want to configure, and then click on the `Integrations` tab.
 
 ![Edit integrations](./assets/edit_integrations.png)
 
-Click on the `+ Add new integration` button, and then, select the integration you created previously. In the second dropdown select `Airflow` as service.
+- Click on the `+ Add new integration` button, and then, select the integration you created previously. 
+- In the second dropdown select `Airflow` as service.
 
 ![Add integration](./assets/add_smtp_integration.png)
 
-Click `Save Changes`. 
-
-The Airflow service will be restarted shortly and will now include the SMTP configuration required to send emails.
-
->[!NOTE]You can skip this next step if going through the getting started guides since we will be completing the next step of the getting started guide: Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md).
+- Click `Save Changes`. 
 
 ## Implement in a DAG
 
@@ -81,9 +106,10 @@ from operators.datacoves.dbt import DatacovesDbtOperator
 @dag(
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez",
-        "email": "gomezn@example.com",
+        "owner": "Noel Gomez", # Replace with your name 
+        "email": ["gomezn@example.com", "mayra@example.com", "walter@example.com"] # Replace with your emails
         "email_on_failure": True,
+        "email_on_retry": False,
     },
     description="Sample DAG for dbt build",
     schedule="0 0 1 */12 *",
@@ -111,8 +137,12 @@ default_args:
   start_date: 2023-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
-  email: gomezn@example.com
+  email: 
+    - gomezn@example.com
+    - mayra@example.com 
+    - walter@example.com
   email_on_failure: true
+  email_on_retry: false
   catchup: false
 
 nodes:
@@ -122,6 +152,45 @@ nodes:
     bash_command: "dbt run -s personal_loans" # Replace the name of the model
 ```
 
-## Getting Started Next Steps 
+## DRY default_args 
+>[!TIP]We recommend placing your default_default args in its own file and importing it for better reusability. In the example below we created a file inside of orchestrate/utils/
 
-Start [developing DAGs](getting-started/Admin/creating-airflow-dags.md)
+```python
+# orchestrate/utils/default_args.py
+from datetime import datetime, timedelta
+
+default_args = {
+    'owner': 'mayra@example.com',
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 3,
+    'retry_delay': timedelta(minutes=5),
+    'start_date': datetime(2023, 12, 1),
+}
+
+```
+
+import the default_args
+```python
+from airflow.decorators import dag
+from orchestrate.utils.default_args import default_args # Import default args
+from operators.datacoves.dbt import DatacovesDbtOperator
+
+
+@dag(
+    default_args=default_args, # use default args from import
+    description="Daily dbt run",
+    schedule="0 12 * * *",
+    tags=["version_1"],
+    catchup=False,
+
+)
+def default_args_dag():
+    run_dbt = DatacovesDbtOperator(
+        task_id="run_dbt", bash_command="dbt run -s country_codes"
+    )
+
+
+dag = default_args_dag()
+
+```
