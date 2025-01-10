@@ -12,7 +12,9 @@ This guide covers essential Git commands for managing branches and making change
 
 - **Create a new branch - `git checkout -b <new_branch> <reference_branch>`:** Create a new branch and switch to it with a single command.
 
-- **Switch branches - `git checkout <branch-name>`:** Switch between existing branches in your repository.
+- **Switch branches - `git checkout <branch-name>`:** Allows you to navigate between branches or commits, restore files, and create new branches.
+  
+- **Switch branches (cont) - `git switch <branch-name>`:** A simpler command to switch between branches.
 
 - **Stash changes - `git stash`:** Temporarily save your changes without committing them.
 
