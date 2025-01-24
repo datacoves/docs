@@ -107,6 +107,7 @@
     - [Grafana](/reference/metrics-and-logs/grafana.md)
   - [Security](/reference/security/)
   - [VS Code](/reference/vscode/)
+    - [CSVs](/reference/vscode/csv-in-datacoves.md)
     - [Datacoves Environment Variables](/reference/vscode/datacoves-env-vars.md)
 - [Tutorials](/tutorials/)
 - **Platform**
