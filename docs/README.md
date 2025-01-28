@@ -2,6 +2,14 @@
 
 Our Mission is to be the best solution for enterprises to run  **dbt Core** by offering a simple platform that reduces **time to market** while handling the complexities of a large enterprise.
 
+### Lower your Total Cost of Ownership by 50% 
+Start a trial account and see how Datacoves can lower accelerate your time to market.
+Set up a Datacoves Trial account with the help of our team.
+
+[Start your trial journey](https://datacoves.com/discover-datacoves)
+
+## Our Docs
+
 This documentation is divided in 4 parts following the structure is inspired by [Divio’s documentation system](https://documentation.divio.com/).
 
 - **How to guides** to help you accomplish a given task and assume you have some basic understanding
