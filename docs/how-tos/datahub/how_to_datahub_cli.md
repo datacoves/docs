@@ -54,10 +54,6 @@ Next, you will be prompted to provide a DataHub access token to authenticate you
 
 7. Go back to the tab were you have VS Code terminal waiting for your input and paste the copied token. Press Enter.
 
-8. You can validate that the connection was correctly configured by running `datahub check server-config`:
-
-![DataHub check](assets/datahub-check.png)
-
 ## Useful commands
 
 Once you successfully configured DataHub CLI, you can run `datahub` on the terminal and explore the different options the tool has to offer.
