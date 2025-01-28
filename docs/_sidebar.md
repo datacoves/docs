@@ -109,6 +109,7 @@
   - [VS Code](/reference/vscode/)
     - [CSVs](/reference/vscode/csv-in-datacoves.md)
     - [Datacoves Environment Variables](/reference/vscode/datacoves-env-vars.md)
+    - [VS Code Tips](/reference/vscode/tips.md)
 - [Tutorials](/tutorials/)
 - **Platform**
 - [Status Tracker](https://datacoves.statuspage.io/)
