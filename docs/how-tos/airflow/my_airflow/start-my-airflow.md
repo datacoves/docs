@@ -22,7 +22,7 @@ Thats it, our My Airflow is up and ready to use! 🎉
 
 ## Using My Airflow to Develop DAGs
 
->[!NOTE] You must add or import and connections and variables from Team Airflow. You can do this easily using `datacoves my import`. For more information follow [this documentation](/how-tos/airflow/my_airflow/my-import.md).
+>[!NOTE] You must add or import connections and variables from Team Airflow. You can do this easily using `datacoves my import`. For more information follow [this documentation](/how-tos/airflow/my_airflow/my-import.md).
 
 
 Developing your DAG using My Airflow is quick and easy. 
