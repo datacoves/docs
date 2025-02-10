@@ -99,6 +99,7 @@
   - [Airflow](/reference/airflow/)
     - [Airflow Config Defaults](/reference/airflow/airflow-config-defaults.md)
     - [DAG Generators](/reference/airflow/dag-generators.md)
+    - [Datacoves Airflow Decorators](/reference/airflow/datacoves-decorators.md)
     - [Datacoves Operators](/reference/airflow/datacoves-operator.md)
   - [Datacoves](/reference/datacoves/)
     - [Versioning](/reference/datacoves/versioning.md)
