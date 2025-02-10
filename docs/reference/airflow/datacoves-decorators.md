@@ -38,7 +38,7 @@ This custom decorator is an extension of the @task decorator and simplifies runn
 - It runs dbt commands inside the dbt Project Root, not the Repository root.
 
 **Params:**
-- **connection_id:** This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
+- `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
 
 ```python
 def my_dbt_dag():
@@ -57,13 +57,13 @@ The example above is using the service connection `main`
 >[!NOTE] The following Airflow tables are synced by default: ab_permission, ab_role, ab_user, dag, dag_run, dag_tag, import_error, job, task_fail, task_instance. 
 
 **Params:**
-- **db_type** The data warehouse you are using. Currently supports `redshift` or `snowflake`.
-- **destination_schema** The destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: `airflow-{datacoves environment slug}` for example `airflow-qwe123`.
+- `db_type`: The data warehouse you are using. Currently supports `redshift` or `snowflake`.
+- `destination_schema`: The destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: `airflow-{datacoves environment slug}` for example `airflow-qwe123`.
 - **Connection** There are currently two service credential delivery methods for Airflow. You may only use one or the other.
-  - **airflow_connection_name** The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
-  - **service_connection_name** The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`. 
-- **additional_tables** A list of additional tables you would want to add to the default set.
-- **tables** A list of tables to override the default ones from above. Warning: An empty list [] will perform a full-database sync.
+  - `airflow_connection_name`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
+  - `service_connection_name`: The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`. 
+- `additional_tables`: A list of additional tables you would want to add to the default set.
+- `tables`: A list of tables to override the default ones from above. Warning: An empty list [] will perform a full-database sync.
 
 ```python
 def airflow_data_sync():

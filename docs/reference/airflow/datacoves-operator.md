@@ -40,3 +40,23 @@ Params:
 
 - `bash_command`: command to run
 - `project_dir` (optional): relative path from repo root to a specific dbt project.
+
+## Data Sync Operators
+
+To synchronize the Airflow database, we can use an Airflow DAG with one of the Airflow operators below.
+
+Datacoves has the following Airflow Data Sync Operators: `DatacovesDataSyncOperatorSnowflake` and `DatacovesDataSyncOperatorRedshift`.
+
+Both of them receive the same arguments, so we won't differentiate examples. Select the appropriate provider for your Data Warehouse.
+
+> [!NOTE]To avoid synchronizing unnecessary Airflow tables, the following Airflow tables are synced by default: `ab_permission`, `ab_role`, `ab_user`, `dag`, `dag_run`, `dag_tag`, `import_error`, `job`, `task_fail`, `task_instance`
+
+These operators can receive:
+
+- `tables`: a list of tables to override the default ones. _Warning:_ An empty list `[]` will perform a full-database sync.
+- `additional_tables`: a list of additional tables you would want to add to the default set.
+- `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example airflow-qwe123
+- **Connection** There are currently two service credential delivery methods for Airflow. You may only use one or the other.
+  - `airflow_connection_name`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
+  - `service_connection_name` The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`.
+  
