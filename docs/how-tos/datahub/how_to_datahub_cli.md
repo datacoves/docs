@@ -22,7 +22,7 @@ datahub init
  http://{environment-slug}-datahub-datahub-gms:8080
  ```
 
- >[!TIP] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`
+ >[!TIP] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`. Cross environment access is available. ie) You can access Datahub in in Prod from the Dev environment. Just be sure to use the environment slug where Datahub is located.
 
 ![Environment slug](assets/datahub-env-slug.png)
 
