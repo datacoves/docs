@@ -19,7 +19,7 @@ These operators can receive:
 - `tables`: a list of tables to override the default ones. _Warning:_ An empty list `[]` will perform a full-database sync.
 - `additional_tables`: a list of additional tables you would want to add to the default set.
 - `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example airflow-qwe123
-- `service_connection_name`: the name of your Airflow Service Connection in Datacoves that will be used by the operator. By default it looks for a connection named `load_airflow`.
+- `service_connection_name`: the name of your Airflow Service Connection in Datacoves that will be used by the operator. 
   
 ![airflow_load](assets/service_connection_airflow_raw.png)
 ## Example DAG
