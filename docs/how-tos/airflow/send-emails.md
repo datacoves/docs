@@ -98,16 +98,13 @@ Simply provide a `default_args` dict like so:
 
 ```python
 import datetime
-
-from airflow.decorators import dag
-from operators.datacoves.dbt import DatacovesDbtOperator
-
+from airflow.decorators import dag, task
 
 @dag(
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez", # Replace with your name 
-        "email": ["gomezn@example.com", "mayra@example.com", "walter@example.com"] # Replace with your emails
+        "owner": "Noel Gomez",  # Replace with your name
+        "email": ["gomezn@example.com", "mayra@example.com", "walter@example.com"], 
         "email_on_failure": True,
         "email_on_retry": False,
     },
@@ -117,11 +114,12 @@ from operators.datacoves.dbt import DatacovesDbtOperator
     catchup=False,
 )
 def dbt_run():
-    build_dbt = DatacovesDbtOperator(
-        task_id="build_dbt",
-        bash_command="dbt run -s personal_loans",
-    )
 
+    @task.datacoves_dbt(connection_id="main")  
+    def build_dbt():
+        return "dbt run -s personal_loans"
+
+    build_dbt()  
 
 dag = dbt_run()
 ```
@@ -172,25 +170,23 @@ default_args = {
 
 import the default_args
 ```python
-from airflow.decorators import dag
-from orchestrate.utils.default_args import default_args # Import default args
-from operators.datacoves.dbt import DatacovesDbtOperator
-
+from airflow.decorators import dag, task
+from orchestrate.utils.default_args import default_args  # Import default args
 
 @dag(
-    default_args=default_args, # use default args from import
+    default_args=default_args,  # Use imported default args
     description="Daily dbt run",
     schedule="0 12 * * *",
     tags=["version_1"],
     catchup=False,
-
 )
 def default_args_dag():
-    run_dbt = DatacovesDbtOperator(
-        task_id="run_dbt", bash_command="dbt run -s country_codes"
-    )
 
+    @task.datacoves_dbt(connection_id="main")  
+    def run_dbt():
+        return "dbt run -s country_codes"
+
+    run_dbt()  
 
 dag = default_args_dag()
-
 ```

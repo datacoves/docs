@@ -175,13 +175,12 @@ if __name__ == '__main__':
 ### Step 4: Call the script in your DAG
 
 ```python
-""" 
-This is a Kubernetes execution test dag
+"""
+This is a Kubernetes execution test DAG using the new task decorators.
 """
 
-from airflow.decorators import dag
-from operators.datacoves.bash import DatacovesBashOperator
-from datetime import datetime, timedelta
+from airflow.decorators import dag, task
+from pendulum import datetime
 from airflow.models import Connection
 from airflow import settings
 
@@ -193,9 +192,7 @@ def get_connection_string(conn_id):
     else:
         return None
 
-kube_connection = get_connection_string("<YOUR_KUBERNETES_CONNECTION_ID>") # Name of your connection ID you set above
-
-
+kube_connection = get_connection_string("<YOUR_KUBERNETES_CONNECTION_ID>")  # Connection ID
 
 default_args = {
     'owner': 'airflow',
@@ -207,6 +204,7 @@ default_args = {
     'email_on_failure': True,
     'email_on_retry': False
 }
+
 @dag(
     dag_id="Kubernetes_execution_dag",
     schedule_interval=None,  # This DAG runs manually or can be triggered
@@ -216,19 +214,18 @@ default_args = {
 )
 def bash_command_dag():
 
-    bash = DatacovesBashOperator(
-        task_id="Execute_Kubernetes_Python_Job",
-        bash_command = f"python orchestrate/python_scripts/kubernetes_job_executer.py", # Path to your python file you created above
-        retries=0,
-        env={
-            'kube_conn': kube_connection,
-            'kube_namespace': '<YOUR_NAMESPACE>',
-            'kube_cronjob_name': '<YOUR_CRONJOB_NAME>',
-            'kube_context': '<YOUR_KUBE_CONTEXT>'
+    @task.datacoves_bash(env={
+        'kube_conn': kube_connection,
+        'kube_namespace': '<YOUR_NAMESPACE>',
+        'kube_cronjob_name': '<YOUR_CRONJOB_NAME>',
+        'kube_context': '<YOUR_KUBE_CONTEXT>'
+    })
+    def execute_kubernetes_python_job():
+        return "python orchestrate/python_scripts/kubernetes_job_executer.py"
 
-            } # These will be used in your script 
-    )
-    bash
+    execute_kubernetes_python_job()
+
 # Instantiate the DAG
 bash_command_dag_instance = bash_command_dag()
+
 ```

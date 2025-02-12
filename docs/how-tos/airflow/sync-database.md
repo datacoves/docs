@@ -18,33 +18,43 @@ These operators can receive:
 
 - `tables`: a list of tables to override the default ones. _Warning:_ An empty list `[]` will perform a full-database sync.
 - `additional_tables`: a list of additional tables you would want to add to the default set.
-- `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example airflow-qwe123
+- `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example `airflow-qwe123`
 - `service_connection_name`: the name of your Airflow Service Connection in Datacoves that will be used by the operator. 
   
 ![airflow_load](assets/service_connection_airflow_raw.png)
 ## Example DAG
 
 ```python
-from airflow.decorators import dag
-from operators.datacoves.data_sync import DatacovesDataSyncOperatorSnowflake
+import datetime
 
+from airflow.decorators import dag, task
 
 @dag(
-    default_args={"start_date": "2021-01"},
-    description="sync_airflow_db",
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Bruno",
+        "email": "bruno@example.com",
+        "email_on_failure": False,
+        "retries": 3
+    },
+    description="Sample DAG for dbt build",
     schedule="0 0 1 */12 *",
-    tags=["version_1"],
+    tags=["extract_and_load"],
     catchup=False,
 )
-def snowflake_airflow_sync():
-    airflow_sync = DatacovesDataSyncOperatorSnowflake(
-        additional_tables=["log", "log_template"],
-        destination_schema="airflow-tables",
-        service_connection_name="raw", 
+def airflow_data_sync():
+    @task.datacoves_airflow_db_sync(
+        db_type="snowflake",
+        destination_schema="airflow_dev",
+        service_connection_name="snowflake_main",
+        # additional_tables=["additional_table_1", "additional_table_2"],
     )
+    def sync_airflow_db():
+        pass
 
+    sync_airflow_db()
 
-dag = snowflake_airflow_sync()
+dag = airflow_data_sync()
 ```
 
 > [!NOTE]The example DAG above uses the service connection `raw`

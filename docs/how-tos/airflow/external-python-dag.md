@@ -30,17 +30,13 @@ print_sample_dataframe()
 ## orchestrate/dags
 Create a DAG in the `dags` folder.
 
-To run the custom script from an Airflow DAG, you will use the `DatacovesBashOperator` as seen in the `python_task` below.
+To run the custom script from an Airflow DAG, you will use the `@task.datacoves_bash` decorator as seen in the `python_task` below.
 
->[!TIP]See [Datacoves Operators](reference/airflow/datacoves-operator.md) documentation for more information on the Datacoves Airflow Operators.
+>[!TIP]See [Datacoves Decorators](reference/airflow/datacoves-decorators.md) documentation for more information on the Datacoves Airflow Decorators.
 
 ```python
-from airflow.decorators import dag
-from operators.datacoves.bash import DatacovesBashOperator
+from airflow.decorators import dag, task
 from pendulum import datetime
-
-# Only here for reference, this is automatically activated by Datacoves Operator
-DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
 
 @dag(
     default_args={
@@ -51,23 +47,16 @@ DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
     },
     catchup=False,
     tags=["version_6"],
-    description="Datacoves Sample dag",
-    # This is a regular CRON schedule. Helpful resources
-    # https://cron-ai.vercel.app/
-    # https://crontab.guru/
+    description="Datacoves Sample DAG",
     schedule="0 0 1 */12 *",
 )
 def datacoves_sample_dag():
+    
+    @task.datacoves_bash()
+    def run_python_script():
+        return "python orchestrate/python_scripts/sample_script.py"
 
-    # This is calling an external Python file after activating the venv
-    # use this instead of the Airflow Python Operator
-    python_task = DatacovesBashOperator(
-        task_id = "run_python_script",
-        # Virtual Environment is automatically activated. Can be set to False to access Airflow environment variables.
-        # activate_venv=True,
-        bash_command = "python orchestrate/python_scripts/sample_script.py"
-    )
+    run_python_script()
 
-# Invoke Dag
-dag = datacoves_sample_dag()
+datacoves_sample_dag()
 ```
