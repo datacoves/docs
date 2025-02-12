@@ -59,7 +59,6 @@
     - [Database Errors](/how-tos/dbt/database-errors)
     - [Dependency Errors](/how-tos/dbt/dependency-errors)
     - [Runtime Errors](/how-tos/dbt/runtime-errors)
-
   - [Git](/how-tos/git/)
     - [SSH Keys configuration](/how-tos/git/ssh-keys)
   - [Snowflake](/how-tos/snowflake/)
