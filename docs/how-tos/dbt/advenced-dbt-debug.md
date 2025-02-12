@@ -1,4 +1,4 @@
-# How to debug dbt models and macros
+# How to Debug dbt Models and Macros
 
 This guide covers advanced debugging techniques for dbt models, providing tools and strategies to diagnose and fix issues in your dbt projects.
 
@@ -72,7 +72,7 @@ Insert breakpoints in your code with `debug()`:
 
 While `debug()` is not available in dbt Cloud, you can use it in Datacoves since you will have full access to the terminal. You can learn more about using `debug()` in [this article](https://docs.getdbt.com/blog/guide-to-jinja-debug)
 
-You will need to set the following environment variable and install ipdb
+You will need to install ipdbset and set the following environment variable.
 ```bash
 pip install ipdb
 export DBT_MACRO_DEBUGGING=1
@@ -81,7 +81,7 @@ export DBT_MACRO_DEBUGGING=1
 When the `debug()` macro is hit:
 1. Execution pauses
 2. Debugger opens
-3. You can imspect variables and other state
+3. You can inspect variables and other state
 
 ## Advanced Model Debugging Techniques
 

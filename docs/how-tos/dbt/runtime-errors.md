@@ -62,7 +62,7 @@ Confirm your database user has the necessary permissions:
 
 Sometimes clearing the dbt cache can resolve mysterious runtime issues:
 
-1. Run `dbt clean` and assure that the `target/` and `dbt_packages` folders are deleted
+1. Run `dbt clean`, which will remove the `target/` and `dbt_packages/` directories, then reinstall packages.
 2. Reinstall packages with `dbt deps`
 3. Retry the command that showed the error 
 
@@ -79,7 +79,7 @@ If you're having problems installing dbt packages:
    ```
 2. Verify package compatibility with the dbt version you are using
 3. Look for conflicting package dependencies
-4. Try removing and reinstalling packages:
+4. Remove and reinstall packages to resolve potential conflicts.
    ```bash
    dbt clean
    dbt deps
@@ -96,7 +96,7 @@ If you're having problems installing dbt packages:
 | `Permission denied` | Insufficient privileges | Review and update user permissions in the database |
 | `Package not found` | Package installation issues | Check package.yml and run dbt deps |
 
-### CI/CD Environment Issies
+### CI/CD Environment Issues
 - Ensure secrets are properly configured
 - Verify service account permissions
 - Confirm CI/CD configuration

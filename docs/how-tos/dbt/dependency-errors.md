@@ -22,7 +22,8 @@ Model A → Model B → Model C → Model A
 This creates an impossible situation where each model needs the others to be built first.
 It also violates a key tenant of dbt which leverages a DAG(Directed Acyclic Graph), acyclic meaning that there are no cycles in the graph.
 
-When this happens, dbt will show an error
+When this occurs, dbt will raise an error such as:
+
 ```bash
 RuntimeError: Found a cycle: model.balboa.my_model --> model.balboa.some_model.v2
 ```

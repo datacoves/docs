@@ -10,7 +10,7 @@ Database errors occur when dbt tries to execute SQL that your database cannot pr
 - Data type mismatches
 - Query timeout issues
 - Resource constraints
-- Permissions problems
+- Permissions issues
 
 ## Solution Steps
 
@@ -91,7 +91,7 @@ dbt compile --inline '{{ ref("us_population") }}' --state logs --defer
 5. Implement appropriate error handling
 6. Use incremental processing for large datasets
 7. Add dbt data and unit tests
-8. Use your data warehouse query profiler or explain query
+8. Use your data warehouse query profiler or `EXPLAIN` query
 9. Monitor query performance 
 
 Resources:
@@ -101,7 +101,7 @@ See this article on using the [Snowflake Query Profiler](https://select.dev/post
 
 1. Set up monitoring and alerting
 2. Implement CI/CD checks
-3. Implelemt regular performance reviews
+3. Implement regular performance reviews
 4. Implement Documentation policies and governance
 5. Train team on database best practices
 

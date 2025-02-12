@@ -98,7 +98,7 @@ When you have a list of items, they start with `-`. That is why `name` in both m
 
 3. Check for special character handling
 
-Check that you don't have strange characters in the yml file. This can happen if oyu copy/paste text from another source such as an MS Word file.
+Check that you don't have strange characters in the yml file. This can happen if you copy/paste text from another source such as an MS Word file.
 
 If you have a long description, you can also make it a multi line string using `>-`. Note: adding the `-` is preferable because without it, the docs would compile with an extra new line at the end of the text block. 
 
