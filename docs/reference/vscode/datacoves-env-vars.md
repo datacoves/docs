@@ -23,39 +23,3 @@ env | grep DATACOVES | sort
 
 **DATACOVES__USER_EMAIL**: Email associated with your account.
 
-## Warehouse Environment Variables
-These variables contain sensitive credentials to your warehouse and can be used in your profiles.yml file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse.
-### Snowflake Environment Variables
-| Variables                        |
-|----------------------------------|
-| `DATACOVES__MAIN__ACCOUNT`       |
-| `DATACOVES__MAIN__DATABASE`      |
-| `DATACOVES__MAIN__SCHEMA`        |
-| `DATACOVES__MAIN__USER`          |
-| `DATACOVES__MAIN__PASSWORD`      |
-| `DATACOVES__MAIN__ROLE`          |
-| `DATACOVES__MAIN__WAREHOUSE`     |
-
-### Redshift Environment Variables
-| Variables                        |
-|----------------------------------|
-| `DATACOVES__MAIN__HOST`          |
-| `DATACOVES__MAIN__USER`          |
-| `DATACOVES__MAIN__PASSWORD`      |
-| `DATACOVES__MAIN__DATABASE`      |
-
-### Big Query Environment Variables
-| Variables                        |
-|----------------------------------|
-| `DATACOVES__MAIN__DATASET`       |
-| `DATACOVES__MAIN__KEYFILE_JSON`  |
-
-### Databricks Environment Variables
-| Variables                        |
-|----------------------------------|
-| `DATACOVES__MAIN__HOST`          |
-| `DATACOVES__MAIN__SCHEMA`        |
-| `DATACOVES__MAIN__HTTP_PATH`     |
-| `DATACOVES__MAIN__TOKEN`         |
-| `DATACOVES__MAIN__TYPE`          |
-
