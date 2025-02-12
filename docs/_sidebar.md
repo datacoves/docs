@@ -30,6 +30,7 @@
     - [DAGs - Use Variables and Connections](/how-tos/airflow/use-variables-and-connections.md)
     - [Git - Get Current Branch Name from a DAG Task](/how-tos/airflow/get-current-branch-name.md)
     - [My Airflow](/how-tos/airflow/my_airflow/)
+      - [Migrating from Environment Service Connections](/how-tos/airflow/my_airflow/migrating-service-connections.md)
       - [My Import](/how-tos/airflow/my_airflow/my-import.md)
       - [Use My Airflow](/how-tos/airflow/my_airflow/start-my-airflow.md)
     - [Notifications - Send Emails](/how-tos/airflow/send-emails.md)
