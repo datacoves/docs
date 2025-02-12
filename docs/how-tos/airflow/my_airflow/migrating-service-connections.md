@@ -5,19 +5,19 @@ To leverage **My Airflow** and **Datacoves Decorators**, you'll need to update y
 Previously, Datacoves injected environment variables into Airflow when a service connection was created. While this method is still supported, the new and recommended approach is to add credentials directly to Airflow as a connection. This transition enables seamless integration with [Datacoves Decorators](/reference/airflow/datacoves-decorators.md) and **My Airflow**.
 
 
-## Step 1: Update Your Service Connection
+### Step 1: Update Your Service Connection
 
 Edit an existing or create a new [service connection](/how-tos/datacoves/how_to_service_connections.md), ensuring that **`Airflow Connection`** is selected as the **Delivery Mode**.
 
-## Step 2: Start Your My Airflow Instance
+### Step 2: Start Your My Airflow Instance
 
 Launch your [My Airflow](/how-tos/airflow/my_airflow/start-my-airflow.md) instance to begin the migration process.
 
-## Step 3: Import Variables and Connections
+### Step 3: Import Variables and Connections
 
 Run the [My Import](/how-tos/airflow/my_airflow/my-import.md) process to import variables and connections from **Team Airflow** to **My Airflow**. Note that secret values will not be automatically transferred and must be manually provided via the command line.
 
-## Step 4: Refactor Your DAGs
+### Step 4: Refactor Your DAGs
 
 Update your DAGs by replacing [Datacoves Operators](/reference/airflow/datacoves-operator.md) with [Datacoves Decorators](/reference/airflow/datacoves-decorators.md) to align with the new service connection structure. 
 
