@@ -20,6 +20,38 @@ Params:
 - `cwd` (optional): relative path from repo root where to run command from
 - `activate_venv` (optional): whether to activate the Datacoves Airflow virtualenv or not
 
+```python
+"""## Simple Datacoves DAG
+This DAG executes a Python script using DatacovesBashOperator.
+"""
+
+from airflow.decorators import dag
+from operators.datacoves.bash import DatacovesBashOperator
+from pendulum import datetime
+
+@dag(
+    doc_md=__doc__,
+    default_args={
+        "start_date": datetime(2022, 10, 10),
+        "owner": "Noel Gomez",
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
+        "retries": 3,
+    },
+    catchup=False,
+    tags=["python_script"],
+    description="Simple Datacoves DAG",
+    schedule="0 0 1 */12 *",
+)
+def simple_datacoves_dag():
+    run_python_script = DatacovesBashOperator(
+        task_id="run_python_script",
+        bash_command="python orchestrate/python_scripts/sample_script.py",
+    )
+
+simple_datacoves_dag()
+```
+
 ## Datacoves dbt Operator
 
 >[!WARNING]If you have either `dbt_modules` or `dbt_packages` folders in your project repo we won't run `dbt deps`.
@@ -41,6 +73,34 @@ Params:
 - `bash_command`: command to run
 - `project_dir` (optional): relative path from repo root to a specific dbt project.
 
+```python
+import datetime
+
+from airflow.decorators import dag
+from operators.datacoves.dbt import DatacovesDbtOperator
+
+
+@dag(
+    default_args={
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "owner": "Noel Gomez",
+        "email": "gomezn@example.com",
+        "email_on_failure": True,
+    },
+    description="Sample DAG for dbt build",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_2"],
+    catchup=False,
+)
+def yaml_dbt_dag():
+    run_dbt = DatacovesDbtOperator(
+        task_id="run_dbt", bash_command="dbt run -s personal_loans"
+    )
+
+
+dag = yaml_dbt_dag()
+```
+
 ## Data Sync Operators
 
 To synchronize the Airflow database, we can use an Airflow DAG with one of the Airflow operators below.
@@ -59,4 +119,31 @@ These operators can receive:
 - **Connection** There are currently two service credential delivery methods for Airflow. You may only use one or the other.
   - `airflow_connection_name`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
   - `service_connection_name` The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`.
-  
+
+```python
+"""## Datacoves Airflow db Sync Sample DAG
+This DAG is a sample using the DatacovesDataSyncOperatorSnowflake Airflow Operator
+to sync the Airflow Database to a target db
+"""
+
+
+from airflow.decorators import dag
+from operators.datacoves.data_sync import DatacovesDataSyncOperatorSnowflake
+
+@dag(
+    default_args={"start_date": "2021-01"},
+    description="sync_data_script",
+    schedule_interval="0 0 1 */12 *",
+    tags=["version_3"],
+    catchup=False,
+)
+def sync_airflow_db():
+    # service connection name default is 'airflow_db_load'.
+    # Destination type default is 'snowflake' (and the only one supported for now)
+    sync_data_script = DatacovesDataSyncOperatorSnowflake(
+        service_connection_name="airflow_db_load",  # this can be omitted or changed to another service connection name.
+    )
+
+dag = sync_airflow_db()
+dag.doc_md = __doc__
+```
