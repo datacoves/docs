@@ -60,6 +60,8 @@
     - [Releasing a new feature](/how-tos/dataops/releasing-new-feature)
   - [Git](/how-tos/git/)
     - [SSH Keys configuration](/how-tos/git/ssh-keys)
+  - [Metrics & Logs](/how-tos/metrics-and-logs/)
+    - [Git Sync/S3 Failures](/how-tos/metrics-and-logs/view-failed-git-sync.md)
   - [Snowflake](/how-tos/snowflake/)
     - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles)
   - [Superset](/how-tos/superset/)
