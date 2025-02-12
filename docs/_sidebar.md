@@ -27,6 +27,7 @@
     - [DAGs - Run Databricks Notebooks](/how-tos/airflow/run-databricks-notebook.md)
     - [DAGs - Run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs.md)
     - [DAGs - Test DAGs](/how-tos/airflow/test-dags.md)
+    - [DAGs - Trigger External Kubernetes Job](/how-tos/airflow/trigger-kubernetes-job.md)
     - [DAGs - Use Variables and Connections](/how-tos/airflow/use-variables-and-connections.md)
     - [Git - Get Current Branch Name from a DAG Task](/how-tos/airflow/get-current-branch-name.md)
     - [My Airflow](/how-tos/airflow/my_airflow/)
