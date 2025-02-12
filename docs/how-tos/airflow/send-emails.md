@@ -16,7 +16,7 @@ Let's get started!
 ## Configure SMTP integration in Environment
 
 Datacoves provides a **pre-configured SMTP** which will send out a failure email from `hey@datacoves.com` to email recipients you configure in your DAGs.
-With this default SMTP all you have to do is configure the SMTP in your environment.
+In Datacoves 3.3 and up, the Datacoves_SMTP will be automatically added to your environment upon creation. If you created your environment before Datacoves 3.3 follow these instructions to configure the default SMTP.
 
 - First, go to the `Environments` admin.
 
