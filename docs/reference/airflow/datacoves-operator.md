@@ -1,4 +1,5 @@
 # Datacoves Operators & Generators
+>[!NOTE] All operators use Datacoves Service connections with `Delivery Mode` set to `Environment Variables`
 
 When utilizing dbt-coves to generate DAGs, it's crucial to grasp the functionality of the two frequently used operators and their behind-the-scenes operations, enhancing your Airflow experience.
 
@@ -102,7 +103,6 @@ dag = yaml_dbt_dag()
 ```
 
 ## Data Sync Operators
-
 To synchronize the Airflow database, we can use an Airflow DAG with one of the Airflow operators below.
 
 Datacoves has the following Airflow Data Sync Operators: `DatacovesDataSyncOperatorSnowflake` and `DatacovesDataSyncOperatorRedshift`.
@@ -117,7 +117,6 @@ These operators can receive:
 - `additional_tables`: a list of additional tables you would want to add to the default set.
 - `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example airflow-qwe123
 - **Connection** There are currently two service credential delivery methods for Airflow. You may only use one or the other.
-  - `airflow_connection_name`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
   - `service_connection_name` The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`.
 
 ```python
