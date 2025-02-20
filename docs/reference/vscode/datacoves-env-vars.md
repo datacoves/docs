@@ -15,6 +15,14 @@ env | grep DATACOVES | sort
 
 **DATACOVES__AIRFLOW_DAGS_PATH**: Path to folder Airflow will look for DAGs. Set environment settings > Service Configurations > Python DAGs path.
 
+**DATACOVES__AIRFLOW_DAGS_YML_PATH**: Path to folder dbt-coves will look for yaml files to generate python DAGs.
+
+**DATACOVES__AIRFLOW_DBT_PROFILE_PATH**: Path to your profiles.yml 
+
+**DATACOVES__DATAHUB_HOST_NAME**: Host url for Datahub.
+
+**DATACOVES__DATAHUB_PORT**: Port for Datahub. 
+
 **DATACOVES__DBT_HOME**: Relative path to the folder where the dbt_project.yml file is located. Set in your environment settings > Service Configurations > dbt project path.
 
 **DATACOVES__REPOSITORY_CLONE**: true or false. Will be true when git repository is properly configured and tested in your user settings.
@@ -23,3 +31,14 @@ env | grep DATACOVES | sort
 
 **DATACOVES__USER_EMAIL**: Email associated with your account.
 
+
+
+
+
+
+
+
+
+
+
+ 
