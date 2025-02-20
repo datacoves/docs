@@ -15,7 +15,9 @@ Launch your [My Airflow](/how-tos/airflow/my_airflow/start-my-airflow.md) instan
 
 ### Step 3: Import Variables and Connections
 
-Run the [My Import](/how-tos/airflow/my_airflow/my-import.md) process to import variables and connections from **Team Airflow** to **My Airflow**. Note that secret values will not be automatically transferred and must be manually provided via the command line.
+Run the [My Import](/how-tos/airflow/my_airflow/my-import.md) process to import variables and connections from **Team Airflow** to **My Airflow**. 
+
+>[!Note] Secret values will not be automatically transferred and must be manually provided via the command line. `datacoves my import` only imports connections created by a Datacoves service connections, all other connections must be imported manually.
 
 ### Step 4: Refactor Your DAGs
 
