@@ -6,7 +6,7 @@ To mitigate such risks, a practical approach is to dynamically configure the sch
 
 Here is how to achieve this:
 
-**Step 1:** Create a `get_schedule.py` file inside of `orchestrate/dags/python_scripts`
+**Step 1:** Create a `get_schedule.py` file inside of `orchestrate/utils`
 
 **Step 2:** Paste the following code:
 Note: Find your environment slug [here](reference/admin-menu/environments.md)
@@ -42,13 +42,13 @@ def get_schedule(default_input: Union[str, None]) -> Union[str, None]:
     else:
         return default_input
 ```
-**Step 3:** In your DAG, import the `get_schedule` function using `from orchestrate.python_scripts.get_schedule import get_schedule` and pass in your desired schedule.
+**Step 3:** In your DAG, import the `get_schedule` function using `from orchestrate.utils.get_schedule import get_schedule` and pass in your desired schedule.
 
 ie) If your desired schedule is `'0 1 * * *'` then you will set `schedule=get_schedule('0 1 * * *')` as seen in the example below. 
 ```python
 from airflow.decorators import dag, task
 from pendulum import datetime
-from orchestrate.python_scripts.get_schedule import get_schedule
+from orchestrate.utils.get_schedule import get_schedule
 
 @dag(
     default_args={
