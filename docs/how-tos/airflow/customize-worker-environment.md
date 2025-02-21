@@ -14,10 +14,8 @@ eg) When writing your yaml, if you add the config under ` marketing_automation` 
 
 ```python
 import datetime
-
-from airflow.decorators import dag
+from airflow.decorators import dag, task
 from kubernetes.client import models as k8s
-from operators.datacoves.bash import DatacovesBashOperator
 
 TRANSFORM_CONFIG = {
     "pod_override": k8s.V1Pod(
@@ -32,7 +30,6 @@ TRANSFORM_CONFIG = {
     ),
 }
 
-
 @dag(
     default_args={
         "start_date": datetime.datetime(2023, 1, 1, 0, 0),
@@ -41,19 +38,19 @@ TRANSFORM_CONFIG = {
         "email_on_failure": True,
     },
     description="Sample DAG with custom image",
-    schedule_interval="0 0 1 */12 *",
+    schedule="0 0 1 */12 *",  # Using 'schedule' instead of deprecated 'schedule_interval'
     tags=["version_2"],
     catchup=False,
 )
 def yaml_teams_dag():
-    transform = DatacovesBashOperator(
-        task_id="transform",
-        bash_command="echo SUCCESS!",
-        executor_config=TRANSFORM_CONFIG,
-    )
 
+    @task.datacoves_bash(executor_config=TRANSFORM_CONFIG)
+    def transform():
+        return "echo SUCCESS!"
 
-dag = yaml_teams_dag()
+    transform()
+
+yaml_teams_dag()
 ```
 
 ### YAML version

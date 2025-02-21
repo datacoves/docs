@@ -14,17 +14,15 @@ Follow this guide on [How to set up Airflow](/how-tos/airflow/initial-setup)'s e
 
 ### Airbyte connection
 
-As Airflow will need to retrieve metadata from the Airbyte's server, you need to set up a connection in Airflow.
+As Airflow will need to retrieve metadata from the Airbyte's server, Datacoves automatically adds the connection in Airflow.
 
-A user with Airflow admin privileges must go to the Airflow `Admin -> Connections` menu.
+To view this connection, a user with Airflow admin privileges must go to the Airflow `Admin -> Connections` menu.
 
 ![Admin Connections](./assets/admin-connections.png)
 
-There they create a new connection using the following details:
+>[!NOTE] `host` is created using your environment (3 letters + 3 digits like xyz123) `<environment slug> + "-airbyte-airbyte-server-svc"`.
 
 ![Admin Connections](./assets/airbyte-connection-details.png)
-
-Where `host` is created using your environment (3 letters + 3 digits like xyz123) `<environment slug> + "-airbyte-airbyte-server-svc"`.
 
 ### Turn off Airbyte's scheduler
 
