@@ -19,6 +19,12 @@ Run the [My Import](/how-tos/airflow/my_airflow/my-import.md) process to import 
 
 >[!Note] Secret values will not be automatically transferred and must be manually provided via the command line. `datacoves my import` only imports connections created by a Datacoves service connections, all other connections must be imported manually.
 
+**When prompted to add secret values:**
+
+- enter the value
+- press enter
+- Press Ctrl-D
+
 ### Step 4: Refactor Your DAGs
 
 Update your DAGs by replacing [Datacoves Operators](/reference/airflow/datacoves-operator.md) with [Datacoves Decorators](/reference/airflow/datacoves-decorators.md) to align with the new service connection structure. 
