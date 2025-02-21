@@ -39,6 +39,7 @@ This custom decorator is an extension of the @task decorator and simplifies runn
 
 **Params:**
 - `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
+- `overrides`: Pass in a dictionary with override parameters such as warehouse, role, or database.
 
 ```python
 def my_dbt_dag():
@@ -49,7 +50,19 @@ def my_dbt_dag():
 dag = my_dbt_dag()
 ```
 
-The example above is using the service connection `main`
+Example with overrides.
+```python
+def my_dbt_dag():
+    @task.datacoves_dbt(
+        connection_id=main,
+        overrides={"warehouse": "my_custom_wh"})
+    def dbt_test() -> str:
+        return "dbt debug"
+
+dag = my_dbt_dag()
+```
+
+The examples above are using the service connection `main`
 ![Service Connection](assets/service_connection_main.jpg)
 
 ### @task.datacoves_airflow_db_sync

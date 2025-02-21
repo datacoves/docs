@@ -7,18 +7,21 @@ By default, one default group exists for your account, the `Account Admin`. When
 
 >[!TIP]See our How To - [Groups](how-tos/datacoves/how_to_groups.md) for information on editing group permissions and associating groups with AD groups for Datacoves enterprise installations.
 
-| Group type           | Group Name                                            | Default Privileges                                                                                                 |
-|----------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| Admin                | Account Admin                                         | Manages billing, and other administrative tasks such as managing users, creating environments, and service connections.                                                 |
-|||||
-| **Project** Developer | _\<Account Name\> \<Project Name\>_ Project Developer | Can access all environments within the given project. Gets an individual VS Code IDE for each environment. Developers can also create and modify Superset objects. |                                                                         |
-| **Project** Sys Admin | _\<Account Name\> \<Project Name\>_ Project Sys Admin | Can access Superset, data sources, and has Airflow admin capabilities in all environments within the given project. |
-| **Project** Viewer | _\<Account Name\> \<Project Name\>_ Project Viewer    | Can access dbt docs in all environments   |
-|||||
-| **Environment** Developer| _\<Environment Name\> (\<Environment Slug\>)_ Environment Developer | Can access only the specific environment. Gets an individual VS Code IDE for the specific environment. Developers can also create and modify Superset objects in the specific environment. |
-| **Environment** Sys Admin| _\<Environment Name\> (\<Environment Slug\>)_ Environment Sys Admin | Can access Superset data sources and has Airflow admin capabilities in the specific environment.                  |
-| **Environment** Viewer   | _\<Account Name\> \<Project Name\>_ Environment Viewer| Can see dbt docs only in the specific environment. |
+| **Group Type**              | **Group Name**                                          | **Default Privileges**                                                                                         |
+|----------------------------|--------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| **Admin**                  | Datacoves Admin                                           | Manages **billing, Grafana, platform-wide settings**, and other administrative tasks such as managing users, creating environments, and service connections. |
+|                            |                                                        |                                                                                                              |
+| **Project Admin**          | _\<Account Name\> \<Project Name\>_ Project Admin     | Individual project admin with full control over project-level settings, user roles, and enabled tools. |
+| **Project Developer**      | _\<Account Name\> \<Project Name\>_ Project Developer | Can access all environments within the given project. Gets an individual VS Code IDE for each environment. Developers can also create and modify Superset objects. |
+| **Project Sys Admin**      | _\<Account Name\> \<Project Name\>_ Project Sys Admin | Can access Superset, data sources, and has **limited admin capabilities**. **No longer has full Airflow Admin rights to access to variables.** |
+| **Project Viewer**         | _\<Account Name\> \<Project Name\>_ Project Viewer    | Can access dbt docs in all environments. |
+|                            |                                                        |                                                                                                              |
+| **Environment Admin**      | _\<Environment Name\> (\<Environment Slug\>)_ Environment Admin | **Admin of the environment** for enabled tools. Has **Airflow Admin rights** and can extract variables from Airflow. |
+| **Environment Developer**  | _\<Environment Name\> (\<Environment Slug\>)_ Environment Developer | Can access only the specific environment. Gets an individual VS Code IDE for the specific environment. Developers can also create and modify Superset objects in the specific environment. |
+| **Environment Sys Admin**  | _\<Environment Name\> (\<Environment Slug\>)_ Environment Sys Admin | Can access Superset data sources and has **limited admin capabilities**. Can **see the Airflow admin menu but not variables**, can create connections, and trigger DAGs. |
+| **Environment Viewer**     | _\<Account Name\> \<Project Name\>_ Environment Viewer | Can see dbt docs only in the specific environment. |
 
+---
 ## Groups Listing
 
 ![Groups Listing](./assets/groups_listing.gif)
