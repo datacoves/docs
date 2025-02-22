@@ -14,7 +14,7 @@ source:
     type: snowflake
     config:
         account_id: <your snowflake account withouth .snowflakecomputing.com >
-        convert_urns_to_lowercase: false
+        convert_urns_to_lowercase: true
         include_table_lineage: true
         include_view_lineage: true
         include_tables: true

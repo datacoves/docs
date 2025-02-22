@@ -24,7 +24,6 @@ source:
         test_results_path: 's3://<s3 bucket name>/dbt_artifacts/run_results.json'
         target_platform: snowflake
         include_column_lineage: true
-        convert_column_urns_to_lowercase: false
         aws_connection:
             aws_access_key_id: ABC.....
             aws_secret_access_key: '${S3_secret_key}'
