@@ -50,6 +50,8 @@
     - [Manage Users](/how-tos/datacoves/how_to_manage_users.md)
     - [Update Repository](/getting-started/Admin/configure-repository.md)
   - [Datahub](/how-tos/datahub/)
+    - [Configure dbt metadata ingestion](/how-tos/datahub/how_to_datahub_dbt.md)
+    - [Configure Snowflake metadata ingestion](/how-tos/datahub/how_to_datahub_snowflake.md)
     - [Manage datahub using CLI](/how-tos/datahub/how_to_datahub_cli.md)
   - [DataOps](/how-tos/dataops/)
     - [Releasing a new feature](/how-tos/dataops/releasing-new-feature)
