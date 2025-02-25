@@ -5,9 +5,11 @@ Datahub can ingest Snowflake metadata by connecting to Snowflake directly.
 
 ## Configure DataHub Snowflake Source
 
-Here is a sample recipe for a Snowflake. You can click the `YAML` view in Datahub Snowflake Recipe and paste the following.
+To set up Snowflake ingestion in DataHub, follow these steps:
 
-This recipe requires a Datahub secret to be created `svc_datahub_psw` so create that first.
+1. **Create a DataHub secret**: This example requires a secret named `svc_datahub_psw` for authentication. Ensure this secret is created before proceeding.
+2. **Paste the YAML configuration**: In DataHub's Snowflake Ingestion wizard, switch to the **YAML view** and insert the following configuration.
+
 
 ```yaml
 source:
@@ -42,4 +44,6 @@ source:
                 - '^(?!.*(?:PR|pr)).*$'
 ```
 
-Note in this example, the `database_pattern` has an allow pattern that actually excludes databases with `pr` or `PR` in the name.
+### Notes:
+- The `database_pattern` setting excludes databases with `PR` or `pr` in their names.
+- Ensure your Snowflake credentials and DataHub secrets are correctly set up before running the ingestion process.
