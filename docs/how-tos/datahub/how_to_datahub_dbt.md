@@ -1,70 +1,94 @@
+# Ingesting dbt Metadata into DataHub
 
-# How to ingest dbt metadata into DataHub
+## Prerequisites
 
-Datahub makes use of [dbt artifacts](https://datahubproject.io/docs/generated/ingestion/sources/dbt/#module-dbt) to populate metadata. This data comes from `catalog.json`, `manifest.json`, `run_results.json`, and `sources.json`
+DataHub utilizes [dbt artifacts](https://datahubproject.io/docs/generated/ingestion/sources/dbt/#module-dbt) to populate metadata. Before configuring DataHub, ensure that dbt artifacts are available in an S3 bucket.  
 
-## Configure DataHub dbt Source
+These artifacts include:
 
-You must get the dbt artifacts to S3 first. Once the artifacts are on S3, you can proceed.
+- `catalog.json`
+- `manifest.json`
+- `run_results.json`
+- `sources.json`
 
-Configure the dbt source to ingest the dbt metadata. You can find more information on the [Datahub documentation](https://datahubproject.io/docs/generated/ingestion/sources/dbt/#config-details).
+## Configuring the dbt Source in DataHub
 
-Here is a sample recipe for a dbt project.
+To ingest dbt metadata, configure the dbt source in DataHub. Refer to the [official documentation](https://datahubproject.io/docs/generated/ingestion/sources/dbt/#config-details) for details.
 
-This recipe requires a Datahub secret to be created `S3_secret_key` so create that first.
+### Sample Configuration
 
-```yaml
-source:
-    type: dbt
-    config:
-        platform_instance: balboa
-        manifest_path: 's3://<s3 bucket name>/dbt_artifacts/manifest.json'
-        catalog_path: 's3://<s3 bucket name>/dbt_artifacts/catalog.json'
-        sources_path: 's3://<s3 bucket name>/dbt_artifacts/sources.json'
-        test_results_path: 's3://<s3 bucket name>/dbt_artifacts/run_results.json'
-        target_platform: snowflake
-        include_column_lineage: true
-        aws_connection:
-            aws_access_key_id: ABC.....
-            aws_secret_access_key: '${S3_secret_key}'
-            aws_region: us-west-2
-        git_info:
-            repo: github.com/datacoves/balboa
-            url_template: '{repo_url}/blob/{branch}/transform/{file_path}'
-```
+The following sample demonstrates how to configure a dbt ingestion source in DataHub. 
 
-## Configure DataHub a second dbt Source
-
-If using Datacoves mesh(aka dbt Mesh), you can ingest metadata from more than one project. Note the exclusion of the upstream project. This will prevent Datahub from duplicating nodes.
+>[!Note] This configuration requires a DataHub secret (`S3_secret_key`) for secure access to S3. Ensure that this secret is created before proceeding.
 
 ```yaml
 source:
-    type: dbt
-    config:
-        platform_instance: great_bay
-        manifest_path: 's3://<s3 bucket name>/dbt_artifacts_great_bay/manifest.json'
-        catalog_path: 's3://<s3 bucket name>/dbt_artifacts_great_bay/catalog.json'
-        sources_path: 's3://<s3 bucket name>/dbt_artifacts_great_bay/sources.json'
-        test_results_path: 's3://<s3 bucket name>/dbt_artifacts_great_bay/run_results.json'
-        target_platform: snowflake
-        entities_enabled:
-            sources: No
-        stateful_ingestion:
-            enabled: false
-            remove_stale_metadata: true
-        include_column_lineage: true
-        convert_column_urns_to_lowercase: false
-        skip_sources_in_lineage: true
-        aws_connection:
-            aws_access_key_id: ABC.....
-            aws_secret_access_key: '${S3_secret_key}'
-            aws_region: us-west-2
-        git_info:
-            repo: github.com/datacoves/great_bay
-            url_template: '{repo_url}/blob/{branch}/transform/{file_path}'
-        node_name_pattern:
-            deny:
-                - 'model.balboa.*'
-                - 'seed.balboa.*'
-```
+  type: dbt
+  config:
+    platform_instance: balboa
+    target_platform: snowflake
+    manifest_path: "s3://<s3-bucket>/dbt_artifacts/manifest.json"
+    catalog_path: "s3://<s3-bucket>/dbt_artifacts/catalog.json"
+    sources_path: "s3://<s3-bucket>/dbt_artifacts/sources.json"
+    test_results_path: "s3://<s3-bucket>/dbt_artifacts/run_results.json"
+    include_column_lineage: true
+    aws_connection:
+      aws_access_key_id: ABC.....
+      aws_secret_access_key: "${S3_secret_key}"
+      aws_region: us-west-2
+    git_info:
+      repo: github.com/datacoves/balboa
+      url_template: "{repo_url}/blob/{branch}/transform/{file_path}"
 
+```
+## Configuring DataHub for a Second dbt Source
+
+When using **Datacoves Mesh** (also known as dbt Mesh), you can ingest metadata from multiple dbt projects. 
+
+>[!NOTE] To prevent **duplicate nodes**, exclude the upstream project by specifying patterns to deny in the `node_name_pattern` section.
+
+### Sample Configuration
+
+The following configuration demonstrates how to add a second dbt source in DataHub:
+
+```yaml
+source:
+  type: dbt
+  config:
+    platform_instance: great_bay
+    target_platform: snowflake
+    manifest_path: "s3://<s3-bucket>/dbt_artifacts_great_bay/manifest.json"
+    catalog_path: "s3://<s3-bucket>/dbt_artifacts_great_bay/catalog.json"
+    sources_path: "s3://<s3-bucket>/dbt_artifacts_great_bay/sources.json"
+    test_results_path: "s3://<s3-bucket>/dbt_artifacts_great_bay/run_results.json"
+    
+    # Prevent duplication of upstream nodes
+    entities_enabled:
+      sources: No
+
+    # Stateful ingestion settings
+    stateful_ingestion:
+      enabled: false
+      remove_stale_metadata: true
+
+    include_column_lineage: true
+    convert_column_urns_to_lowercase: false
+    skip_sources_in_lineage: true
+
+    # AWS credentials (requires secret `S3_secret_key`)
+    aws_connection:
+      aws_access_key_id: ABC.....
+      aws_secret_access_key: "${S3_secret_key}"
+      aws_region: us-west-2
+
+    # Git repository information
+    git_info:
+      repo: github.com/datacoves/great_bay
+      url_template: "{repo_url}/blob/{branch}/transform/{file_path}"
+
+    # Exclude upstream dbt project nodes to prevent duplication
+    node_name_pattern:
+      deny:
+        - "model.balboa.*"
+        - "seed.balboa.*"
+```
