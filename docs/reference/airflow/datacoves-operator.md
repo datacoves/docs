@@ -55,7 +55,7 @@ simple_datacoves_dag()
 
 ## Datacoves dbt Operator
 
->[!WARNING]If you have either `dbt_modules` or `dbt_packages` folders in your project repo we won't run `dbt deps`.
+>[!WARNING]If you have either `dbt_modules` or `dbt_packages` folders in your project repo Datacoves won't run `dbt deps`.
 
 ``` 
 from operators.datacoves.dbt import DatacovesDbtOperator
@@ -98,8 +98,7 @@ def yaml_dbt_dag():
         task_id="run_dbt", bash_command="dbt run -s personal_loans"
     )
 
-
-dag = yaml_dbt_dag()
+yaml_dbt_dag()
 ```
 
 ## Data Sync Operators
@@ -116,15 +115,13 @@ These operators can receive:
 - `tables`: a list of tables to override the default ones. _Warning:_ An empty list `[]` will perform a full-database sync.
 - `additional_tables`: a list of additional tables you would want to add to the default set.
 - `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example airflow-qwe123
-- **Connection** There are currently two service credential delivery methods for Airflow. You may only use one or the other.
-  - `service_connection_name` The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`.
+- `service_connection_name` The name of your environment variables from your [service connection](/how-tos/datacoves/how_to_service_connections.md) which are automatically injected to airflow if you select `Environment Variables` as the `Delivery Mode`.
 
 ```python
 """## Datacoves Airflow db Sync Sample DAG
 This DAG is a sample using the DatacovesDataSyncOperatorSnowflake Airflow Operator
 to sync the Airflow Database to a target db
 """
-
 
 from airflow.decorators import dag
 from operators.datacoves.data_sync import DatacovesDataSyncOperatorSnowflake
@@ -143,6 +140,5 @@ def sync_airflow_db():
         service_connection_name="airflow_db_load",  # this can be omitted or changed to another service connection name.
     )
 
-dag = sync_airflow_db()
-dag.doc_md = __doc__
+sync_airflow_db()
 ```

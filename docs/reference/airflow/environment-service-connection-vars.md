@@ -2,10 +2,9 @@
 
 When creating a service connection and setting the `Delivery Mode` to environment variables, Datacoves will inject the following environment variables in Airflow. 
 
-These variables contain sensitive credentials to your warehouse and can be used in your `profiles.yml` file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse.
+These variables can be used in your `profiles.yml` file and will allow you to safely commit a profiles.yml without sensitive data in git. The available environment variables will vary based on your data warehouse.
 
-
->[!NOTE] These variables will need to be configured in your CI/CD provider. ie) github, Gitlab.
+>[!NOTE] These variables will also need to be configured in your CI/CD provider. ie) github, Gitlab.
 
 The name of the service connection will be used to dynamically create the following variables. In the chart below the name of the service connection is `main`.
 
@@ -42,4 +41,3 @@ The name of the service connection will be used to dynamically create the follow
 | `DATACOVES__MAIN__HTTP_PATH`     |
 | `DATACOVES__MAIN__TOKEN`         |
 | `DATACOVES__MAIN__TYPE`          |
-
