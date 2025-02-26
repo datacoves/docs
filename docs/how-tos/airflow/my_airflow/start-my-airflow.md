@@ -1,7 +1,7 @@
 # How to use My Airflow
 
-## Spin up your individual instance 
->[!ATTENTION] Unlike Team Airflow which is always running, My Airflow will spin down after 4 hours of inactivity. If you are an existing Datacoves user you may need to [migrate your environment variable based service connections](/how-tos/airflow/my_airflow/migrating-service-connections.md). Users need  both a sysadmin and a developer [group](reference/admin-menu/groups.md) to access My Airflow.
+## Spin up your individual Airflow instance 
+>[!ATTENTION] Unlike Team Airflow which is always running, My Airflow will spin down after 4 hours of inactivity. If you are an existing Datacoves user you may need to [migrate your environment variable based service connections](/how-tos/airflow/my_airflow/migrating-service-connections.md). Users need both the sysadmin and the developer [groups](reference/admin-menu/groups.md) to access My Airflow.
 
 My Airflow is a single instance allocated to a user. This allows the user to test their DAG in isolation before pushing it to Team Airflow for more robust testing. To spin up your own My Airflow:
 
@@ -9,15 +9,15 @@ My Airflow is a single instance allocated to a user. This allows the user to tes
 
 ![Start My Airflow](assets/airflow_startmyairflow.jpg)
 
-This will prompt your to restart your development environment. 
+This will restart your development environment.
 
 ![Restart Env](assets/airflow_start.jpg)
 
-**Step 2:** Once your environment has restarted. You will be notified that My Airflow is ready. Select `Open My Airflow` and sign in. 
+**Step 2:** Once your environment has restarted. You will be notified that My Airflow is ready. Select `Open My Airflow` and click sign in. 
 
 ![Launch My Airflow](assets/airflow_ready.jpg)
 
-Thats it, our My Airflow is up and ready to use! 🎉 
+Thats it, your My Airflow instance is ready to use! 🎉 
 
 
 ## Using My Airflow to Develop DAGs
@@ -33,7 +33,7 @@ In the example below I have added a new DAG called `my_airflow_dag_test`.
 
 ![Add new DAG](assets/my_airflow_add_new_dag.jpg)
 
-**Step 2:** Switch to your My Airflow browser tab to see your DAG changes populate in near real time. Notice the Light Blue Banner which is distinct to the My Airflow UI.
+**Step 2:** Switch to your My Airflow browser tab to see your DAG changes populate in near real time. Notice the Light Blue Airflow Banner which is distinct for My Airflow.
 
 ![View new DAG](assets/my_airflow_tab.gif)
 
