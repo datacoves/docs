@@ -1,10 +1,10 @@
 # Monitor git sync or s3 sync failure
 
-This how to will walk you through the steps to view git sync/s3 failures in Grafana.
+This how-to will walk you through the steps to view git sync/s3 failures in Grafana.
 
 ### Step 1
 
-A user with top level access such as `Datacoves Admin` or `Project Admin` can navigate to the Grafana UI by clicking on the Eye icon in the top right corner of the Datacoves UI.
+A user with Grafana access can navigate to the Grafana UI by clicking on the Eye icon in the top right corner of the Datacoves UI.
 
 ![Grafana icon](assets/grafana-eye.jpg)
 
