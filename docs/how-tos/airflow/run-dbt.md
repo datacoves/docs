@@ -24,8 +24,6 @@ See [Datacoves Decorators](reference/airflow/datacoves-decorators.md) for more i
 
 **Step 2:** Paste in the code below and be sure to replace information such as name, email and model name with your own.
 
->[!NOTE]The name of the DAG will be the name you set for the file. ie) my_sample_dag.py = my_sample_dag
-
 ### Python version
 
 ```python
