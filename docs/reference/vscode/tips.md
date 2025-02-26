@@ -2,4 +2,4 @@
 
 ## Shortcuts
 
-- `cmd + alt + Shift + L` ➡️ Select all occurrences and find a match
+- `cmd + alt + Shift + L` ➡️ Select all occurrences of a selected phrase

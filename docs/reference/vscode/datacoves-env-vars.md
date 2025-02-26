@@ -17,7 +17,7 @@ env | grep DATACOVES | sort
 
 **DATACOVES__AIRFLOW_DAGS_YML_PATH**: Path to folder dbt-coves will look for yaml files to generate python DAGs.
 
-**DATACOVES__AIRFLOW_DBT_PROFILE_PATH**: Path to your profiles.yml 
+**DATACOVES__AIRFLOW_DBT_PROFILE_PATH**: Path to the profiles.yml used by Airflow
 
 **DATACOVES__DATAHUB_HOST_NAME**: Host url for Datahub.
 
@@ -30,15 +30,4 @@ env | grep DATACOVES | sort
 **DATACOVES__REPOSITORY_URL**: Repository associated with your project. Set in your user settings.
 
 **DATACOVES__USER_EMAIL**: Email associated with your account.
-
-
-
-
-
-
-
-
-
-
-
  
