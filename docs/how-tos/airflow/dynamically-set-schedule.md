@@ -1,8 +1,8 @@
 # How to Dynamically set the schedule Interval
 
-By default, DAGs are created with a `paused` state in Airflow, but you can change this with the `is_paused_on_creation=True` option. However, in some cases, you might forget to configure the schedule interval before pushing your DAG to production, which can lead to unexpected results.
+By default, DAGs are created with a `paused` state in Airflow, but you can change this with the `is_paused_on_creation=True` option. However, you will likely not want to schedule DAGs in a development Airflow instance. The steps below describe how do not set a schedule in a Development Airflow instance.
 
-To avoid this, a more flexible approach is to dynamically set the schedule interval based on your environment (development or production). By using a function called get_schedule, you can ensure that the correct schedule is applied depending on whether you're in a development or production environment. This method helps reduce mistakes and ensures consistent scheduling behavior across environments.
+You can dynamically set the DAG schedule based on your Datacoves environment (development or production). By using a function called get_schedule, you can ensure that the correct schedule is applied only in the production Airflow instance.
 
 Here is how to achieve this:
 
