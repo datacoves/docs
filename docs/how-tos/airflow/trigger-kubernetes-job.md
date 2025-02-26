@@ -1,6 +1,6 @@
 # How to trigger External Kubernetes Jobs from Airflow
 
-This how to will walk you through steps to trigger an external Kubernetes job using Datacoves Managed Airflow. Please be sure to store sensitive variables like API tokens, credentials, or kubeconfig data accordingly instead of hardcoding. 
+This how-to will walk you through steps to trigger an external Kubernetes job using Datacoves Managed Airflow. Please be sure to store sensitive variables like API tokens, credentials, or kubeconfig data accordingly instead of hardcoding. 
 
 ### Step 1: Request Kubernetes Library Installation  
 
@@ -8,7 +8,7 @@ Let the Datacoves team know you need the `kubernetes` library installed. Please 
 
 ### Step 2: Add Kubernetes Connection in Airflow
 
-- Someone with Airflow Admin access can add the connection by navigating to the `Admin` Menu and selecting `Connections` in Airflow.
+- Someone with Airflow the sysadmin group can add the connection by navigating to the `Admin` Menu and selecting `Connections` in Airflow.
 - Provide the following: 
   - `Connection ID` - You will use this in your DAG
   - `Connection Type` - Select  `Kubernetes Cluster Connection` 
@@ -18,7 +18,7 @@ Let the Datacoves team know you need the `kubernetes` library installed. Please 
 
 ### Step 3: Create a Python Script for Job Execution  
 
-Create your python script that triggers your Kubernetes job in the `orchestrate/python_scripts/` directory. 
+Create the python script that triggers your Kubernetes job in the `orchestrate/python_scripts/` directory. 
  
 **Below is an example script that:**
 - Fetches configuration from environment variables and extracts Kubernetes credentials.

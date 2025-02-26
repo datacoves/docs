@@ -1,6 +1,6 @@
 # How to use the Airflow API
 
->[!WARNING] Users must have Project Level Admin Group to view Airflow API. The API will allow you to view secrets values in plain text. Always exercise the principle of least privilege. 
+>[!WARNING] Users must have Project Level Admin Group to use the Airflow API. The API will allow you to view secrets values in plain text. Always exercise the principle of least privilege. 
 
 This how to will walk you through configuring the Airflow API and using it in a DAG.
 

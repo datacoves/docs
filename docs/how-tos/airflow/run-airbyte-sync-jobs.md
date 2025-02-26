@@ -1,6 +1,6 @@
 # Run Airbyte sync jobs
 
-In our quest to simplify the way the different tools integrate together in the Modern Data Stack, we developed the generate airflow-dags command in the <a href="https://github.com/datacoves/dbt-coves?tab=readme-ov-file#generate-airflow-dags" target="_blank" rel="noopener">dbt-coves</a> extension.
+In our quest to simplify the way tools integrate in the Modern Data Stack, we developed the generate airflow-dags command in the <a href="https://github.com/datacoves/dbt-coves?tab=readme-ov-file#generate-airflow-dags" target="_blank" rel="noopener">dbt-coves</a> library.
 
 The main idea behind this concept is to use tags defined on dbt sources and determine which data to load via different tools (e.g. Airbyte or Fivetran). Using this information, we can dynamically create _Extract and Load_ tasks in an Airflow DAG before running dbt.
 
@@ -14,9 +14,9 @@ Follow this guide on [How to set up Airflow](/how-tos/airflow/initial-setup)'s e
 
 ### Airbyte connection
 
-As Airflow will need to retrieve metadata from the Airbyte's server, Datacoves automatically adds the connection in Airflow.
+As Airflow will trigger connections in the Airbyte's server, Datacoves automatically adds the connection in Airflow.
 
-To view this connection, a user with Airflow admin privileges must go to the Airflow `Admin -> Connections` menu.
+To view this connection, a user with the Datacoves sysadmin group can go to the Airflow `Admin -> Connections` menu.
 
 ![Admin Connections](./assets/admin-connections.png)
 

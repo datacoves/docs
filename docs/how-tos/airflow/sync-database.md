@@ -1,12 +1,12 @@
 # Sync Airflow database
 
-It is now possible to synchronize a Datacoves Airflow database to your Data Warehouse
+It is now possible to synchronize the Datacoves Airflow database to your Data Warehouse
 
-> [!NOTE]This is only available for Snowflake and Redshift connections.
+> [!NOTE]This is currently only available for Snowflake and Redshift warehouses.
 
 ## Data Sync Decorator
 
-To synchronize the Airflow database, we can use an Airflow DAG with one of the Airflow Decorator below.
+To synchronize the Airflow database, we can use an Airflow DAG with the Datacoves Airflow Decorator below.
 
 ```python
 @task.datacoves_airflow_db_sync
@@ -16,7 +16,8 @@ To synchronize the Airflow database, we can use an Airflow DAG with one of the A
 
 These decorator can receive:
 
-- `connection_id`: the name of your Airflow Service Connection in Datacoves that will be used by the operator. 
+- `db_type`: the destination warehouse type, "snowflake" or "redshift"
+- `connection_id`: the name of the Airflow Service Connection in Datacoves that will be used by the operator. 
 - `tables`: a list of tables to override the default ones. _Warning:_ An empty list `[]` will perform a full-database sync.
 - `additional_tables`: a list of additional tables you would want to add to the default set.
 - `destination_schema`: the destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: airflow-{datacoves environment slug} for example `airflow-qwe123`
@@ -54,9 +55,9 @@ def airflow_data_sync():
 
     sync_airflow_db()
 
-dag = airflow_data_sync()
+airflow_data_sync()
 ```
 
-> [!NOTE]The example DAG above uses the service connection `raw`
+> [!NOTE]The example DAG above uses the service connection `main`
 
 ![Service Connection Raw](assets/service_connection_raw.png)

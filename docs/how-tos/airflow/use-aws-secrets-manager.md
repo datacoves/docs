@@ -31,11 +31,7 @@ from airflow.decorators import dag, task
 from pendulum import datetime
 from airflow.models import Variable
 
-
-# Only here for reference, this is automatically activated by Datacoves Operator
-DATACOVES_VIRTUAL_ENV = "/opt/datacoves/virtualenvs/main/bin/activate"
-
-doc = """## Datacoves Bash Operator DAG
+doc = """## Datacoves Bash Decorator DAG
 This DAG is a sample using the Datacoves decorators with variable calls."""
 
 @dag(

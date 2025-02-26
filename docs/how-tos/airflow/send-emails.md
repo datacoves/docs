@@ -15,7 +15,7 @@ Let's get started!
 
 ## Configure SMTP integration in Environment
 
-Datacoves provides a **pre-configured SMTP** which will send out a failure email from `hey@datacoves.com` to email recipients you configure in your DAGs.
+Datacoves provides a **pre-configured SMTP** connection which will send out a failure email from `hey@datacoves.com` to email recipients you configure in your DAGs.
 In Datacoves 3.3 and up, the Datacoves_SMTP will be automatically added to your environment upon creation. If you created your environment before Datacoves 3.3 follow these instructions to configure the default SMTP.
 
 - First, go to the `Environments` admin.
@@ -42,7 +42,7 @@ Viola!🎉 The Airflow service will be restarted shortly and will now include th
 
 ## Set up a custom SMTP (Optional)
 
-If you do not wish to use the default SMTP, you can configure your own.
+If you do not wish to use the default SMTP server, you can configure your own.
 First, create a new integration of type `SMTP` by navigating to the Integrations Admin.
 
 ![Integrations Admin](./assets/menu_integrations.gif)
@@ -151,7 +151,7 @@ nodes:
 ```
 
 ## DRY default_args 
->[!TIP]We recommend placing your default_default args in its own file and importing it for better reusability. In the example below we created a file inside of orchestrate/utils/
+>[!TIP]We recommend placing your default_args in its own file and importing it for reusability. In the example below we created a file inside of orchestrate/utils/
 
 ```python
 # orchestrate/utils/default_args.py
