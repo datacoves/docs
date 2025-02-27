@@ -60,4 +60,4 @@ airflow_data_sync()
 
 > [!NOTE]The example DAG above uses the service connection `main`
 
-![Service Connection Raw](assets/service_connection_raw.png)
+![Service Connection main](assets/service_connections_main.png)
