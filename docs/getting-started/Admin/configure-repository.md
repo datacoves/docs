@@ -12,7 +12,7 @@ Now that you have configured your Airflow settings you must ensure that your rep
 
 ## Create a profiles.yml
 
-Upon creating a service connection, [environment variables](/reference/airflow/environment-service-connection-vars.md) for your warehouse credentials were created to be used in your profiles.yml file and will allow you to safely commit them with git. The available environment variables will vary based on your data warehouse. We have made it simple to set this up by completing the following steps.
+If the `delivery mode` of your service connection is [`Environment Variables`](/how-tos/datacoves/how_to_service_connections.md) then Airflow will need a `profiles.yml`. The available environment variables will vary based on your data warehouse. We have made it simple to set this up by completing the following steps. This profiles.yml will also be used in the CI/CD process. 
 
 To create your and your `profiles.yml`:
 
