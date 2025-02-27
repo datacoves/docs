@@ -17,6 +17,9 @@ This custom decorator is an extension of Airflow's default @task decorator and s
     - Passing `activate_venv = False` will skip this activation. Useful for running Airflow Python code.
 - Runs the command in the repository root (or a passed `cwd`, relative path from repo root where to run command from).
 
+**Params:**
+- `env`: Pass in a dictionary of variables. eg) `{'my_var1': 'hello', 'my_var2': 'world',}`
+  
 ```python
 def my_bash_dag():
     @task.datacoves_bash
