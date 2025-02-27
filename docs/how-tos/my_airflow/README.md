@@ -7,7 +7,7 @@ Datacoves makes it easy to test DAGs quickly with My Airflow, a stand alone user
 While My Airflow will make writing and testing DAGs quick it is important to cover its limitations.
 1. My Airflow uses Sqlite
 2. My Airflow **cannot** run tasks in parallel. It will run one task at a time.
-3. Connections and variables from Team Airflow **will not** be automatically ported over to My Airflow. You will need to perform a variable import either manually or using the [`datacoves my import`](/how-tos/airflow/my_airflow/my-import.md) command in your terminal.
+3. Connections and variables from Team Airflow **will not** be automatically ported over to My Airflow. You will need to perform a variable import either manually or using the [`datacoves my import`](/how-tos/my_airflow/my-import.md) command in your terminal.
 4. Emailing is not available in My Airflow.
 5. Slack and Teams notifications are not available in My Airflow.
 
