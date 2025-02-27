@@ -13,9 +13,9 @@ This custom decorator is an extension of Airflow's default @task decorator and s
 **The operator does the following:**
 
 - Copies the entire Datacoves repo to a temporary directory, to avoid read-only errors when running `bash_command`.
-- Activates the Datacoves Airflow virtualenv (or a passed `virtualenv`, relative path from repo root to the desired virtualenv)
-    - Passing `activate_venv = False` will skip this activation. Useful for running Airflow Python code
-- Runs the command in the repository root (or a passed `cwd`, relative path from repo root where to run command from)
+- Activates the Datacoves Airflow virtualenv.
+    - Passing `activate_venv = False` will skip this activation. Useful for running Airflow Python code.
+- Runs the command in the repository root (or a passed `cwd`, relative path from repo root where to run command from).
 
 ```python
 def my_bash_dag():
