@@ -10,7 +10,7 @@ This page is all about working with CSV files in Datacoves' VS Code in the brows
 ![Rainbow CSV](assets/csv_rainbow_view.jpg)
 
 ### Editing CSVs
-Editing CSVs is made simple with the `Edit CSV` option. 
+Editing CSVs is made simple with the `Edit CSV` option or right clicking on the file. 
 ![CSV edit button](assets/csv_edit_button.jpg)
 
 This will open up the CSV editor seen below.
