@@ -1,8 +1,8 @@
 # Datacoves Airflow Decorators
 
-With the introduction of the decorators in airflow we have released the Datacoves decorators to make writing DAGs simple! 
+With the introduction of the task flow API in Airflow we have released the Datacoves decorators to make writing DAGs simple! 
 
->[!NOTE] While the Datacoves decorators replace the [Datacoves Operators](/reference/airflow/datacoves-operator.md), the datacoves operators are still supported. 
+>[!NOTE] While the Datacoves decorators are recommended, the [Datacoves Operators](/reference/airflow/datacoves-operator.md), are still supported. 
 
 ## Decorators 
 
@@ -62,7 +62,7 @@ def my_dbt_dag():
 dag = my_dbt_dag()
 ```
 
-The examples above are using the service connection `main`
+The examples above use the Airflow connection `main` which is added automatically from the Datacoves Service Connection
 ![Service Connection](assets/service_connection_main.jpg)
 
 ### @task.datacoves_airflow_db_sync
@@ -72,8 +72,7 @@ The examples above are using the service connection `main`
 **Params:**
 - `db_type`: The data warehouse you are using. Currently supports `redshift` or `snowflake`.
 - `destination_schema`: The destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: `airflow-{datacoves environment slug}` for example `airflow-qwe123`.
-- **Connection** There are currently two service credential delivery methods for Airflow. You may only use one or the other.
-  - `connection_id`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
+- `connection_id`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
 - `additional_tables`: A list of additional tables you would want to add to the default set.
 - `tables`: A list of tables to override the default ones from above. Warning: An empty list [] will perform a full-database sync.
 
@@ -82,7 +81,7 @@ def airflow_data_sync():
     @task.datacoves_airflow_db_sync(
         db_type="snowflake",
         destination_schema="airflow_dev", 
-        connection_id="snowflake_main",
+        connection_id="load_airflow",
         # additional_tables=["additional_table_1", "additional_table_2"]
     )
 

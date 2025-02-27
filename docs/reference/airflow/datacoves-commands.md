@@ -1,4 +1,4 @@
-# Datacoves Commands
+# Datacoves CLI Commands
 The `datacoves` bash commands are meant to simplify your workflow. Currently, the datacoves command has the following sub commands: 
 
 - `my` 

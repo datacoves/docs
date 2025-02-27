@@ -18,4 +18,3 @@ This will open up the CSV editor seen below.
 
 ### Autosave
 Unlike the rest of VS Code in the browser experience which makes use of Autosave. When editing CSVs you must always save using `CMD/CTRL + S` or use the `Apply changes to file and save` button.
-
