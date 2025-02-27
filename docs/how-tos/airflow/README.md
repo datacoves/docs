@@ -5,12 +5,12 @@ These how to guides are dedicated to Airflow within Datacoves. Here you will fin
 * Create Airflow jobs(DAGs)
 * Run dbt with in an Airflow DAG
 * Sending notifications
-* Customing Airflow worker environments (docker images)
+* Customizing Airflow worker environments (docker images)
 * Requesting Airflow worker resources
 
 And more! 
 
 ## What to know
-- ruff is installed to show unused imports and unused variables as well as python linting. 
+- `Ruff` is installed to show unused imports and unused variables as well as python linting. 
 - [Datacoves Decorators](/reference/airflow/datacoves-decorators.md) simplify working with dbt, syncing databases, and running commands in Airflow.
 - [My Airflow](/how-tos/my_airflow/README.md) can help speed up your DAG writing experience.
