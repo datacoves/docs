@@ -16,7 +16,8 @@ Let's get started!
 ## Configure SMTP integration in Environment
 
 Datacoves provides a **pre-configured SMTP** connection which will send out a failure email from `hey@datacoves.com` to email recipients you configure in your DAGs.
-In Datacoves 3.3 and up, the Datacoves_SMTP will be automatically added to your environment upon creation. If you created your environment before Datacoves 3.3 follow these instructions to configure the default SMTP.
+
+In Datacoves 3.3 and up, the `SMTP` will be automatically added to your environment upon creation. If you created your environment before Datacoves 3.3 follow these instructions to configure the default SMTP.
 
 - First, go to the `Environments` admin.
 
@@ -30,9 +31,10 @@ In Datacoves 3.3 and up, the Datacoves_SMTP will be automatically added to your 
 
 ![Edit integrations](./assets/edit_integrations.png)
 
-- Select `Datacoves_SMTP`. In the second dropdown select `Airflow` as service. 
+- Select `SMTP`. In the second dropdown select `Airflow` as service. 
 
-![Add default integration](assets/add_smtp_datacoves.jpg)
+<!-- uncomment image when SMTP is change to DATACOVES_SMTP -->
+<!-- ![Add default integration](assets/add_smtp_datacoves.jpg) -->
 
 - Click `Save Changes`. 
 
