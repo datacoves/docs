@@ -120,7 +120,7 @@ from fivetran_provider_async.operators import FivetranOperator
 from fivetran_provider_async.sensors import FivetranSensor
 
 @dag(
-    default_args={"start_date": datetime.datetime(2024, 1, 1)},
+    default_args={"start_date": datetime.datetime(2023, 1, 1, 0, 0)},
     description="Loan Run",
     schedule="0 0 1 */12 *",
     tags=["version_1"],
