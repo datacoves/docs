@@ -80,13 +80,13 @@ To send MS Teams notifications, in the Airflow DAG we need to import the appropr
 ### Python version
 
 ```python
-import datetime
+from pendulum import datetime
 from airflow.decorators import dag, task
 from notifiers.datacoves.ms_teams import MSTeamsNotifier
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2024, 1, 1),
         "owner": "Noel Gomez",
         "email": "gomezn@example.com",
         "email_on_failure": True,
@@ -123,7 +123,7 @@ tags:
   - version_2
   - ms_teams_notification
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
   email: gomezn@example.com

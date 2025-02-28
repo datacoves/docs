@@ -94,7 +94,7 @@ To send Slack notifications, in the Airflow DAG we need to import the appropriat
 ### Python version
 
 ```python
-import datetime
+from pendulum import datetime
 from airflow.decorators import dag, task
 from airflow.providers.slack.notifications.slack_webhook import send_slack_webhook_notification
 
@@ -111,7 +111,7 @@ run_inform_failure = send_slack_webhook_notification(
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2024, 1, 1),
         "owner": "Noel Gomez",  # Replace with your name
         "email": "gomezn@example.com",  # Replace with your email
         "email_on_failure": True,  
@@ -143,7 +143,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
   email: gomezn@example.com

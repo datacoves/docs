@@ -20,11 +20,12 @@ After creating a variable in Airflow's UI, using it is as simple as importing th
 ![select More](./assets/variable_creation.png)
 
 ```python
+from pendulum import datetime
 from airflow.decorators import dag, task
 from airflow.models import Variable
 
 @dag(
-    default_args={"start_date": "2021-01"},
+    default_args={"start_date": datetime(2024, 1, 1)},
     description="DAG that outputs a Variable",
     schedule="0 0 1 */12 *",
     tags=["version_1"],
@@ -51,11 +52,13 @@ In the following example, a connection of `type Airbyte` is created, and it's `h
 ![select More](./assets/connection_creation.png)
 
 ```python
+from pendulum import datetime
+
 from airflow.decorators import dag, task
 from airflow.models import Connection
 
 @dag(
-    default_args={"start_date": "2021-01"},
+    default_args={"start_date": datetime(2024, 1, 1)},
     description="DAG that outputs Airbyte Hostname",
     schedule="0 0 1 */12 *",
     tags=["version_1"],

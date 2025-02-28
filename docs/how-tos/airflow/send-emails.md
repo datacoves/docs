@@ -99,12 +99,12 @@ Simply provide a `default_args` dict like so:
 ### Python version
 
 ```python
-import datetime
+from pendulum import datetime
 from airflow.decorators import dag, task
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2024, 1, 1),
         "owner": "Noel Gomez",  # Replace with your name
         "email": ["gomezn@example.com", "mayra@example.com", "walter@example.com"], 
         "email_on_failure": True,
@@ -134,7 +134,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_1
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
   email: 
@@ -165,7 +165,7 @@ default_args = {
     'email_on_retry': False,
     'retries': 3,
     'retry_delay': timedelta(minutes=5),
-    'start_date': datetime(2023, 12, 1),
+    'start_date': datetime(2024, 1, 1),
 }
 
 ```

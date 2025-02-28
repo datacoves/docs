@@ -26,13 +26,13 @@ These decorator can receive:
 ## Example DAG
 
 ```python
-import datetime
+from pendulum import datetime
 
 from airflow.decorators import dag, task
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2022, 10, 10),
         "owner": "Bruno",
         "email": "bruno@example.com",
         "email_on_failure": False,

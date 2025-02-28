@@ -33,7 +33,7 @@ TRANSFORM_CONFIG = {
 
 @dag(
     default_args={
-        "start_date": datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2022, 10, 10),
         "owner": "Noel Gomez",
         "email": "gomezn@example.com",
         "email_on_failure": True,
@@ -63,7 +63,7 @@ schedule_interval: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2022-10-10
   owner: Noel Gomez
   email: gomezn@example.com
   email_on_failure: true

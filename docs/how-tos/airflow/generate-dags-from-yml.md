@@ -49,7 +49,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2022-10-10
   owner: Noel Gomez # Replace this with your name
   email: gomezn@example.com # Replace with the email of the recipient for failures
   email_on_failure: true
@@ -114,14 +114,14 @@ To generate all of the DAGs from your `orchestrate/dag_yml_definitions/` directo
 All generated python DAGs will be placed in the `orchestrate/dags`
 
 ```python
-import datetime
+from pendulum import datetime
 
 from airflow.decorators import dag
 from operators.datacoves.dbt import DatacovesDbtOperator
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2022, 10, 10),
         "owner": "Noel Gomez",
         "email": "gomezn@example.com",
         "email_on_failure": True,

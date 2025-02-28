@@ -73,7 +73,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_1
 default_args:
-  start_date: 2024-01
+  start_date: 2024-01-01
 catchup: false
 
 # DAG Tasks
@@ -114,13 +114,13 @@ nodes:
 ### Python version
 
 ```python
-import datetime
+from pendulum import datetime
 from airflow.decorators import dag, task, task_group
 from fivetran_provider_async.operators import FivetranOperator
 from fivetran_provider_async.sensors import FivetranSensor
 
 @dag(
-    default_args={"start_date": datetime.datetime(2023, 1, 1, 0, 0)},
+    default_args={"start_date": datetime(2024, 1, 1)},
     description="Loan Run",
     schedule="0 0 1 */12 *",
     tags=["version_1"],

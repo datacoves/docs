@@ -27,12 +27,12 @@ See [Datacoves Decorators](reference/airflow/datacoves-decorators.md) for more i
 ### Python version
 
 ```python
-from datetime import datetime
+from pendulum import datetime
 from airflow.decorators import dag, task
 
 @dag(
     default_args={
-        "start_date": datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2024, 1, 1),
         "owner": "Noel Gomez",  # Replace with name
         "email": "gomezn@example.com",  # Replace with your email
         "email_on_failure": True,
@@ -70,7 +70,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez # Replace with your name
   # Replace with the email of the recipient for failures
   email: gomezn@example.com 

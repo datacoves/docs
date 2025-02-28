@@ -36,7 +36,7 @@ This DAG is a sample using the Datacoves decorators with variable calls."""
 
 @dag(
     default_args={
-        "start_date": datetime(2022, 10, 10),
+        "start_date": datetime(2024, 1, 1),
         "owner": "Mayra Pena",
         "email": "Mayra @example.com",
         "email_on_failure": True,
