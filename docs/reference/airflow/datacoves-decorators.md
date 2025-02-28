@@ -17,7 +17,10 @@ This custom decorator is an extension of Airflow's default @task decorator and s
 - Runs the command in the repository root (or a passed `cwd`, relative path from repo root where to run command from).
 
 **Params:**
+
 - `env`: Pass in a dictionary of variables. eg) `{'my_var1': 'hello', 'my_var2': 'world',}`
+- `outlets`: Used to connect a task to an object in datahub or update a dataset
+- `append_env`: Add env vars to existing ones like `DATACOVES__DBT_HOME`
   
 ```python
 def my_bash_dag():
