@@ -114,12 +114,14 @@ To generate all of the DAGs from your `orchestrate/dag_yml_definitions/` directo
 All generated python DAGs will be placed in the `orchestrate/dags`
 
 ```python
-from datetime import datetime
-from airflow.decorators import dag, task
+import datetime
+
+from airflow.decorators import dag
+from operators.datacoves.dbt import DatacovesDbtOperator
 
 @dag(
     default_args={
-        "start_date": datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
         "owner": "Noel Gomez",
         "email": "gomezn@example.com",
         "email_on_failure": True,
@@ -130,13 +132,9 @@ from airflow.decorators import dag, task
     catchup=False,
 )
 def yml_dbt_dag():
+    run_dbt = DatacovesDbtOperator(
+        task_id="run_dbt", bash_command="dbt run -s personal_loans"
+    )
 
-    @task.datacoves_dbt(connection_id="main")
-    def run_dbt():
-        return "dbt run -s personal_loans"
-
-    run_dbt()
-
-yml_dbt_dag()
-
+dag = yml_dbt_dag()
 ```
