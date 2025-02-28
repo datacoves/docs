@@ -29,7 +29,6 @@
     - [DAGs - Run Databricks Notebooks](/how-tos/airflow/run-databricks-notebook.md)
     - [DAGs - Run Fivetran sync jobs](/how-tos/airflow/run-fivetran-sync-jobs.md)
     - [DAGs - Test DAGs](/how-tos/airflow/test-dags.md)
-    - [DAGs - Trigger External Kubernetes Job](/how-tos/airflow/trigger-kubernetes-job.md)
     - [DAGs - Using Variables and Connections](/how-tos/airflow/use-variables-and-connections.md)
     - [Notifications - Send Emails](/how-tos/airflow/send-emails.md)
     - [Notifications - Send Microsoft Teams notifications](/how-tos/airflow/send-ms-teams-notifications.md)
