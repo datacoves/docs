@@ -11,10 +11,9 @@ In the following example, we're requesting a minimum of 8Gb of memory and 1000m 
 **Note**: Keep in mind that if you request more resources than a node in the cluster could allocate the task will never run and the DAG will fail.
 
 ```python
-import datetime
-from airflow.decorators import dag
+from datetime import datetime
+from airflow.decorators import dag, task
 from kubernetes.client import models as k8s
-from operators.datacoves.bash import DatacovesBashOperator
 
 # Configuration for Kubernetes Pod Override with Resource Requests
 TRANSFORM_CONFIG = {
@@ -34,7 +33,7 @@ TRANSFORM_CONFIG = {
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2022, 10, 10),
         "owner": "Noel Gomez",
         "email": "gomezn@example.com",
         "email_on_failure": True,
@@ -45,12 +44,14 @@ TRANSFORM_CONFIG = {
     catchup=False,
 )
 def request_resources_dag():
-    transform_task = DatacovesBashOperator(
-        task_id="transform", 
-        executor_config=TRANSFORM_CONFIG
-    )
 
-dag = request_resources_dag()
+    @task.datacoves_bash(executor_config=TRANSFORM_CONFIG)
+    def transform():
+        return "echo 'Resource request DAG executed successfully!'"
+
+    transform()
+
+request_resources_dag()
 ```
 
 ### YAML version
@@ -62,7 +63,7 @@ schedule_interval: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2022-10-10
   owner: Noel Gomez
   email: gomezn@example.com
   email_on_failure: true

@@ -14,9 +14,9 @@ This means that you can simply run `dbt <dbt subcommand>` in your Airflow DAG an
 
 If your dbt command like `dbt run` works in your development environment(**Try dbt run in your terminal**), then you should be able to create an Airflow DAG that will run this command automatically.
 
->[!TIP]Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python dependencies. Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. No need to worry about the complexity when using the `DatacovesBashOperator` because it will automatically activate that environment amongst other actions.
+>[!TIP]Keep in mind that in an Airflow context `dbt` is installed in an isolated Python Virtual Environment to avoid clashing with Airflow python dependencies. Datacoves default Python's virtualenv is located in `/opt/datacoves/virtualenvs/main`. No need to worry about the complexity when using the `@task.datacoves_dbt` decorator because it will automatically activate that environment amongst other actions.
 
-See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more information.
+See [Datacoves Decorators](reference/airflow/datacoves-decorators.md) for more information.
 
 ### Lets create a DAG!
 
@@ -24,35 +24,33 @@ See [Datacoves Operators](reference/airflow/datacoves-operator.md) for more info
 
 **Step 2:** Paste in the code below and be sure to replace information such as name, email and model name with your own.
 
->[!NOTE]The name of the DAG will be the name you set for the file. ie) my_sample_dag.py = my_sample_dag
-
 ### Python version
 
 ```python
-import datetime
-
-from airflow.decorators import dag
-from operators.datacoves.dbt import DatacovesDbtOperator
+from pendulum import datetime
+from airflow.decorators import dag, task
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez", # Replace with name
-        "email": "gomezn@example.com", # Replace with your email
+        "start_date": datetime(2024, 1, 1),
+        "owner": "Noel Gomez",  # Replace with name
+        "email": "gomezn@example.com",  # Replace with your email
         "email_on_failure": True,
     },
     description="Sample DAG for dbt run",
-    schedule="0 0 1 */12 *", # Replace with your desired schedule 
+    schedule="0 0 1 */12 *",  # Replace with your desired schedule
     tags=["version_2"],
     catchup=False,
 )
 def my_sample_dag():
-    run_dbt = DatacovesDbtOperator(
-        task_id="run_dbt", 
-        bash_command="dbt run -s personal_loans" # Replace with your model 
-    )
 
-dag = my_sample_dag()
+    @task.datacoves_dbt(connection_id="main")
+    def run_dbt():
+        return "dbt run -s personal_loans"  # Replace with your model
+
+    run_dbt()
+
+my_sample_dag()
 ```
 
 **Step 3:** Push your changes to the branch.
@@ -72,7 +70,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez # Replace with your name
   # Replace with the email of the recipient for failures
   email: gomezn@example.com 

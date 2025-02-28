@@ -94,43 +94,44 @@ To send Slack notifications, in the Airflow DAG we need to import the appropriat
 ### Python version
 
 ```python
-import datetime
-
-from airflow.decorators import dag
-from operators.datacoves.dbt import DatacovesDbtOperator
+from pendulum import datetime
+from airflow.decorators import dag, task
 from airflow.providers.slack.notifications.slack_webhook import send_slack_webhook_notification
 
-
+# ✅ Define Slack notifications (These will send messages when the DAG succeeds or fails)
 run_inform_success = send_slack_webhook_notification(
     slack_webhook_conn_id="SLACK_NOTIFICATIONS",  # Slack integration name slug -- double check in Datacoves integrations' admin
-    text="The dag {{ dag.dag_id }} succeeded",
+    text="The DAG {{ dag.dag_id }} succeeded",
 )
 
 run_inform_failure = send_slack_webhook_notification(
-    slack_webhook_conn_id="SLACK_NOTIFICATIONS", text="The dag {{ dag.dag_id }} failed"
+    slack_webhook_conn_id="SLACK_NOTIFICATIONS",
+    text="The DAG {{ dag.dag_id }} failed",
 )
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez",
-        "email": "gomezn@example.com",
-        "email_on_failure": True,
+        "start_date": datetime(2024, 1, 1),
+        "owner": "Noel Gomez",  # Replace with your name
+        "email": "gomezn@example.com",  # Replace with your email
+        "email_on_failure": True,  
     },
-    description="Sample DAG with Slack notification",
-    schedule="0 0 1 */12 *",
-    tags=["version_2"],
-    catchup=False,
-    on_success_callback=[run_inform_success],
-    on_failure_callback=[run_inform_failure],
+    description="Sample DAG with Slack notification",  
+    schedule="0 0 1 */12 *",  
+    tags=["version_2"], 
+    catchup=False,  
+    on_success_callback=[run_inform_success],  
+    on_failure_callback=[run_inform_failure], 
 )
 def yaml_slack_dag():
-    transform = DatacovesDbtOperator(
-        task_id="transform",
-        bash_command="dbt run -s personal_loans",
-    )
 
+    @task.datacoves_dbt(connection_id="main")  
+    def transform():
+        return "dbt run -s personal_loans"  
 
+    transform()  
+
+# Instantiate the DAG
 dag = yaml_slack_dag()
 ```
 
@@ -142,7 +143,7 @@ schedule: "0 0 1 */12 *"
 tags:
   - version_2
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
   email: gomezn@example.com
