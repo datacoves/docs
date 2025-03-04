@@ -22,55 +22,42 @@ Each time a variable is accessed, an API call is made to AWS Secrets Manager. If
 
 ### To solve for this there are 2 best practices to follow:
 
-1. Always call your `Variable.get` from within the `@task` decorator
+1. Always call your `Variable.get` from within the Datacoves Task Decorator. This ensures the variable is only fetched at runtime. 
 2. Make use of the `connections_lookup_pattern` and `variables_lookup_pattern` when setting up your secondary backend above. This means only variables and connections prefixed with `aws_` would be make an API call to AWS Secrets Manager. eg) `aws_mayras_secret`
    
 
 ```python
-import datetime
 from airflow.decorators import dag, task
-from operators.datacoves.dbt import DatacovesDbtOperator
+from pendulum import datetime
+from airflow.models import Variable
+
+doc = """## Datacoves Bash Decorator DAG
+This DAG is a sample using the Datacoves decorators with variable calls."""
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez",
-        "email": "gomezn@example.com",
+        "start_date": datetime(2024, 1, 1),
+        "owner": "Mayra Pena",
+        "email": "Mayra @example.com",
         "email_on_failure": True,
     },
-    description="Sample DAG for dbt build",
-    schedule="0 0 1 */12 *",
-    tags=["version_2"],
     catchup=False,
+    tags=["version_1"],
+    description="Testing task decorators",
+    schedule_interval="0 0 1 */12 *",
 )
-def aws_dag():
+def task_decorators_example():
 
-    @task
-    def get_variables():
-        from airflow.models import Variable
-        # Fetches the variable, potentially making an AWS Secrets Manager API call
-        aws_var = Variable.get("aws_mayras_secret")
-        datacoves_var = Variable.get("datacoves_mayras_secret")
-        return [aws_var, datacoves_var]
+    @task.datacoves_bash(connection_id="main")
+    def calling_vars_in_decorators() -> str:
+        my_var = Variable.get("aws_mayras_secret") # Call variable within @task.datacoves_bash
+        return f"My variable is: {my_var}"
 
-    #
-    my_variables = get_variables()
-    aws_var = my_variables[0]
-    datacoves_var = my_variables[1]
+    calling_vars_in_decorator() # Call task function
 
-    # Task to run dbt using the DatacovesDbtOperator and pass the variables
-    @task
-    def run_dbt_task(aws_var, datacoves_var):
-        # Use the fetched variables in the dbt command
-        DatacovesDbtOperator(
-            task_id="run_dbt",
-            bash_command=f"dbt run -s personal_loans --vars '{{my_aws_variable: \"{aws_var}\", datacoves_variable: \"{datacoves_var}\"}}'"
-        )
-
-    run_dbt_task(aws_var=aws_var, datacoves_var=datacoves_var)
-
-dag = aws_dag()
-
+# Invoke Dag
+dag = task_decorators_example()
+dag.doc_md = doc
 
 ```
 

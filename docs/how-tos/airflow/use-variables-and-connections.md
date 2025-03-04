@@ -14,47 +14,33 @@ The main difference between them is that [Variables](https://airflow.apache.org/
 
 ### Variables
 
-After creating a variable in Airflow's UI, using it is as simple as importing the `Variable` model in your DAG and `getting` it's name.
+After creating a variable in Airflow's UI, using it is as simple as importing the `Variable` model in your DAG and `getting` it's name. If a variable contains `SECRET` on it's name, value will be hidden:
+
 
 ![select More](./assets/variable_creation.png)
 
 ```python
-from airflow.decorators import dag
-from operators.datacoves.dbt import DatacovesDbtOperator
+from pendulum import datetime
+from airflow.decorators import dag, task
 from airflow.models import Variable
 
-daily_run_tag = Variable.get("DBT_DAILY_RUN_TAG")
-
 @dag(
-    default_args={"start_date": "2021-01"},
+    default_args={"start_date": datetime(2024, 1, 1)},
     description="DAG that outputs a Variable",
     schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )
 def variables_dag():
-    transform = DatacovesDbtOperator(
-        task_id="transform",
-        bash_command=f"dbt build -s 'tag:{daily_run_tag}'",
-    )
 
-dag = variables_dag()
-```
+    @task.datacoves_bash(="main")
+    def transform():
+        daily_run_tag = Variable.get("DBT_DAILY_RUN_TAG") 
+        return f"dbt build -s 'tag:{daily_run_tag}'"
 
-If a variable contains `SECRET` on it's name, value will be hidden:
+    transform()
 
-```python
-s3_password = Variable.get("S3_PASSWORD_SECRET")
-[...]
-transform = DatacovesDbtOperator(
-    task_id="transform",
-    bash_command=f"echo {s3_password}'",
-)
-```
-
-```shell
-Running command: ['bash', '-c', "source /opt/datacoves/virtualenvs/main/bin/activate" &&'echo ***']
-
+variables_dag()
 ```
 
 ### Connections
@@ -66,24 +52,26 @@ In the following example, a connection of `type Airbyte` is created, and it's `h
 ![select More](./assets/connection_creation.png)
 
 ```python
-from airflow.decorators import dag
-from operators.datacoves.bash import DatacovesBashOperator
+from pendulum import datetime
+
+from airflow.decorators import dag, task
 from airflow.models import Connection
 
-airbyte_connection = Connection.get_connection_from_secrets(conn_id="AIRBYTE_CONNECTION")
-
 @dag(
-    default_args={"start_date": "2021-01"},
+    default_args={"start_date": datetime(2024, 1, 1)},
     description="DAG that outputs Airbyte Hostname",
     schedule="0 0 1 */12 *",
     tags=["version_1"],
     catchup=False,
 )
 def connections_dag():
-    echo_airbyte_host = DatacovesBashOperator(
-        task_id="echo_airbyte_host",
-        bash_command=f"echo 'Airbyte hostname is {airbyte_connection.host}'",
-    )
+    
+    @task.datacoves_bash()
+    def echo_airbyte_host():
+        airbyte_connection = Connection.get_connection_from_secrets(conn_id="AIRBYTE_CONNECTION") 
+        return f"echo 'Airbyte hostname is {airbyte_connection.host}'"
 
-dag = connections_dag()
+    echo_airbyte_host()
+
+connections_dag()
 ```

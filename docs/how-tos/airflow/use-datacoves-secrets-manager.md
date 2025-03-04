@@ -10,7 +10,7 @@ Once you save your variable in the Datacoves Secret Manager you are ready to use
 
 1. AWS Secrets Manager (If configured)
 2. Datacoves Secrets Manager
-3. Airflow environment variables
+3. Airflow variables
 
 Once a variable is found Airflow will stop its search. 
 
@@ -20,53 +20,42 @@ Once a variable is found Airflow will stop its search.
 
 There are some best practices that we recommend when using the Datacoves Secrets manager which will improve performance and cost.
 
-1. Always call your `Variable.get` from within the `@task` decorator. This ensures the variable is only fetched at runtime.
-2. Make use of prefixes like `datacoves_` to help you identify and debug your variables. eg) `datacoves_mayras_secret`
+1. Always call your `Variable.get` from within the Datacoves Task Decorators. This ensures the variable is only fetched at runtime.
+2. Make use of prefixes based on where your variable is stored like `datacoves_`, `aws_`, `airflow_` and so on to help you identify and debug your variables. eg) `datacoves_mayras_secret` seen in the example below. 
 
 
 ```python
-import datetime
 from airflow.decorators import dag, task
-from operators.datacoves.dbt import DatacovesDbtOperator
+from pendulum import datetime
+from airflow.models import Variable
+
+doc = """## Datacoves Bash Decorator DAG
+This DAG is a sample using the Datacoves decorators with variable calls."""
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
-        "owner": "Noel Gomez",
-        "email": "gomezn@example.com",
+        "start_date": datetime(2024, 1, 1),
+        "owner": "Mayra Pena",
+        "email": "Mayra @example.com",
         "email_on_failure": True,
     },
-    description="Sample DAG for dbt build",
-    schedule_interval="0 0 1 */12 *",
-    tags=["version_3"],
     catchup=False,
+    tags=["version_1"],
+    description="Testing task decorators",
+    schedule_interval="0 0 1 */12 *",
 )
-def tester_dag():
+def task_decorators_example():
 
-    @task
-    def get_variable():
-        from airflow.models import Variable
-        # Fetch the variable from Airflow's Variables
-        my_var = Variable.get("datacoves_mayras_secret")
-        return my_var  # Return the value for downstream tasks
+    @task.datacoves_bash
+    def calling_vars_in_decorators() -> str:
+        my_var = Variable.get("datacoves_mayras_secret") # Call variable within @task.datacoves_bash
+        return f"My variable is: {my_var}"
 
-    fetched_variable = get_variable()
+    calling_vars_in_decorator() # Call task function
 
-    # Task to run dbt using the DatacovesDbtOperator and pass the fetched variable
-    @task
-    def run_dbt_task(dbt_var):
-        # Use the fetched variable in the dbt command
-        DatacovesDbtOperator(
-            task_id="run_dbt",
-            bash_command=f"dbt run -s personal_loans --vars '{{my_var: \"{fetched_variable}\"}}'"
-        )
-
-    run_dbt_task(dbt_var = fetched_variable)
-
-dag = tester_dag()
-
-
-
+# Invoke Dag
+dag = task_decorators_example()
+dag.doc_md = doc
 ```
 
 >[!TIP]To auto mask your secret you can use `secret` or `password` in the secret name since this will set `hide_sensitive_var_conn_fields` to True. eg) aws_mayras_password. Please see [this documentation](https://www.astronomer.io/docs/learn/airflow-variables#hide-sensitive-information-in-airflow-variables) for a full list of masking words.

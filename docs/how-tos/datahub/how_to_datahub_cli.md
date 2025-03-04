@@ -22,7 +22,7 @@ datahub init
  http://{environment-slug}-datahub-datahub-gms:8080
  ```
 
- >[!TIP] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`
+ >[!TIP] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`. Cross environment access is available. ie) You can access Datahub in in Prod from the Dev environment. Just be sure to use the environment slug where Datahub is hosted.
 
 ![Environment slug](assets/datahub-env-slug.png)
 
@@ -53,10 +53,6 @@ Next, you will be prompted to provide a DataHub access token to authenticate you
 ![DataHub copy token](assets/datahub-copy-token.png)
 
 7. Go back to the tab were you have VS Code terminal waiting for your input and paste the copied token. Press Enter.
-
-8. You can validate that the connection was correctly configured by running `datahub check server-config`:
-
-![DataHub check](assets/datahub-check.png)
 
 ## Useful commands
 

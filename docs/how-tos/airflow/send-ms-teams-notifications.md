@@ -80,14 +80,13 @@ To send MS Teams notifications, in the Airflow DAG we need to import the appropr
 ### Python version
 
 ```python
-import datetime
-from airflow.decorators import dag
-from operators.datacoves.dbt import DatacovesDbtOperator
+from pendulum import datetime
+from airflow.decorators import dag, task
 from notifiers.datacoves.ms_teams import MSTeamsNotifier
 
 @dag(
     default_args={
-        "start_date": datetime.datetime(2023, 1, 1, 0, 0),
+        "start_date": datetime(2024, 1, 1),
         "owner": "Noel Gomez",
         "email": "gomezn@example.com",
         "email_on_failure": True,
@@ -97,16 +96,20 @@ from notifiers.datacoves.ms_teams import MSTeamsNotifier
     tags=["version_2", "ms_teams_notification", "blue_green"],
     catchup=False,
     on_success_callback=MSTeamsNotifier(
-      connection_id="MS_TEAMS", # This is redundant if using 'ms teams' as Integration
-      message="DAG {{ dag.dag_id }} Succeeded"),
+        connection_id="MS_TEAMS",  # ✅ If using 'ms teams' as an Integration, this is optional
+        message="DAG {{ dag.dag_id }} Succeeded"
+    ),
     on_failure_callback=MSTeamsNotifier(message="DAG {{ dag.dag_id }} Failed"),
 )
 def dbt_run():
-    transform = DatacovesDbtOperator(
-        task_id="transform", bash_command="dbt run -s personal_loans"
-    )
 
-dag = yaml_teams_dag()
+    @task.datacoves_dbt(connection_id="main")  
+    def transform():
+        return "dbt run -s personal_loans"
+
+    transform() 
+
+dag = dbt_run()
 ```
 
 > [!NOTE]Quotation marks are not needed when setting the custom message. However, making use of Jinja in a YAML file requires the message to be wrapped quotations to be parsed properly. eg) "{{ dag.dag_id }} failed"
@@ -120,7 +123,7 @@ tags:
   - version_2
   - ms_teams_notification
 default_args:
-  start_date: 2023-01-01
+  start_date: 2024-01-01
   owner: Noel Gomez
   # Replace with the email of the recipient for failures
   email: gomezn@example.com
