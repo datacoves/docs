@@ -39,7 +39,7 @@ eg) `yml_dbt_dag.yml` generates a dag named `yml_dbt_dag`
 
 Let's create our first DAG using YAML. 
 
-**Step 1**: Create a new file named `my_first_yml.py` in your `orchestrate/dags` folder.
+**Step 1**: Create a new file named `my_first_yml.yml` in your `orchestrate/dags_yml_definition` folder.
 
 **Step 2:** Add the following YAML to your file and be sure to change 
 
