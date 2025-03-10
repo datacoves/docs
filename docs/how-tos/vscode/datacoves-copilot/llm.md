@@ -1,6 +1,6 @@
-# Working with an LLM in Datacoves
+# Working with an LLM in Datacoves Copilot
 
-Once you have [configured your LLM](/how-tos/vscode/ai/llm-config.md), working with the AI chat is a breeze! 
+Once you have [configured your LLM](/how-tos/vscode/datacoves-copilot/llm-config.md), working with the AI chat is a breeze! 
 
 ## Pre-configured presets
 
@@ -19,7 +19,7 @@ Current out of the box presents include:
 
 To use your LLM head to the Datacoves Power User extension and open up `Copilot`. 
 
-<img src="/how-tos/vscode/ai/assets/llm_menu.png" alt="LLM Menu" width="250" height="500">
+<img src="/how-tos/vscode/datacoves-copilot/assets/llm_menu.png" alt="LLM Menu" width="250" height="500">
 
 ### Provide files for context 
 The most important thing to remember is providing context to the LLM. In order to do this simply open up the file you wish to work with.
