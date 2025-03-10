@@ -42,12 +42,12 @@ Datacoves Copilot makes copying AI generated code simple with 3 options.
 ![Code Options](assets/llm_code_options.png)
 
 ### Replace
-Replace the entire code file with the llm code.
+Replace the entire code file with the LLM code.
 
 ![llm Replace](assets/llm_replace.gif)
 
 ### Insert 
-Insert llm code into your file.
+Insert LLM code into your file.
 
 ![llm Insert](assets/llm_insert.gif)
 
