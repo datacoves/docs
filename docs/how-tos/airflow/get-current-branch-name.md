@@ -6,7 +6,7 @@ To retrieve the current branch name in a Git repository.
 
 
 ``` bash
-cat /opt/airflow/dags/.git/HEAD | sed 's~ref: refs/heads/~~
+cat /opt/airflow/dags/.git/HEAD | sed 's~ref: refs/heads/~~'
 ```
 
 ### This command consists of two parts:

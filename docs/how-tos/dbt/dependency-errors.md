@@ -35,32 +35,34 @@ RuntimeError: Found a cycle: model.balboa.my_model --> model.balboa.some_model.v
 Common strategies:
 
 **Introduce Intermediate Models**
-   ```sql
-   -- Instead of direct circular reference
-   -- model_a.sql
-   select * from {{ ref('model_b') }}
-   
-   -- model_b.sql
-   select * from {{ ref('model_a') }}
-   
-   -- Create intermediate model
-   -- model_a_intermediate.sql
-   select * from raw_data
-   
-   -- model_a.sql
-   select * from {{ ref('model_a_intermediate') }}
-   
-   -- model_b.sql
-   select * from {{ ref('model_a') }}
-   ```
+
+```sql
+-- Instead of direct circular reference
+-- model_a.sql
+select * from {{ ref('model_b') }}
+
+-- model_b.sql
+select * from {{ ref('model_a') }}
+
+-- Create intermediate model
+-- model_a_intermediate.sql
+select * from raw_data
+
+-- model_a.sql
+select * from {{ ref('model_a_intermediate') }}
+
+-- model_b.sql
+select * from {{ ref('model_a') }}
+```
 
 **Use the `{{ this }}` Reference**
-   ```sql
-   -- For self-referencing models
-   with current_data as (
-     select * from {{ this }}
-   )
-   ```
+
+```sql
+-- For self-referencing models
+with current_data as (
+   select * from {{ this }}
+)
+```
 
 ### Restructure Model Relationships
 

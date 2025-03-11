@@ -3,6 +3,7 @@
 Getting notifications when there is a failure is critical for data teams and Airflow allows multiple ways to keep users informed about the status of a DAG.
 
 This page will show you how to:
+
 - Use the Datacoves default SMTP 
 - Add the integration to your environment
 - Create a custom smtp Integration for Airflow (optional)
@@ -153,7 +154,8 @@ nodes:
 ```
 
 ## DRY default_args 
->[!TIP]We recommend placing your default_args in its own file and importing it for reusability. In the example below we created a file inside of orchestrate/utils/
+
+>[!TIP] We recommend placing your default_args in its own file and importing it for reusability. In the example below we created a file inside of orchestrate/utils/
 
 ```python
 # orchestrate/utils/default_args.py

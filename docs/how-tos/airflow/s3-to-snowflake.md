@@ -14,14 +14,14 @@ You cannot go from a column containing `NUMBER` values to `VARCHAR`, but you can
 
 **Step 2:** Create a custom file format for the data that you are planning to load. In this example we are using a custom CSV file format. 
 
-```
+```sql
 CREATE OR REPLACE FILE FORMAT MY_CSV_FORMAT
 TYPE = 'CSV' 
 PARSE_HEADER = TRUE
 ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE;
 ```
 **Step 3:** Now we will create a Snowflake stage and link our custom file format to it. 
-```
+```sql
 CREATE OR REPLACE STAGE TEST_STAGE
     FILE_FORMAT = MY_CSV_FORMAT;
 ```
@@ -34,14 +34,14 @@ This example will use SnowSQL and our data looks like this:
 
 The SnowSQL command to upload the file to the Snowflake stage is below: 
 ```
->PUT file://test_file.csv @TEST_STAGE;
+PUT file://test_file.csv @TEST_STAGE;
 ```
 
 Where test_file.csv is in the same folder from where we are running the SnowSQL command. 
 
 **Step 5:** Once the file has been uploaded to the test stage, we create the initial table using it as a template and enabling schema evolution. 
 
-```
+```sql
 CREATE OR REPLACE TABLE TEST_TABLE
     ENABLE_SCHEMA_EVOLUTION== TRUE
     USING TEMPLATE (
@@ -65,7 +65,7 @@ However, the table does not have any data loaded into it.
 
 **Step 6:** To load the data from the file we used as a template we use the following COPY INTO SQL. 
 
-```
+```sql
 COPY INTO TEST_TABLE
     FROM '@TEST_STAGE/test_file.csv.gz'
     FILE_FORMAT =  'my_csv_format'
@@ -87,7 +87,7 @@ PUT files://test_file_copy.csv @TEST_STAGE;
 ```
 
 **Step 8:** Now we can run another COPY INTO statement that references the new file. 
-```
+```sql
 COPY INTO TEST_TABLE
     FROM '@TEST_STAGE/test_file_copy.csv.gz'
     FILE_FORMAT = 'my_csv_format'
@@ -104,13 +104,13 @@ If the data that you want to load is in JSON format and the schema is likely to 
 
 **Step 1:** 1. Create a Snowflake table with a single variant column. 
 
-```
+```sql
 CREATE OR REPLACE TABLE VARIABLE_TABLE (MAIN_COLUMN VARIANT);
 ```
 
 **Step 2:**  Now create a custom file format for the JSON data.
 
-```
+```sql
 CREATE OR REPLACE FILE FORMAT MY_JSON_FORMAT
     TYPE = 'JSON'
     STRIP_OUTER_ARRAY = TRUE;
@@ -118,14 +118,14 @@ CREATE OR REPLACE FILE FORMAT MY_JSON_FORMAT
 
 **Step 3:** After this we create a Snowflake stage that uses the JSON custom file format. 
 
-```
+```sql
 CREATE OR REPLACE STAGE JSON_STAGE
     FILE_FORMAT = MY_JSON_FORMAT;
 ```
 
 **Step 4:** We can now load JSON files that have been staged using the following COPY INTO command. 
 
-```
+```sql
 COPY INTO VARIANT_TABLE 
     FROM @JSON_STAGE
 ```

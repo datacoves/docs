@@ -38,7 +38,9 @@ If you do not have admin privileges, work with an admin to get the token. Follow
 ## Handling Databricks Variables in Airflow
 
 It is best practice to use Airflow variables for values that may need to change in your Airflow DAG. This allows for easy updates without redeployment of your Airflow code.
-> [!NOTE] It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
+
+It is possible to hardcode these two variables in your DAG if you don’t see them needing to be changed.
+
 - **DATABRICKS_CLUSTER_ID**: Your databricks Cluster ID
 - **MY_NOTEBOOK_REPO_PATH**: This should be a meaningful name as you may have many notebooks you wish to trigger eg) INSERT_INTO_RAW_REPO_PATH
 

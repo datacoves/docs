@@ -77,6 +77,8 @@ To send MS Teams notifications, in the Airflow DAG we need to import the appropr
 - `message`: the body of the message
 - `theme_color`: theme color of the MS Teams card
 
+>[!ATTENTION] `on_failure_callback` will throw an error if using lists causing your task to fail.
+
 ### Python version
 
 ```python

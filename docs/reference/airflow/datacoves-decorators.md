@@ -75,6 +75,7 @@ The examples above use the Airflow connection `main` which is added automaticall
 >[!NOTE] The following Airflow tables are synced by default: ab_permission, ab_role, ab_user, dag, dag_run, dag_tag, import_error, job, task_fail, task_instance. 
 
 **Params:**
+
 - `db_type`: The data warehouse you are using. Currently supports `redshift` or `snowflake`.
 - `destination_schema`: The destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: `airflow-{datacoves environment slug}` for example `airflow-qwe123`.
 - `connection_id`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 

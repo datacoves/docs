@@ -46,71 +46,6 @@ generate:
 
 ## Example DAG
 
-### Fields reference
-- **extract_and_load_fivetran**: The name of the task group. This can be named whatever you like and will show up in airflow.
-![Extract and Load DAG](assets/extract_load_airflow_dag.png)
-- **tooltip**: The tooltip argument allows you to provide explanatory text or helpful hints about specific elements in the Airflow UI
-- **tasks**: Define all of your tasks within the task group.
-
-You will need to define two operators: `fivetran_provider.operators.fivetran.FivetranOperator` and `fivetran_provider.sensors.fivetran.FivetranSensor`
-- **example_task_trigger**: Name your trigger task accordingly and define arguments below.
-  - **operator**: `fivetran_provider.operators.fivetran.FivetranOperator`
-  - **connector_id**: Find in Fivetran UI. Select your desired source. Click into `Setup` and locate the `Fivetran Connector ID`
-  ![Fivetran Connection ID](assets/fivetran_connector_id.png)
-  - **do_xcom_push**:  Indicate that the output of the task should be sent to XCom, making it available for other tasks to use.
-  - **fivetran_conn_id**: This is the `connection_id` that was configured above in the Fivetran UI as seen [above](#id=fivetran-connection).
-- **example_task_sensor**: Name your Sensor task accordingly and define arguments below.
-  -  **operator**: `fivetran_provider.sensors.fivetran.FivetranSensor`
-  -  **connector_id**: Find in Fivetran UI.
-  -  **poke_interval**: The poke interval is the time in seconds that the sensor waits before rechecking if the connector is done loading data. Defaults to 60.
-  - **fivetran_conn_id**: This is the `connection_id` that was configured above in the Fivetran UI as seen [above](#id=fivetran-connection).
-  - **dependencies**: A list of tasks this task depends on.
-### YAML version
-
-```yaml
-description: "Loan Run"
-schedule: "0 0 1 */12 *"
-tags:
-  - version_1
-default_args:
-  start_date: 2024-01-01
-catchup: false
-
-# DAG Tasks
-nodes:
-  # The name of the task group. Will populate in Airflow DAG
-  extract_and_load_fivetran:
-    type: task_group
-    # Change to fit your use case
-    tooltip: "Fivetran Extract and Load"
-    tasks:
-      # Rename with your desired task name. We recommend the suffix _trigger
-      datacoves_snowflake_google_analytics_4_trigger:
-        operator: fivetran_provider_async.operators.FivetranOperator
-        # Change this to your specific connector ID 
-        connector_id: speak_menial
-        do_xcom_push: true
-        fivetran_conn_id: fivetran_connection
-      # Rename with your desired task name. We recommend the suffix _sensor
-      datacoves_snowflake_google_analytics_4_sensor:
-        operator:fivetran_provider_async.sensors.FivetranSensor
-        # Change this to your specific connector ID 
-        connector_id: speak_menial
-        # Set your desired poke interval. Defaults to 60.
-        poke_interval: 60
-        fivetran_conn_id: fivetran_connection
-        # Set your dependencies for tasks. This task depends on datacoves_snowflake_google_analytics_4_trigger
-        dependencies:
-          - datacoves_snowflake_google_analytics_4_trigger
-
-  transform:
-    operator: operators.datacoves.dbt.DatacovesDbtOperator
-    type: task
-    # The daily_run_fivetran tag must be set in the source.yml
-    bash_command: "dbt build -s 'tag:daily_run_fivetran+'"
-
-    dependencies: ["extract_and_load_fivetran"]
-```
 ### Python version
 
 ```python
@@ -160,4 +95,71 @@ def daily_loan_run():
     transform_task.set_upstream([tg_extract_and_load_fivetran])
 
 dag = daily_loan_run()
+```
+
+### Fields reference
+- **extract_and_load_fivetran**: The name of the task group. This can be named whatever you like and will show up in airflow.
+![Extract and Load DAG](assets/extract_load_airflow_dag.png)
+- **tooltip**: The tooltip argument allows you to provide explanatory text or helpful hints about specific elements in the Airflow UI
+- **tasks**: Define all of your tasks within the task group.
+
+You will need to define two operators: `fivetran_provider.operators.fivetran.FivetranOperator` and `fivetran_provider.sensors.fivetran.FivetranSensor`
+- **example_task_trigger**: Name your trigger task accordingly and define arguments below.
+  - **operator**: `fivetran_provider.operators.fivetran.FivetranOperator`
+  - **connector_id**: Find in Fivetran UI. Select your desired source. Click into `Setup` and locate the `Fivetran Connector ID`
+  ![Fivetran Connection ID](assets/fivetran_connector_id.png)
+  - **do_xcom_push**:  Indicate that the output of the task should be sent to XCom, making it available for other tasks to use.
+  - **fivetran_conn_id**: This is the `connection_id` that was configured above in the Fivetran UI as seen [above](#id=fivetran-connection).
+- **example_task_sensor**: Name your Sensor task accordingly and define arguments below.
+  -  **operator**: `fivetran_provider.sensors.fivetran.FivetranSensor`
+  -  **connector_id**: Find in Fivetran UI.
+  -  **poke_interval**: The poke interval is the time in seconds that the sensor waits before rechecking if the connector is done loading data. Defaults to 60.
+  - **fivetran_conn_id**: This is the `connection_id` that was configured above in the Fivetran UI as seen [above](#id=fivetran-connection).
+  - **dependencies**: A list of tasks this task depends on.
+  
+### YAML version
+
+```yaml
+description: "Loan Run"
+schedule: "0 0 1 */12 *"
+tags:
+  - version_1
+default_args:
+  start_date: 2024-01-01
+catchup: false
+
+# DAG Tasks
+nodes:
+  # The name of the task group. Will populate in Airflow DAG
+  extract_and_load_fivetran:
+    type: task_group
+    # Change to fit your use case
+    tooltip: "Fivetran Extract and Load"
+    tasks:
+      # Rename with your desired task name. We recommend the suffix _trigger
+      datacoves_snowflake_google_analytics_4_trigger:
+        operator: fivetran_provider_async.operators.FivetranOperator
+        # Change this to your specific connector ID 
+        connector_id: speak_menial
+        do_xcom_push: true
+        fivetran_conn_id: fivetran_connection
+      # Rename with your desired task name. We recommend the suffix _sensor
+      datacoves_snowflake_google_analytics_4_sensor:
+        operator:fivetran_provider_async.sensors.FivetranSensor
+        # Change this to your specific connector ID 
+        connector_id: speak_menial
+        # Set your desired poke interval. Defaults to 60.
+        poke_interval: 60
+        fivetran_conn_id: fivetran_connection
+        # Set your dependencies for tasks. This task depends on datacoves_snowflake_google_analytics_4_trigger
+        dependencies:
+          - datacoves_snowflake_google_analytics_4_trigger
+
+  transform:
+    operator: operators.datacoves.dbt.DatacovesDbtOperator
+    type: task
+    # The daily_run_fivetran tag must be set in the source.yml
+    bash_command: "dbt build -s 'tag:daily_run_fivetran+'"
+
+    dependencies: ["extract_and_load_fivetran"]
 ```

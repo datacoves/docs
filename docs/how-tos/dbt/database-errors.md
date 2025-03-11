@@ -31,42 +31,43 @@ Then:
 
 Examine the compiled SQL:
 
-1. Review the compiled SQL for:
-   - Correct table references
-   - Valid column names
-   - Proper SQL syntax
-   - Correct schema references
+- Correct table references
+- Valid column names
+- Proper SQL syntax
+- Correct schema references
 
 ## Query Optimization Tips
 
 ### Common Performance Patterns
 
 1. Replace subqueries with CTEs:
-   ```sql
-   -- Instead of this
-   SELECT *
-   FROM table_a
-   WHERE id IN (SELECT id FROM table_b WHERE status = 'active')
 
-   -- Use this
-   WITH active_ids AS (
-     SELECT id 
-     FROM table_b 
-     WHERE status = 'active'
-   )
-   SELECT *
-   FROM table_a
-   WHERE id IN (SELECT id FROM active_ids)
-   ```
+```sql
+-- Instead of this
+SELECT *
+FROM table_a
+WHERE id IN (SELECT id FROM table_b WHERE status = 'active')
+
+-- Use this
+WITH active_ids AS (
+   SELECT id 
+   FROM table_b 
+   WHERE status = 'active'
+)
+SELECT *
+FROM table_a
+WHERE id IN (SELECT id FROM active_ids)
+```
 
 2. Use appropriate materialization:
-   ```yaml
-   {{ config(
-       materialized='incremental',
-       unique_key='id',
-       incremental_strategy='merge'
-   ) }}
-   ```
+
+```yaml
+{{ config(
+   materialized='incremental',
+   unique_key='id',
+   incremental_strategy='merge'
+) }}
+```
    
 3. Check that `ref` and `source` macros compile as expected:
 
