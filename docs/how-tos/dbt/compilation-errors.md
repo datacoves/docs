@@ -23,31 +23,33 @@ dbt deps
 Review your Jinja code for common issues:
 
 1. Verify bracket closure:
-   ```jinja
-    {# Correct #}
-    {{ ref('model_name') }}
 
-    {# Incorrect, missing ) #}
-    {{ ref('model_name' }}
+```jinja
+{# Correct #}
+{{ ref('model_name') }}
 
-    {# Incorrect, missing } #}
-    {{ ref('model_name') }
-    
-    {# Incorrect, missing { and } #}
-    { ref('model_name') }
-   ```
+{# Incorrect, missing ) #}
+{{ ref('model_name' }}
+
+{# Incorrect, missing } #}
+{{ ref('model_name') }
+
+{# Incorrect, missing { and } #}
+{ ref('model_name') }
+```
 
 2. Check macro syntax:
-   ```jinja
-    {# Correct #}
-    {% set my_var = 'value' %}
-    
-    {# Incorrect, missing } #}
-    {% set my_var = 'value' %
-    
-    {# Incorrect, uses {{ }} instead of {% %} #}
-    {{ set my_var = 'value' }}
-   ```
+
+```jinja
+ {# Correct #}
+ {% set my_var = 'value' %}
+ 
+ {# Incorrect, missing } #}
+ {% set my_var = 'value' %
+ 
+ {# Incorrect, uses {{ }} instead of {% %} #}
+ {{ set my_var = 'value' }}
+```
 
 ### Validate Model References
 
@@ -55,7 +57,7 @@ Ensure all referenced models and sources exist:
 
 1. Check spelling of model names in `ref()` functions
 2. Check spelling of sources and tables in `source()` functions
-3. Check name caseing. It is a best practice to name everything in lower case to avoid issues.
+3. Check name casing. It is a best practice to name everything in lower case to avoid issues.
 
 ### Review YAML Formatting
 
@@ -86,11 +88,11 @@ YAML files must follow strict formatting rules:
          - not_null
           - accepted_values:
             values: ['placed', 'shipped', 'completed', 'returned']
-   ```
+```
 
- A good way to think of indentation is "Is the property I am adding a sub-set of the prior item?". This is why the `name:` of each model is indented below models.
+A good way to think of indentation is "Is the property I am adding a sub-set of the prior item?". This is why the `name:` of each model is indented below models.
  
- The same is true for columns and tests. Notice that `values:` is indented below `accepted_values:` because those are properties of that specific test.
+The same is true for columns and tests. Notice that `values:` is indented below `accepted_values:` because those are properties of that specific test.
  
 2. Verify list formatting
 

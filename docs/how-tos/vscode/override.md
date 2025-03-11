@@ -73,7 +73,7 @@ Below you can see the structure of the command entry.
   
 - **color**: To change the color of the text for the button edit the "color" variable. This can be a color name or a hex code eg) "purple" or "#800080"
   
--**showButton**: You can customize the buttons displayed in the status bar to fit your needs. To do this simply change "showButton": `true` for the button to populate in the bar and `false` to remove the button from the bar.
+- **showButton**: You can customize the buttons displayed in the status bar to fit your needs. To do this simply change "showButton": `true` for the button to populate in the bar and `false` to remove the button from the bar.
   
 - **Tool tips**: To change the hover message, edit the "tooltip" variable and add a string with the message you'd like to display upon hovering. If you decide to add a button to the status bar that was not there by default, its tooltip will likely be `null`. This will default to `"betterStatusBar.<id>"`
 

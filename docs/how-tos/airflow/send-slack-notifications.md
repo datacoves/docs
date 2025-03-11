@@ -2,13 +2,13 @@
 
 As stated in [how to send email notifications](/how-tos/airflow/send-emails.md), Airflow allows multiple ways to inform users about DAGs and tasks status.
 
-Furthermore, it's important to understand Airflow handles these 4 status (`failure`, `retry`, `success` and `missed SLA`) via callbacks. You can learn more about them [here](https://airflow.apache.org/docs/apache-airflow/2.2.1/logging-monitoring/callbacks.html)
+Furthermore, it's important to understand Airflow handles these 4 status (`failure`, `retry`, `success` and `missed SLA`) via callbacks. You can learn more about them [here](https://airflow.apache.org/docs/apache-airflow/2.2.1/logging-monitoring/callbacks.html).
 
 Below we explain how to use those callbacks to send Slack notifications.
 
 ## Prepare Slack
 
-To send messages in Slack, you must first create a Slack App, which will act as a "bot" that sends messages. Visit [https://api.slack.com/apps](https://api.slack.com/apps) to start
+To send messages in Slack, you must first create a Slack App, which will act as a "bot" that sends messages. Visit [https://api.slack.com/apps](https://api.slack.com/apps) to start.
 
 ![Slack Apps](./assets/slack_apps.png)
 
@@ -90,6 +90,8 @@ To send Slack notifications, in the Airflow DAG we need to import the appropriat
 
 - `slack_webhook_conn_id`: the name of the Datacoves Integration created above
 - `text`: to customize the message sent to Slack.
+
+>[!ATTENTION] `on_failure_callback` will throw an error if using lists causing your task to fail.
 
 ### Python version
 

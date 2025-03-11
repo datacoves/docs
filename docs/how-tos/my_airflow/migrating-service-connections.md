@@ -17,7 +17,7 @@ Launch your [My Airflow](/how-tos/my_airflow/start-my-airflow.md) instance to be
 
 Run the [My Import](/how-tos/my_airflow/my-import.md) process to import variables and connections from **Team Airflow** to **My Airflow**. 
 
->[!Note] Secret values will not be automatically transferred and must be manually provided via the command line. `datacoves my import` only imports connections created by a Datacoves service connections, all other connections must be imported manually.
+>[!NOTE] Secret values will not be automatically transferred and must be manually provided via the command line. `datacoves my import` only imports connections created by a Datacoves service connections, all other connections must be imported manually.
 
 **When prompted to add secret values:**
 

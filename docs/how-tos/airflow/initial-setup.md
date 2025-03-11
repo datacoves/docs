@@ -48,6 +48,7 @@ You must create the s3 bucket and IAM user before this step.
 Once configured, you will need to configure your CI/CD process to clone your project into the S3 bucket.
 
 ### Logs Configuration - Private Deployment ONLY. Not applicable in SaaS.
+
 >[!ATTENTION] Log Storage limit: 15 days. Airflow logs are not stored indefinitely and will be deleted after 15 days. 
 
 There are **2 options** for logs - **EFS** and **S3**. Below you will see the fields required for each:

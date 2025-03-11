@@ -67,6 +67,7 @@ Please, follow the [AWS Secrets Manager documentation](https://docs.aws.amazon.c
 ![Project Secrets Backend](assets/edit_project_secrets_backend.jpg)
 
 **This secrets backend will require the following fields:**
+
 - **connections_lookup_pattern** We recommend setting this to `"^aws_"` to lower the number of API calls made. Only connections prefixed with `aws_` will be searched for in AWS Secrets Manger. 
 - **variables_lookup_pattern**  We recommend setting this to `"^aws_"` to lower the number of API calls made. Only variables prefixed with `aws_` will be searched for in AWS Secrets Manger.
 (For both of the lookup patterns they can be changed to whatever RegEx expression you choose. The important thing to note is that lookup patterns are recommended to lower the amount of API calls to AWS Secrets Manager.)

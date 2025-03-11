@@ -4,6 +4,7 @@ For security purposes, connections and variables **do not** auto populate from T
 
 
 ## datacoves my import
+
 >[!NOTE] You must have [initiated My Airflow](how-tos/my_airflow/start-my-airflow.md) before attempting to use the `datacoves my import` command. 
 
 This command will import your Data Warehouse connections and Airflow variables over from Team Airflow to My Airflow. While the tool will do most of the work for you, sensitive variables will not be ported over for security reasons. You will be prompted to provide those secrets in the terminal.

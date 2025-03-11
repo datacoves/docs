@@ -19,7 +19,7 @@ To ingest dbt metadata, configure the dbt source in DataHub. Refer to the [offic
 
 The following sample demonstrates how to configure a dbt ingestion source in DataHub. 
 
->[!Note] This configuration requires a DataHub secret (`S3_secret_key`) for secure access to S3. Ensure that this secret is created before proceeding.
+>[!NOTE] This configuration requires a DataHub secret (`S3_secret_key`) for secure access to S3. Ensure that this secret is created before proceeding.
 
 ```yaml
 source:

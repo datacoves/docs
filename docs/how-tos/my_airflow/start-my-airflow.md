@@ -1,6 +1,7 @@
 # How to use My Airflow
 
 ## Spin up your individual Airflow instance 
+
 >[!ATTENTION] Unlike Team Airflow which is always running, My Airflow will spin down after 4 hours of inactivity. If you are an existing Datacoves user you may need to [migrate your environment variable based service connections](/how-tos/my_airflow/migrating-service-connections.md). Users need both the sysadmin and the developer [groups](reference/admin-menu/groups.md) to access My Airflow.
 
 My Airflow is a single instance allocated to a user. This allows the user to test their DAG in isolation before pushing it to Team Airflow for more robust testing. To spin up your own My Airflow:
