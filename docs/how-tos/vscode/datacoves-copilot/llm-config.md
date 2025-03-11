@@ -16,6 +16,7 @@ Creating a [Datacoves Secret](/how-tos/datacoves/how_to_secrets.md) requires som
     "OPENAI_API_KEY": "Your key here"
 }
 ``` 
+
   - **Azure Open AI:** This requires two credentials. Head to [ai.azure.com](https://ai.azure.com) to find your credentials under the [Deployments](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/working-with-models?tabs=powershell#model-deployment-upgrade-configuration) tab. 
 
 ```json
