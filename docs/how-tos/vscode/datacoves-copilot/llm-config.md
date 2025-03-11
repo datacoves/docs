@@ -15,7 +15,9 @@ Creating a [Datacoves Secret](/how-tos/datacoves/how_to_secrets.md) requires som
     }
     ``` 
   - **Azure Open AI:** This requires two credentials. Head to [ai.azure.com](https://ai.azure.com) to find your credentials under the [Deployments](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/working-with-models?tabs=powershell#model-deployment-upgrade-configuration) tab. 
-    >[!Note] We currently only support the 4o model gpt model.
+
+  >[!Note] We currently only support the 4o model gpt model.
+
   ```json
     {
         "AZURE_OPENAI_ENDPOINT": "Your endpoint here",
