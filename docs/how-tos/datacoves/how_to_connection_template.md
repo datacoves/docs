@@ -16,14 +16,12 @@ To create a new connection template click the `Create Connection Template` in th
 - **Enabled for users** This flag indicates whether this template will be available for users or only for service accounts. To simplify the end-user experience, it is best to show them only the templates they should use when entering their database credentials. If enabled, a new field will appear:
 
 - **User field configuration** Defines how the DB connection `Username` field will be treated. It can be `provided` by the end-user or inferred using two strategies: from their email, or based on custom templates. The difference in these approaches will be noticed when the final user creates their respective connections in `Settings -> Database connections`
-  
->[!TIP]You cannot select the user-provided username if snowflake public key is automatically added to Snowflake by datacoves using: `_alter user \<some_user\> set rsa_public_kay = '\<some_key\>';`
 
   - **Email**: Use the users email as used to authenticate with Datacoves. In this case the format of the email must match in both Snowflake and Datacoves. For example, if the login in Snowflake is `Noel@example.com` but in Datacoves you authenticate with `noel@example.com` the emails will not match and authentication to Snowflake will fail. 
   ![Email](assets/connectiontemplates_email.jpg)
   - **Email (Uppercase)**: Use the email used to log into Datacoves, but transforms it to uppercase. 
   ![Email Uppercase](assets/connectiontemplates_email_uppercase.jpg)
-  - **Provided by user** With this strategy, the user will have free to enter the desired username when creating a connection.
+  - **Provided by user** With this strategy, the user will have free to enter the desired username when creating a connection. You cannot select `provided by user` if snowflake public key is automatically added to Snowflake by datacoves using: `_alter user \<some_user\> set rsa_public_kay = '\<some_key\>';`
   ![Provided by user](./assets/connectiontemplates_provided_by_user.png)
   - **Username from email** Defines the username field as read-only, pre-populating it with the user's email username (what comes before @domain.com)
   ![Inferred from email](./assets/connectiontemplates_inferred_from_email.png)
