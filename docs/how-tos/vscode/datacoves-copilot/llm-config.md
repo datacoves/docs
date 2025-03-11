@@ -11,19 +11,20 @@ Creating a [Datacoves Secret](/how-tos/datacoves/how_to_secrets.md) requires som
 - **Format:** Select `Raw JSON`  
 - **Value**: The value will vary based on the LLM you are utilizing.
   - **Open AI:** You only need your API key. Head to [Open AI](https://platform.openai.com/api-keys) to create your key. 
-    ```json
-    {
-        "OPENAI_API_KEY": "Your key here"
-    }
-    ``` 
+```json
+{
+    "OPENAI_API_KEY": "Your key here"
+}
+``` 
   - **Azure Open AI:** This requires two credentials. Head to [ai.azure.com](https://ai.azure.com) to find your credentials under the [Deployments](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/working-with-models?tabs=powershell#model-deployment-upgrade-configuration) tab. 
 
-    ```json
-      {
-          "AZURE_OPENAI_ENDPOINT": "Your endpoint here",
-          "AZURE_OPENAI_API_KEY"  : "Your key here"
-      }
-    ```
+```json
+{
+    "AZURE_OPENAI_ENDPOINT": "Your endpoint here",
+    "AZURE_OPENAI_API_KEY"  : "Your key here"
+}
+```
+
 - **Scope:** Select the desired scope, either `Project` or `Environment`. 
 - **Project/Environment:** Select the `Project` or `Environment` that will access this LLM.
 
