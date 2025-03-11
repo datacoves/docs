@@ -25,9 +25,12 @@ Once you enabled Airflow, click on the `Services configuration > Airflow Setting
   ![Airflow Settings](./assets/environments_airflow_config.gif)
 
 ### DAGs Sync Configuration
-There are **2 options** to choose from for your DAGs sync - **Git Sync** and **S3 Sync**. Each requires specific information to be provided during configuration. Our recommended default is Git Sync.
+
+There are **2 options** to choose from for your DAGs sync: **Git Sync** and **S3 Sync**. 
+Each requires specific information to be provided during configuration. Our recommended default is Git Sync.
 
 **Git Sync**
+
 - **Provider** Select `Git`
 - **Git branch name** The branch airflow will monitor for changes. If you have more than 1 environment (Development and Production), we suggest `airflow_development` for the development environment and `main` for the production environment. Note: You would need to create an  `airflow_development` branch in your repo. If only have 1 environment, then the `Git branch name` should be `main`. 
 

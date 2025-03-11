@@ -5,6 +5,7 @@
 Secrets are used to manage confidential information that are used by tools running in VSCode, or services like Airflow.
 
 Some uses could be:
+
 - Storing Airbyte connections credentials using `dbt-coves extract` and `dbt-coves load` commands.
 - Storing Airflow connections or variables used by Airflow DAGs
 

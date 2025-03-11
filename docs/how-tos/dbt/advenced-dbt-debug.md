@@ -79,6 +79,7 @@ export DBT_MACRO_DEBUGGING=1
 ```
 
 When the `debug()` macro is hit:
+
 1. Execution pauses
 2. Debugger opens
 3. You can inspect variables and other state
