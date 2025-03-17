@@ -1,7 +1,7 @@
 # How to Trigger a DAG using Datasets
 
 ## Overview
-This guide explains how to trigger Airflow DAGs with Datasets. DAGs can be triggered by a DAG or externally using the Airflow API. 
+This guide explains how to trigger Airflow DAGs with Datasets. DAGs can be triggered by another DAG using datasets or by an external process that sends a dataset event using the Airflow API.
 
 ## Producer DAG
 
@@ -202,6 +202,6 @@ dag = data_aware_consumer_dag()
 ```
 
 
->[!NOTE] Ensure the Dataset Exists in Airflow. If a dataset does not exist, triggering will fail.
+>[!NOTE] Ensure the Dataset you are sending an event to exists in Airflow. It will be created automatically when a DAG is created. If a dataset does not exist when the API event is sent, the API call will fail.
 
 
