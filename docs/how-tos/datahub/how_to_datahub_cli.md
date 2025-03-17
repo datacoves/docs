@@ -16,13 +16,25 @@ datahub init
 ```
 ![DataHub init](assets/datahub-init.png)
 
-2. When prompted, enter the DataHub host URL using the following pattern: 
+1. When prompted, enter the DataHub host URL. This will differ depending on which environment your Datahub instance is in.
+
+#### Development Environment 
+
+If your Datahub instance is within the Development environment use:
 
 ```bash
- http://{environment-slug}-datahub-datahub-gms:8080
- ```
+http://{environment-slug}-datahub-datahub-gms:8080
+```
 
- >[!TIP] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`. Cross environment access is available. ie) You can access Datahub in in Prod from the Dev environment. Just be sure to use the environment slug where Datahub is hosted.
+#### Cross Environment 
+
+You can access Datahub in Prod or QA from the Dev environment. This is considered cross environment access and requires the use the full url as seen below. The slug will be for the environment where Datahub is hosted (QA or Prod). 
+
+```bash
+http://<slug>-datahub-datahub-gms.dcw-<slug>:8080
+```
+
+>[!NOTE] The environment slug can be found next to your environment name on the top left corner of your Datacoves workspace. For example, the environment slug below is `DEV123`, so the URL would be: `http://dev123-datahub-datahub-gms:8080`.
 
 ![Environment slug](assets/datahub-env-slug.png)
 
