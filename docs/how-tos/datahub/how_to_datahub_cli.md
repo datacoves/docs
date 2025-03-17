@@ -16,7 +16,7 @@ datahub init
 ```
 ![DataHub init](assets/datahub-init.png)
 
-1. When prompted, enter the DataHub host URL. This will differ depending on which environment your Datahub instance is in.
+2. When prompted, enter the DataHub host URL. This will differ depending on which environment your Datahub instance is in.
 
 #### Development Environment 
 
