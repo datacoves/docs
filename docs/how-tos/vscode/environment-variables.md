@@ -70,11 +70,11 @@ Creating variables is simple. Add the key following the correct format and add t
 
 Deleting variables is also simple. Simply navigate to the Project or Environment settings. 
 
-### Step 1: Toggle the delete option or the red trashcan.
+### Step 1: Toggle the delete option or the red trashcan
 
 ### Step 2: Save Changes
 
-If you do not save changes, the variable will not be deleted
+If you do not save changes, the variable will not be deleted.
 
 ![Delete variables](assets/env_var_project_delete.png)
 
