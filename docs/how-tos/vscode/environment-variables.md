@@ -72,10 +72,9 @@ Deleting variables is also simple. Simply navigate to the Project or Environment
 
 ### Step 1: Toggle the delete option or the red trashcan.
 
-![Delete variables](assets/env_var_project_delete.png)
-
 ### Step 2: Save Changes
 
 If you do not save changes, the variable will not be deleted. 
 
 ![Delete variables](assets/env_var_project_delete.png)
+
