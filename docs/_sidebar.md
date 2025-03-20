@@ -89,6 +89,7 @@
       - [Databricks](/how-tos/vscode/databricks_setup.md)
       - [Redshift](/how-tos/vscode/redshift_setup.md)
       - [Snowflake](/how-tos/vscode/snowflake_setup.md)
+    - [Custom Environment Variables](/how-tos/vscode/environment-variables.md)
     - [Override VS Code settings](/how-tos/vscode/override.md)
     - [Reset User Env](/how-tos/vscode/reset-user-env.md)
     - [Reset Git](how-tos/vscode/reset-git.md)
