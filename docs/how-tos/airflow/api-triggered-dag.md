@@ -145,7 +145,8 @@ zip -g deployment-package.zip lambda_function.py
 
 ### Set Environment Variables
 
-   - Gather your [API credentials](how-tos/airflow/use-airflow-api.md#step-1-navigate-to-your-target-environment) Configure the following environment variables in the Lambda Function's Configuration:
+- Gather your [API credentials](how-tos/airflow/use-airflow-api.md#step-1-navigate-to-your-target-environment) Configure the following environment variables in the Lambda Function's Configuration:
+
      - `AIRFLOW_API_URL` (the API URL for Airflow)
      - `AIRFLOW_API_KEY` (the API key for authentication)
 
