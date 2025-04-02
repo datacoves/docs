@@ -40,13 +40,12 @@ Additionally, when an [Environment](/reference/admin-menu/environments.md) is cr
 | **Tool**      | **Required Roles** |
 |--------------|-------------------|
 | **Airbyte** | Must have **Admin, Sys Admin, or Developer** to use Airbyte. |
-| **Airflow** | Must have **Environment Admin or Project Admin** to extract variables. **Sys Admins** can see the **Admin menu** and create connections but **cannot access or add variables**. **Sys Admins & Developers** can trigger DAGs. |
+| **Team Airflow** | Must have **Environment Admin or Project Admin** to extract variables. **Sys Admins** can see the **Admin menu** and create connections but **cannot access or add variables**. **Sys Admins & Developers** can trigger DAGs. |
+| **My Airflow** | Must have **Environment Developer or Project Developer** and **Environment Sysadmin or Project Sysadmin** to access My Airflow. |
 | **DataHub** | Must have **Environment Admin or Project Admin** to create integrations. **Developers and Sys Admins** have **editor access in DataHub**. |
 | **dbt Docs** | Must have **Production Environment Developer or Viewer** to view **dbt docs** in production. **Developers** can run **local dbt-docs**. |
 | **Superset** | Must have **Environment Admin or Project Admin** to modify security settings. Developers can create and modify **Superset objects**. |
 
-
----
 ## Groups Listing
 
 ![Groups Listing](./assets/groups_listing.gif)
