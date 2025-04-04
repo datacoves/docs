@@ -28,8 +28,6 @@ Datacoves injects several environment variables into Apache Airflow to streamlin
 
 - **DATACOVES__PROJECT_SLUG**: Represents the unique identifier for the Datacoves project, e.g., `balboa-analytics-datacoves`.
 
-- **DATACOVES__REPO_PATH**: Specifies the path to the repository. Typically set to `/opt/airflow/dags/repo`.
-
 - **DATACOVES__SQLFLUFF_VERSION**: Indicates the version of SQLFluff in use, such as `3.1.1`.
 
 - **DATACOVES__VERSION**: Denotes the full version of Datacoves, e.g., `3.3.202503311754`.
