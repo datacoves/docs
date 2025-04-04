@@ -37,8 +37,3 @@ Datacoves injects several environment variables into Apache Airflow to streamlin
 - **DATACOVES__VERSION_MAJOR_MINOR__ENV**: Specifies the major and minor version numbers for the environment, e.g., `3.3`.
 
 - **DATACOVES__VERSION__ENV**: Indicates the full version of Datacoves for the environment, such as `3.3.202503311754`.
-
-
-```bash
-env| grep DATACOVES | sort
-```
