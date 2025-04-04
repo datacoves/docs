@@ -22,7 +22,7 @@ Datacoves injects several environment variables into Apache Airflow to streamlin
 
 - **DATACOVES__DBT_ADAPTER**: Specifies the dbt adapter in use, such as `snowflake`.
 
-- **DATACOVES__DBT_HOME**: Sets the relative path to the folder containing the `dbt_project.yml` file. Typically `/opt/airflow/dags/repo/transform`.
+- **DATACOVES__DBT_HOME**: Sets the relative path to the folder containing the `dbt_project.yml` file. Typically `transform/`.
 
 - **DATACOVES__DBT_PROFILE**: Indicates the dbt profile name, commonly set to `default`.
 
