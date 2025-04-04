@@ -18,7 +18,7 @@ Datacoves injects several environment variables into Apache Airflow to streamlin
 
 - **DATACOVES__AIRBYTE_PORT**: Indicates the port number for Airbyte. Typically set to `8001`.
 
-- **DATACOVES__AIRFLOW_DBT_PROFILE_PATH**: Defines the path to the dbt profile directory used by Airflow. Usually set to `automate/dbt`.
+- **DATACOVES__AIRFLOW_DBT_PROFILE_PATH**: Defines the path to the dbt profile directory used by Airflow when using environment variables for the the [service connection delivery mode.](/how-tos/datacoves/how_to_service_connections.md) Usually set to `automate/dbt`.
 
 - **DATACOVES__DBT_ADAPTER**: Specifies the dbt adapter in use, such as `snowflake`.
 
