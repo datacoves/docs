@@ -33,10 +33,13 @@ It includes tasks for demonstration purposes.
 from airflow.decorators import dag, task
 from pendulum import datetime
 ...
-
+@dag(
+    # This is used to display the markdown docs at the top of this file in the Airflow UI when viewing a DAG
+    doc_md = __doc__,
+ ...
 # Invoke Dag
-dag = datacoves_sample_dag()
-dag.doc_md = __doc__
+datacoves_sample_dag()
+
 ```
 
 ## Best Practices
