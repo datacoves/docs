@@ -120,6 +120,7 @@
   - [Airflow](/reference/airflow/)
     - [Airflow Best Practices](/reference/airflow/airflow-best-practices.md)
     - [Airflow Config Defaults](/reference/airflow/airflow-config-defaults.md)
+    - [Airflow Variables](/reference/airflow/airflow-variables.md)
     - [DAG Generators](/reference/airflow/dag-generators.md)
     - [Datacoves Airflow Decorators](/reference/airflow/datacoves-decorators.md)
     - [Datacoves CLI Commands](/reference/airflow/datacoves-commands.md)

@@ -2,6 +2,8 @@
 
 Datacoves makes it easy to test DAGs quickly with My Airflow, a stand alone user instance of Airflow which tracks whatever branch the user is making changes to in VS Code. My Airflow allows developers to test their DAGs without need to push to their changes to a branch such as `airflow_development`. My Airflow is meant to test DAG naming, import errors, and basic configurations of a DAG. It has limitations and thus it is important to test your DAG in Team Airflow before pushing to production. That is because Team Airflow is more robust as it is configured to match your Production Airflow instance and runs using the Kubernetes Executor. 
 
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/279354dd8ea042c690ee731333f8f8a8?sid=3076574f-01f5-4a77-a4d0-26a021f8b78e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
 ## Limitations
 
 While My Airflow will make writing and testing DAGs quick it is important to cover its limitations.
@@ -22,4 +24,5 @@ My Airflow = Light Blue
 Team Airflow = Dark Blue
 
 ![Team Airflow](assets/airflow_team.jpg)
+
 
