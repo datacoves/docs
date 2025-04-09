@@ -6,9 +6,9 @@ Datacoves injects several environment variables into Apache Airflow to streamlin
 
 - **DATACOVES__AIRFLOW_DAGS_YML_PATH**: Defines the path to YAML files used by dbt-coves to generate Python DAGs. Commonly set to `orchestrate/dags_yml_definitions`.
 
-- **DATACOVES__AIRFLOW_NOTIFICATION_INTEGRATION**: Indicates the notification service enabled for Airflow alerting. Possible values include `Teams` or `Slack`.
+- **DATACOVES__AIRFLOW_NOTIFICATION_INTEGRATION**: Indicates the notification service enabled for Airflow alerting. Possible values include `TEAMS` or `SLACK`.
 
-- **DATACOVES__AIRFLOW_TYPE**: Distinguishes between 'Team Airflow' and 'My Airflow'. Useful for environment-specific logic, such as sending email alerts only in 'Team Airflow'.
+- **DATACOVES__AIRFLOW_TYPE**: Distinguishes between 'my_airflow' or 'team_airflow'.'Team Airflow'. Useful for environment-specific logic, such as sending email alerts only in Team Airflow.
 
 - **DATACOVES__ENVIRONMENT_SLUG**: Represents the unique identifier for the Datacoves environment.
 
@@ -22,7 +22,7 @@ Datacoves injects several environment variables into Apache Airflow to streamlin
 
 - **DATACOVES__DBT_ADAPTER**: Specifies the dbt adapter in use, such as `snowflake`.
 
-- **DATACOVES__DBT_HOME**: Sets the relative path to the folder containing the `dbt_project.yml` file. Typically `transform/`.
+- **DATACOVES__DBT_HOME**: Path to the folder containing 'dbt_project.yml' file.
 
 - **DATACOVES__DBT_PROFILE**: Indicates the dbt profile name, commonly set to `default`.
 
