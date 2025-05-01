@@ -1,6 +1,6 @@
 # How to use Datacoves Secrets Manager in Airflow
 
-Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md) that allows you to securely store and manage secrets for both administrators and developers. Secrets can be stored at the project or environment level and easily shared across other tools in your stack, ensuring seamless integration and enhanced security. [Creating or editing a secret](/how-tos/datacoves/how_to_secrets.md) in the Datacoves Secret Manager is straightforward.
+Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md) that allows you to securely store and manage secrets for both administrators and developers. Secrets can be stored at the project or environment level and easily shared across other tools in your stack, ensuring seamless integration and enhanced security. [Creating or editing a secret](/how-tos/datacoves/how_to_secrets.md) in the Datacoves Secret Manager is straightforward. Be sure to prefix all secrets stored in Datacoves Secrets Manager with `datacoves-`
 
 ## Read variable from Datacoves Secrets manager
 
@@ -21,7 +21,7 @@ Once a variable is found Airflow will stop its search.
 There are some best practices that we recommend when using the Datacoves Secrets manager which will improve performance and cost.
 
 1. Always call your `Variable.get` from within the Datacoves Task Decorators. This ensures the variable is only fetched at runtime.
-2. Make use of prefixes based on where your variable is stored like `datacoves_`, `aws_`, `airflow_` and so on to help you identify and debug your variables. eg) `datacoves_mayras_secret` seen in the example below. 
+2. Make use of prefixes based on where your variable is stored like `datacoves-`(Datacoves secrets manager will only search for secrets with this prefix), `aws_`, `airflow_` and so on to help you identify and debug your variables. eg) `datacoves-mayras_secret` seen in the example below. 
 
 
 ```python
@@ -48,7 +48,7 @@ def task_decorators_example():
 
     @task.datacoves_bash
     def calling_vars_in_decorators() -> str:
-        my_var = Variable.get("datacoves_mayras_secret") # Call variable within @task.datacoves_bash
+        my_var = Variable.get("datacoves-mayras_secret") # Call variable within @task.datacoves_bash
         return f"My variable is: {my_var}"
 
     calling_vars_in_decorator() # Call task function

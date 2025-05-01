@@ -18,7 +18,7 @@ This custom decorator is an extension of Airflow's default @task decorator and s
 
 **Params:**
 
-- `env`: Pass in a dictionary of variables. eg) `{'my_var1': 'hello', 'my_var2': 'world',}`
+- `env`: Pass in a dictionary of variables. eg) `"my_var": "{{ var.value.my_var }}"` Please use {{ var.value.my_var }} syntax to avoid parsing every 30 seconds.
 - `outlets`: Used to connect a task to an object in datahub or update a dataset
 - `append_env`: Add env vars to existing ones like `DATACOVES__DBT_HOME`
   
