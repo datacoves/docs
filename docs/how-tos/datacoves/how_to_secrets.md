@@ -2,6 +2,9 @@
 
 Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md) that allows you to securely store and manage secrets for both administrators and developers. Secrets can be stored at the project or environment level and easily shared across other tools in your stack, ensuring seamless integration and enhanced security. Follow this guide to create/edit a secret in the Datacoves Secrets Manager.
 
+>[!NOTE] Datacoves Secret Manager will ONLY look for variables that are prefixed with `datacoves-`
+
+
 **Step 1:** Navigate to `Secrets` in the Admin menu
 
 ![secrets](assets/admin_menu_secrets.gif)
@@ -9,7 +12,7 @@ Datacoves includes a built-in [Secrets Manager](reference/admin-menu/secrets.md)
 **Step 2:** Select `+ New Secret`
 
 **Step 3:** Define the following
-- **Reference Key (slug):** This is how the secret will be retrieved in your DAG. We recommend prefixing all of your secrets stored in the Datacoves Secrets Manager with `datacoves_`.
+- **Reference Key (slug):** This is how the secret will be retrieved in your DAG. Prefix all of your secrets stored in the Datacoves Secrets Manager with `datacoves-`.
 - **Format:** Select what format you would like to use to store your secret. ie) key-value, JSON, or multiple key-value pairs.
 - **Scope:** Select whether you want to share the secret at the project or environment level.
 - **Project** Select what project this variable belongs to.
