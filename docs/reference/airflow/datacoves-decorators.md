@@ -48,7 +48,9 @@ This custom decorator is an extension of the @task decorator and simplifies runn
 
 ```python
 def my_dbt_dag():
-    @task.datacoves_dbt(connection_id=main)
+    @task.datacoves_dbt(
+      connection_id="main"
+    )
     def dbt_test() -> str:
         return "dbt debug"
 
@@ -59,7 +61,7 @@ Example with overrides.
 ```python
 def my_dbt_dag():
     @task.datacoves_dbt(
-        connection_id=main,
+        connection_id="main",
         overrides={"warehouse": "my_custom_wh"})
     def dbt_test() -> str:
         return "dbt debug"
