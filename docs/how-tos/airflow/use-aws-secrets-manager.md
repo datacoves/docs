@@ -22,26 +22,29 @@ Each time a variable is accessed, an API call is made to AWS Secrets Manager. If
 
 ### To solve for this there are 2 best practices to follow:
 
-1. Always call your `Variable.get` from within the Datacoves Task Decorator. This ensures the variable is only fetched at runtime. 
-2. Make use of the `connections_lookup_pattern` and `variables_lookup_pattern` when setting up your secondary backend above. This means only variables and connections prefixed with `aws_` would be make an API call to AWS Secrets Manager. eg) `aws_mayras_secret`
+1. Always call your `Variable.get` from within an Airflow decorator such as the Datacoves Bash Task Decorator. This ensures the variable is only fetched at run time. 
+2. Make use of the `connections_lookup_pattern` and `variables_lookup_pattern` when setting up your secondary backend above. This means only variables and connections prefixed with `aws_` would be make an API call to AWS Secrets Manager. eg) `aws_my_secret`
    
 
 ```python
+"""
+## Sample DAG using variables
+This DAG is a sample using the Datacoves decorators with variable from AWS.
+"""
+
 from airflow.decorators import dag, task
 from pendulum import datetime
 from airflow.models import Variable
 
-doc = """## Datacoves Bash Decorator DAG
-This DAG is a sample using the Datacoves decorators with variable calls."""
-
 @dag(
+    doc_md = __doc__,
+    catchup = False,
     default_args={
         "start_date": datetime(2024, 1, 1),
         "owner": "Mayra Pena",
-        "email": "Mayra @example.com",
+        "email": "mayra@example.com",
         "email_on_failure": True,
     },
-    catchup=False,
     tags=["version_1"],
     description="Testing task decorators",
     schedule_interval="0 0 1 */12 *",
@@ -50,15 +53,80 @@ def task_decorators_example():
 
     @task.datacoves_bash(connection_id="main")
     def calling_vars_in_decorators() -> str:
-        my_var = Variable.get("aws_mayras_secret") # Call variable within @task.datacoves_bash
+        my_var = Variable.get("aws_my_secret") # Call variable within @task.datacoves_bash
         return f"My variable is: {my_var}"
 
     calling_vars_in_decorator() # Call task function
 
 # Invoke Dag
-dag = task_decorators_example()
-dag.doc_md = doc
-
+task_decorators_example()
 ```
 
->[!TIP]To auto mask your secret you can use `secret` or `password` in the secret name since this will set `hide_sensitive_var_conn_fields` to True. eg) aws_mayras_password. Please see [this documentation](https://www.astronomer.io/docs/learn/airflow-variables#hide-sensitive-information-in-airflow-variables) for a full list of masking words.
+>[!TIP]To auto mask your secret you can use `secret` or `password` in the secret name since this will set `hide_sensitive_var_conn_fields` to True. eg) aws_my_password. Please see [this documentation](https://www.astronomer.io/docs/learn/airflow-variables#hide-sensitive-information-in-airflow-variables) for a full list of masking words.
+
+## Using a secrets manager directly from Airflow
+
+While not recommended, you can bypass the Datacoves secrets manager integration by configuring an Airflow connection and using the `SecretsManagerHook` in an Airflow DAG.
+
+### Configure an Airflow Connection
+Create a new Airflow Connection with the following parameters:
+
+Connection Id: aws_secrets_manager
+Connection Type: Amazon Web Services
+AWS Access Key ID: ....
+AWS Secret Access Key: ....
+Extra:
+{
+  "region_name": "us-west-2"
+}
+
+
+```python
+"""
+## Sample DAG using variables
+This DAG is a sample using the Datacoves decorators with variable from AWS.
+"""
+
+from airflow.decorators import dag, task
+from pendulum import datetime
+from airflow.providers.amazon.aws.hooks.secrets_manager import SecretsManagerHook
+
+@dag(
+    doc_md = __doc__,
+    catchup = False,
+
+    default_args={
+        "start_date": datetime(2024, 1, 1),
+        "owner": "Noel Gomez",
+        "email": "noel@example.com",
+        "email_on_failure": True,
+    },
+    tags=["sample"],
+    description="Testing task decorators",
+    schedule_interval="0 0 1 */12 *",
+)
+def variable_usage():
+
+    @task.datacoves_bash
+    def aws_var():
+        secrets_manager_hook = SecretsManagerHook(aws_conn_id='aws_secrets_manager')
+        var = secrets_manager_hook.get_secret("airflow/variables/aws_ngtest")
+        return f"export MY_VAR={var} && echo $MY_VAR"
+
+    aws_var()
+
+variable_usage()
+```
+
+## Check when secret is being fetched from AWS
+
+It is a good idea to verify that Secrets are only being fetched when expected. To do this, you can use AWS CloudTrail.
+
+1. From the AWS Console, go to `CloudTrail`
+2. Click `Event History`
+3. Click `Clear Filter`
+4. In the `Lookup Attributes` dropdown, select `Event Name`
+5. In the `Enter an Event Name` input box, enter `GetSecretValue`
+
+Review the `Resource name` and `Event time`. 
+Note: it may take a few minutes for fetch events to show up in CloudTrail. 
