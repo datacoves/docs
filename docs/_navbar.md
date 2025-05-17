@@ -1,7 +1,7 @@
-- [Datacoves](https://datacoves.com)
-  
-- [Learning Resources](https://datacoves.com/learning-resources)
+- <a target="_blank" href="https://datacoves.com">datacoves.com</a>
 
-- [Our git repos](https://github.com/datacoves/)
+- <a target="_blank" href="https://datacoves.com/learning-resources">Learning Resources</a>
 
-- [dbt docs](https://docs.getdbt.com/)
+- <a target="_blank" href="https://github.com/datacoves">Git repos</a>
+
+- <a target="_blank" href="https://docs.getdbt.com">dbt docs</a>
