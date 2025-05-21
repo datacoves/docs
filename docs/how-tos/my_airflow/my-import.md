@@ -1,4 +1,4 @@
-# Importing connections and variables from Team Airlfow
+# Importing connections and variables from Team Airflow
 
 For security purposes, connections and variables **do not** auto populate from Team Airflow ➡️ My Airflow. This means that **every user** will need to perform a variable/connection import to their My Airflow. An import will need to be done any time there is a new variable or connection added to keep Team Airflow and My Airflow in sync.  Once connections and variables are added to a user's My Airflow they will persist. 
 
