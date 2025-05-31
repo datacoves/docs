@@ -76,6 +76,7 @@
     - [My Import](/how-tos/my_airflow/my-import.md)
     - [Use My Airflow](/how-tos/my_airflow/start-my-airflow.md)
   - [Snowflake](/how-tos/snowflake/)
+    - [Setting up Snowflake Key-Based Auth](/how-tos/snowflake/snowflake-key-based-auth)
     - [Warehouses, Schemas and Roles](/how-tos/snowflake/warehouses-schemas-roles)
   - [Superset](/how-tos/superset/)
     - [Add a Database](/how-tos/superset/how_to_database.md)
