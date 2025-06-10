@@ -79,7 +79,7 @@ From Datacoves 3.4 onwards, the `datacoves_dbt` decorator allows users to upload
 
 >[!NOTE] Dbt API is a feature that is not enabled by default. Please contact support for further assistance.
 
-This is particularly useful for performing [dbt retries](/how-tos/airflow/retry_dbt_tasks.md).
+This is particularly useful for performing [dbt retries](/how-tos/airflow/retry-dbt-tasks.md).
 
 
 The new datacoves_dbt parameters are:
