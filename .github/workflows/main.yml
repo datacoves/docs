@@ -60,9 +60,9 @@ jobs:
       - name: Build index
         run: node indexer.js output/ output/assets/search-index.js
       - name: Make No Jekyll file
-        run: touch .nojekyll
+        run: touch output/.nojekyll && touch .nojekyll
       - name: Make CNAME file
-        run: echo "docs.datacoves.com" > CNAME
+        run: echo "docs.datacoves.com" > CNAME && echo "docs.datacoves.com" > output/CNAME
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Artifact
