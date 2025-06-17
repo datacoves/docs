@@ -32,20 +32,20 @@ const documents = [];
 
 ;(async () => {
   for await (const filename of getHtmlFiles(input_path)) {
-    const content = (await readFile(filename)).toString();
-
-    // We just want a chunk of this content
+    const content = (await readFile(filename)).toString();  
     const slice_content = content.split('<article class="markdown-section" id="main">');
+    if (slice_content.length < 2) {
+      continue;
+    }
     const slice_again = slice_content[1].split('</article>');
-    const body = slice_again[0].replace(/<[^>]*>?/gm, '').trim()
-
+    const body = slice_again[0].replace(/<[^>]*>?/gm, '').trim();
+  
     let url = "/" + relative(input_path, filename);
-
-    // Figure out the URL
+  
     if (url.endsWith('index.html')) {
         url = url.substr(0, url.length - 10);
     }
-
+  
     documents.push({
         id: relative(input_path, filename),
         text: body,
