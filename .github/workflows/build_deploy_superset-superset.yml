@@ -1,0 +1,44 @@
+name: Build and deploy superset-superset
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/superset/superset/*
+      - src/superset/superset/**/*
+
+jobs:
+  build_and_deploy_superset-superset:
+    name: Build and deploy superset-superset
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Lint
+        run: flake8
+        shell: bash
+
+      - name: Build and deploy superset-superset
+        run: ./cli.py ci_build_and_push superset/superset
+        shell: bash

@@ -1,0 +1,116 @@
+domain: datacoveslocal.com
+context: kind-datacoves-cluster
+
+provider: kind
+kubernetes_version: "1.31.1" # Must match cli.py: kind_create.
+
+## Docker image defaults
+release: "3.4.202505141555"
+
+# docker_registry:
+# docker_secret_name:
+# extra_images:
+
+## cert-manager
+# cert_manager_issuer:
+
+## external-dns
+# external_dns_url: "" # kc get -A svc | grep LoadBalancer
+postgres_db_provisioner:
+  host: postgres-postgresql.core.svc.cluster.local
+  user: postgres
+  pass: password
+
+airflow_config:
+  db:
+    external: true
+  logs:
+    external: true
+    backend: nfs
+
+superset_config:
+  db:
+    external: true
+
+airbyte_config:
+  db:
+    tls: false
+    backend: postgres
+    external: true
+    tls_enabled: false
+    host_verification: false
+    tls_disable_host_verification: true
+  logs:
+    backend: s3
+    external: false
+
+datahub_config:
+  db:
+    external: true
+    backend: postgres
+
+## Account
+account:
+  name: Local
+  slug: local
+  owner:
+    email: hey@datacoves.com
+    name: Datacoves Admin
+    is_superuser: true
+    setup_enabled: true
+
+## Projects
+projects:
+  analytics:
+    name: Analytics
+    slug: analytics-local
+    clone_strategy: http_clone
+    repository:
+      url: https://github.com/datacoves/balboa.git
+      git_url: git@github.com:datacoves/balboa.git
+    settings:
+      dbt_profile: default
+    groups:
+      admins:
+        - ADMIN-TEST
+      developers:
+        - DEVELOPER-TEST
+      viewers:
+        - VIEWER-TEST
+
+## Features
+features_enabled:
+  admin_users: true
+  admin_groups: true
+  admin_account: true
+  admin_billing: true
+  admin_projects: true
+  accounts_signup: false # change to true when testing stripe integration
+  admin_invitations: true
+  admin_environments: true
+  admin_connections: true
+  admin_integrations: true
+  admin_secrets: true
+  admin_service_credentials: true
+  user_profile_change_name: true
+  user_profile_delete_account: true
+  user_profile_change_credentials: true
+  user_profile_change_ssh_keys: true
+  user_profile_change_ssl_keys: true
+  codeserver_restart: true
+  observability_stack: false
+  env_grafana_dashboards_enabled: false
+
+## Local development flags
+dont_use_uwsgi: true
+celery_worker_autoreload: true
+run_core_api_db_in_cluster: true
+local_api_volume: true
+local_dbt_api_volume: false
+local_workbench_image: false
+local_workbench_volume: false
+enable_dbt_api: true
+expose_dbt_api: true # Exposes the Jade API at dbt.{cluster_domain}
+observability_stack: true
+core_liveness_readiness: false
+install_node_local_dns: true

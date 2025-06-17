@@ -1,0 +1,46 @@
+repos:
+  - repo: local
+    hooks:
+      # Format.
+      - id: black
+        name: black
+        entry: black
+        language: python
+        language_version: python3
+        additional_dependencies: [black]
+        minimum_pre_commit_version: 2.9.2
+        require_serial: true
+        types_or: [cython, pyi, python]
+      - id: isort
+        name: isort
+        entry: isort
+        require_serial: true
+        language: python
+        language_version: python3
+        additional_dependencies: [isort]
+        types_or: [cython, pyi, python]
+        args: ["--profile", "black", "./src/core", "./scripts", "./cli.py"]
+      # Lint
+      - id: linter
+        name: linter
+        entry: flake8
+        language: python
+        language_version: python3
+        additional_dependencies: [flake8]
+        types_or: [cython, pyi, python]
+      - id: dockerfile-labels-check
+        name: Dockerfile Labels Validator
+        entry: python3 ./scripts/pre-commit-hooks/validate_docker_labels.py
+        language: system
+        pass_filenames: false
+  - repo: https://github.com/gitguardian/ggshield
+    rev: v1.17.2
+    hooks:
+      - id: ggshield
+        language_version: python3
+        stages: [commit]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0  # Use the ref you want to point at
+    hooks:
+    -   id: debug-statements
+

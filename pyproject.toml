@@ -1,0 +1,7 @@
+[tool.black]
+line-length = 88
+# Excluding hidden files makes sense, and covers .git, .venv, etc...
+exclude = '/\..*|__pycache__|migrations|node_modules|^/docker|^/config|^/local|^/.generated'
+[tool.isort]
+profile = "black"
+extend_skip = ["__pycache__", "migrations", "node_modules"]

@@ -1,0 +1,151 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: users.datacoves.com
+spec:
+  group: datacoves.com
+  names:
+    kind: User
+    listKind: UserList
+    plural: users
+    singular: user
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: User is the Schema for the users API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: UserSpec defines the desired state of User
+            properties:
+              cloneRepository:
+                description: Clone git repository (code_server)
+                type: string
+              codeServerAccess:
+                description: Code server access
+                type: string
+              codeServerDisabled:
+                description: Disable code server
+                type: string
+              codeServerExposures:
+                additionalProperties:
+                  additionalProperties:
+                    type: string
+                  type: object
+                description: A map of code server services.
+                type: object
+              codeServerRestartedAt:
+                description: Restart annotation (code_server)
+                type: string
+              codeServerShareCode:
+                description: Code server access
+                type: string
+              dbtHome:
+                description: Dbt project home path (code_server)
+                type: string
+              dbtSyncServerDisabled:
+                description: Disable dbt sync server (code_server)
+                type: string
+              email:
+                description: The user's email.
+                type: string
+              images:
+                additionalProperties:
+                  type: string
+                description: A map of the docker images used. Maps image names to
+                  tags (versions).
+                type: object
+              localAirflowEnabled:
+                description: Enable local airflow server as part of code server
+                type: string
+              localAirflowEnvironment:
+                description: Environment variables for local airflow
+                items:
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type: string
+                  required:
+                  - name
+                  - value
+                  type: object
+                type: array
+              localDbtDocsDisabled:
+                description: Disable local dbt docs (code_server)
+                type: string
+              name:
+                description: The user's name
+                type: string
+              permissions:
+                description: The permissions to have access to the workspace services
+                items:
+                  description: PermissionSpec defines the desired state of User permissions
+                  properties:
+                    path:
+                      description: Resources, i.e. "/subpath, read https://www.pomerium.com/reference/#prefix"
+                      type: string
+                    service:
+                      description: Service prefix, i.e. "airbyte"
+                      type: string
+                  required:
+                  - service
+                  type: object
+                type: array
+              profile:
+                description: Code server profile name
+                type: string
+              secretName:
+                description: The user's secret name
+                type: string
+              services:
+                additionalProperties:
+                  additionalProperties:
+                    type: string
+                  type: object
+                description: A map of enabled services.
+                type: object
+              slug:
+                description: A slug used in urls.
+                pattern: '[a-z]([-a-z0-9]*[a-z0-9])?'
+                type: string
+            required:
+            - email
+            - images
+            - name
+            - permissions
+            - secretName
+            - services
+            - slug
+            type: object
+          status:
+            description: UserStatus defines the observed state of User
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

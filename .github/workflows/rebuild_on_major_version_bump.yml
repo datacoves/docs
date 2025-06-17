@@ -1,0 +1,59 @@
+name: Rebuild all on major version bump
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'manually force build'
+        type: boolean
+        default: false
+  push:
+    branches:
+      - main
+    paths:
+      - .version.yml
+
+jobs:
+  collect-images-to-rebuild:
+    name: Collect images to rebuild
+    container: datacoves/ci-multiarch:latest
+
+    runs-on: [self-hosted, Linux]
+    outputs:
+      images: ${{ steps.collect.outputs.images }}
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+      - uses: actions/checkout@v3
+        with:
+          clean: false
+          fetch-depth: 2
+      - id: collect
+        run: ./cli.py ci_rebuild_on_major_bump ${{ github.event.inputs.force }}
+  image-rebuild:
+    name: Build and deploy image
+    container: datacoves/ci-multiarch:latest
+
+    runs-on: [self-hosted, Linux]
+    needs: [collect-images-to-rebuild]
+    strategy:
+      matrix:
+        images: ${{ fromJson(needs.collect-images-to-rebuild.outputs.images) }}
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Build and deploy ${{ matrix.images.image }}
+        run: ./cli.py ci_build_and_push ${{ matrix.images.image }} ${{ matrix.images.repo }} ${{ matrix.images.profile }}
+        shell: bash

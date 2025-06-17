@@ -1,0 +1,47 @@
+name: Publish extensible images
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  release:
+    types: published
+
+jobs:
+  publish_extensible_images:
+    name: Publish extensible images
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+    strategy:
+      matrix:
+        group:
+          - name: "ci-basic"
+            is_local: "False"
+          - name: "ci-airflow"
+            is_local: "False"
+          - name: "airflow-airflow"
+            is_local: "False"
+          - name: "airflow-airflow"
+            is_local: "True"
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DATACOVES_GITHUB_API_TOKEN: ${{ secrets.DATACOVES_GITHUB_API_TOKEN }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Publish extensible images
+        run: ./cli.py publish_extensible_images ${{ matrix.group.name }} ${{ matrix.group.is_local }}
+        shell: bash

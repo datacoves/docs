@@ -1,0 +1,62 @@
+name: Build and deploy code-server-code-server
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/code-server/code-server/*
+      - src/code-server/code-server/**/*
+      - src/common/*
+      - src/common/**/*
+
+jobs:
+  build_and_deploy_code-server-code-server:
+    name: Build and deploy code-server-code-server
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Lint
+        run: flake8
+        shell: bash
+
+      - name: Build and deploy code-server-code-server base
+        run: ./cli.py ci_build_and_push code-server/code-server datacovesprivate base
+        shell: bash
+
+      - name: Build and deploy code-server-code-server dbt-snowflake
+        run: ./cli.py ci_build_and_push code-server/code-server datacovesprivate dbt-snowflake
+        shell: bash
+
+      - name: Build and deploy code-server-code-server dbt-redshift
+        run: ./cli.py ci_build_and_push code-server/code-server datacovesprivate dbt-redshift
+        shell: bash
+
+      - name: Build and deploy code-server-code-server dbt-bigquery
+        run: ./cli.py ci_build_and_push code-server/code-server datacovesprivate dbt-bigquery
+        shell: bash
+
+      - name: Build and deploy code-server-code-server dbt-databricks
+        run: ./cli.py ci_build_and_push code-server/code-server datacovesprivate dbt-databricks
+        shell: bash

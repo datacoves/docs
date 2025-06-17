@@ -1,0 +1,30 @@
+version: "3"
+services:
+  jade:
+    image: datacovesprivate/core-dbt-api:2.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      INTERNAL_BEARER_TOKEN: dev_internal_bearer_token
+      SECRET_KEY_BASE: local_super_secret_key_base
+      IEX_COOKIE: monster
+      CONNECT_TO_AIRFLOW: false
+      DB_HOST: host.docker.internal
+      DATACOVES_DB_HOST: host.docker.internal
+    ports:
+      - 4000:4000
+  minio:
+    image: bitnami/minio:2023.11.20
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+  postgres:
+    image: postgres:15.3
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password

@@ -1,0 +1,174 @@
+- name: Create Azure Kubernetes Service
+  hosts: localhost
+  connection: local
+  collections:
+    - azure.azcollection
+  tasks:
+    - name: Create resource group
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+
+    - name: Create a managed Azure Container Services (AKS) cluster
+      register: aks
+      azure_rm_aks:
+        name: "{{ aks_name }}"
+        location: "{{ location }}"
+        resource_group: "{{ resource_group }}"
+        dns_prefix: "{{ aks_name }}-dns"
+        kubernetes_version: "{{ kubernetes_version }}"
+        service_principal:
+          client_id: "{{ service_client_id }}"
+          client_secret: "{{ service_client_secret }}"
+        enable_rbac: true
+        auto_upgrade_profile:
+          node_os_upgrade_channel: NodeImage
+          upgrade_channel: patch
+        disable_local_accounts: false
+        network_profile:
+          network_plugin: kubenet
+          load_balancer_sku: standard
+          network_policy: calico
+          #pod_cidr: "10.244.0.0/16"
+          #service_cidr: "10.0.0.0/16"
+        security_profile:
+          image_cleaner:
+            enabled: false
+            interval_hours: 168
+        agent_pool_profiles:
+          - name: system
+            count: 1
+            vm_size: Standard_D2s_v3
+            enable_auto_scaling: true
+            max_count: 4
+            max_pods: 100
+            min_count: 1
+            mode: System
+            orchestrator_version: "{{ kubernetes_version }}"
+            os_disk_size_gb: 128
+            os_sku: Ubuntu
+            os_type: Linux
+            type: VirtualMachineScaleSets
+            storage_profiles: ManagedDisks
+
+          - name: general
+            count: 1
+            vm_size: Standard_D4s_v3
+            enable_auto_scaling: true
+            max_count: 4
+            max_pods: 100
+            min_count: 1
+            mode: User
+            node_labels:
+              "k8s.datacoves.com/nodegroup-kind": general
+            orchestrator_version: "{{ kubernetes_version }}"
+            os_disk_size_gb: 128
+            os_sku: Ubuntu
+            os_type: Linux
+            type: VirtualMachineScaleSets
+            storage_profiles: ManagedDisks
+
+          - name: volumed
+            count: 1
+            vm_size: Standard_D16s_v5
+            enable_auto_scaling: true
+            max_count: 4
+            max_pods: 100
+            min_count: 1
+            mode: User
+            node_labels:
+              "k8s.datacoves.com/nodegroup-kind": volumed
+            orchestrator_version: "{{ kubernetes_version }}"
+            os_disk_size_gb: 512
+            os_sku: Ubuntu
+            os_type: Linux
+            type: VirtualMachineScaleSets
+            storage_profiles: ManagedDisks
+
+          - name: workers
+            count: 1
+            vm_size: Standard_D4s_v3
+            enable_auto_scaling: true
+            max_count: 4
+            max_pods: 100
+            min_count: 1
+            mode: User
+            node_labels:
+              "k8s.datacoves.com/workers": enabled
+            orchestrator_version: "{{ kubernetes_version }}"
+            os_disk_size_gb: 128
+            os_sku: Ubuntu
+            os_type: Linux
+            type: VirtualMachineScaleSets
+            storage_profiles: ManagedDisks
+
+    - name: Create Kubeconfig file
+      copy:
+        content: "{{ aks['kube_config'][0] }}"
+        dest: "../{{ aks_name }}.kubeconfig"
+
+    - name: Get Networking Info
+      register: network
+      azure_rm_virtualnetwork_info:
+        resource_group: "MC_{{ resource_group }}_{{ aks_name }}_{{ location }}"
+
+    - name: Create PostgreSQL Subnet
+      register: db_subnet
+      azure_rm_subnet:
+        resource_group: "MC_{{ resource_group }}_{{ aks_name }}_{{ location }}"
+        virtual_network_name: "{{ network['virtualnetworks'][0]['name'] }}"
+        name: db-subnet
+        address_prefix_cidr: "10.225.0.0/24"
+        private_endpoint_network_policies: Disabled
+        private_link_service_network_policies: Enabled
+        delegations:
+          - name: "Microsoft.DBforPostgreSQL/flexibleServers"
+            actions:
+              - "Microsoft.Network/virtualNetworks/subnets/join/action"
+            serviceName: "Microsoft.DBforPostgreSQL/flexibleServers"
+
+    - name: Create Private DNS Zone
+      register: private_dns
+      azure_rm_privatednszone:
+        resource_group: "MC_{{ resource_group }}_{{ aks_name }}_{{ location }}"
+        name: "{{ aks_name }}.private.postgres.database.azure.com"
+
+    - name: Link Private DNS Zone to Virtual Network
+      azure_rm_privatednszonelink:
+        resource_group: "MC_{{ resource_group }}_{{ aks_name }}_{{ location }}"
+        virtual_network: "{{ network['virtualnetworks'][0]['id'] }}"
+        zone_name: "{{ private_dns['state']['name'] }}"
+        name: "why-must-i-name-this-{{ aks_name }}"
+        registration_enabled: true
+
+    - name: Dump AKS
+      debug:
+        var: private_dns
+
+    - name: Create PostgreSQL Database
+      register: db
+      azure_rm_postgresqlflexibleserver:
+        administrator_login: datacoves_admin
+        administrator_login_password: "{{ database_password }}"
+        backup:
+          backup_retention_days: 7
+          geo_redundant_backup: Disabled
+        high_availability:
+          mode: Disabled
+        location: "{{ location }}"
+        resource_group: "{{ resource_group }}"
+        name: "{{ aks_name }}-db"
+        network:
+          delegated_subnet_resource_id: "{{ db_subnet['state']['id'] }}"
+          private_dns_zone_arm_resource_id: "{{ private_dns['state']['id'] }}"
+          public_network_access: Disabled
+        sku:
+          name: "Standard_D2ads_v5"
+          tier: GeneralPurpose
+        storage:
+          storage_size_gb: 128
+        version: 13
+
+
+- name: Call Datacoves Install Playbook
+  ansible.builtin.import_playbook: "datacoves-install.yml"

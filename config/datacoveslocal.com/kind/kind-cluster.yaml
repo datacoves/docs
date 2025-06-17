@@ -1,0 +1,55 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: datacoves-cluster
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP
+    extraMounts:
+      - hostPath: src/core/api/app
+        containerPath: /mnt/core-api
+      - hostPath: src/core/dbt-api
+        containerPath: /mnt/core-dbt-api
+      - hostPath: src/core/workbench/app
+        containerPath: /mnt/core-workbench
+      - hostPath: src/test-app
+        containerPath: /mnt/test-app
+  - role: worker
+    labels:
+      k8s.datacoves.com/nodegroup-kind: general
+      k8s.datacoves.com/workers: enabled
+    extraMounts:
+      - hostPath: src/core/api/app
+        containerPath: /mnt/core-api
+      - hostPath: src/core/dbt-api
+        containerPath: /mnt/core-dbt-api
+      - hostPath: src/core/workbench/app
+        containerPath: /mnt/core-workbench
+      - hostPath: src/test-app
+        containerPath: /mnt/test-app
+  - role: worker
+    labels:
+      k8s.datacoves.com/nodegroup-kind: volumed
+    extraMounts:
+      - hostPath: src/core/api/app
+        containerPath: /mnt/core-api
+      - hostPath: src/core/dbt-api
+        containerPath: /mnt/core-dbt-api
+      - hostPath: src/core/workbench/app
+        containerPath: /mnt/core-workbench
+      - hostPath: src/test-app
+        containerPath: /mnt/test-app
+networking:
+  disableDefaultCNI: true
+  podSubnet: 10.201.0.0/16

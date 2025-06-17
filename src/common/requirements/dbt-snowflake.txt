@@ -1,0 +1,6 @@
+-r base.txt
+dbt-snowflake~=1.9.0
+snowflake-connector-python[pandas]==3.14.0
+snowflake-snowpark-python==1.25.0
+snowflake-cli==3.7.1
+certifi==2025.1.31

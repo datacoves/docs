@@ -1,0 +1,39 @@
+domain: datacoves.com
+layout:
+- go.kubebuilder.io/v3
+projectName: operator
+repo: datacoves.com/operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: datacoves.com
+  kind: Workspace
+  path: datacoves.com/operator/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: datacoves.com
+  kind: User
+  path: datacoves.com/operator/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: datacoves.com
+  kind: HelmRelease
+  path: datacoves.com/operator/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: datacoves.com
+  kind: Account
+  path: datacoves.com/operator/api/v1
+  version: v1
+version: "3"

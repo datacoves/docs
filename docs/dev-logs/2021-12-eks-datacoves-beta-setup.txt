@@ -1,0 +1,139 @@
+Created the datacoves-beta cluster
+
+  $ cd config/beta.datacoves.com
+  $ cd eks; eksctl create cluster -f eks-cluster.yaml`; cd ..
+
+Added cluster admins: https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
+
+  $ kc edit -n kube-system configmap aws-auth
+    + mapUsers: |
+    +   - userarn: arn:aws:iam::XXXXXXXXXXXX:user/ssassi
+    +     username: ssassi
+    +     groups:
+    +       - system:masters
+    +   - userarn: arn:aws:iam::XXXXXXXXXXXX:user/spelufo
+    +     username: spelufo
+    +     groups:
+    +       - system:masters
+    + mapAccounts: |
+    +   - XXXXXXXXXXXX
+
+Enabled IRSA abd OIDC: https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
+Required by cluster-autoscaler.
+
+  $ eksctl utils associate-iam-oidc-provider --cluster datacoves-beta --approve
+
+Setup cluster autoscaler: https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html
+
+  Created the IAM policy for the autoscaler (wasn't created by eksctl):
+
+    $ aws iam create-policy --policy-name AmazonEKSClusterAutoscalerPolicy --policy-document file://eks/cluster-autoscaler-policy.json
+
+  Created the IAM role for the autoscaler and attach the policy:
+
+    $ eksctl create iamserviceaccount \
+      --cluster=datacoves-beta \
+      --namespace=kube-system \
+      --name=cluster-autoscaler \
+      --attach-policy-arn=arn:aws:iam::XXXXXXXXXXXX:policy/AmazonEKSClusterAutoscalerPolicy \
+      --override-existing-serviceaccounts \
+      --approve
+
+  Downloaded the autoscaler deployment yaml into base and made the necessary
+  modifications. The docs say the modifications that need to be done, but they
+  tell you to do them directly using kubectl. Didn't run those commands. Made
+  those changes to the yaml instead, and applied them with kustomize, so we can
+  track and update them if needed. The name of the role for the service account
+  annotation was hard to find. The `eksctl create iamserviceaccount` command
+  above creates it but it doesn't print the name. Had to go into the
+  cloudformation stack to find it.
+
+    $ kc apply -k base
+
+  Check that there are no auth errors in the logs
+
+    $ kc -n kube-system logs -f deployment.apps/cluster-autoscaler
+
+Installed metrics-server, cert-manager and ingress-nginx by adding their yamls to base.
+
+  $ kc apply -k base
+
+  Check metrics-server works (can take some time):
+
+    $ kc top pods
+
+  Check ingress-nginx is running, then get the load balancer url (it ends with .elb.<aws_region>.amazonaws.com):
+
+    $ kc get -A svc | grep LoadBalancer
+
+Added a wildcard DNS record for *.beta.datacoves.com pointing to the ELB url above.
+
+Created an aurora postgres database cluster from AWS console.
+
+  Chose Private.
+  Chose the eks cluster's VPC.
+  Chose the eks cluster's security group with ClusterSharedNodeSecurityGroup in the name.
+
+  Check the connection from a pod in the cluster:
+
+    $ kc run -it shell --image=python:3.9  -- bash
+
+    # apt-get update; apt-get install postgresql-client
+
+    # psql -U postgres -h DB_HOST_FROM_AWS_CONSOLE -W
+
+  Create users and databases:
+
+    Open an ssh tunnel to the RDS database through a cluster node, so we can
+    connect through it from outside the VPC. It will forward a connection to
+    your machine's localhost:63333 to the database.
+
+      $ ssh -i config/beta.datacoves.com/keys/datacoves_beta_node_access_rsa -L 63333:DB_HOST:5432 ec2-user@CLUSTER_NODE
+
+    Run the script to create the dbs. Note the generated passwords and save them
+    to the relevant config files under git secret.
+
+      $ ./cli.py create_dbs
+      Please enter host: localhost
+      Please enter port (default: 5432): 63333
+      Please enter master username: postgres
+      Please enter master password:
+      Creating database: datacoves, user: datacovesapi, pass: ************
+      Creating database: airbyte, user: airbyte, pass: ************
+      Creating database: superset, user: superset, pass: ************
+      Creating database: airflow, user: airflow, pass: ************
+
+Created s3 buckets from AWS console.
+
+  Created a bucket for airbyte logs, named datacoves-beta-airbyte-logs.
+    Options: Disable public access, encrypted.
+
+  Created a policy with permissions to access the bucket.
+
+    $ aws iam create-policy --policy-name datacoves-beta-airbyte-logs --policy-document file://eks/airbyte-logs-policy.json
+
+  Created a AWS IAM user with programmatic access, named datacoves-beta-airbyte-logs.
+  While creating, grant the policy.
+
+  Configure the airbyte env files with the bucket information and the user's keys.
+
+Deploy core-api
+
+  Created a new application in auth0 and put the credentials in core-api.env and
+  pomerium-config.secret.yaml
+
+  $ ./cli.py setup_core datacoves-beta beta.datacoves.com
+
+  $ kcc exec -it $(kubectl -n core get pods -l app=core-api -o name) -- bash
+
+    # ./manage.py migrate
+    # ./manage.py loaddata */fixtures/*
+
+Deploy operator and check logs
+
+  $ ./cli.py setup_core datacoves-beta beta.datacoves.com
+  $ kco logs -l control-plane=controller-manager -c manager -f
+
+Setup balboa project
+
+  $ ./cli.py setup_project datacoves-beta beta.datacoves.com balboa

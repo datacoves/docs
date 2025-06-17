@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-app
+  namespace: core
+  labels:
+    app: test-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-app
+  template:
+    metadata:
+      labels:
+        app: test-app
+    spec:
+      containers:
+      - name: test-python-app
+        image: datacovesprivate/test-app:pre-3286.202503212211-f5ce26e8
+        command:
+        - datacoves
+        args:
+          - my_commnd
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+        env:
+        - name: REDIS_URL
+          value: redis://redis-master.core.svc.cluster.local:6379/1
+        volumeMounts:
+        - mountPath: /app
+          name: workdir-volume
+      volumes:
+      - hostPath:
+          path: /mnt/test-app
+          type: Directory
+        name: workdir-volume
+      serviceAccount: api
+      serviceAccountName: api
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-app-svc
+  namespace: core
+  labels:
+    app: test-app
+spec:
+  selector:
+    app: test-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: prometheus
+  name: test-app
+  namespace: core
+spec:
+  endpoints:
+  - interval: 15s
+    path: /metrics
+    port: http
+  namespaceSelector:
+  selector:
+    matchLabels:
+      app: test-app

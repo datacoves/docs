@@ -1,0 +1,25 @@
+# There is some potential interdependence of variables between different
+# playbooks; this allows us to put all the variables in one place.  We
+# only run this on 'localhost' so there will only ever be one host here.
+all:
+  hosts:
+    localhost
+
+  vars:
+    # AKS Specific
+    ## REQUIRED
+    service_client_id: "{{ lookup('env', 'DC_AZ_SERVICE_CLIENT_ID') }}"
+    service_client_secret: "{{ lookup('env', 'DC_AZ_SERVICE_CLIENT_SECRET') }}"
+
+    ## OPTIONAL
+    resource_group: "{{ lookup('env', 'DC_AZ_RESOURCE_GROUP', default='DatacovesTesting') }}"
+    location: "{{ lookup('env', 'DC_AZ_LOCATION', default='eastus') }}"
+    aks_name: "{{ lookup('env', 'DC_AZ_AKS_NAME', default='datacoves-test') }}"
+    kubernetes_version: "{{ lookup('env', 'DC_AZ_KUBERNETES_VERSION', default='1.31.5') }}"
+    database_password: "{{ lookup('env', 'DC_AZ_DB_PASSWORD', default='password') }}"
+    database_host: "{{ aks_name }}-db.postgres.database.azure.com"
+
+    ## OPTIONAL
+    hostname: "{{ lookup('env', 'DC_HOSTNAME', default='datacoves-test.datacoves.com') }}"
+    kubectl_context: "{{ lookup('env', 'DC_KUBECTL_CONTEXT', default=aks_name) }}"
+    release: "{{ lookup('env', 'DC_RELEASE', 'latest') }}"

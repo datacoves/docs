@@ -1,0 +1,39 @@
+name: Unit test core-api
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - src/core/api/*
+      - src/core/api/**/*
+      - "!src/core/api/app/integration_tests/**/*"
+
+jobs:
+  test_core-api:
+    name: Test core-api
+    runs-on: ubuntu-latest
+
+    container: datacovesprivate/core-api-local:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Install requirements
+        run: |
+          pip install --no-input -r src/core/api/requirements.txt
+
+      - name: Django test on core-api
+        run: |
+          cd src/core/api/app/
+          ./manage.py test

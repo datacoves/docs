@@ -1,0 +1,13 @@
+acryl-datahub==0.15.0.5
+dbt-core~=1.9.0
+dbt-coves==1.9.5
+git+https://gitlab.com/datacoves/permifrost.git@v0.15.6
+pre-commit==3.7.1
+PyYAML==6.0.2
+shandy-sqlfmt[jinjafmt]==0.26.0
+sqlfluff==3.1.1
+sqlfluff-templater-dbt==3.1.1
+rich==14.0.0
+kubernetes==31.0.0
+uv==0.4.30
+ruff==0.8.3

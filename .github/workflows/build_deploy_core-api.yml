@@ -1,0 +1,119 @@
+name: Build and deploy core-api
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/core/api/*
+      - src/core/api/**/*
+      - "!src/core/api/app/integration_tests/**/*"
+
+jobs:
+  check_core-api:
+    name: Check core-api
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Lint
+        run: flake8
+        shell: bash
+
+  build_and_deploy_core-api-local:
+    name: Build and deploy core-api-local
+    runs-on: ubuntu-latest
+    needs: check_core-api
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get modified files
+        id: git-diff
+        run: |
+          echo "diff<<EOF" >> "$GITHUB_OUTPUT"
+          echo $(git diff --name-only HEAD~1 HEAD) >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Build and deploy core-api-local
+        if: ${{ contains(steps.git-diff.outputs.diff, 'src/core/api/Dockerfile') || contains(steps.git-diff.outputs.diff, 'src/core/api/requirements.txt') }}
+        run: ./cli.py ci_build_and_push core/api datacovesprivate local
+        shell: bash
+
+  test_core-api:
+    name: Test core-api
+    runs-on: ubuntu-latest
+    needs: build_and_deploy_core-api-local
+
+    container: datacovesprivate/core-api-local:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Django test on core-api
+        run: |
+          cd src/core/api/app/
+          ./manage.py test
+
+  build_and_deploy_core-api:
+    name: Build and deploy core-api
+    runs-on: ubuntu-latest
+    needs: test_core-api
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Build and deploy core-api
+        run: ./cli.py ci_build_and_push core/api
+        shell: bash

@@ -1,0 +1,8 @@
+flask==3.0.3
+prometheus-client==0.20.0
+kubernetes==30.1.0
+redis==5.0.7
+rich==14.0.0
+pyfiglet==1.0.2
+requests==2.32.3
+click==8.1.7

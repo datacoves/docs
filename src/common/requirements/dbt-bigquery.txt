@@ -1,0 +1,2 @@
+-r base.txt
+dbt-bigquery~=1.9.0

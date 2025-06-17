@@ -1,0 +1,43 @@
+DEBUG=True
+USER_AND_PASS_AUTH=True
+
+# Hard coding these for the test server
+SECRET_KEY='^dc$s=8@)tutjb&4cde3)ny+@)y_8pc-&3&!3fdq=b$!$-(1si'
+FERNET_KEY=R1wy0eHlc1VSV25OZGfXDHmwD3uGlEZUIvFdhgwYrDI=
+
+ALLOWED_HOSTS=.{{ hostname }}
+
+DB_HOST={{ database_host }}
+DB_NAME=datacoves
+DB_USER=datacoves_admin
+DB_PASS={{ database_password }}
+
+IDENTITY_PROVIDER=auth0
+AUTH0_DOMAIN={{ coreapi_secrets['AUTH0_DOMAIN'] }}
+AUTH0_CLIENT_ID={{ coreapi_secrets['AUTH0_CLIENT_ID'] }}
+AUTH0_CLIENT_SECRET={{ coreapi_secrets['AUTH0_CLIENT_SECRET'] }}
+IDP_SERVICE_ACCOUNT={{ coreapi_secrets['IDP_SERVICE_ACCOUNT'] }}
+
+# base64 config/{domain}/secrets/docker-config.secret.json
+DEFAULT_DOCKER_CONFIG={{ coreapi_secrets['DEFAULT_DOCKER_CONFIG'] }}
+
+# Stripe would go here if we wanted to enable it.
+#STRIPE_WEBHOOK_SECRET=
+#STRIPE_API_KEY=
+#STRIPE_CUSTOMER_PORTAL=
+
+CELERY_BROKER_URL=redis://redis-master:6379/1
+FLOWER_USERNAME=flower
+FLOWER_PASSWORD=flower
+
+REDIS_URI=redis://redis-master:6379/1
+
+# This is optional (some customers may not like external logs reporting)
+SENTRY_DSN=https://5d7d4b6b765d41a295ba80e70d685cf2@o1145668.ingest.sentry.io/6213267
+
+# This is pretty problematic and I don't think we need it.  I can fix it if
+# it is necessary, or just generate it with "openssl genrsa -out oidc.key 4096"
+#OAUTH_OIDC_RSA_KEY=
+
+# Slack token
+#SLACK_BOT_TOKEN=

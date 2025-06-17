@@ -1,0 +1,109 @@
+- name: Install Datacoves
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Determine Working Directory
+      shell: "cd .. && pwd"
+      register: working_dir   
+
+    - name: Create Virtual Environment
+      pip:
+        virtualenv: "{{ working_dir['stdout'] }}/.venv"
+        virtualenv_command: "python3 -m venv"
+        requirements: "{{ working_dir['stdout'] }}/requirements.txt"
+
+    # Reveal secrets is optional because it is easier to develop locally without
+    # re-doing this; just let the secrets reveal once.
+    - name: Reveal Secrets
+      when: lookup('env', 'DC_SKIP_REVEAL_SECRETS') != '1'
+      shell:
+        cmd: |
+          export OP_SERVICE_ACCOUNT_TOKEN="{{ lookup('env', 'OP_SERVICE_ACCOUNT_TOKEN') }}"
+          source {{ working_dir['stdout'] }}/.venv/bin/activate
+          ./cli.py reveal_secrets -y
+        chdir: "{{ working_dir['stdout'] }}"
+
+    - name: Create configuration path
+      file:
+        path: "{{ working_dir['stdout'] }}/config/{{ hostname }}"
+        state: directory
+
+    - name: "Create configuration path: base"
+      file:
+        path: "{{ working_dir['stdout'] }}/config/{{ hostname }}/base"
+        state: directory
+
+    - name: "Create configuration path: secrets"
+      file:
+        path: "{{ working_dir['stdout'] }}/config/{{ hostname }}/secrets"
+        state: directory
+
+    - name: Create cluster-params.yaml
+      template:
+        src: cluster-params.j2
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/cluster-params.yaml"
+
+    - name: Read datacoveslocal cluster-params.secrets
+      ansible.builtin.shell: "cat {{ working_dir['stdout'] }}/config/datacoveslocal.com/cluster-params.secret.yaml"
+      register: results
+
+    - name: Grab Secrets from datacoveslocal
+      set_fact:
+        cluster_secrets: "{{ results.stdout | from_yaml}}"
+
+    - name: Read datacoveslocal core-api secrets
+      ansible.builtin.shell: "env -i bash --noprofile --norc -c 'set -a; source {{ working_dir['stdout'] }}/config/datacoveslocal.com/secrets/core-api.env; env'"
+      register: results
+      changed_when: false
+
+    - name: Grab Secrets from datacoveslocal
+      ansible.builtin.set_fact:
+        coreapi_secrets: "{{ ('{' + results.stdout_lines | map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
+
+    - name: Read datacoveslocal core-dbt-api secrets
+      ansible.builtin.shell: "env -i bash --noprofile --norc -c 'set -a; source {{ working_dir['stdout'] }}/config/datacoveslocal.com/secrets/core-dbt-api.env; env'"
+      register: results
+      changed_when: false
+
+    - name: Grab Secrets from datacoveslocal
+      ansible.builtin.set_fact:
+        coredbtapi_secrets: "{{ ('{' + results.stdout_lines | map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
+
+    - name: Create cluster-params.secret.yaml
+      template:
+        src: cluster-params.secret.j2
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/cluster-params.secret.yaml"
+
+    - name: Create core-api.env
+      template:
+        src: core-api.j2
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/secrets/core-api.env"
+
+    - name: Create core-dbt-api.env
+      template:
+        src: core-dbt-api.j2
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/secrets/core-dbt-api.env"
+
+    - name: Copy docker config
+      ansible.builtin.copy:
+        src: "{{ working_dir['stdout'] }}/config/datacoveslocal.com/secrets/docker-config.secret.json"
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/secrets/"
+
+    - name: Copy base directory
+      ansible.builtin.copy:
+        src: "{{ working_dir['stdout'] }}/infra/base"
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/"
+
+    - name: Create cert-manager-resources.yaml
+      ansible.builtin.template:
+        src: cert-manager-resources.j2
+        dest: "{{ working_dir['stdout'] }}/config/{{ hostname }}/base/cert-manager-resources.yaml"
+
+#    - name: Set release and install
+#      ansible.builtin.shell:
+#        cmd: |
+#          export KUBECONFIG=$HOME/.kube/config:{{ working_dir['stdout'] }}/{{ aks_name}}.kubeconfig
+#          source {{ working_dir['stdout'] }}/.venv/bin/activate
+#          ./cli.py set_latest_release {{ hostname }} && ./cli.py setup_base {{ hostname }} && ./cli.py install {{ hostname }} COMPLY
+#        chdir: "{{ working_dir['stdout'] }}"
+

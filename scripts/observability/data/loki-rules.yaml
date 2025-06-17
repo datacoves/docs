@@ -1,0 +1,30 @@
+groups:
+- name: LogBasedAlerts
+  rules:
+  - alert: FailedToPullImagesFromRegistry
+    expr: | 
+      count_over_time({agent_hostname="eventhandler", namespace=~"core|operator-system|dcw-.*"} |= "failed to pull and unpack image" [2m]) > 0
+    for: "0m"
+    annotations:
+      summary: Image could not be pulled from registry
+    labels:
+      severity: critical
+      alert_type: log
+  - alert: MaxNodesGroupSizeReached
+    expr: |
+      count_over_time({agent_hostname="eventhandler"} |= "max node group size reached"[2m]) > 0
+    for: "0m"
+    annotations:
+      summary: Node group has reached maximum node capacity
+    labels:
+      severity: critical
+      alert_type: log
+  - alert: ZombieAirflowTasksDetected
+    expr: |
+      count_over_time({namespace=~"dcw-.*", component="scheduler", container="scheduler", instance=~".*-airflow"} |= "Detected zombie job"[2m]) > 0
+    for: "0m"
+    annotations:
+      summary: Zombie job detected on Airflow
+    labels:
+      severity: critical
+      alert_type: log

@@ -1,0 +1,18 @@
+name: Development
+project: analytics-local
+type: dev
+release: "3.4.202505141555"
+
+services:
+  airbyte:
+    enabled: false
+  airflow:
+    enabled: false
+  code-server:
+    enabled: true
+  dbt-docs:
+    enabled: true
+  superset:
+    enabled: false
+dbt_home_path: transform
+dbt_profiles_dir: automate/dbt

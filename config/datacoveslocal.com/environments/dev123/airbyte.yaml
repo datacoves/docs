@@ -1,0 +1,11 @@
+# Sample airbyte.secret.yaml with external db and s3 for logs.
+# db_config:
+#   host: "db_host:5432"
+#   password: "db_pass"
+#   user: "db_user"
+# logs_config:
+#   AWS_ACCESS_KEY_ID: "XXXXXXXXXXXXXXXXXXXX"
+#   AWS_SECRET_ACCESS_KEY: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#   S3_LOG_BUCKET: "s3_bucket_name"
+#   S3_LOG_BUCKET_REGION: "xx-xxxx-x"
+#   S3_MINIO_ENDPOINT: ""

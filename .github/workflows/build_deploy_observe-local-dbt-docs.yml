@@ -1,0 +1,40 @@
+name: Build and deploy observe-local-dbt-docs
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/observe/local-dbt-docs/*
+      - src/observe/local-dbt-docs/**/*
+
+jobs:
+  build_and_deploy_observe-local-dbt-docs:
+    name: Build and deploy observe-local-dbt-docs
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Build and deploy observe-local-dbt-docs
+        run: ./cli.py ci_build_and_push observe/local-dbt-docs
+        shell: bash

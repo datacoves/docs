@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}Join {{ account_name }} in using Datacoves{% endblocktrans %}
+{% endautoescape %}

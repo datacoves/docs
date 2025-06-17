@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - metrics-server-v0.6.2.yaml
+  - cert-manager-v1.11.0.yaml
+  - cert-manager-resources.yaml
+  - ingress-nginx-v1.6.4.yaml
+  # - dashboard-v2.4.0.yaml
+
+patchesStrategicMerge:
+  - ingress-nginx-patch.yaml
+
+secretGenerator:
+  - name: cloudflare-api-token
+    namespace: cert-manager
+    type: Opaque
+    envs:
+      - cloudflare-api-token.env
+    options:
+      disableNameSuffixHash: true

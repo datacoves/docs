@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DBT Docs not generated</title>
+    <style>
+        body {
+            width: 35em;
+            margin: 200px auto;
+            font-family: Tahoma, Verdana, Arial, sans-serif;
+        }
+
+        pre {
+            background-color: #e8e8e8;
+            padding: 1em
+        }
+
+        code {
+            background-color: #e8e8e8;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DBT Docs not generated yet</h1>
+    <p>You need a <code>dbt-docs</code> branch with dbt docs generated in the root folder.
+    <p>You can achieve this by
+        using, for example, <code>JamesIves/github-pages-deploy-action</code> if working with Github Actions</p>
+    <pre><code><span>- name:</span> Deploy docs 🚀
+    <span>uses:</span> JamesIves/github-pages-deploy-action@<span>4.1</span><span>.4</span>
+    <span>with:</span>
+    <span>  branch:</span> dbt-docs
+    <span>  folder:</span> transform/target
+    </code></pre>
+
+    <p>Learn more on <a href="https://docs.datacoves.com" target="_blank">https://docs.datacoves.com</a></p>
+</body>
+
+</html>

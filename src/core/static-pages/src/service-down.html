@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Datacoves on Maintenance</title>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;500&display=swap"
+        rel="stylesheet"
+        />
+        <style>
+            body {
+                width: 60em;
+                margin: 200px auto;
+                font-family: "Manrope", sans-serif;
+                text-align: center;
+                font-size: 20px;
+            }
+
+            .logo {
+                width: 300px;
+                height: 80px;
+            }
+
+            .loader-line {
+                width: 200px;
+                height: 3px;
+                position: relative;
+                overflow: hidden;
+                background-color: #ddd;
+                margin: 20px auto;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+            }
+
+            .loader-line:before {
+                content: "";
+                position: absolute;
+                left: -50%;
+                height: 3px;
+                width: 40%;
+                background-color: #3496E0;
+                -webkit-animation: lineAnim 1s linear infinite;
+                -moz-animation: lineAnim 1s linear infinite;
+                animation: lineAnim 1s linear infinite;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+            }
+
+            @keyframes lineAnim {
+                0% {
+                    left: -40%;
+                }
+                50% {
+                    left: 20%;
+                    width: 80%;
+                }
+                100% {
+                    left: 100%;
+                    width: 100%;
+                }
+            }
+
+            .btn {
+                display: inline-block;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                background-color: #3496E0;
+                border-radius: 4px;
+                padding: 8px 16px;
+                font-size: 16px;
+                font-weight: 700;
+                color: white;
+                line-height: 26px;
+            }
+            .btn:disabled {
+                background-color: #9cd0f8;
+                cursor: not-allowed;
+            }
+            .hidden {
+                display: none;
+            }
+            .square {
+                border: #3496E0 dashed 1px;
+                border-radius: 3px;
+                width: 500px;
+                margin: 20px auto;
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <img src="/assets/logo.svg" alt="Datacoves" class="logo">
+            <div class="square">
+                <p>Something isn’t done loading.</p>
+                <p>Try reloading your workspace.</p>
+                <p>If this continues, please contact support.</p>
+                <button href="#" id="btn-reload" class="btn hidden">Reload Workspace</button>
+                <div id="spinner" class="loader-line" hidden></div>
+            </div>
+        </main>
+    </body>
+    <script>
+        window.onload = () => {
+            // It's not an iframe
+            if (window.location.ancestorOrigins.length === 0) {
+                const spinner = document.getElementById("spinner");
+                const btnReload = document.getElementById("btn-reload");
+                let urlStored = document.referrer;
+
+                if (urlStored.startsWith(window.location.origin)) {
+                    urlStored = localStorage.getItem("redirect-service-maintenance");
+                }
+                
+                if (urlStored && !urlStored.startsWith(window.location.origin)) {
+                    localStorage.setItem("redirect-service-maintenance", urlStored);
+                    btnReload.classList.remove("hidden");
+                    btnReload.addEventListener("click", () => {
+                        btnReload.disabled = true;
+                        spinner.removeAttribute("hidden");
+                        setTimeout(() => window.location.href = urlStored, 10 * 1000);
+                    });
+                }
+            }
+        }
+    </script>    
+</html>

@@ -1,0 +1,10 @@
+{% if environment.release_profile == "dbt-snowflake" %}
+{% set snowflake_cons = connections | selectattr('type', 'equalto', 'snowflake') | list %}
+{% set first_snowflake = snowflake_cons[0].name if snowflake_cons else '' %}
+default_connection_name = "{{ first_snowflake }}"
+
+[cli.logs]
+save_logs = true
+path = "/config/.snowflake/logs"
+level = "info"
+{% endif %}

@@ -1,0 +1,3 @@
+redshift-connector==2.1.1
+# pip-audit: subdependency explicitly fixed
+requests==2.31.0

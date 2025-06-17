@@ -1,0 +1,5 @@
+.pytest_cache
+.links
+.screenshots
+test-results/output
+integration_tests/output

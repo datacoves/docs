@@ -1,0 +1,44 @@
+name: Build and deploy dynamic-admission-controller
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/core/admission-controller/*
+      - src/core/admission-controller/**/*
+
+jobs:
+  build_and_deploy_dynamic-admission-controller:
+    name: Build and deploy admission-controller
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Lint
+        run: flake8
+        shell: bash
+
+      - name: Build and deploy dynamic-admission-controller
+        run: ./cli.py ci_build_and_push core/admission-controller
+        shell: bash

@@ -1,0 +1,89 @@
+name: Publish Release Assets
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release name, starting with 'v'"
+        default: ''
+        required: false
+        type: string
+  release:
+    types: published
+
+jobs:
+  create-datacoveslocal-cluster:
+    runs-on: [self-hosted, Linux]
+    steps:
+      - name: Create repo directory and set ownership
+        run: |
+          mkdir -p /home/datacoves/actions-runner/_work/datacoves
+          sudo chown -R $USER:$USER /home/datacoves/actions-runner/_work/datacoves
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.release || github.event.pull_request.head.sha }}
+      - name: Grant permissions # Allow abc user to write into github runner's filesystem
+        run: |
+          chmod 777 src/core/api/app
+          chmod 777 src/core/workbench/app
+          chmod 777 src/core/dbt-api
+          mkdir src/core/api/app/integration_tests/output
+          chmod 777 src/core/api/app/integration_tests/output
+      - name: Install 1Password client
+        run: |
+          curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --yes --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+          echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list
+          sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+          curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+          sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+          curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --yes --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+          sudo apt update && sudo apt install 1password-cli
+          op --version
+      - name: Install python dependencies
+        run: pip install -r requirements.txt
+      - name: Reveal secrets
+        run: ./cli.py reveal_secrets -y
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.ONE_PASSWORD_SERVICE_ACCOUNT }}
+      - name: Deploy cluster
+        run: |
+          if kubectl get namespaces &> /dev/null; then
+            echo "Cluster exists, deleting..."
+            ./cli.py kind_delete
+            echo "Creating a new cluster..."
+            ./cli.py kind_create
+          else
+            echo "No cluster found, creating a new one..."
+            ./cli.py kind_create
+          fi
+      - name: Set latest release
+        run: ./cli.py set_latest_release datacoveslocal.com
+      - name: Install Datacoves
+        run: ./ci.py install
+
+  publish-release-assets:
+    name: Publish Release Assets
+    runs-on: [self-hosted, Linux]
+    needs: [create-datacoveslocal-cluster]
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      - name: Publish assets to S3
+        run: ./cli.py build_and_deploy_static_files ${{ inputs.release || github.ref }}
+
+  tear-down:
+    runs-on: [self-hosted, Linux]
+    needs: [publish-release-assets]
+    steps:
+      - name: Tear down
+        run: ./cli.py kind_delete

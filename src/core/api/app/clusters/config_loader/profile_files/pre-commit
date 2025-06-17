@@ -1,0 +1,9 @@
+#!/bin/sh
+{% if protected_branch %}
+current_branch="$(git branch --show-current)"
+if [ "$current_branch" = "{{ protected_branch }}" ]; then
+    echo "ERROR: $current_branch branch is protected. Please create a feature branch."
+    exit 1
+fi
+{% endif %}
+exit 0

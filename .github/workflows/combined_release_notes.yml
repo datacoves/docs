@@ -1,0 +1,52 @@
+name: Combined release notes
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release"
+        required: true
+
+jobs:
+  combine_release_notes:
+    name: Combined release notes ${{ inputs.release }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install 1Password client
+        run: |
+          curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --yes --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+          echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list
+          sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+          curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+          sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+          curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --yes --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+          sudo apt update && sudo apt install 1password-cli
+          op --version
+      - name: Checkout branch
+        uses: actions/checkout@v4
+      - name: Install python dependencies
+        run: pip install -r requirements.txt
+      - name: Reveal secrets
+        run: ./cli.py reveal_secrets -y
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.ONE_PASSWORD_SERVICE_ACCOUNT }}
+      - name: Run combined release notes
+        run: ./cli.py combined_release_notes ${{ inputs.release }}
+        shell: bash
+      - name: Make the merged version as well
+        run: python ./scripts/notemerge.py combined.md merged-${{ inputs.release }}.md
+        shell: bash
+      - name: Rename combined release notes file
+        run: mv combined.md combined-${{ inputs.release }}.md
+        shell: bash
+      - uses: actions/upload-artifact@v4
+        with:
+          name: combined
+          path: |
+            combined-${{ inputs.release }}.md
+            merged-${{ inputs.release }}.md
+

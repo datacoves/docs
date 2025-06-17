@@ -1,0 +1,58 @@
+#!/usr/bin/python
+import json
+import pathlib
+import shutil
+
+print("Moving extensions to /config/extensions...")
+extensions_prep = pathlib.Path("/config/extensions-prep")
+extensions = pathlib.Path("/config/extensions")
+
+if extensions_prep.exists():
+    # Cleaning up extensions folder (can't delete it since it's being watched by VSCode)
+    for f in extensions.iterdir():
+        if f.is_dir():
+            shutil.rmtree(f, ignore_errors=True)
+        else:
+            f.unlink()
+    for f in extensions_prep.iterdir():
+        shutil.move(f, f"{extensions}/")
+
+    # Remove extensions-prep
+    shutil.rmtree(extensions_prep)
+
+    ext_configs = []
+    for f in extensions.glob("*/package.json"):
+        if f.is_file():
+            package = json.load(open(f))
+            try:
+                publisher = package["publisher"].lower()
+                name = package["name"].lower()
+                version = package["version"]
+            except:
+                print(f"Exception processing extension {f}")
+                raise
+
+            ext_configs.append(
+                {
+                    "identifier": {"id": f"{publisher}.{name}"},
+                    "version": version,
+                    "location": {
+                        "$mid": 1,
+                        "fsPath": str(f.parent),
+                        "path": str(f.parent),
+                        "scheme": "file",
+                    },
+                    "relativeLocation": f.parent.name,
+                }
+            )
+
+    extensions_json_path = extensions / "extensions.json"
+    with open(extensions_json_path, "w", encoding="utf-8") as f:
+        json.dump(ext_configs, f, ensure_ascii=False, indent=4)
+    shutil.chown(extensions_json_path, user="abc", group="abc")
+
+
+from threading import Event
+
+# Sleep to infinity since this is a service
+Event().wait()

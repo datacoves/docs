@@ -1,0 +1,12 @@
+- name: Delete Azure Kubernetes Service
+  hosts: localhost
+  collections:
+    - azure.azcollection
+  connection: local
+  tasks:
+    - name: Delete resource group
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+        state: absent
+        force_delete_nonempty: true

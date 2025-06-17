@@ -1,0 +1,20 @@
+[user]
+name = {{name}}
+email = {{email}}
+
+[pull]
+rebase = false
+
+[fetch]
+prune = true
+
+[diff]
+colorMoved = zebra
+
+[alias]
+br = !git branch
+co = !git checkout
+l = !git log
+st = !git status
+po = !git pull origin main
+prune-branches = !git remote prune origin && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D

@@ -1,0 +1,9 @@
+dags_folder: orchestrate/dags
+yaml_dags_folder: orchestrate/dags
+git_branch: airflow_development
+
+db:
+  external: true
+logs:
+  backend: nfs
+  external: true

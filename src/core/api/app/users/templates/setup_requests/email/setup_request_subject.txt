@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}{{user_name}} ({{user_email}}) is trying to create an Account{% endblocktrans %}
+{% endautoescape %}

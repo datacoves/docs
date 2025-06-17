@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build and Deploy DevDocs Site
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/*
+      - docs/**/*
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux]
+    steps:
+      - name: Create Repo Directory and Ownership
+        run: |
+          rm -rf /home/datacoves/actions-runner/_work/devdocs
+          mkdir -p /home/datacoves/actions-runner/_work/datacoves/datacoves
+          sudo chown -R $USER:$USER /home/datacoves/actions-runner/_work/datacoves/datacoves
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          path: devdocs
+      - name: Move directory out of its default location
+        run: mv /home/datacoves/actions-runner/_work/datacoves/datacoves/devdocs /home/datacoves/actions-runner/_work/
+      - name: Install Dependencies
+        run: cd /home/datacoves/actions-runner/_work/devdocs && pip install -r requirements.txt
+      # Compile our HTML
+      - name: Build HTML
+        run: |
+          cd /home/datacoves/actions-runner/_work/devdocs && ./cli.py compile_docs docs docs_output
+          cd /home/datacoves/actions-runner/_work/devdocs && mv docs_output docs
+      - name: Re-run docker processes
+        run: |
+          cd /home/datacoves/actions-runner/_work/devdocs/docs
+          docker-compose down -v --rmi all
+          docker-compose build
+          docker-compose up --remove-orphans -d

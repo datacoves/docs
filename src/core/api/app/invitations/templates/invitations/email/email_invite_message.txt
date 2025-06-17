@@ -1,0 +1,12 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}
+
+Hello {{ name }},
+
+You ({{ email }}) have been invited to join {{ account_name }} in Datacoves.
+
+If you'd like to join, please go to {{ invite_url }}
+
+{% endblocktrans %}
+{% endautoescape %}

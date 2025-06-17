@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}Datacoves Support accepted your trial request.{% endblocktrans %}
+{% endautoescape %}

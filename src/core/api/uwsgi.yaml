@@ -1,0 +1,22 @@
+# https://uwsgi-docs.readthedocs.io/en/latest/Options.html
+
+uwsgi:
+  module: datacoves.wsgi:application
+  master: true
+  pidfile: /tmp/datacoves.pid
+  vacuum: true
+  max-requests: 5000
+  http-socket: 0.0.0.0:8000
+  processes: 3
+  harakiri: 120
+  env: DJANGO_SETTINGS_MODULE=datacoves.settings
+  uid: 1000
+  gid: 1000
+  single-interpreter: true
+  enable-threads: true
+  offload-threads: %k
+  # required for auth2 endpoints
+  buffer-size: 16384
+
+  static-map: /static=/usr/src/app/assets
+  static-expires: /* 7776000

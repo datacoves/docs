@@ -1,0 +1,5 @@
+-r requirements.txt
+black==23.10.1
+ipdb==0.13.9
+ipython>=7.16.2
+playwright==1.45.0

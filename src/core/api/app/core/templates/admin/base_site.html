@@ -1,0 +1,229 @@
+{% extends 'admin/base.html' %}
+
+{% load panel static %}
+
+{% block page-tools %}
+    <ul id="cluster-domain">
+        <li><a href="{% url 'django-admindocs-docroot' %}">Documentation</a></li>
+        <li><a href="https://{% cluster_domain %}">{% cluster_domain %}</a></li>
+    </ul>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="shortcut icon" href="{% static 'admin/img/favicon.ico' %}" type="image/x-icon" />
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        #grp-context-navigation { border-bottom: 3px solid {% cluster_admin_color %}; }
+        #cluster-domain { padding: 5px 20px !important; color: {% cluster_admin_color %}; }
+        .grp-fixed-footer { border-top: 3px solid {% cluster_admin_color %}; }
+
+        table.grp-table tr > th { text-align: left; }
+
+        #grp-user-tools>li.grp-user-options-container { min-width: 0; }
+
+        #grp-user-tools .shortcuts {
+            cursor: pointer;
+            margin: 0;
+            padding: 2px 5px !important;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            background: #fdfdfd;
+            box-shadow: inset 0 1px 3px 0 #eee;
+            }
+
+        #grp-user-tools .shortcuts span {
+            display: block;
+            flex: 1;
+            color: #555;
+            padding: 0 20px 0 0;
+        }
+        #grp-user-tools li:has(.shortcuts) {
+            display: flex;
+            align-items: center;
+        }
+
+        #grp-user-tools .shortcuts kbd {
+            display: inline-block;
+            border: 1px solid #ccc;
+            color: #ccc;
+            border-radius: 3px;
+            line-height: 17px;
+            font-size: 12px;
+            padding: 1px 2px;
+        }
+
+        #shortcuts {
+            display: none;
+            position: fixed;
+            background: #0000007a;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        #shortcuts select {
+            width: 500px;
+            max-width: 80vh;
+        }
+
+        #shortcuts .select2 {
+            display: block;
+            margin: 50px auto 0 auto;
+        }
+
+        .select2 {
+            display: block;
+            margin: 50px auto 0 auto;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            font-size: 20px;
+            padding: 4px 6px;
+        }
+
+        .select2-container--default .select2-results>.select2-results__options {
+            max-height: calc(100vh - 200px) !important;
+            font-size: 20px;
+        }
+
+        #dc-logo {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+            padding: 20px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    {% shortcuts as shortcuts_links %}
+    {{ shortcuts_links|json_script:'shortcuts-links'}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.jQuery = jQuery || django.jQuery || grp.jQuery;
+            window.$ = $ || jQuery;
+
+            if (window.toggleShortcuts) {
+                return;
+            }
+
+            const links = JSON.parse(document.getElementById('shortcuts-links').textContent);
+            let visible = false;
+            const back = document.createElement('div');
+            back.setAttribute('id', 'shortcuts');
+            back.setAttribute('tabindex', '');
+
+            const select = document.createElement('select');
+            const empty = document.createElement('option');
+            select.appendChild(empty);
+            links.forEach(({name, url}) => {
+                const option = document.createElement('option');
+                option.setAttribute('value', url);
+                option.innerText = name;
+                select.appendChild(option);
+            });
+        
+            back.appendChild(select);
+            document.querySelector('body').appendChild(back);
+        
+            const show = () => {
+                visible = true;
+                back.style.display = 'block';
+                $(select).val(null).trigger('change').select2('open');
+            };
+        
+            const hide = () => {
+                visible = false;
+                $(select).select2('close');
+                back.style.display = 'none';
+            };
+        
+            const toggle = () => {
+                visible ? hide() : show();
+            };
+        
+            const backKeyDown = (event) => {
+                if (event.keyCode === 27) {
+                    hide();
+                }
+            };
+        
+            const backClick = (event) => {
+                hide();
+            };
+        
+            const documentKeyDown = (event) => {
+                if (event.keyCode === 75 && (event.ctrlKey || event.metaKey)) {
+                    toggle();
+                    event.preventDefault();
+                }
+            };
+        
+            const selectSelect = (event) => {
+                hide();
+                window.location.href = event.params.data.id;
+            };
+        
+            const selectClose = (event) => {
+                hide();
+            };
+        
+            const selectOpen = (event) => {
+                document.querySelector('.select2-container--open .select2-search__field').focus()
+            };
+        
+            back.addEventListener('keydown', backKeyDown);
+            back.addEventListener('click', backClick);
+            document.addEventListener('keydown', documentKeyDown);
+            $(select).on('select2:select', selectSelect);
+            $(select).on('select2:close', selectClose);
+            $(select).on('select2:open', selectOpen);
+        
+            $(document).ready(function() {
+                $(select).select2({
+                    allowClear: true,
+                    placeholder: 'Shortcuts...',
+                });
+            });
+        
+            window.toggleShortcuts = toggle;
+            back.style.display = 'none';
+        }, false);
+    </script>
+{% endblock %}
+
+{% block userlinks %}
+    <ul id="grp-user-tools">
+        <li><div class="shortcuts" onclick="toggleShortcuts()"><span>Shortcuts</span><kbd>Ctrl+k</kbd></div></li>
+        <li class="grp-user-options-container grp-collapse grp-closed {% if request.session.original_user %}grp-switch-user-is-target{% endif %}">
+            <a href="javascript://" class="user-options-handler grp-collapse-handler {% if request.session.original_user %}grp-switch-user-is-target{% else %}grp-switch-user-is-original{% endif %}">{% firstof user.get_short_name user.get_username %}</a>
+            <ul class="grp-user-options">
+                <!-- Change Password -->
+                {% if user.has_usable_password %}
+                    <li><a href="{% url 'admin:password_change' %}" class="grp-change-password">Change password</a></li>
+                {% endif %}
+                <!-- Logout -->
+                <li>
+                    <a href="{% url 'admin:logout' %}" class="grp-logout">Log out</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+DB_SSL_ENABLED=true
+DB_USER=datacoves_admin
+DB_PASS={{ database_password }}
+DB_HOST={{ database_host }}
+DB_NAME=dbt_api
+
+DATACOVES_DB_USER=datacoves_ro
+DATACOVES_DB_PASS=ThisIsJustATest
+DATACOVES_DB_HOST={{ database_host }}
+DATACOVES_DB_NAME=datacoves
+
+CONNECT_TO_AIRFLOW=true
+S3_BUCKET_NAME=dbt-api
+MINIO_URL=http://minio.core.svc.cluster.local:9000
+MINIO_ACCESS_KEY=admin
+MINIO_SECRET_KEY={{ cluster_secrets['core_minio_config']['password'] }}
+
+
+SECRET_KEY_BASE={{ coredbtapi_secrets['SECRET_KEY_BASE'] }}
+INTERNAL_BEARER_TOKEN=dev_internal_bearer_token
+IEX_COOKIE={{ coredbtapi_secrets['IEX_COOKIE'] }}
+
+# Hard coding for test - must match core-api.j2
+FERNET_KEY=R1wy0eHlc1VSV25OZGfXDHmwD3uGlEZUIvFdhgwYrDI=

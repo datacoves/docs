@@ -1,0 +1,143 @@
+groups:
+- name: Instances
+  rules:
+  - alert: ContainerCpuUsage
+    expr: (sum(rate(container_cpu_usage_seconds_total{namespace=~"core|operator-system"}[3m]))
+      BY (container, namespace, instance, pod, name) * 100) > 90
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: CPU usage > 90% on container {{ $labels.pod }}:{{ $labels.container }} on namespace {{ $labels.namespace }}
+  - alert: ContainerOOMKiller
+    expr: min_over_time(kube_pod_container_status_terminated_reason{reason="OOMKilled"}[10m]) == 1
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: OOMKilled container {{ $labels.pod }}:{{ $labels.container }} on namespace {{ $labels.namespace }}
+  - alert: NodeOutOfDiskSpace
+    expr: "(node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes < 10 and
+      ON (instance, device, mountpoint) node_filesystem_readonly == 0"
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: Disk free space < 10% on node {{ $labels.instance }}
+  - alert: NodeHighCpuLoad
+    expr: 100 - (avg by(instance, node) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: CPU usage > 90% on node {{ $labels.instance }}
+  - alert: StatefulsetDown
+    expr: kube_statefulset_replicas != kube_statefulset_status_replicas_ready > 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: StatefulSet {{ $labels.statefulset }} not ready for > 1 minute on namespace {{ $labels.namespace }}
+  - alert: PodCrashLooping
+    expr: increase(kube_pod_container_status_restarts_total{container!~"git-sync|s3-sync"} [5m]) > 2
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Crashloop on container {{ $labels.pod }}:{{ $labels.container }} on namespace {{ $labels.namespace }}
+  - alert: ReplicaSetMismatch
+    expr: kube_replicaset_spec_replicas != kube_replicaset_status_ready_replicas
+    for: 20m
+    labels:
+      severity: warning
+    annotations:
+      summary: Replica Set {{ $labels.replicaset }} not ready for > 20 minutes on namespace {{ $labels.namespace }}
+  - alert: StatefulsetUpdateNotRolledOut
+    expr: max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision)
+      * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: StatefulSet {{ $labels.statefulset }} update not rolled out on namespace {{ $labels.namespace }}
+  - alert: PersistentVolumeClaimError
+    expr: kube_persistentvolumeclaim_status_phase{phase=~"Failed"} > 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: PVC {{ $labels.persistentvolumeclaim }} not healthy on namespace {{ $labels.namespace }}
+  - alert: PodNotHealthy
+    expr: sum by (namespace, pod, node) (kube_pod_status_phase{phase=~"Pending|Unknown|Failed"}
+      and on(pod) kube_pod_labels{label_airflow_worker="", label_airbyte!~"job-pod|worker-pod"}
+      and on(pod) kube_pod_container_status_terminated_reason{reason!="OOMKilled"}) > 0
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      summary: Pod {{ $labels.pod }} not healthy on namespace {{ $labels.namespace }}
+  - alert: AirflowWorkerFailedToInit
+    expr: sum by (namespace) (kube_pod_init_container_status_terminated_reason{reason="Error", container=~"git-sync-init|s3-sync"}
+      and on(pod) kube_pod_labels{label_airflow_worker!=""}) > 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: Airflow workers failed to copy dags from git/s3 on namespace {{ $labels.namespace }}
+  - alert: DiskPressure
+    expr: sum by (node) (kube_node_status_condition{condition="DiskPressure", status="true"}) > 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: Node {{ $labels.node }} had DiskPressure condition
+  - alert: CeleryWorkerOffline
+    expr: sum(flower_worker_online{namespace="core"}) by (container) == 0
+    for: 2m
+    labels:
+      severity: critical
+      context: celery-worker
+    annotations:
+      summary: Celery worker offline
+      description: Celery worker {{ $labels.worker }} has been offline for more than 2 minutes.
+  - alert: CeleryTaskFailureRatioTooHigh
+    expr: (sum(avg_over_time(flower_events_total{type="task-failed"}[15m])) by (task) / sum(avg_over_time(flower_events_total{type=~"task-failed|task-succeeded"}[15m])) by (task)) * 100 > 1
+    for: 5m
+    labels:
+      severity: critical
+      context: celery-task
+    annotations:
+      summary: Task Failure Ratio Too High.
+      description: Average task failure ratio for task {{ $labels.task }} is {{ $value }}.
+  - alert: CeleryTaskPrefetchTimeTooHigh
+    expr: sum(avg_over_time(flower_task_prefetch_time_seconds[15m])) by (task, worker) > 1
+    for: 5m
+    labels:
+      severity: critical
+      context: celery-task
+    annotations:
+      summary: Average Task Prefetch Time Too High.
+      description: Average task prefetch time at worker for task {{ $labels.task }} and worker {{ $labels.worker }} is {{ $value }}.
+  - alert: CeleryTaskPrefetchTimeTooHigh
+    expr: sum(avg_over_time(flower_task_prefetch_time_seconds[15m])) by (task, worker) > 1
+    for: 5m
+    labels:
+      severity: critical
+      context: celery-task
+    annotations:
+      summary: Average Task Prefetch Time Too High.
+      description: Average task prefetch time at worker for task {{ $labels.task }} and worker {{ $labels.worker }} is {{ $value }}.
+  - alert: PodsStuckedInTerminatingStatus
+    expr: count(kube_pod_deletion_timestamp) by (namespace, pod) * count(kube_pod_status_reason{reason="NodeLost"} == 0) by (namespace, pod) > 0
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Pod {{$labels.namespace}}/{{$labels.pod}} stucked in terminating status.
+  - alert: HelmChartBadStatus
+    expr: sum(datacoves_helm_chart_info{status!="deployed"}) by (namespace, name, status) > 0
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Helm chart {{$labels.namespace}}/{{$labels.name}} on {{$labels.status}} status.

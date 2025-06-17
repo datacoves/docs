@@ -1,0 +1,59 @@
+name: Build and deploy ci-basic
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/ci/basic/*
+      - src/ci/basic/**/*
+      - src/common/*
+      - src/common/**/*
+
+jobs:
+  build_and_deploy_ci-basic:
+    name: Build and deploy ci-basic
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DATACOVES_GITHUB_API_TOKEN: ${{ secrets.DATACOVES_GITHUB_API_TOKEN }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Build and deploy ci-basic base
+        run: ./cli.py ci_build_and_push ci/basic datacoves base
+        shell: bash
+
+      - name: Build and deploy ci-basic dbt-snowflake
+        run: ./cli.py ci_build_and_push ci/basic datacoves dbt-snowflake
+        shell: bash
+
+      - name: Build and deploy ci-basic dbt-redshift
+        run: ./cli.py ci_build_and_push ci/basic datacoves dbt-redshift
+        shell: bash
+
+      - name: Build and deploy ci-basic dbt-bigquery
+        run: ./cli.py ci_build_and_push ci/basic datacoves dbt-bigquery
+        shell: bash
+
+      - name: Build and deploy ci-basic dbt-databricks
+        run: ./cli.py ci_build_and_push ci/basic datacoves dbt-databricks
+        shell: bash

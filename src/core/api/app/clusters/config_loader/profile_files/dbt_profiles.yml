@@ -1,0 +1,67 @@
+{% if connections|length > 0%}
+{{ environment.dbt_profile }}:
+  outputs:
+    {% set ns = namespace(main_target='') %}
+    {% for con in connections %}
+    {% if ns.main_target == '' or 'dev' not in ns.main_target %}
+      {% set ns.main_target = con.slug %}
+    {% endif %}
+    {{ con.slug }}:
+    {% if con.type == 'snowflake' %}
+      type: snowflake
+      account: {{ con.account }}
+      warehouse: {{ con.warehouse }}
+      database: {{ con.database }}
+      role: {{ con.role }}
+      schema: {{ con.schema }}
+      user: {{ con.user }}
+    {% if con.ssl_public_key %}
+      private_key_path: /config/.ssl/{{ con.slug }}-private.pem
+    {% else %}
+      password: "{{ con.password | escape_quotes }}"
+    {% endif %}
+    {% if 'mfa_protected' in con and con.mfa_protected %}
+      authenticator: username_password_mfa
+    {% endif %}
+      threads: 16
+    {% elif con.type == 'redshift' %}
+      type: redshift
+      host: {{ con.host }}
+      user: {{ con.user }}
+      password: "{{ con.password | escape_quotes}}"
+      port: 5439
+      dbname: {{ con.database }}
+      schema: {{ con.schema }}
+      threads: 8
+      keepalives_idle: 240
+      connect_timeout: 900
+    {% elif con.type == 'databricks' %}
+      type: databricks
+      schema: {{ con.schema }}
+      host: {{ con.host }}
+      http_path: {{ con.http_path }}
+      token: {{ con.token }}
+      threads: 8
+    {% elif con.type == 'bigquery' %}
+      type: bigquery
+      method: service-account-json
+      project: {{ con.keyfile_json.project_id }}
+      dataset: {{ con.dataset }}
+      threads: 8
+      keyfile_json:
+        type: {{ con.keyfile_json.type }}
+        project_id: {{ con.keyfile_json.project_id }}
+        private_key_id: {{ con.keyfile_json.private_key_id }}
+        private_key: {{ con.keyfile_json.private_key | tojson }}
+        client_email: {{ con.keyfile_json.client_email }}
+        client_id: {{ con.keyfile_json.client_id }}
+        auth_uri: {{ con.keyfile_json.auth_uri }}
+        token_uri: {{ con.keyfile_json.token_uri }}
+        auth_provider_x509_cert_url: {{ con.keyfile_json.auth_provider_x509_cert_url }}
+        client_x509_cert_url: {{ con.keyfile_json.client_x509_cert_url }}
+    {% else %}
+      # TODO: {{ con.type }} connection type not supported yet
+    {% endif %}
+    {% endfor %}
+  target: {{ ns.main_target }}
+{% endif %}

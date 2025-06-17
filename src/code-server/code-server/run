@@ -1,0 +1,72 @@
+#!/usr/bin/with-contenv bash
+
+if [ -n "${PASSWORD}" ] || [ -n "${HASHED_PASSWORD}" ]; then
+    AUTH="password"
+else
+    AUTH="none"
+    echo "starting with no password"
+fi
+
+if [ -z ${PROXY_DOMAIN+x} ]; then
+    PROXY_DOMAIN_ARG=""
+else
+    PROXY_DOMAIN_ARG="--proxy-domain=${PROXY_DOMAIN}"
+fi
+
+DATA=$(
+    printenv | grep DC_CUSTOM__ | sed "s/DC_CUSTOM__//g" | awk '!/^\s*#/' | awk '!/^\s*$/' | while IFS='' read -r line; do
+        key=$(echo "$line" | cut -d '=' -f 1)
+        value=$(echo "$line" | cut -d '=' -f 2-)
+        echo "    $key=\"$value\" \\"
+    done
+)
+
+if [ -z "${DATA}" ]; then
+    DATA="\\"
+fi
+
+COMMAND_EXEC="
+exec \\
+    env -i \\
+    HOME=\"$HOME\" \\
+    AUTH=\"$AUTH\" \\
+    PROXY_DOMAIN_ARG=\"$PROXY_DOMAIN_ARG\" \\
+    PUID=\"$PUID\" \\
+    PGID=\"$PGID\" \\
+    TZ=\"$TZ\" \\
+    DBT_HOME=\"$DBT_HOME\" \\
+    LOG_LEVEL=\"$LOG_LEVEL\" \\
+    KUBERNETES_SERVICE_PORT_HTTPS=\"$KUBERNETES_SERVICE_PORT_HTTPS\" \\
+    KUBERNETES_SERVICE_PORT=\"$KUBERNETES_SERVICE_PORT\" \\
+    KUBERNETES_PORT_443_TCP=\"$KUBERNETES_PORT_443_TCP\" \\
+    KUBERNETES_PORT_443_TCP_PROTO=\"$KUBERNETES_PORT_443_TCP_PROTO\" \\
+    KUBERNETES_PORT_443_TCP_ADDR=\"$KUBERNETES_PORT_443_TCP_ADDR\" \\
+    KUBERNETES_SERVICE_HOST=\"$KUBERNETES_SERVICE_HOST\" \\
+    KUBERNETES_PORT=\"$KUBERNETES_PORT\" \\
+    KUBERNETES_PORT_443_TCP_PORT=\"$KUBERNETES_PORT_443_TCP_PORT\" \\
+    DATACOVES__DBT_HOME=\"$DATACOVES__DBT_HOME\" \\
+    DATACOVES__USER_EMAIL=\"$DATACOVES__USER_EMAIL\" \\
+    DATACOVES__USER_FULLNAME=\"$DATACOVES__USER_FULLNAME\" \\
+    DATACOVES__REPOSITORY_URL=\"$DATACOVES__REPOSITORY_URL\" \\
+    DATACOVES__REPOSITORY_CLONE=\"$DATACOVES__REPOSITORY_CLONE\" \\
+    DATACOVES__USER_SLUG=\"$DATACOVES__USER_SLUG\" \\
+    DATACOVES__SECRETS_URL=\"$DATACOVES__SECRETS_URL\" \\
+    DATACOVES__SECRETS_TOKEN=\"$DATACOVES__SECRETS_TOKEN\" \\
+    DATACOVES__SECRETS_PROJECT=\"$DATACOVES__SECRETS_PROJECT\" \\
+    DATACOVES__AIRBYTE_HOST_NAME=\"$DATACOVES__AIRBYTE_HOST_NAME\" \\
+    DATACOVES__AIRBYTE_PORT=\"$DATACOVES__AIRBYTE_PORT\" \\
+    DATACOVES__AIRFLOW_DAGS_YML_PATH=\"$DATACOVES__AIRFLOW_DAGS_YML_PATH\" \\
+    DATACOVES__AIRFLOW_DAGS_PATH=\"$DATACOVES__AIRFLOW_DAGS_PATH\" \\
+    DATACOVES__ENVIRONMENT_SLUG=\"$DATACOVES__ENVIRONMENT_SLUG\" \\
+    DATACOVES__API_ENDPOINT=\"$DATACOVES__API_ENDPOINT\" \\
+    DATACOVES__API_TOKEN=\"$DATACOVES__API_TOKEN\" \\
+    DATACOVES__PROJECT_SLUG=\"$DATACOVES__PROJECT_SLUG\" \\
+    DATACOVES__AIRFLOW_DBT_PROFILE_PATH=\"$DATACOVES__AIRFLOW_DBT_PROFILE_PATH\" \\
+    DATACOVES__REPO_PATH=\"$DATACOVES__REPO_PATH\" \\
+    DATACOVES__DBT_ADAPTER=\"$DATACOVES__DBT_ADAPTER\" \\
+    UV_CACHE_DIR=\"/tmp/uv\" \\
+${DATA}
+    bash -l -c \"s6-notifyoncheck -d -n 300 -w 1000 -c 'nc -z 127.0.0.1 8443' s6-setuidgid abc /app/code-server/bin/code-server --bind-addr 0.0.0.0:8443 --user-data-dir /config/data --extensions-dir /config/extensions --disable-telemetry --disable-update-check --auth ${AUTH} ${PROXY_DOMAIN_ARG} ${DEFAULT_WORKSPACE:-/config/workspace}\"
+"
+
+eval "$COMMAND_EXEC"

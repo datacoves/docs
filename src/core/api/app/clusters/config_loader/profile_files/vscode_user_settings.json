@@ -1,0 +1,579 @@
+{% if environment.dbt_home_path %}
+{% set dbt_home_subpath = "/" ~ environment.dbt_home_path %}
+{% else %}
+{% set dbt_home_subpath = "" %}
+{% endif %}
+{% if environment.release_profile == "dbt-snowflake" %}
+{% set sql_file_association = "snowflake-sql" %}
+{% else %}
+{% set sql_file_association = "sql" %}
+{% endif %}
+{
+  "betterStatusBar.commands": [
+    {
+      "id": "20",
+      "label": "✔️ lint current",
+      "command": "sqlfluff lint ${file}",
+      "color": "white",
+      "alignment": 1,
+      "priority": 10,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "30",
+      "label": "✔️ Run checks",
+      "command": "pre-commit run",
+      // "command": "pre-commit run --from-ref origin/main --to-ref HEAD",
+      "color": "lightgray",
+      "alignment": 1,
+      "priority": 10,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "40",
+      "label": "Generate Properties",
+      "command": "dbt-coves generate properties -s ${fileBasenameNoExtension}",
+      "color": "yellow",
+      // 1 = left side | 2 = right side
+      "alignment": 1,
+      // Determines the location of the button. Higher priority is farther to the left.
+      "priority": 8,
+      // Setting this to null defaults to the command value (which you could then use to add a keyboard shortcut to) as the tooltip text.
+      "tooltip": "generate yml file for current file",
+      // Change this to false if you only want the button to show in the dropdown.
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        // Setting a name allows the terminal to be re-used by other commands with the same name.
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "45",
+      "label": "Generate Sources",
+      "command": "dbt-coves generate sources",
+      "color": "pink",
+      // 1 = left side | 2 = right side
+      "alignment": 1,
+      // Determines the location of the button. Higher priority is farther to the left.
+      "priority": 8,
+      // Setting this to null defaults to the command value (which you could then use to add a keyboard shortcut to) as the tooltip text.
+      "tooltip": "generate staging files",
+      // Change this to false if you only want the button to show in the dropdown.
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        // Setting a name allows the terminal to be re-used by other commands with the same name.
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "47",
+      "label": "Generate Airflow Dag for YML",
+      "command": "dbt-coves generate airflow-dags --yaml-path ${file}",
+      "color": "pink",
+      "alignment": 1,
+      "priority": 8,
+      "tooltip": "generate python dag from current yml template",
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        // Setting a name allows the terminal to be re-used by other commands with the same name.
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "50",
+      "label": "Generate Metadata",
+      "command": "dbt-coves generate metadata",
+      "color": "yellow",
+      // 1 = left side | 2 = right side
+      "alignment": 1,
+      // Determines the location of the button. Higher priority is farther to the left.
+      "priority": 8,
+      // Setting this to null defaults to the command value (which you could then use to add a keyboard shortcut to) as the tooltip text.
+      "tooltip": "generate metadata file for generating models and properties",
+      // Change this to false if you only want the button to show in the dropdown.
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        // Setting a name allows the terminal to be re-used by other commands with the same name.
+        "name": "datacoves"
+      }
+    },
+    {
+      // The label makes adding the command to the dropdown easier.
+      "id": "90",
+      "label": "▶️ Run current",
+      "command": "dbt run --select ${fileBasenameNoExtension}",
+      "color": "lightgreen",
+      // 1 = left side | 2 = right side
+      "alignment": 1,
+      // Determines the location of the button. Higher priority is farther to the left.
+      "priority": 9,
+      // Setting this to null defaults to the command value (which you could then use to add a keyboard shortcut to) as the tooltip text.
+      "tooltip": "dbt run current file",
+      // Change this to false if you only want the button to show in the dropdown.
+      "showButton": true,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        // Setting a name allows the terminal to be re-used by other commands with the same name.
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "92",
+      "label": "▶️ Run Upstream models",
+      "command": "dbt run --select +${fileBasenameNoExtension}",
+      "color": "lightgreen",
+      "alignment": 1,
+      "priority": 10,
+      "tooltip": "dbt run models upstream of current file",
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        // Setting a name allows the terminal to be re-used by other commands with the same name.
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "94",
+      "label": "▶️ Run Downstream models",
+      "command": "dbt run --select ${fileBasenameNoExtension}+",
+      "color": "lightgreen",
+      "alignment": 1,
+      "priority": 10,
+      "tooltip": "dbt run models downstream of current file",
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "96",
+      "label": "▶️ Run Upstream/Downstream models",
+      "command": "dbt run --select +${fileBasenameNoExtension}+",
+      "color": "lightgreen",
+      "alignment": 1,
+      "priority": 10,
+      "tooltip": "dbt run models upstream and downstream of current file",
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "100",
+      "label": "🗳️ Get Production metadata (for state modified)",
+      "command": "/config/workspace/automate/dbt/get_artifacts.sh",
+      "color": "white",
+      "alignment": 1,
+      "priority": 1,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "105",
+      "label": "📝 Generate dbt Docs",
+      "command": "dbt docs generate",
+      "color": "white",
+      "alignment": 1,
+      "priority": 1,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "120",
+      "label": "⏭ Build all models and ther tests",
+      "command": "dbt build",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "122",
+      "label": "⏭ Build Upstream models and their tests",
+      "command": "dbt build --select +${fileBasenameNoExtension}",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "124",
+      "label": "⏭ Build Downstream models and their tests",
+      "command": "dbt build --select ${fileBasenameNoExtension}+",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "126",
+      "label": "⏭ Build Upstream/Downstream models and their tests",
+      "command": "dbt build --select +${fileBasenameNoExtension}+",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "130",
+      "label": "⏭ Build all models changed",
+      "command": "dbt build -s state:modified --state logs",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "140",
+      "label": "☑︎ Test current model",
+      "command": "dbt test --select ${fileBasenameNoExtension}",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "142",
+      "label": "☑︎ Test all models",
+      "command": "dbt test",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "144",
+      "label": "☑︎ Test Upstream models",
+      "command": "dbt test --select +${fileBasenameNoExtension}",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "146",
+      "label": "☑︎ Test Downstream models",
+      "command": "dbt test --select ${fileBasenameNoExtension}+",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "datacoves"
+      }
+    },
+    {
+      "id": "148",
+      "label": "☑︎ Test Upstream/Downstream models",
+      "command": "dbt test --select +${fileBasenameNoExtension}+",
+      "color": "white",
+      "alignment": 1,
+      "priority": 0,
+      "tooltip": null,
+      "showButton": false,
+      "terminal": {
+        "cwd": "/config/workspace{{ dbt_home_subpath }}",
+        "singleInstance": true,
+        "clear": true,
+        "focus": false,
+        "name": "bash2"
+      }
+    }
+  ],
+  "betterStatusBar.defaultColor": "statusBar.foreground",
+  "betterStatusBar.dropdowns": [
+    {
+      "id": "Dropdown",
+      "label": "More...",
+      // The id or the label can be used to show the commands.
+      "commands": [
+        "40",
+        "45",
+        "47",
+        "50",
+        "90",
+        "92",
+        "94",
+        "96",
+        "100",
+        "105",
+        "20",
+        "30",
+        "120",
+        "122",
+        "124",
+        "122",
+        "124",
+        "126",
+        "130",
+        "140",
+        "142",
+        "144",
+        "146",
+        "148"
+      ],
+      "tooltip": "Additional Commands"
+    }
+  ],
+  "betterStatusBar.loadNpmCommands": false,
+  // Set this to null to reload on configuration change in settings or this file.
+  "betterStatusBar.reloadButton": null,
+  "cSpell.checkOnlyEnabledFileTypes": true,
+  "cSpell.enableFiletypes": [
+    "yaml",
+    "markdown",
+    "!python"
+  ],
+  "csv-edit.initiallyFixedRowsTop": 1,
+  "csv-edit.readOption_hasHeader": "true",
+  "datacovesCopilot.defaultModel": "gpt-4.1-mini",
+  "datacovesCopilot.presets": [
+    {
+      "name": "Document dbt model",
+      "prompt": "Document the following dbt model. Add the description wherever it is missing and do not ovverride existing descriptions. Return the result as a code block"
+    },
+    {
+      "name": "Explain dbt model",
+      "prompt": "What does this dbt model do?"
+    },
+    {
+      "name": "Explain dbt macro",
+      "prompt": "What does this dbt macro do?"
+    },
+    {
+      "name": "Add descriptions to CSV",
+      "prompt": "Add descriptions to this csv file for each column"
+    },
+  ],
+  "datacovesCopilot.systemPrompt": "You are a senior dbt analytics engineer. You are given a CODEBASE, a SELECTION, and a USER QUERY. You are to answer the USER QUERY based on the CODEBASE and the SELECTION. If only an explanation is needed, respond with a clear and digestible answer in short paragraphs or bullet lists that a lay person can understand",
+  "dbt.dbtPythonPath": "/usr/bin/python",
+  "dbt.terminal.name": "datacoves",
+  "dbt.terminal.output": "none",
+  "dbt.terminal.preserveFocus": true,
+  "dbt.terminal.readonly": false,
+  "editor.hover.delay": 1500,
+  "editor.minimap.enabled": false,
+  "editor.rulers": [140],
+  "extensions.autoCheckUpdates": false,
+  "extensions.autoUpdate": false,
+  "files.associations": {
+    "*.sql": "{{ sql_file_association }}",
+    "**/{models,macros,analysis,snapshots,tests}/**/*.sql": "jinja-sql"
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "git.autofetch": true,
+  {% if environment.protected_branch != "" %}
+  "git.branchProtection": "{{ environment.protected_branch }}",
+  {% endif %}
+  "git.enableSmartCommit": true,
+  "git.postCommitCommand": "sync",
+  "redhat.telemetry.enabled": false,
+  "remote.autoForwardPortsSource": "process",
+  "security.workspace.trust.enabled": false,
+  {% if environment.release_profile == "dbt-snowflake" %}
+  "snowflake.showExecuteAboveStatement.enabled": false,
+  {% endif %}
+  "sqlfluff.config": "/config/workspace{{ dbt_home_subpath }}/.sqlfluff",
+  "sqlfluff.dbtInterface.enabled": true,
+  "sqlfluff.dbtInterface.host": "localhost",
+  "sqlfluff.dbtInterface.port": 8581,
+  "sqlfluff.executablePath": "/config/.local/bin/sqlfluff",
+  "sqlfluff.experimental.format.executeInTerminal": true,
+  "sqlfluff.ignoreParsing": false,
+  "sqlfluff.linter.run": "onType",
+  {% if environment.release_profile == "dbt-redshift" %}
+  "sqltools.connections": [
+    {% for con in connections %}
+    {% if con.type == 'redshift' %}
+    {
+      "pgOptions": {
+        "ssl": true
+      },
+      "previewLimit": 50,
+      "server": "{{con.host}}",
+      "port": 5439,
+      "driver": "PostgreSQL",
+      "name": "{{con.name}}",
+      "database": "{{con.database}}",
+      "username": "{{con.user}}"
+    }{% if not loop.last %},
+    {% endif %}
+    
+    {% endif %}
+    {% endfor %}
+  ],
+  "sqltools.results.location": "current",
+  "sqltools.results.reuseTabs": "connection",
+  {% endif %}
+  "telemetry.enableTelemetry": false,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cwd": "/config/workspace{{ dbt_home_subpath }}",
+  "terminal.integrated.gpuAcceleration": "off",
+  "terminal.integrated.tabs.title": "datacoves",
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+  },
+  "workbench.editor.enablePreviewFromCodeNavigation": true,
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.sideBar.location": "left",
+  "workbench.startupEditor": "none",
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json": [
+      "{{ dbt_home_subpath }}/dbt_project.yml"
+    ],
+    "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json": [
+      "{{ dbt_home_subpath }}/**/*.yml",
+      "!{{ dbt_home_subpath }}/*.yml",
+      "!{{ dbt_home_subpath }}/.dbt_coves/*.yml"
+    ],    
+    "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json": [
+      "{{ dbt_home_subpath }}/selectors.yml"
+    ],
+    "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json": [
+      "{{ dbt_home_subpath }}/packages.yml"
+    ]
+  },
+  // Deprecated (remove once dbt-osmosis is completely unused)
+  "dbt.osmosisCheck": false,
+  "dbt.server.createServer": false,
+  "dbt.server.persistentHealthCheck": false,
+  "dbt.versionCheck": "neither",
+  "sqlfluff.osmosis.enabled": true,
+  "sqlfluff.osmosis.host": "localhost",
+  "sqlfluff.osmosis.port": 8581,
+  // end deprecation warning
+}

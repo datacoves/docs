@@ -1,0 +1,102 @@
+name: Test, build and deploy core-workbench
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/core/workbench/*
+      - src/core/workbench/**/*
+
+jobs:
+  build_and_deploy_core-workbench-local:
+    name: Build and deploy core-workbench-local
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get modified files
+        id: git-diff
+        run: |
+          echo "diff<<EOF" >> "$GITHUB_OUTPUT"
+          echo $(git diff --name-only HEAD~1 HEAD) >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Build and deploy core-workbench-local
+        if: ${{ contains(steps.git-diff.outputs.diff, 'src/core/workbench/Dockerfile') || contains(steps.git-diff.outputs.diff, 'src/core/workbench/app/package.json') }}
+        run: ./cli.py ci_build_and_push core/workbench datacovesprivate local
+
+  test_core-workbench:
+    needs: build_and_deploy_core-workbench-local
+    name: Test core-workbench-local
+    runs-on: ubuntu-latest
+
+    container: datacovesprivate/core-workbench-local:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Test core-workbench
+        run: |
+          mv /usr/src/node_modules src/core/workbench/app/
+          cd src/core/workbench/app/
+          yarn test:coverage
+
+  build_and_deploy_core-workbench:
+    needs: test_core-workbench
+
+    name: Build and deploy core-workbench
+    runs-on: ubuntu-latest
+
+    container: datacoves/ci-multiarch:latest
+
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Checkout and deploy core-workbench
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+          set-safe-directory: true
+
+      - name: Build an deploy core-workbench
+        run: ./cli.py ci_build_and_push core/workbench

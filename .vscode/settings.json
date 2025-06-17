@@ -1,0 +1,7 @@
+{
+    "git.ignoreLimitWarning": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "typescript.tsdk": "src/core/workbench/app/node_modules/typescript/lib"
+}

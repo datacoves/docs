@@ -1,0 +1,59 @@
+name: Build and deploy airflow-airflow
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - prev
+    paths:
+      - src/airflow/airflow/*
+      - src/airflow/airflow/**/*
+      - src/common/*
+      - src/common/**/*
+
+jobs:
+  collect-airflow-profiles: # will output all airflow profiles under the profiles dir
+    runs-on: ubuntu-latest
+    outputs:
+      dir: ${{ steps.collect.outputs.dir }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: collect
+        run: |
+          cd src/airflow/airflow
+          echo "::set-output name=dir::$(ls -1 profiles/ | jq -R -s -c 'split("\n")[:-1]')"
+
+  build_and_deploy_airflow-airflow:
+    name: Build and deploy airflow-airflow
+    runs-on: ubuntu-latest
+    container: datacoves/ci-multiarch:latest
+    needs: [collect-airflow-profiles]
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.collect-airflow-profiles.outputs.dir) }}
+    env:
+      DOCKER_TLS_CERTDIR: "/certs"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Trust directory
+        run: git config --global --add safe.directory /__w/datacoves/datacoves
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Lint
+        run: flake8
+        shell: bash
+
+      - name: Build and deploy airflow-airflow base
+        run: ./cli.py ci_build_and_push airflow/airflow datacovesprivate ${{ matrix.dir }}
+        shell: bash

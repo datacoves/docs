@@ -1,0 +1,38 @@
+[flake8]
+exclude =
+  .git,
+  .venv,
+  __pycache__,
+  *_template.py,
+  */migrations/*,
+  */node_modules/*,
+  k8s/kubesphere,
+  k8s/cluster/global,
+  .generated,
+  docker,
+  local,
+  config,
+  src/core/workspace,
+  src/core/old-workspace,
+  src/airbyte,
+  src/code-server,
+  src/dagster,
+  src/dbt-rpc,
+  src/superset,
+  src/observe,
+  src/pomerium
+max-complexity = 10
+max-line-length = 120
+extend-ignore = E203
+ignore =
+  E266
+  E741
+  E713
+  E731
+  W503
+  C901
+per-file-ignores =
+  cli.py:E501
+  scripts/docker_images.py:E501
+  scripts/k8s_deploy.py:E501
+  *_generator.py:F541

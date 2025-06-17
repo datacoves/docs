@@ -1,0 +1,3 @@
+{
+  "snowflake.connectionsConfigFile": "/config/.snowflake/connections.toml"
+}

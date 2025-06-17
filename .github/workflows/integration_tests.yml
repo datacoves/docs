@@ -1,0 +1,64 @@
+name: Integration Tests
+on:
+  workflow_dispatch:
+
+jobs:
+  collect-integration-tests: # will output all integration tests under the tests dir
+    runs-on: ubuntu-latest
+    outputs:
+      dir: ${{ steps.collect.outputs.dir }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: collect
+        run: |
+          cd src/core/api/app
+          echo "::set-output name=dir::$(ls -d integration_tests/*/test_*.py | jq -R -s -c 'split("\n")[:-1]' | sed -e 's#integration_tests/##g')"
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: [collect-integration-tests]
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.collect-integration-tests.outputs.dir) }}
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Grant permissions # Allow abc user to write into github runner's filesystem
+        run: |
+          chmod 777 src/core/api/app
+          chmod 777 src/core/workbench/app
+          chmod 777 src/core/dbt-api
+          mkdir src/core/api/app/integration_tests/output
+          chmod 777 src/core/api/app/integration_tests/output
+      - name: Install 1Password client
+        run: |
+          curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --yes --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+          echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list
+          sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+          curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+          sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+          curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --yes --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+          sudo apt update && sudo apt install 1password-cli
+          op --version
+      - name: Install python dependencies
+        run: pip install -r requirements.txt
+      - name: Reveal secrets
+        run: ./cli.py reveal_secrets -y
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.ONE_PASSWORD_SERVICE_ACCOUNT }}
+      - name: Deploy cluster
+        run: ./cli.py kind_create
+      - name: Add Bitnami repo explicitly
+        run: helm repo add bitnami https://charts.bitnami.com/bitnami
+      - name: Set latest release
+        run: ./cli.py set_latest_release datacoveslocal.com
+      - name: Install Datacoves
+        run: ./ci.py install
+      - name: Integration tests
+        run: |
+          ./cli.py integration_tests ${{ matrix.dir }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: test-output
+          path: src/core/api/app/integration_tests/output

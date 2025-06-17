@@ -1,0 +1,580 @@
+#!/bin/env python3
+#
+# Datacoves Command Line Tool for interacting with Datacoves specific
+# features.
+
+import json
+import os
+import shlex
+import socket
+import sqlite3
+import sys
+from argparse import ArgumentParser
+from pathlib import Path
+
+import questionary
+import requests
+import yaml
+from kubernetes import client, config
+from kubernetes.stream import stream
+from rich.console import Console
+from rich.progress import Progress
+
+# Disable requests warnings
+requests.packages.urllib3.disable_warnings()
+
+console = Console()
+
+
+MY_AIRFLOW_DB_PATH = "/config/local-airflow/db/airflow.db"
+
+
+class DbtProfileToAirflow:
+    """This translates a DBT profile into an Airflow connection DB row."""
+
+    @classmethod
+    def method_name(cls, type: str) -> str:
+        """Generates the method name for the given Airflow connection type"""
+
+        return f"translate_{type}"
+
+    @classmethod
+    def is_supported(cls, type: str) -> bool:
+        """Is Airflow connection type 'type' supported by this class?"""
+
+        return hasattr(cls, cls.method_name(type))
+
+    @classmethod
+    def translate(cls, profile: dict) -> dict:
+        """This does the actual translation of a profile to an airflow
+        Connection object dictionary"""
+
+        method = cls.method_name(profile.get("type", ""))
+
+        if not hasattr(cls, method):
+            raise RuntimeError(
+                f"Profile of type {profile.get('type', '')} is not yet " "supported."
+            )
+
+        return getattr(cls, method)(profile)
+
+    @classmethod
+    def translate_snowflake(cls, profile: dict) -> dict:
+        """Translates a snowflake dbt profile to an airflow connection"""
+
+        extra = {}
+
+        # Copy these into extra if they are set
+        for field in ["account", "warehouse", "database", "role"]:
+            if field in profile:
+                extra[field] = profile[field]
+
+        ret = {
+            "schema": profile.get("schema"),
+            "login": profile.get("user"),
+            "host": profile.get("host"),
+            "port": profile.get("port"),
+            "password": profile.get("password"),
+        }
+
+        if "private_key_path" in profile:
+            with open(profile["private_key_path"], "r") as f:
+                extra["private_key_content"] = f.read()
+                del ret["password"]
+
+        if profile.get("authenticator") == "username_password_mfa":
+            extra["mfa_protected"] = True
+
+        ret["extra"] = json.dumps(extra)
+        return ret
+
+    @classmethod
+    def translate_redshift(cls, profile: dict) -> dict:
+        return {
+            "schema": profile.get("dbname"),
+            "login": profile.get("user"),
+            "host": profile.get("host"),
+            "port": profile.get("port"),
+            "password": profile.get("password"),
+            "extra": json.dumps(
+                {
+                    "schema": profile.get("schema", ""),
+                }
+            ),
+        }
+
+    @classmethod
+    def translate_databricks(cls, profile: dict) -> dict:
+        return {
+            "schema": profile.get("schema"),
+            "host": profile.get("host"),
+            "password": profile.get("token"),
+            "extra": json.dumps(
+                {
+                    "token": profile.get("token"),
+                    "http_path": profile.get("http_path"),
+                }
+            ),
+        }
+
+    @classmethod
+    def translate_bigquery(cls, profile: dict) -> dict:
+        return {
+            "extra": json.dumps(
+                {
+                    "project": profile.get("project"),
+                    "dataset": profile.get("dataset"),
+                    "keyfile_dict": json.dumps(profile.get("keyfile_json")),
+                }
+            ),
+        }
+
+
+def get_user_input() -> str:
+    """Fetches multi-line user input"""
+
+    ret = ""
+
+    try:
+        while True:
+            next_line = input()
+
+            if ret == "":  # Empty, don't inject a \n
+                ret = next_line
+
+            else:
+                ret += "\n" + next_line
+
+    except EOFError:
+        return ret
+
+
+def quick_query(*arg, **argv):
+    """This runs a 'quick query', which is to say, we open My Airflow's
+    DB, do the query, and close it right away.  This avoids lingering with
+    the DB handle open which locks up My Airflow and can have other
+    various problems.
+
+    All parameters are passed to the cursor.execute method.  If you
+    provide the parameter 'and_then', it will run that method on the
+    cursor and return the value.  Otherwise, this returns None.
+    """
+
+    # Try to open our database
+    db = sqlite3.connect(MY_AIRFLOW_DB_PATH)
+    cursor = db.cursor()
+
+    and_then = False
+
+    if "and_then" in argv:
+        and_then = argv["and_then"]
+        del argv["and_then"]
+
+    cursor.execute(*arg, **argv)
+
+    ret = None
+
+    if and_then:
+        ret = getattr(cursor, and_then)()
+
+    db.commit()
+    cursor.close()
+    db.close()
+
+    return ret
+
+
+def airflow_import(args):
+    """Import variables from airflow.  'args' is the paramaters from the
+    arg parser; right now it just understands 'quiet' which will avoid
+    prompting for missing secrets.
+    """
+
+    quiet = args.quiet
+
+    import_variables = not args.connections
+    import_connections = not args.variables
+
+    if not import_variables and not import_connections:
+        print("Hmm... nothing to do!")
+        sys.exit(0)
+
+    # Make sure local airflow database exists.
+    if not os.path.isfile(MY_AIRFLOW_DB_PATH):
+        print(
+            "You must start My Airflow and let it fully start up before "
+            "you can import Team Airflow items into it."
+        )
+        sys.exit(1)
+
+    ###
+    ### BASIC COMMAND VALIDATION
+    ###
+
+    # Make sure required environment variables are set
+    token = os.environ.get("DATACOVES__SECRETS_TOKEN")
+    url = os.environ.get("DATACOVES__SECRETS_URL")
+    slug = os.environ.get("DATACOVES__ENVIRONMENT_SLUG")
+
+    if not token:
+        print("DATACOVES__SECRETS_TOKEN environment variable is missing.")
+        sys.exit(1)
+
+    if not url:
+        print("DATACOVES__SECRETS_URL environment variable is missing.")
+        sys.exit(1)
+
+    if not slug:
+        print(
+            "DC_CUSTOM__DATACOVES__ENVIRONMENT_SLUG environment variable " "is missing."
+        )
+        sys.exit(1)
+
+    if url[-1] != "/":
+        url += "/"
+
+    ###
+    ### LOAD LOCAL DBT PROFILES - only if importing connections
+    ###
+
+    # Map profile type to list of potential profiles.
+    profiles = {}
+
+    if import_connections:
+        # Try to load profiles.yml, only if loading connections.
+        profiles_path = (
+            Path(os.environ.get("DBT_PROFILES_DIR", f"{os.environ.get('HOME')}/.dbt"))
+            / "profiles.yml"
+        )
+
+        if not profiles_path.exists():
+            print(
+                "Missing user database connection: My Airflow uses your user's "
+                "own credentials to operate in the development environment. "
+                "Please configure your database connection in your Datacoves "
+                "User Settings and try again."
+            )
+            sys.exit(1)
+
+        with open(str(profiles_path), "rt") as input:
+            profiles_file = yaml.safe_load(input)
+
+        if not isinstance(profiles_file, dict):
+            print(
+                "ERROR: Could not parse your profiles.yml file.  This is "
+                "rather unusual - contact Datacoves support and provide this "
+                "error message."
+            )
+            sys.exit(1)
+
+        try:
+            for name, details in (
+                next(iter(profiles_file.values())).get("outputs", {}).items()
+            ):
+                type = details.get("type", "")
+
+                if type not in profiles:
+                    profiles[type] = []
+
+                profiles[type].append(name)
+
+        except:
+            # There's a number of things that can go wrong here.
+            # All are unparsablae profiles.yml file
+            print(
+                "WARNING: Could not parse your profiles.yml file.  This is "
+                "an unusual error - contact Datacoves support and provide "
+                "this error message."
+            )
+            sys.exit(1)
+
+    ###
+    ### LOAD AIRFLOW SECRETS
+    ###
+
+    # Try to get the airflow environment from Datacoves API
+    result = requests.get(
+        f"{url}api/v1/secrets-fetch/{slug}",
+        headers={"Authorization": f"Token {token}"},
+        verify=False,
+    )
+
+    if result.status_code != 200:
+        print(f"Got status {result.status_code}: {result.text}")
+        sys.exit(1)
+
+    result = result.json()
+
+    # Start the import process
+    if import_variables:
+        if not quiet:
+            print("Importing variables ...")
+
+        for variable in result["variables"]:
+            # Does the variable exist?
+            if (
+                quick_query(
+                    "select id from variable where key=?",
+                    [variable["key"]],
+                    and_then="fetchone",
+                )
+                is not None
+            ):
+                if not quiet:
+                    print(f"Variable {variable['key']} already exists, skipping...")
+
+                continue
+
+            # Is the variable redacted?  If so, we need to make a place holder
+            # or set it.
+            if variable["is_redacted"]:
+                if quiet:
+                    variable["value"] = ""
+
+                else:
+                    print(f"Enter a value for secret variable {variable['key']}.")
+                    print("Use CTRL-D to finish entering the value.")
+                    variable["value"] = get_user_input()
+
+            elif not quiet:
+                print(f"Importing {variable['key']}...")
+
+            quick_query(
+                "insert into variable (key, val, description) values (?, ?, ?)",
+                [variable["key"], variable["value"], variable["description"]],
+            )
+
+    if import_connections:
+        if not quiet:
+            print("Importing connections...")
+
+        for connection in result["connections"]:
+            # Does the connection exist?
+            if (
+                quick_query(
+                    "select id from connection where conn_id=?",
+                    [connection["connection_id"]],
+                    and_then="fetchone",
+                )
+                is not None
+            ):
+                if not quiet:
+                    print(
+                        f"Connection {connection['connection_id']} already exists, "
+                        "skipping..."
+                    )
+
+                continue
+
+            # Correct the type
+            type = connection["conn_type"]
+
+            if "bigquery" in type:
+                type = "bigquery"
+
+            if type in profiles:
+                if not quiet and len(profiles[type]) > 1:
+                    print(
+                        "Select a profile to map to connection ID: "
+                        + connection["connection_id"]
+                    )
+
+                    profile = questionary.select(
+                        "Choose Profile", choices=profiles[type]
+                    ).ask()
+
+                    if profile is None:
+                        # User hit CTRL-C
+                        sys.exit(0)
+
+                else:
+                    profile = profiles[type][0]
+
+                    if not quiet:
+                        print(
+                            f"Mapping connection ID {connection['connection_id']} "
+                            f"to profile {profile} because you have only one. "
+                            "You can edit this in My Airflow if you need to."
+                        )
+
+            else:
+                profile = None
+
+                if DbtProfileToAirflow.is_supported(type):
+                    print(
+                        "We could not map connection ID "
+                        + connection["connection_id"]
+                        + "to any of your User Database Connections because "
+                        "you do not have one of type "
+                        + connection["conn_type"]
+                        + ".  You will need to add this one manually."
+                    )
+
+                else:
+                    print(
+                        "Skipping connection ID "
+                        + connection["connection_id"]
+                        + " because it is not supported by the import process."
+                        + "  You will need to add this one manually."
+                    )
+
+                continue
+
+            # Copy the profile into My Airflow.
+            new_conn = DbtProfileToAirflow.translate(
+                next(iter(profiles_file.values())).get("outputs").get(profile)
+            )
+
+            quick_query(
+                "insert into connection "
+                "(conn_id, conn_type, description, host, schema, login, "
+                "password, port, extra) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [
+                    connection["connection_id"],
+                    connection["conn_type"],
+                    connection["description"],
+                    new_conn.get("host", ""),
+                    new_conn.get("schema", ""),
+                    new_conn.get("login", ""),
+                    new_conn.get("password", ""),
+                    new_conn.get("port", ""),
+                    new_conn.get("extra", ""),
+                ],
+            )
+
+    if not quiet:
+        print("Done!")
+
+
+def local_airflow_pytest(args):
+    """Handle to run pytest in local airflow using kubectl"""
+
+    # SHELL = "/bin/bash"
+    ENV_SLUG = os.environ.get("DATACOVES__ENVIRONMENT_SLUG")
+    NAMESPACE = f"dcw-{ENV_SLUG}"
+    POD_NAME = socket.gethostname()
+    CONTAINER_NAME = "local-airflow"
+    task_pytest = None
+
+    with Progress() as progress:
+        try:
+            # Set up the API client for the pod's exec
+            config.load_incluster_config()
+            v1 = client.CoreV1Api()
+
+            # Valid if the container exists in the pod
+            pod = v1.read_namespaced_pod(POD_NAME, NAMESPACE)
+            container_names = [container.name for container in pod.spec.containers]
+
+            if CONTAINER_NAME not in container_names:
+                raise ValueError(
+                    "You must start My Airflow and let it fully start up first."
+                )
+
+            # Execute command in the pod
+            task_pytest = progress.add_task("Running...", total=None)
+
+            command = [
+                "/bin/bash",
+                "-c",
+                "cd /opt/airflow/dags/repo && "
+                "pytest " + " ".join([shlex.quote(x) for x in args.arguments]),
+            ]
+
+            exec_response = stream(
+                v1.connect_get_namespaced_pod_exec,
+                name=POD_NAME,
+                namespace=NAMESPACE,
+                container=CONTAINER_NAME,
+                command=command,
+                stderr=True,
+                stdin=False,
+                stdout=True,
+                tty=False,
+            )
+
+            sys.stdout.write(exec_response)
+        except client.exceptions.ApiException as e:
+            console.print(e.reason)
+        except Exception as e:
+            console.print(e)
+        finally:
+            if task_pytest is not None:
+                progress.update(task_pytest, visible=False)
+
+
+def main():
+    """Handle command line parsing and routing to subcommands"""
+
+    parser = ArgumentParser(
+        prog="datacoves",
+        description="Datacoves command line control interface.",
+    )
+
+    subparsers = parser.add_subparsers(help="Available Subcommands", dest="subcommand")
+
+    # Subparsers for Airflow Local
+    airflow_local_parser = subparsers.add_parser(
+        "my",
+        help="Execute commands for my Airflow",
+    )
+    airflow_local_subparser = airflow_local_parser.add_subparsers(
+        help="Available Subcommands"
+    )
+    import_parser = airflow_local_subparser.add_parser(
+        "import",
+        help="Import connections and variables from Team Airflow",
+    )
+    import_parser.set_defaults(func=airflow_import)
+    import_parser.add_argument(
+        "-q",
+        "--quiet",
+        required=False,
+        help="Don't interactively ask for secrets.",
+        action="store_true",
+    )
+
+    import_parser.add_argument(
+        "-v",
+        "--variables",
+        required=False,
+        help="Only import varaibles",
+        action="store_true",
+    )
+
+    import_parser.add_argument(
+        "-c",
+        "--connections",
+        required=False,
+        help="Only import connections",
+        action="store_true",
+    )
+
+    pytest_parser = airflow_local_subparser.add_parser(
+        "pytest",
+        help="Run test in Airflow",
+    )
+    pytest_parser.add_argument(
+        "arguments",
+        nargs="*",
+        help="Arguments for pytest; typically you will want to prefix this "
+        "with -- in order to allow passing of flag-like parameters.  For "
+        "instance, '-- -h' to get help text.  You should, at a minimum, "
+        "provide a path to a test file or folder such as: "
+        "-- /config/workspace/orchestrate/tests/my_test.py",
+    )
+    pytest_parser.set_defaults(func=local_airflow_pytest)
+
+    # Parser arguments
+    args = parser.parse_args()
+
+    # Execute the function for the subcommand
+    if hasattr(args, "func"):
+        args.func(args)
+    else:
+        print("Subcommand required: See -h for help")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

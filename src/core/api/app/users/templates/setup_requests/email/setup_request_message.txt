@@ -1,0 +1,12 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}
+
+
+{{user_name}} ({{user_email}}) is trying to create an Account
+
+Accept: {{accept_url}}
+Reject: {{reject_url}}
+
+{% endblocktrans %}
+{% endautoescape %}

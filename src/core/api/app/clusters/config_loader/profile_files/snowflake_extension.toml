@@ -1,0 +1,23 @@
+{% if environment.release_profile == "dbt-snowflake" %}
+{% for con in connections %}
+{% if con.type == 'snowflake' %}
+[{{con.name}}]
+account = "{{ con.account }}"
+user = "{{ con.user }}"
+warehouse = "{{ con.warehouse }}"
+database = "{{ con.database }}"
+schema = "{{ con.schema }}"
+role = "{{ con.role }}"
+{% if con.ssl_public_key %}
+authenticator = "SNOWFLAKE_JWT"
+private_key_path = "/config/.ssl/{{ con.name }}-private.pem"
+{% elif 'mfa_protected' in con and con.mfa_protected %}
+authenticator = "username_password_mfa"
+password = "{{ con.password | escape_quotes }}"
+{% else %}
+authenticator = "SNOWFLAKE"
+password = "{{ con.password | escape_quotes }}"
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}

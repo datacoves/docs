@@ -1,0 +1,336 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: workspaces.datacoves.com
+spec:
+  group: datacoves.com
+  names:
+    kind: Workspace
+    listKind: WorkspaceList
+    plural: workspaces
+    singular: workspace
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Workspace is the Schema for the workspaces API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WorkspaceSpec defines the desired state of Workspace
+            properties:
+              account:
+                description: The workspace's account name.
+                type: string
+              accountSuspended:
+                description: Is account suspended?
+                type: string
+              certManagerIssuer:
+                description: The name of a cert-manager issuer to put on ingress annotations,
+                  for SSL.
+                type: string
+              charts:
+                additionalProperties:
+                  additionalProperties:
+                    type: string
+                  type: object
+                description: A map of service helm charts configs
+                type: object
+              cloneRepository:
+                description: Clone git repository (code_server)
+                type: string
+              clusterApiServerIps:
+                description: The IP of the internal-dns so that network policies allow
+                  communication with it.
+                properties:
+                  ips:
+                    description: Kubernates api server ips.
+                    items:
+                      type: string
+                    type: array
+                  ports:
+                    description: Kubernates api server port.
+                    items:
+                      format: int32
+                      type: integer
+                    type: array
+                required:
+                - ips
+                - ports
+                type: object
+              clusterDomain:
+                description: The domain of the cluster. Used to derive ingress rules.
+                type: string
+              configs:
+                additionalProperties:
+                  type: string
+                description: Map the name of a config to the name of a resource containing
+                  its current value.
+                type: object
+              dbtDocsAskpassUrl:
+                description: Dbt docs AskPass URL if using Azure (dbt_docs)
+                type: string
+              dbtDocsGitBranch:
+                description: Dbt docs git branch (dbt_docs)
+                type: string
+              dbtHome:
+                description: Dbt project home path (code_server)
+                type: string
+              dbtSyncServerDisabled:
+                description: Disable dbt sync server (code_server)
+                type: string
+              dontUseWsgi:
+                description: Runs python web apps in development mode (code_server)
+                type: string
+              externalDnsUrl:
+                description: An URL to put on ingress annotations so that external-dns
+                  creates DNS records.
+                type: string
+              externalIp:
+                description: The cluster external IP
+                type: string
+              gitCloneStrategy:
+                description: The git clone strategy, could be either 'ssh_clone' or
+                  'http_clone'
+                type: string
+              httpGitRepo:
+                description: The http git url to the project repository
+                type: string
+              imagePullSecret:
+                type: string
+              imageRegistry:
+                description: The docker image registry to pull images from. Empty
+                  implies dockerhub.
+                type: string
+              images:
+                additionalProperties:
+                  type: string
+                description: A map of the docker images used. Maps image names to
+                  tags (versions).
+                type: object
+              internalDbClusterIpRange:
+                description: The IP of the internal-dns so that network policies allow
+                  communication with it.
+                type: string
+              internalDnsIp:
+                description: The IP of the internal-dns so that network policies allow
+                  communication with it.
+                type: string
+              internalIp:
+                description: The cluster internal IP
+                type: string
+              internalServices:
+                additionalProperties:
+                  additionalProperties:
+                    type: string
+                  type: object
+                description: A map of enabled internal services.
+                type: object
+              localDbtDocsDisabled:
+                description: Disable local dbt docs (code_server)
+                type: string
+              nodeLocalDnsEnabled:
+                description: If true, we will use the node local DNS for all pods.  The
+                  cluster must be installed with the install_node_local_dns option
+                  set to true in the cluster-params yaml
+                type: string
+              oidcUserId:
+                description: The oidc token attribute used to identify the user
+                type: string
+              project:
+                description: The workspace's project name.
+                type: string
+              releaseProfile:
+                description: Release profile name
+                type: string
+              resourceRequirements:
+                additionalProperties:
+                  description: ResourceRequirements describes the compute resource
+                    requirements.
+                  properties:
+                    limits:
+                      additionalProperties:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                        x-kubernetes-int-or-string: true
+                      description: 'Limits describes the maximum amount of compute
+                        resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+                      type: object
+                    requests:
+                      additionalProperties:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                        x-kubernetes-int-or-string: true
+                      description: 'Requests describes the minimum amount of compute
+                        resources required. If Requests is omitted for a container,
+                        it defaults to Limits if that is explicitly specified, otherwise
+                        to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+                      type: object
+                  type: object
+                type: object
+              services:
+                additionalProperties:
+                  additionalProperties:
+                    type: string
+                  type: object
+                description: A map of enabled services.
+                type: object
+              sshGitRepo:
+                description: The ssh git url to the project repository
+                type: string
+              users:
+                description: The workspace's users.
+                items:
+                  description: UserSpec defines the desired state of User
+                  properties:
+                    cloneRepository:
+                      description: Clone git repository (code_server)
+                      type: string
+                    codeServerAccess:
+                      description: Code server access
+                      type: string
+                    codeServerDisabled:
+                      description: Disable code server
+                      type: string
+                    codeServerExposures:
+                      additionalProperties:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      description: A map of code server services.
+                      type: object
+                    codeServerRestartedAt:
+                      description: Restart annotation (code_server)
+                      type: string
+                    codeServerShareCode:
+                      description: Code server access
+                      type: string
+                    dbtHome:
+                      description: Dbt project home path (code_server)
+                      type: string
+                    dbtSyncServerDisabled:
+                      description: Disable dbt sync server (code_server)
+                      type: string
+                    email:
+                      description: The user's email.
+                      type: string
+                    images:
+                      additionalProperties:
+                        type: string
+                      description: A map of the docker images used. Maps image names
+                        to tags (versions).
+                      type: object
+                    localAirflowEnabled:
+                      description: Enable local airflow server as part of code server
+                      type: string
+                    localAirflowEnvironment:
+                      description: Environment variables for local airflow
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          value:
+                            type: string
+                        required:
+                        - name
+                        - value
+                        type: object
+                      type: array
+                    localDbtDocsDisabled:
+                      description: Disable local dbt docs (code_server)
+                      type: string
+                    name:
+                      description: The user's name
+                      type: string
+                    permissions:
+                      description: The permissions to have access to the workspace
+                        services
+                      items:
+                        description: PermissionSpec defines the desired state of User
+                          permissions
+                        properties:
+                          path:
+                            description: Resources, i.e. "/subpath, read https://www.pomerium.com/reference/#prefix"
+                            type: string
+                          service:
+                            description: Service prefix, i.e. "airbyte"
+                            type: string
+                        required:
+                        - service
+                        type: object
+                      type: array
+                    profile:
+                      description: Code server profile name
+                      type: string
+                    secretName:
+                      description: The user's secret name
+                      type: string
+                    services:
+                      additionalProperties:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      description: A map of enabled services.
+                      type: object
+                    slug:
+                      description: A slug used in urls.
+                      pattern: '[a-z]([-a-z0-9]*[a-z0-9])?'
+                      type: string
+                  required:
+                  - email
+                  - images
+                  - name
+                  - permissions
+                  - secretName
+                  - services
+                  - slug
+                  type: object
+                type: array
+            required:
+            - account
+            - charts
+            - clusterDomain
+            - configs
+            - gitCloneStrategy
+            - imageRegistry
+            - images
+            - internalServices
+            - oidcUserId
+            - project
+            - services
+            - users
+            type: object
+          status:
+            description: WorkspaceStatus defines the observed state of Workspace
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

@@ -1,0 +1,93 @@
+domain: {{ hostname }}
+context: {{ kubectl_context }}
+provider: aks
+kubernetes_version: "{{ kubernetes_version }}"
+
+## Docker image defaults
+release: "{{ release }}"
+
+# docker_registry:
+# docker_secret_name:
+# extra_images:
+
+## cert-manager
+cert_manager_issuer: letsencrypt
+
+## internal-dns to allow traffic to it
+# Commented out bec it was being resolved incorrectly
+# internal_dns_url: datacoveskube-dns-j3b0n2u7.hcp.centralus.azmk8s.io
+
+## External services
+airbyte_config:
+  db:
+    external: true
+    backend: postgres
+    tls: true
+    tls_enabled: true
+    host_verification: false
+    tls_disable_host_verification: true
+  logs:
+    external: true
+    backend: afs
+
+datahub_config:
+  db:
+    external: true
+    backend: postgres
+
+airflow_db_external: true
+airflow_logs_external: true
+superset_db_external: true
+core_liveness_readiness: false
+
+# network policy configuration
+internal_db_cluster_ip_range: 10.225.0.0/24
+
+## Project
+projects:
+  balboa-analytics:
+    name: Balboa Analytics
+    slug: balboa-analytics-datacoves
+    clone_strategy: http_clone
+    repository:
+      url: https://github.com/datacoves/balboa.git
+      git_url: git@github.com:datacoves/balboa.git
+
+## Account
+account:
+  name: Datacoves Test
+  slug: datacoves-test
+  owner:
+    email: gomezn@convexa.ai
+    name: Noel Gomez
+
+## Features
+features_enabled:
+  admin_groups: true
+  admin_projects: true
+  admin_connections: true
+  admin_environments: true
+  admin_integrations: true
+  admin_secrets: true
+  admin_service_credentials: true
+  local_airflow: true
+  user_profile_change_name: true
+  user_profile_change_credentials: true
+  user_profile_change_ssh_keys: true
+  user_profile_change_ssl_keys: true
+  stop_codeserver_on_inactivity: true
+  codeserver_restart: true
+  observability_stack: true
+  show_get_started_banner: true
+
+airflow_config:
+  db:
+    external: true
+  logs:
+    backend: afs
+    external: true
+
+min_replicas_worker_main: 1
+max_replicas_worker_main: 2
+min_replicas_api: 1
+max_replicas_api: 2

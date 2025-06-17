@@ -1,0 +1,45 @@
+# Version control directories
+.git/
+.gitignore
+
+# Compiled application & artifacts
+/_build/
+/deps/
+
+# Files related to test, build and CI
+/test/
+/cover/
+/.fetch
+/.tool-versions
+/.circleci/
+/.github/
+/.vscode/
+/docker-compose.*
+
+# Editor directories and files
+.elixir_ls/
+.elixir-tools/
+.idea/
+*.swo
+*.swp
+*.swn
+*.swm
+
+# Node.js artifacts
+/assets/node_modules/
+
+# Ignore custom files
+architecture.png
+README.md
+/insomnia/
+
+# Ignore .env files that may contain sensitive data
+.env
+.env.*
+
+# Ignore potential secrets stored in the credentials file
+config/*.secret.exs
+
+# Ignore system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Datacoves on Maintenance</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        width: 60em;
+        margin: 200px auto;
+        font-family: "Manrope", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="/assets/logo.svg" width="300px" />
+    <h3>⚠️ SERVICE DOWN ⚠️</h3>
+    <h1>Datacoves is currently down for scheduled maintenance</h1>
+    <div style="font-size: 20px">
+      <p>
+        The service is planned to be restored by 🕒
+        <strong>${RESTORE_TIME}</strong>.
+      </p>
+      <p>
+        Please contact
+        <a href="mailto:${CONTACT_EMAIL}" target="_blank">✉️ ${CONTACT_NAME}</a>
+        if you have any questions.
+      </p>
+    </div>
+    <p style="margin-top: 50px; font-size: 16px">Thanks, the Datacoves Team.</p>
+  </body>
+</html>
