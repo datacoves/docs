@@ -77,7 +77,7 @@ The examples above use the Airflow connection `main` which is added automaticall
 
 From Datacoves 3.4 onwards, the `datacoves_dbt` decorator allows users to upload and download dbt execution results and metadata to our `dbt API`
 
->[!NOTE] Dbt API is a feature that is not enabled by default. Please contact support for further assistance.
+>[!NOTE] dbt-API is a feature that is not enabled by default. Please contact support for further assistance.
 
 This is particularly useful for performing [dbt retries](/how-tos/airflow/retry-dbt-tasks.md).
 

@@ -10,7 +10,7 @@ The `dbt-coves setup` command generates a fully configured project environment t
 
 ### Initial Setup Process
 
-Dbt-coves comes pre-installed with all Datacoves instances, then you only have to run:
+dbt-coves comes pre-installed in Datacoves, you only have to run:
 
 ```bash
 # Create a new Datacoves repository
@@ -25,6 +25,8 @@ During the setup process, you'll be guided through a series of configuration que
 - Repository structure preferences
 - CI/CD pipeline configurations
 - Testing and documentation settings
+
+>[!NOTE] It is recommended that you commit the answers file in your repo for future updates (see below)
 
 ## What Gets Created
 
@@ -75,9 +77,7 @@ The update process:
 - Adds any new components you select (it will remove the components you selected at Setup time but didn't select at Update time)
 - Maintains backward compatibility where possible
 
->[!NOTE] 
-> ### dbt-coves setup --update
-> When running an Update, you will be prompted which services you want to set-up, having your original choices pre-selected. If you unselect one of these, it's content will be deleted
+>[!NOTE] When running an update, you will be prompted for the services you want to setup / update, if you saved the answers file from when you first ran set, your original choices pre-selected. If you unselect one of these, that content will be deleted
 
 ## Benefits for Data Teams
 
