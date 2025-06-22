@@ -27,9 +27,9 @@ def my_bash_dag():
     @task.datacoves_bash
     def echo_hello_world() -> str:
         return "Hello World!"
-
 dag = my_bash_dag()
 ```
+
 
 ### @task.datacoves_dbt
 
@@ -43,7 +43,7 @@ This custom decorator is an extension of the @task decorator and simplifies runn
 - It runs dbt commands inside the dbt Project Root, not the Repository root.
 
 **Params:**
-- `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
+- `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
 - `overrides`: Pass in a dictionary with override parameters such as warehouse, role, or database.
 
 ```python
@@ -58,6 +58,7 @@ dag = my_dbt_dag()
 ```
 
 Example with overrides.
+
 ```python
 def my_dbt_dag():
     @task.datacoves_dbt(
@@ -71,6 +72,39 @@ dag = my_dbt_dag()
 
 The examples above use the Airflow connection `main` which is added automatically from the Datacoves Service Connection
 ![Service Connection](assets/service_connection_main.jpg)
+
+#### Uploading and downloading dbt results
+
+From Datacoves 3.4 onwards, the `datacoves_dbt` decorator allows users to upload and download dbt execution results and metadata to our `dbt API`
+
+>[!NOTE] dbt-API is a feature that is not enabled by default. Please contact support for further assistance.
+
+This is particularly useful for performing [dbt retries](/how-tos/airflow/retry-dbt-tasks.md).
+
+
+The new datacoves_dbt parameters are:
+
+- `dbt_api_enabled` (Default: `False`): Whether your Environment includes a dbt API instance.
+- `download_static_artifacts` (Default: `True`): Whether user wants to download dbt static artifact files.
+- `upload_static_artifacts` (Default: `False`): Whether user wants to upload dbt static files.
+- `download_additional_files` (Default: `[]`): A list of extra paths the user wants to download.
+- `upload_additional_files` (Default: `[]`): A list of extra paths the user wants to upload.
+- `upload_tag` (Default: DAG `run_id`): The tag/label the files will be uploaded with.
+- `upload_run_results` (Default: `True`): Whether the `run_results.json` dbt file will be uploaded.
+- `download_run_results` (Default: `False`): Whether the `run_results.json` dbt file will be downloaded.
+- `upload_sources_json` (Default: `True`): Whether the `sources.json` dbt file will be uploaded.
+- `download_sources_json` (Default: `False`): Whether the `sources.json` dbt file will be downloaded.
+
+>[!NOTE]
+>**Static Artifacts**  
+>The static artifacts are important dbt-generated files that help with dbt's operations:
+>
+>- `target/graph_summary.json`: Contains a summary of the DAG structure of your dbt project.
+>- `target/graph.gpickle`: A serialized Python networkx graph object representing your dbt project's dependency graph.
+>- `target/partial_parse.msgpack`: Used by dbt to speed up subsequent runs by storing parsed information.
+>- `target/semantic_manifest.json`: Contains semantic information about your dbt project.
+>
+>These files are downloaded by default (when `download_static_artifacts=True`) and are tagged as "latest" when uploaded.
 
 ### @task.datacoves_airflow_db_sync
 
