@@ -10,7 +10,7 @@ Set up a Datacoves Trial account with the help of our team.
 
 ## Our Docs
 
-This documentation is divided in 4 parts following the structure is inspired by [Divio’s documentation system](https://documentation.divio.com/).
+This documentation is divided in 4 parts following the structure is inspired by [Divio’s documentation system](https://docs.divio.com/documentation-system/).
 
 - **How to guides** to help you accomplish a given task and assume you have some basic understanding
 - **Explanation** give you an understanding as to the rationale for the suggestions we make
