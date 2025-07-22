@@ -40,7 +40,6 @@
     - [Secrets - Datacoves Secrets Manager](/how-tos/airflow/use-datacoves-secrets-manager.md)
     - [Worker - Custom Worker Environment](/how-tos/airflow/customize-worker-environment.md)
     - [Worker - Request Memory and CPU](/how-tos/airflow/request-resources-on-workers.md)
-
   - [Datacoves](/how-tos/datacoves/)
     - [Configure Connection Templates](/how-tos/datacoves/how_to_connection_template.md)
     - [Configure Datacoves Secret](/how-tos/datacoves/how_to_secrets.md)
