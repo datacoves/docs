@@ -11,6 +11,7 @@
   - [Snowflake Extension](/getting-started/developer/snowflake-extension.md)
   - [Transform Tab](/getting-started/developer/transform-tab.md)
   - [Working with dbt in Datacoves](/getting-started/developer/working-with-dbt-datacoves.md)
+    - [Lineage View](/getting-started/developer/lineage-view.md) 
   - [Using Git](/getting-started/developer/using-git.md)
 - **Diving Deeper**
 - [How to](/how-tos/)
