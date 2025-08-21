@@ -20,6 +20,7 @@
     - [Airflow - Accessing the Airflow API](/how-tos/airflow/use-airflow-api.md)
     - [Airflow - Sync Internal Airflow database](/how-tos/airflow/sync-database.md)
     - [Airflow - Trigger a DAG using Datasets](how-tos/airflow/api-triggered-dag.md)
+    - [Airflow - Use Key-Pair Authentication](how-tos/airflow/use-key-pair-authentication.md)
     - [DAGs - Add Dag Documentation](/how-tos/airflow/create-dag-level-docs.md)
     - [DAGs - Calling External Python Scripts](/how-tos/airflow/external-python-dag.md)
     - [DAGs - Dynamically Set Schedule](/how-tos/airflow/dynamically-set-schedule.md)

@@ -24,6 +24,8 @@ A Service Connection consists of the following fields:
 
 ![Service Connection Connection Details](./assets/serviceconnection_editnew_details.png)
 
+> [!NOTE] Snowflake is [deprecating single-factor password sign-ins](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). For this reason, we encourage users to always use `RSA Key-pair` authentication mechanism for Service Connections.
+
 ## Getting Started Next Steps 
 In the following step, you will update your repository by incorporating the necessary folders and files for Airflow. Specifically, you will add the `orchestrate/dags` directories along with `automate/dbt/profiles.yml`. 
 
