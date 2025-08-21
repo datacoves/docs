@@ -2,7 +2,7 @@
 
 > [!NOTE] This documentation will presume you have knowledge of Datacoves' [Service Connections](/how-tos/datacoves/how_to_service_connections.md) and how to configure them.
 
-First of all, using RSA Keys is only allowed through Airflow Connections, not Environment Variables. Make sure your Service Connection is using this `delivery mode`.
+Using RSA Keys is only supported through Airflow Connections, not Environment Variables. Make sure your Datacoves Service Connection is using this `delivery mode`.
 
 ![alt text](assets/delivery_mode_airflow_connection.png)
 
@@ -10,7 +10,7 @@ Also, make sure to select `Authentication mechanism: RSA Key-pair` and [assign t
 
 ![authentication_mechanism_copy](assets/authentication_mechanism_copy.png)
 
-Once you have properly configured your Service Connection, your Airflow instance will restart (process that can take up to 10 minutes).
+Once you have properly configured your Service Connection, your Airflow instance will restart. This process may take up to 10 minutes.
 
 To confirm the above worked correctly, you can access your Airflow `Admin -> Connections` menu, and make sure your Service Connection  is now an Airflow Connection.
 
