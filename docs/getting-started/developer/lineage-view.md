@@ -1,6 +1,6 @@
 # Lineage View 
 
-The **Lineage View** panel is a feature of the Datacoves Power User VSCode extension that provides a visual representation of the lineage of your project. This tool helps you quickly understand how data flows between models, sources, and downstream dependencies within your dbt project.
+The **Lineage View** panel is a feature of the Datacoves VSCode extension that provides a visual representation of the lineage of your project. This tool helps you quickly understand how data flows between models, sources, and downstream dependencies within your dbt project.
 
 ## What is the Lineage View?
 
@@ -14,30 +14,27 @@ The Lineage View displays a graph of your dbt model's relationships, showing bot
 
 The basic usage of Lineage View consists of the following steps:
 
-1. **Open a dbt model file** in your VSCode workspace.
+1. **Open a dbt model or yml file** in your VSCode workspace.
 2. Locate the **Lineage View** panel, typically found in the lower panel (alongside Terminal, Output, Datacoves)
-3. The panel will automatically display the lineage graph for the currently active model file.
+3. The panel will automatically display the lineage graph for the currently sql or yml file.
 
-### Extra features
+### Additional features
 
-Some of the extra features, apart from seeing your model(s) lineage, include:
+In addition to seeing your model(s) lineage, you can also:
 
-- Single-click on a node: open SQL file.
-- Double-click on a node: open YML file.
-- Write your own lookup query, in the format of:
-  -  `{n}+model`
-  -  `model+{n}`
-  -  `{n}+model+{n}`
-- Right click a node: a dropdown of actions can be performed on each dbt object depending it's type (run, test, compile, open files, etc)
+- **Single-click** on a node to open the SQL file.
+- **Double-click** on a node to open the YML file.
+- **Right click** a node and perform a dbt action(run, test, compile, open files, etc)
+
+You can also look up other dbt models and change the parent and child nodes displayed using one of the following:
+  -  `{n}+my_model`
+  -  `my_model+{n}`
+  -  `{n}+my_model+{n}`
 
 ![Lineage View Example](assets/lineage_view_with_model.png)
 
 ## Configuration
 
-Lineage Panel has 3 configurable settings. As with any VSCode setting, these can be configured in the Settings UI or written to a traditional `settings.json` file:
+Lineage Panel has 3 configurable settings. As with any VSCode setting, these can be [overridden](/how-tos/vscode/override) in the `settings.json` file located in `workspace/.vscode/settings.json`:
 
-- Default Expansion (`dbt.lineage.defaultExpansion`: number): How much Lineage should expand by default to each side of the currently-opened model.
-- Show Non Selected Edges (`dbt.lineage.showNonSelectEdges`: boolean): Show non-selected edges
-- Show Selected Edges (`dbt.lineage.showSelectEdges`: boolean): Show selected edges.
-
-![alt text](assets/lineage_settings.png)
+- Default Expansion (`dbt.lineage.defaultExpansion`: number): How many nodes should expand by default for the currently-opened model.

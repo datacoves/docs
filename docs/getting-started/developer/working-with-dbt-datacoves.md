@@ -18,6 +18,10 @@ This guide covers various aspects of using Datacoves for creating, editing, runn
 
 - **Run current button:** Understand how to use the "Run current" button to execute models.
 
+## dbt Model Lineage
+
+- **Datacoves Linage Panel** Learn how to use the [Datacoves Linage Panel](/getting-started/developer/lineage-view.md) to see the lineage of dbt exposures, models, and sources.
+
 ## Opening a Model and Auto Complete
 
 - **Quick model access using Cmd/Ctrl + P:** Learn how to quickly access models using the keyboard shortcut.
