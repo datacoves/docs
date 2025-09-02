@@ -7,7 +7,7 @@ Creating a [Datacoves Secret](/how-tos/datacoves/how_to_secrets.md) requires som
 - **Name:** The secret must be named `datacoves-copilot-api-configs`
 - **Description:** Provide a simple description such as: `Datacoves Copilot config`
 - **Format:** Select `Raw JSON`
-- **Value**: The value will vary depending on the LLM you are utilizing, see [Value formats by LLM Provider](#value-formats-by-llm-provider).
+- **Value**: The value will vary depending on the LLM you are utilizing, see `Value formats by LLM Provider` section.
 - **Scope:** Select the desired scope, either `Project` or `Environment`.
 - **Project/Environment:** Select the `Project` or `Environment` that will access this LLM.
 
