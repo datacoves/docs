@@ -73,6 +73,7 @@ Params:
 
 - `bash_command`: command to run
 - `project_dir` (optional): relative path from repo root to a specific dbt project.
+- `run_dbt_deps` (optional): boolean to force dbt deps run.
 
 ```python
 import datetime

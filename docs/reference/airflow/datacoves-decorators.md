@@ -18,7 +18,7 @@ This custom decorator is an extension of Airflow's default @task decorator and s
 
 **Params:**
 
-- `env`: Pass in a dictionary of variables. eg) `"my_var": "{{ var.value.my_var }}"` Please use {{ var.value.my_var }} syntax to avoid parsing every 30 seconds.
+- `env`: Pass in a dictionary of variables. eg `"my_var": "{{ var.value.my_var }}"` Please use {{ var.value.my_var }} syntax to avoid parsing every 30 seconds.
 - `outlets`: Used to connect a task to an object in datahub or update a dataset
 - `append_env`: Add env vars to existing ones like `DATACOVES__DBT_HOME`
   
@@ -43,9 +43,21 @@ This custom decorator is an extension of the @task decorator and simplifies runn
 - It runs dbt commands inside the dbt Project Root, not the Repository root.
 
 **Params:**
-- `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
-- `overrides`: Pass in a dictionary with override parameters such as warehouse, role, or database.
 
+Datacoves dbt decorator supports all the [Datacoves dbt Operator params](/reference/airflow/datacoves-operator#datacoves-dbt-operator) plus:
+
+- `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
+
+**dbt profile generation:**
+
+With the `connection_id` mentioned above, we create a temporary dbt profile (it only exists at runtime inside the Airflow DAG's worker). By default, this dbt profile contains the selected Service Credential connection details.
+
+However, even though it's not usual, users can customize this dbt profile connection details and/or target with the following params:
+
+- `overrides`: a dictionary with override parameters such as warehouse, role, database, etc.
+- `target`: the target name this temporary dbt profile will receive. Defaults to `default` 
+
+Basic example
 ```python
 def my_dbt_dag():
     @task.datacoves_dbt(
@@ -58,14 +70,15 @@ dag = my_dbt_dag()
 ```
 
 Example with overrides.
-
 ```python
 def my_dbt_dag():
     @task.datacoves_dbt(
         connection_id="main",
-        overrides={"warehouse": "my_custom_wh"})
+        overrides={"warehouse": "my_custom_wh"},
+        target="testing"
+    )
     def dbt_test() -> str:
-        return "dbt debug"
+        return "dbt debug -t testing" # Make sure to pass `-t {target}` if you are using a custom target name.
 
 dag = my_dbt_dag()
 ```
