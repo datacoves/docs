@@ -18,7 +18,7 @@ This custom decorator is an extension of Airflow's default @task decorator and s
 
 **Params:**
 
-- `env`: Pass in a dictionary of variables. eg) `"my_var": "{{ var.value.my_var }}"` Please use {{ var.value.my_var }} syntax to avoid parsing every 30 seconds.
+- `env`: Pass in a dictionary of variables. eg `"my_var": "{{ var.value.my_var }}"` Please use {{ var.value.my_var }} syntax to avoid parsing every 30 seconds.
 - `outlets`: Used to connect a task to an object in datahub or update a dataset
 - `append_env`: Add env vars to existing ones like `DATACOVES__DBT_HOME`
   
@@ -43,8 +43,23 @@ This custom decorator is an extension of the @task decorator and simplifies runn
 - It runs dbt commands inside the dbt Project Root, not the Repository root.
 
 **Params:**
+
+Datacoves dbt decorator supports all the [Datacoves dbt Operator params](/reference/airflow/datacoves-operator#datacoves-dbt-operator) plus:
+
 - `connection_id`: This is the [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
-- `overrides`: Pass in a dictionary with override parameters such as warehouse, role, or database.
+
+**dbt profile generation:**
+
+With the `connection_id` mentioned above, we create a temporary dbt profile (it only exists at runtime inside the Airflow DAG's worker). By default, this dbt profile contains the selected Service Credential connection details.
+
+The dbt profile `name` is defined either in Project or Environment settings, in their `Profile name` field. This can be overwritten by passing a custom `DATACOVES__DBT_PROFILE` environment variable to the decorator
+
+Users can also customize this dbt profile's connection details and/or target with the following params:
+
+- `overrides`: a dictionary with override parameters such as warehouse, role, database, etc.
+- `target`: the target name this temporary dbt profile will receive. Defaults to `default`.
+
+Basic example
 
 ```python
 def my_dbt_dag():
@@ -63,9 +78,12 @@ Example with overrides.
 def my_dbt_dag():
     @task.datacoves_dbt(
         connection_id="main",
-        overrides={"warehouse": "my_custom_wh"})
+        overrides={"warehouse": "my_custom_wh"},
+        env={"DATACOVES__DBT_PROFILE": "prod"},
+        target="testing"
+    )
     def dbt_test() -> str:
-        return "dbt debug"
+        return "dbt debug -t testing" # Make sure to pass `-t {target}` if you are using a custom target name.
 
 dag = my_dbt_dag()
 ```
@@ -114,7 +132,7 @@ The new datacoves_dbt parameters are:
 
 - `db_type`: The data warehouse you are using. Currently supports `redshift` or `snowflake`.
 - `destination_schema`: The destination schema where the Airflow tables will end-up. By default, the schema will be named as follows: `airflow-{datacoves environment slug}` for example `airflow-qwe123`.
-- `connection_id`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`. 
+- `connection_id`: The name of your Airflow [service connection](/how-tos/datacoves/how_to_service_connections.md) which is automatically added to airflow if you select `Airflow Connection` as the `Delivery Mode`.
 - `additional_tables`: A list of additional tables you would want to add to the default set.
 - `tables`: A list of tables to override the default ones from above. Warning: An empty list [] will perform a full-database sync.
 
